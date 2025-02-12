@@ -1,0 +1,42 @@
+{
+	"folders": {},
+	"connections": {
+		"mysql8-194f348e945-70d93381a5fcb252": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "sharesite",
+			"save-password": true,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "sharesite",
+				"url": "jdbc:mysql://localhost:3306/sharesite",
+				"configurationType": "URL",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20000",
+					"rewriteBatchedStatements": "true",
+					"enabledTLSProtocols": "TLSv1,TLSv1.1,TLSv1.2",
+					"allowPublicKeyRetrieval": "TRUE",
+					"useSSL": "FALSE"
+				},
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": false,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800
+		}
+	}
+}
