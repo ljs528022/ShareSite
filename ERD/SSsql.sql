@@ -58,6 +58,7 @@ CREATE TABLE d1_like
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
 	post_id int NOT NULL,
+	state boolean,
 	PRIMARY KEY (id)
 );
 

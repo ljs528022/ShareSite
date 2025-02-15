@@ -22,7 +22,7 @@ public class User {
     private String phoneNM;         // Phone Number
     private String email;           // Email
     private LocalDateTime regDate;  // Register Date
-    private Long sex;               // gender
+    private String type;               // MEMBER TYPE O: NORMAL, N: NAVER, K: KAKAO
     private Long visitcnt;          // Visit Count
     private Long tradecnt;          // Trade Success Count
 
@@ -36,6 +36,7 @@ public class User {
 
 
     // User Page - Selling
+
 
     // For ADMIN
 
