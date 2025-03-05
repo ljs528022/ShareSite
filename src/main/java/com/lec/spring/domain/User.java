@@ -13,16 +13,17 @@ import java.util.List;
 @Builder
 public class User {
 
-    private Long id;                // PK
+    private Long userKey;                // PK
     private String username;        // ID
-    private String password;        // PW
+    private String userpass;        // PW
     @ToString.Exclude
-    private String passwordChk;     // PW checking
-    private String name;            // Username
-    private String phoneNM;         // Phone Number
-    private String email;           // Email
+    private String userpassChk;     // PW checking
+    private String useralias;            // Username
+    private String tel;         // Phone Number
+    private String regtype;           // Regist Type (site, naver, kakao)
+    private String userimg;         // User Profile IMG
+    private String state;           // User State (B : Banned, S : Stopped, N : Normal)
     private LocalDateTime regDate;  // Register Date
-    private Long sex;               // gender
     private Long visitcnt;          // Visit Count
     private Long tradecnt;          // Trade Success Count
 

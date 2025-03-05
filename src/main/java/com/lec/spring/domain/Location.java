@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Like {
+public class Location {
 
-    private Long wishKey;       // PK
     private Long userKey;       // user's PK (FK)
-    private Long itemKey;       // item's PK (FK)
+    private Long zipcode;       // Address Number
+    private String addr;        // Address
+    private String addrDetail;  // Detail Address
+
 
 }

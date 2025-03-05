@@ -1,14 +1,14 @@
-
+SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
-DROP TABLE IF EXISTS d1_attachment;
 DROP TABLE IF EXISTS d1_authority;
-DROP TABLE IF EXISTS d1_comment;
 DROP TABLE IF EXISTS d1_like;
-DROP TABLE IF EXISTS d1_post;
+DROP TABLE IF EXISTS d1_review;
+DROP TABLE IF EXISTS d1_item;
 DROP TABLE IF EXISTS d1_category;
 DROP TABLE IF EXISTS d1_location;
+DROP TABLE IF EXISTS d1_purchase;
 DROP TABLE IF EXISTS d1_user;
 
 
@@ -16,90 +16,100 @@ DROP TABLE IF EXISTS d1_user;
 
 /* Create Tables */
 
-CREATE TABLE d1_attachment
-(
-	id int NOT NULL AUTO_INCREMENT,
-	post_id int NOT NULL,
-	sourcename varchar(100),
-	filename varchar(100),
-	PRIMARY KEY (id)
-);
-
-
 CREATE TABLE d1_authority
 (
-	id int NOT NULL AUTO_INCREMENT,
+	authKey int NOT NULL AUTO_INCREMENT,
 	auth varchar(10) NOT NULL,
-	PRIMARY KEY (id)
+	PRIMARY KEY (authKey)
 );
 
 
 CREATE TABLE d1_category
 (
-	id int NOT NULL AUTO_INCREMENT,
-	catename varchar(10) NOT NULL,
-	PRIMARY KEY (id)
+	cateKey int NOT NULL,
+	catename varchar(20) NOT NULL,
+	PRIMARY KEY (cateKey)
 );
 
 
-CREATE TABLE d1_comment
+CREATE TABLE d1_item
 (
-	id int NOT NULL AUTO_INCREMENT,
-	user_id int NOT NULL,
-	post_id int NOT NULL,
+	itemKey int NOT NULL AUTO_INCREMENT,
+	userKey int NOT NULL,
+	cateKey int NOT NULL,
+	subject varchar(200) NOT NULL,
 	content longtext,
+	price int,
+	location varchar(30),
+	itemtype varchar(20) NOT NULL,
+	purtype varchar(10) NOT NULL,
+	tradestatus boolean,
 	writeDate datetime,
-	PRIMARY KEY (id)
+	viewcnt int,
+	img1 varchar(600),
+	img2 varchar(600),
+	img3 varchar(600),
+	img4 varchar(600),
+	img5 varchar(600),
+	PRIMARY KEY (itemKey)
 );
 
 
 CREATE TABLE d1_like
 (
-	id int NOT NULL AUTO_INCREMENT,
-	user_id int NOT NULL,
-	post_id int NOT NULL,
-	PRIMARY KEY (id)
+	wishKey int NOT NULL AUTO_INCREMENT,
+	userKey int NOT NULL,
+	itemKey int NOT NULL,
+	PRIMARY KEY (wishKey)
 );
 
 
 CREATE TABLE d1_location
 (
-	user_id int NOT NULL,
-	arr1 varchar(100) NOT NULL,
-	arr2 varchar(100),
-	zipcode int
+	userKey int NOT NULL,
+	zipcode int,
+	addr varchar(300) NOT NULL,
+	addrDetail varchar(100)
 );
 
 
-CREATE TABLE d1_post
+CREATE TABLE d1_purchase
 (
-	id int NOT NULL AUTO_INCREMENT,
-	user_id int NOT NULL,
-	category_id int NOT NULL,
-	subject varchar(200) NOT NULL,
+	purchaseKey int NOT NULL AUTO_INCREMENT,
+	userKey int NOT NULL,
+	bank varchar(20) NOT NULL,
+	bankNum varchar(50) NOT NULL,
+	PRIMARY KEY (purchaseKey)
+);
+
+
+CREATE TABLE d1_review
+(
+	reviewKey int NOT NULL AUTO_INCREMENT,
+	userKey int NOT NULL,
+	itemKey int NOT NULL,
+	reviewtag varchar(20) NOT NULL,
 	content longtext,
-	price int,
-	tradestatus boolean,
-	writeDate datetime,
-	viewcnt int,
-	PRIMARY KEY (id)
+	PRIMARY KEY (reviewKey)
 );
 
 
 CREATE TABLE d1_user
 (
-	id int NOT NULL AUTO_INCREMENT,
+	userKey int NOT NULL,
 	username varchar(20) NOT NULL,
-	password varchar(100) NOT NULL,
-	name varchar(20) NOT NULL,
-	email varchar(100) NOT NULL,
-	phoneNM varchar(20) NOT NULL,
+	userpass varchar(150) NOT NULL,
+	useralias varchar(50) NOT NULL,
+	tel varchar(15) NOT NULL,
+	regtype varchar(10) NOT NULL,
+	userimg varchar(600),
 	regDate datetime,
-	sex int,
+	state varchar(1),
 	visitcnt int,
 	tradecnt int,
 	auth varchar(10),
-	PRIMARY KEY (id),
+	PRIMARY KEY (userKey),
+	UNIQUE (userKey),
 	UNIQUE (username)
 );
 
@@ -107,65 +117,65 @@ CREATE TABLE d1_user
 
 /* Create Foreign Keys */
 
-ALTER TABLE d1_post
-	ADD FOREIGN KEY (category_id)
-	REFERENCES d1_category (id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE d1_attachment
-	ADD FOREIGN KEY (post_id)
-	REFERENCES d1_post (id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE d1_comment
-	ADD FOREIGN KEY (post_id)
-	REFERENCES d1_post (id)
+ALTER TABLE d1_item
+	ADD FOREIGN KEY (cateKey)
+	REFERENCES d1_category (cateKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE d1_like
-	ADD FOREIGN KEY (post_id)
-	REFERENCES d1_post (id)
+	ADD FOREIGN KEY (itemKey)
+	REFERENCES d1_item (itemKey)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+;
+
+
+ALTER TABLE d1_review
+	ADD FOREIGN KEY (itemKey)
+	REFERENCES d1_item (itemKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
-ALTER TABLE d1_comment
-	ADD FOREIGN KEY (user_id)
-	REFERENCES d1_user (id)
+ALTER TABLE d1_item
+	ADD FOREIGN KEY (userKey)
+	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE d1_like
-	ADD FOREIGN KEY (user_id)
-	REFERENCES d1_user (id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ADD FOREIGN KEY (userKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE CASCADE
+	ON DELETE NO ACTION
 ;
 
 
 ALTER TABLE d1_location
-	ADD FOREIGN KEY (user_id)
-	REFERENCES d1_user (id)
+	ADD FOREIGN KEY (userKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE CASCADE
+;
+
+
+ALTER TABLE d1_purchase
+	ADD FOREIGN KEY (userKey)
+	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
-ALTER TABLE d1_post
-	ADD FOREIGN KEY (user_id)
-	REFERENCES d1_user (id)
+ALTER TABLE d1_review
+	ADD FOREIGN KEY (userKey)
+	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;

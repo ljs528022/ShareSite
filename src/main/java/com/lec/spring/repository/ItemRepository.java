@@ -1,4 +1,4 @@
 package com.lec.spring.repository;
 
-public interface CommentRepository {
+public interface ItemRepository {
 }

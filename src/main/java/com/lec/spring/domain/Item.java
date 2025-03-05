@@ -11,15 +11,24 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Post {
+public class Item {
 
-    private Long id;                // Post PK
-    private Long user_id;           // User PK(FK)
-    private Long category_id;       // Category PK(FK)
+    private Long itemKey;                // Post PK
+    private Long userKey;           // User PK(FK)
+    private Long cateKey;       // Category PK(FK)
     private String subject;         // Subject NN
     private String content;         // Content
     private Long price;             // Price
+    private String location;        // Location
+    private String itemtype;        // item's type (New or Old)
+    private String purtype;         // purchase type (post, trade)
     private Boolean tradestatus;    // 0:In progress / 1:Done
     private LocalDateTime writeDate;// Write Date
     private Long viewcnt;           // View Count
+
+    private String img1;
+    private String img2;
+    private String img3;
+    private String img4;
+    private String img5;
 }
