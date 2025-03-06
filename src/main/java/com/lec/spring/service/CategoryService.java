@@ -1,17 +1,19 @@
-package com.lec.spring.repository;
+package com.lec.spring.service;
 
 import com.lec.spring.domain.Category;
 
 import java.util.List;
 
-public interface CategoryRepository {
+public interface CategoryService {
 
     // Get All Categories
     List<Category> findAll();
 
-    // Search by Name
+    // Search By Name
     Category findByName(String catename);
 
-    // Search by CategoryKey
+    // Search By CategoryKey
     Category findByCateKey(Long cateKey);
+
+
 }
