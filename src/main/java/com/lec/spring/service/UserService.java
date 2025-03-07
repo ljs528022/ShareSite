@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 

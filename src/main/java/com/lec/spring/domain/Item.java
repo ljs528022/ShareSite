@@ -22,7 +22,7 @@ public class Item {
     private String location;        // Location
     private String itemtype;        // item's type (New or Old)
     private String purtype;         // purchase type (post, trade)
-    private Boolean tradestatus;    // 0:In progress / 1:Done
+    private Boolean tradeStatus;    // 0:In progress / 1:Done
     private LocalDateTime writeDate;// Write Date
     private Long viewcnt;           // View Count
 
@@ -31,4 +31,7 @@ public class Item {
     private String img3;
     private String img4;
     private String img5;
+
+    private User user;
+    private Category category;
 }
