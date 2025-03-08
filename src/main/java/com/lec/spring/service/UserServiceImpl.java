@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -54,7 +56,15 @@ public class UserServiceImpl implements UserService {
 
         Authority authority = authorityRepository.findByAuth("MEMBER");
 
-        Long userKey = user.getUserKey();
+        // Create User Serial Number
+        String dataPrefix = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+        Long count = userRepository.countByUserKeyStartWith(dataPrefix);
+
+        Long serialNumber = Long.parseLong(String.format("%o4d", count + 1));
+        Long userKey = Long.parseLong(dataPrefix + serialNumber);
+
+        user.setUserKey(userKey);
+
         Long authKey = authority.getAuthKey();
 
         authorityRepository.addAuth(userKey, authKey);

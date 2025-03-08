@@ -20,7 +20,7 @@ public class User {
     private String userpassChk;     // PW checking
     private String useralias;            // Username
     private String tel;         // Phone Number
-    private String regtype;           // Regist Type (site, naver, kakao)
+    private String regtype;           // Regist Type (site(S), naver(N), kakao(K))
     private String userimg;         // User Profile IMG
     private String state;           // User State (B : Banned, S : Stopped, N : Normal)
     private LocalDateTime regDate;  // Register Date

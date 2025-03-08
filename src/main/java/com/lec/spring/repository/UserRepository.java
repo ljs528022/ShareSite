@@ -17,6 +17,8 @@ public interface UserRepository {
     // Return User By username
     User findByUserName(@Param("username") String username);
 
+    Long countByUserKeyStartWith(@Param("dataPrefix") String dataPrefix);
+
     // Regist New User
     int join(User user);
 
