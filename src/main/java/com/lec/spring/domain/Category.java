@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Category {
 
-    private Long cateKey;                // PK
+    private Long cateKey;           // PK
     private String catename;        // Category Name NN
 }

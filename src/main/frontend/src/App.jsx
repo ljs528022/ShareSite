@@ -1,13 +1,26 @@
 import './App.css'
-import { useState } from 'react'
-import axios from 'axios';
+import { Route, Routes } from 'react-router-dom';
+import Header from './components/header';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
+      <Header />
+      <Routes>
+        {/* Main page */}
+        <Route></Route>
 
+        {/* Login & Register */}
+        <Route></Route>
+
+        {/* User Page */}
+        <Route></Route>
+
+        {/* Item Page */}
+        <Route></Route>
+
+      </Routes>
     </>
   )
 }
