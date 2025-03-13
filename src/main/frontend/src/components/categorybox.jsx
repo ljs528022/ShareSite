@@ -16,7 +16,7 @@ function Categorybox({cateKey, catename}) {
             cateKey: cateKey,
             catename: catename,
         })
-        console.log("subCate is",subCate);
+        // console.log("subCate is",subCate);
     }
     
     return (
@@ -40,17 +40,6 @@ function Categorybox({cateKey, catename}) {
                 </li>
             ))}
         </>
-        
-        // <li>
-        //     <a href={url}>{catename}</a>
-        //     <div className="CategoryDetail1">
-        //         <ul>
-        //             <li>
-        //                 <a href={url}>{catename}</a>
-        //             </li>
-        //         </ul>
-        //     </div>
-        // </li>
     )
 }
 
