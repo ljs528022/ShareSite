@@ -1,47 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../components/css/header.css";
 import Categorybox from "./categorybox";
 
 
 const Header = () => {
-    const [categories, setCategories] = useState([
-        {
-            cateKey: 100,
-            catename: "전자기기/IT"
-        },
-        {
-            cateKey: 200,
-            catename: "의류/패션" 
-        },
-        {
-            cateKey: 300,
-            catename: "가구/인테리어" 
-        },
-        {
-            cateKey: 400,
-            catename: "스포츠/레저" 
-        },
-        {
-            cateKey: 500,
-            catename: "책/문구" 
-        },
-        {
-            cateKey: 600,
-            catename: "생활용품" 
-        },
-        {
-            cateKey: 700,
-            catename: "유아/아동용품" 
-        },
-        {
-            cateKey: 800,
-            catename: "자동차/오토바이" 
-        },
-        {
-            cateKey: 900,
-            catename: "기타" 
-        },
-    ]);
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        fetch("/categories.json")
+            .then((response) => response.json())
+            .then((data) => {
+                if(data && Array.isArray(data.categories)) {
+                    setCategories(data.categories);
+                } else {
+                    throw new Error('Is Not Array Type');
+                }
+            })
+            .catch((e) => console.error('데이터 로딩 실패', e));
+    }, []);
 
     return (
         <>

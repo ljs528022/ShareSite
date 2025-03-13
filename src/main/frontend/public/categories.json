@@ -1,0 +1,39 @@
+{
+    "categories": 
+    [
+      { "cateKey": 100, "catename": "전자기기/IT" },
+      { "cateKey": 200, "catename": "의류/패션" },
+      { "cateKey": 300, "catename": "가구/인테리어" },
+      { "cateKey": 400, "catename": "스포츠/레저" },
+      { "cateKey": 500, "catename": "책/문구" },
+      { "cateKey": 600, "catename": "생활용품" },
+      { "cateKey": 700, "catename": "유아/아동용품" },
+      { "cateKey": 800, "catename": "자동차/오토바이" },
+      { "cateKey": 900, "catename": "기타" },
+      { "cateKey": 101, "catename": "스마트폰" },
+      { "cateKey": 102, "catename": "컴퓨터/노트북" },
+      { "cateKey": 103, "catename": "가전제품" },
+      { "cateKey": 201, "catename": "남성의류" },
+      { "cateKey": 202, "catename": "여성의류" },
+      { "cateKey": 203, "catename": "아동복" },
+      { "cateKey": 301, "catename": "소파/의자" },
+      { "cateKey": 302, "catename": "침대/매트리스" },
+      { "cateKey": 303, "catename": "책상/서랍" },
+      { "cateKey": 401, "catename": "운동기구" },
+      { "cateKey": 402, "catename": "캠핑용품" },
+      { "cateKey": 403, "catename": "낚시용품" },
+      { "cateKey": 501, "catename": "도서" },
+      { "cateKey": 502, "catename": "문구류" },
+      { "cateKey": 503, "catename": "학습용품" },
+      { "cateKey": 601, "catename": "주방용품" },
+      { "cateKey": 602, "catename": "청소용품" },
+      { "cateKey": 603, "catename": "욕실용품" },
+      { "cateKey": 701, "catename": "아동의류" },
+      { "cateKey": 702, "catename": "유아용품" },
+      { "cateKey": 703, "catename": "장난감" },
+      { "cateKey": 801, "catename": "자동차용품" },
+      { "cateKey": 802, "catename": "오토바이용품" },
+      { "cateKey": 803, "catename": "자동차/오토바이 부품" }
+    ]
+}
+  
