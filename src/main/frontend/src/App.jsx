@@ -9,7 +9,9 @@ function App() {
       <Header />
       <Routes>
         {/* Main page */}
-        <Route></Route>
+        <Route>
+          
+        </Route>
 
         {/* Login & Register */}
         <Route></Route>

@@ -62,17 +62,17 @@ const Header = () => {
                     ☰ 카테고리
                     <div className="CategoryDetail">
                         <ul>
-                            {
-                                categories.map(cateData => (
-                                    <Categorybox key={cateData.cateKey} {...cateData} />
-                                ))
-                            }
+                            <Categorybox categories={categories} />
                         </ul>
                     </div>
                 </div>
-                <nav className="Navigation">
-                    <div><a></a></div>
-                    <div><a></a></div>
+                <nav className="NavMenu">
+                    <div className="NavItem">
+                        <a href="/price_search">시세조회</a>
+                    </div>
+                    <div className="NavItem">
+                        <a href="">찜한 상품</a>
+                    </div>
                 </nav>
             </div>
         </header>
