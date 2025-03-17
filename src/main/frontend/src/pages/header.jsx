@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../components/css/header.css";
-import Categorybox from "./categorybox";
+import Categorybox from '../components/categorybox.jsx';
 
 
 const Header = () => {

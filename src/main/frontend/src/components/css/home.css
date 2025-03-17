@@ -1,0 +1,75 @@
+hr {
+    height: 0;
+    color: inherit;
+    border-top-width: 1px;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+ul {
+    justify-content: center;
+    align-items: center;
+
+    list-style: none;
+    list-style-type:  none;
+}
+
+li {
+    font-weight: 500;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    
+    word-break: keep-all;
+
+    padding: 0 .75rem;
+
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+button,input,select,textarea {
+    font-family: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+
+    background-color: transparent;
+    background-image: none;
+
+    border: transparent;
+
+    text-transform: none;
+}
+
+p {
+    margin: 0;
+
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+}
+
+main {
+    position: relative;
+    box-sizing: border-box;
+    display: block;
+
+    top: 180px;
+
+    flex-grow: 1;
+
+    min-height: 0px !important;
+    height: 2000px;
+    /* height: auto !important; */
+}

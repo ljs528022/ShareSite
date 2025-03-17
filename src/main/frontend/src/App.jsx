@@ -1,6 +1,7 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom';
-import Header from './components/header';
+import Header from './pages/header';
+import Home from './pages/home';
 
 function App() {
 
@@ -9,12 +10,11 @@ function App() {
       <Header />
       <Routes>
         {/* Main page */}
-        <Route>
-          
-        </Route>
+        <Route path='/' Component={Home}></Route>
 
         {/* Login & Register */}
-        <Route></Route>
+        <Route path='/login' Component={""}></Route>
+        <Route path='/regist' Component={""}></Route>
 
         {/* User Page */}
         <Route></Route>

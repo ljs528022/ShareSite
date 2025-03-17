@@ -2,12 +2,12 @@ import "../components/css/itemCard.css";
 
 function SmallItemCard() {
 
-    return;
+    return 0;
 }
 
 function NormalItemCard() {
 
-    return;
+    return 0;
 }
 
 export default { SmallItemCard, NormalItemCard };
