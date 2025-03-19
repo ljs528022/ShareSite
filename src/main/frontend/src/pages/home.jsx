@@ -20,8 +20,9 @@ const Home = () => {
     return (
         <>
         <main>
-            <Items weekCateItems={weekCateItems}/>
-            <Items latestItems={latestItems}/>
+            <Items />
+            {/* <Items weekCateItems={weekCateItems}/>
+            <Items latestItems={latestItems}/> */}
         </main>
         </>
 

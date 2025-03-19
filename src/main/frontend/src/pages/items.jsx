@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import '../components/css/items.css'
-import itemCard from '../components/itemCard';
 
 const Items = () => {
 
