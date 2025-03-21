@@ -10,8 +10,8 @@ const Header = () => {
         fetch("/categories.json")
             .then((response) => response.json())
             .then((data) => {
-                if(data && Array.isArray(data.categories)) {
-                    setCategories(data.categories);
+                if(data && Array.isArray(data.d1_category)) {
+                    setCategories(data.d1_category);
                 } else {
                     throw new Error('Is Not Array Type');
                 }

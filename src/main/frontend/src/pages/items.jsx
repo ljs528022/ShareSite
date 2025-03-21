@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { NormalItemCard } from '../components/itemCard.jsx'; 
 import '../components/css/items.css'
 
-const Items = () => {
+const Items = ({ items }) => {
 
     // const [ isWeekCateItems, setIsWeekCateItems ] = useState(false);
     // const [ isLatestItems, setIsLatestItems ] = useState(false);
@@ -29,7 +30,7 @@ const Items = () => {
                     </div>
                     <div className="Items">
                         {/* 상품카드 담을 곳 */}
-                        {/* <NormalItemCard items={items} /> */}
+                        <NormalItemCard items={items} />
                     <div className="Swapper_pagination">
                         {/* 상품카드 페이지 span */}
                         {/* <span className="pagination_bullet"></span> */}

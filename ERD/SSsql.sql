@@ -42,7 +42,7 @@ CREATE TABLE d1_item
 	price int,
 	location varchar(30),
 	itemtype varchar(20) NOT NULL,
-	purtype varchar(10) NOT NULL,
+	purtype int NOT NULL,
 	tradestatus boolean,
 	writeDate datetime,
 	viewcnt int,

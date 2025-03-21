@@ -20,8 +20,8 @@ public class Item {
     private String content;         // Content
     private Long price;             // Price
     private String location;        // Location
-    private String itemtype;        // item's type (New or Old)
-    private String purtype;         // purchase type (post, trade)
+    private String itemtype;        // item's type (NEW or OLD)
+    private Long purtype;         // purchase type ( 1: POST, 2: TRADE, 3: BOTH )
     private Boolean tradeStatus;    // 0:In progress / 1:Done
     private LocalDateTime writeDate;// Write Date
     private Long viewcnt;           // View Count
