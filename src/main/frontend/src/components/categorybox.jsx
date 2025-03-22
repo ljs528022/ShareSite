@@ -1,26 +1,19 @@
 import "../components/css/header.css";
 
-function Categorybox({ categories }) {
+const Categorybox = ({ categories }) => {
 
     const parentCate = [];
     const subCate = [];
 
     categories.map((cate) => {
         if(cate.cateKey % 100 === 0) {
-            parentCate.push({
-                cateKey: cate.cateKey,
-                catename: cate.catename,
-                subCategories: []
-            })
-            // console.log("parentCate is", parentCate);
+            parentCate.push(cate)
         } else {
-            subCate.push({
-                cateKey: cate.cateKey,
-                catename: cate.catename,
-            })
-            // consol.log("subCate is, subCate");
+            subCate.push(cate)
         }
     })
+    // console.log("parentCate is", parentCate);
+    // console.log("subCate is", subCate);
     
     return (
         <>
