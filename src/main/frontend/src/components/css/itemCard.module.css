@@ -1,0 +1,60 @@
+
+/* Normal Card CSS */
+.Normal_Card_wrapper {
+    margin: 0px 10px;
+}
+
+.Normal_Card_img {
+    width: 280px;
+    height: 160px;
+    object-fit: cover;
+}
+
+.Normal_CardBody {
+    display: block;
+}
+
+.Normal_CardBody p {
+    margin: 10px;
+    flex: 1;
+}
+
+.Normal_CardBody span {
+    margin: 5px 10px;
+    border-radius: 9px;
+}
+
+.subject {
+    font-size: 15px;
+}
+
+.price {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.span_trading {
+    background-color: #ed5e60;
+    padding: 5px 10px;
+    color: white;
+    font-size: 10px;
+}
+
+.span_traded {
+    background-color: #00a234;
+    padding: 5px 14px;
+    color: white;
+    font-size: 10px;
+}
+
+.span_time {
+    color: gray;
+    font-size: 14px;
+    float: right;
+}
+
+
+/* Small Card CSS */
+.Small_Card_wrapper {
+
+}
