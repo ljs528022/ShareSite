@@ -45,6 +45,9 @@ const NormalItemCard = ({ items }) => {
                         {/* 등록된 시간을 기준으로 지금 시간으로 부터 얼마나 되었는지 표시 */}
                         <span className={style.span_time}>{getDayMinuteCounter(i.writeDate)}</span>
                     </div>
+                    <div>
+                        <div></div>
+                    </div>
                 </div>
             ))}
         </>
