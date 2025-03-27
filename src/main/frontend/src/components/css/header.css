@@ -46,10 +46,10 @@ li {
     font-size: .875rem;
     line-height: 1.25rem;
     
+    cursor: pointer;
     word-break: keep-all;
 
     padding: 0 .75rem;
-
 }
 
 a {
@@ -63,6 +63,7 @@ button,input,select,textarea {
     font-weight: inherit;
     line-height: inherit;
     color: inherit;
+    cursor: pointer;
     margin: 0;
     padding: 0;
 
@@ -143,6 +144,12 @@ p {
     background-color: rgba(241, 244, 246, 1);
     overflow: hidden;
     align-items: center;
+}
+
+.Searchbar label {
+    margin: 0 5px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 input[name = "search"] {

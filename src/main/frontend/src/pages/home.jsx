@@ -9,12 +9,13 @@ const Home = () => {
 
     // 이번주 인기 카테고리 상품들 받아오기 (20개)
     // useEffect(() => {
-
+        // setTag(0);
     // })
 
     // 방금 등록된 상품들 받아오기 (20개)
     // useEffect(() => {
 
+        // setTag(1);
     // })
 
     // 테스트 용
@@ -32,21 +33,17 @@ const Home = () => {
             .catch((e) => console.error('데이터 로딩 실패...', e));
     }, []);
 
-
+    // tag => 표시 상품 분류용 값 (0: 이번주 인기 카테고리, 1: 방금 추가된 상품, ....)
     return (
         <>
         <main>
-            <Items items={test} />
-            {/* <Items weekCateItems={weekCateItems}/>
-            <Items latestItems={latestItems}/> */}
+            <Items items={test} tag={0} />
+            <Items items={test} tag={1} />
         </main>
         </>
 
     );
 };
 
-// function getWeekItems() {
-
-// } 
 
 export default Home;

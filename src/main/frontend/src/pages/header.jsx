@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import "../components/css/header.css";
 import Categorybox from '../components/categorybox.jsx';
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 const Header = () => {
-    const [categories, setCategories] = useState([]);
 
+    const [ user, setUser ] = useState();
+    const [categories, setCategories] = useState([]);
+    const navigate = useNavigate("/");
+
+    // 유저 정보 받아오기
+    
+
+    // 카테고리 받아오기
     useEffect(() => {
         fetch("/categories.json")
             .then((response) => response.json())
@@ -19,6 +27,8 @@ const Header = () => {
             .catch((e) => console.error('데이터 로딩 실패', e));
     }, []);
 
+    
+
     return (
         <>
         <header className='Navber_wrapper'>
@@ -30,14 +40,14 @@ const Header = () => {
                 </a>
                 <div className="Searchbar">
                     <form role="search" >
-                        <label><svg width={24} height={24} viewBox="0 0 24 24"></svg></label>
+                        <label><svg xmlns="http://www.w3.org/2000/svg" height={15} width={15} viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></label>
                         <input id="search" aria-label="search-box" autoComplete="off" placeholder="어떤 상품을 찾으시나요?" name="search" />
                     </form>
                 </div>
                 <div className="Menu">
                     <ul>
                         <li>
-                            <button onClick="">
+                            <button onClick={null}>
                                 <p>채팅하기</p>
                             </button>
                         </li>
@@ -47,8 +57,8 @@ const Header = () => {
                             </a>
                         </li>
                         <li>
-                            <button onClick="">
-                                <p>MY</p>
+                            <button onClick={() => {user ? navigate(`/user?${1}`): navigate(`/login`)}}>
+                            <p>MY</p>
                             </button>
                         </li>
                     </ul>

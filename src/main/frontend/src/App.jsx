@@ -1,7 +1,10 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom';
-import Header from './pages/header';
 import Home from './pages/home';
+import Header from './pages/header';
+import Footer from './pages/footer';
+import Login from './pages/user/login';
+import Register from './pages/user/register';
 
 function App() {
 
@@ -13,8 +16,8 @@ function App() {
         <Route path='/' Component={Home}></Route>
 
         {/* Login & Register */}
-        <Route path='/login' Component={""}></Route>
-        <Route path='/regist' Component={""}></Route>
+        <Route path='/login' Component={Login}></Route>
+        <Route path='/regist' Component={Register}></Route>
 
         {/* User Page */}
         <Route></Route>
@@ -23,6 +26,7 @@ function App() {
         <Route></Route>
 
       </Routes>
+      <Footer />
     </>
   )
 }

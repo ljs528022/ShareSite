@@ -259,32 +259,6 @@
   "tradestatus": "1",
   "writeDate": "2025-02-21 18:00:00",
   "viewcnt": "7"
- },
- {
-    "itemKey": "21",
-  "userKey": "2025308015",
-  "cateKey": "702",
-  "subject": "유모차 팝니다",
-  "content": "거의 새것입니다.",
-  "price": "220000",
-  "itemtype": "OLD",
-  "purtype": "2",
-  "tradestatus": "0",
-  "writeDate": "2025-02-25 09:30:00",
-  "viewcnt": "14"
- },
- {
-    "itemKey": "22",
-  "userKey": "2025308012",
-  "cateKey": "503",
-  "subject": "토익 교재",
-  "content": "실전 문제집 포함",
-  "price": "45000",
-  "itemtype": "NEW",
-  "purtype": "1",
-  "tradestatus": "1",
-  "writeDate": "2025-02-26 14:45:00",
-  "viewcnt": "11"
  }
 ]
 }

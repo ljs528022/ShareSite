@@ -1,0 +1,26 @@
+footer {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.footer-wrapper {
+    box-sizing: border-box;
+
+    margin-top: 100px;
+    width: 100%;
+    height: 100px;
+
+    background-color: rgb(240, 240, 240);
+}
+
+.footer {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    top: 50px;
+
+    font-weight: bold;
+
+    width: 1024px;
+    align-items: center;
+}

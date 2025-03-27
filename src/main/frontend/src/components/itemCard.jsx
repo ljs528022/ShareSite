@@ -1,59 +1,82 @@
+import { useState } from "react";
 import style from "../components/css/itemCard.module.css"
 
-const SmallItemCard = ({ items }) => {
+const ItemCards = ({ items }) => {
 
-    return (
-        <>
-            <div className="Small_Card_wrapper">
-                {/* <Card>
-                    <Card.Img variant="top" src=""/>
-                    <Card.Body>
-                        <Card.Title>상품명</Card.Title>
-                        <p>200,000원</p>
-                        <Badge bg="danger"></Badge>
-                        <p></p>
-                    </Card.Body>
-                </Card> */}
-            </div>
-        </>
-    );
-}
-
-const NormalItemCard = ({ items }) => {
-
+    const [ currentPage, setCurrentPage ] = useState(1);
+    const [ pagePerItem, setPagePerItem ] = useState(4);
+    const [ maxPageButtons, setMaxPageButtons ] = useState(5);
+    
     const item = [];
-
-    // 대체 이미지
-    const tempImg = "./public/SSLogo.jpg";
-
     items.map((i) => {
         item.push(i);
     });
-    console.log(item);
+
+    const totalPage = Math.ceil(item.length / pagePerItem);
+
+    const renderItem = () => {
+
+        const startIndex = (currentPage - 1) * pagePerItem;
+        const endIndex = startIndex + pagePerItem - 1;
+        const currentItems = item.slice(startIndex, endIndex + 1);
+
+        return currentItems.map((i, index) => (
+            // 상품을 누르면 해당 상품으로 이동하게 해야함
+            <a key={i.itemKey || index} href={`/product?${i.itemKey}`}>
+            <div className={style.Normal_Card_wrapper}>
+                <img className={style.Normal_Card_img_temp} src={!i.img1 ? "./SSicon.png" : i.img1} />
+                <div className={style.Normal_CardBody}>
+                    <p className={style.subject}>{i.subject}</p>
+                    <p className={style.price}>{i.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원</p>
+                    <span className={i.tradestatus == 0 ? style.span_trading : style.span_traded}>
+                        {i.tradestatus == 0 ? "거래중" : "거래완료"}
+                    </span>
+                    <span className={style.span_time}>{getDayMinuteCounter(i.writeDate)}</span>
+                </div>
+            </div>
+            </a>
+        ));
+    }
+
+    const handlePageChange = (page) => {
+        if(page < 1 || page > totalPage) return;
+        setCurrentPage(page);
+    }
+
+    const renderPaginationButtons = () => {
+        if(totalPage === 0) return null;
+
+        let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+        let endPage = Math.min(totalPage, startPage + maxPageButtons - 1);
+
+        if(endPage - startPage + 1 < maxPageButtons) {
+            startPage = Math.max(1, endPage - maxPageButtons + 1);
+        }
+
+        const buttons = [];
+
+        for(let i = startPage; i <= endPage; i++) {
+            buttons.push(
+                <button key={i} onClick={() => handlePageChange(i)}
+                className={i === currentPage ? style.buttonSelected : style.button} />
+            )
+        }
+
+        return buttons;
+    }
 
     return (
         <>
-            {item.length > 0 && item.map((i) => (
-                <div className={style.Normal_Card_wrapper} key={i.itemKey}>
-                    <img className={style.Normal_Card_img} src={`./public/SSLogo.jpg`} />
-                    <div className={style.Normal_CardBody}>
-                        <p className={style.subject}>{i.subject}</p>
-                        <p className={style.price}>{i.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원</p>
-                        <span className={i.tradestatus == 0 ? style.span_trading : style.span_traded}
-                        >{i.tradestatus == 0 ? "거래중" : "거래완료"}</span>
+            {renderItem()}
+            <button></button>
+            <button></button>
 
-                        {/* 등록된 시간을 기준으로 지금 시간으로 부터 얼마나 되었는지 표시 */}
-                        <span className={style.span_time}>{getDayMinuteCounter(i.writeDate)}</span>
-                    </div>
-                    <div>
-                        <div></div>
-                    </div>
-                </div>
-            ))}
+            <div className={style.paginaton}>{renderPaginationButtons()}</div>
         </>
-    );
+    );   
 }
 
+// 상품이 등록된지 얼마나 되었는지 표시
 const getDayMinuteCounter = (date) => {
     if (!date) {return "";}
 
@@ -84,4 +107,4 @@ const getDayMinuteCounter = (date) => {
     return elapsedText;
 }
 
-export { SmallItemCard, NormalItemCard };
+export default ItemCards;
