@@ -1,3 +1,329 @@
-.loginBox {
+html {
+    user-select: none;
+}
+
+h3 {
+    display: block;
+    margin: 0 auto;
     
+    text-align: center;
+    
+    font-size: 25px;
+    font-weight: bold;
+    
+    padding-bottom: 20px;
+    
+}
+
+
+/* Login Part */
+
+.login-wrapper {
+    width: 100%;
+    height: 100%;
+
+    padding-bottom: 100px;
+}
+
+
+.loginBox {
+    margin: 0 auto;
+
+    width: 425px;
+    height: 450px;
+
+    background-color: white;
+    border: 3px solid gray;
+    border-radius: 30px;
+
+}
+
+.loginInput {
+    position: relative;
+
+    width: inherit;
+    height: inherit;
+
+    margin: 0 auto;
+
+    justify-content: center;
+    text-align: center;
+}
+
+.loginInput label {
+    position: relative;
+    display: block;
+
+    line-height: 20px;
+
+    top: 20%;
+
+    margin: 2px auto;
+
+    width: 100%;
+    height: 50px;
+}
+
+.loginInput p {
+    position: relative;
+    display: inline-flex;
+
+    width: 50px;
+}
+
+.loginInput input {
+    position: relative;
+    display: inline-block;
+
+    width: 275px;
+    height: 40px;
+    padding-left: 15px;
+
+    background-color: rgb(235, 235, 235);
+    border-radius: 10px;
+}
+
+.loginInput a {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+
+    top: 30%;
+
+    color: rgb(110, 110, 110);
+    text-decoration: underline;
+}
+
+.passShow {
+    position: absolute;
+    cursor: pointer;
+
+    top: 160px;
+    right: 35px;
+}
+
+button[type= "submit"] {
+    position: relative;
+    display: block;
+    width: 100px;
+
+    top: 22%;
+    left: 275px;
+
+    padding: 4px;
+
+    text-align: center;
+    background-color: rgb(235, 235, 235);
+    border-radius: 5px;
+}
+
+.auto-login {
+    position: absolute;
+    display: flex;
+
+    justify-content: flex-start;
+    text-align: center;
+    user-select: none;
+
+    margin-left: 65px;
+
+    top: 207px;
+    width: 200px;
+    height: 30px;
+}
+
+.auto-login label {
+    position: relative;
+
+    width: inherit;
+    height: inherit;
+
+    margin: 0;
+    padding: 0;
+    top: 0;
+
+    font-size: 15px;
+}
+
+input[type= "checkbox"] {
+    position: relative;
+    display: inline-block;
+    visibility: hidden;
+
+    width: 20px;
+    height: 20px;
+}
+
+.auto-login span {
+    display: inline-block;
+
+    padding-left: 10px;
+}
+
+
+.naver-login {
+    position: absolute;
+    display: block;
+    
+    width: 380px;
+    height: 45px;
+
+    color: white;
+    font-weight: bold;  
+    background-color: #00DE5A;
+    border-radius: 5px;
+
+    left: 20px;
+    bottom: 90px;
+}
+
+.kakao-login {
+    position: absolute;
+    display: block;
+    
+    width: 380px;
+    height: 45px;
+
+    color: #000000 85%;
+    font-weight: bold;    
+    background-color: #FEE500;
+    border-radius: 5px;
+
+    left: 20px;
+    bottom: 30px;
+}
+
+
+
+/* Regist Part */
+
+.regist-wrapper {
+    width: 100%;
+    height: 100%;
+
+    padding-bottom: 100px;
+}
+
+.registBox {
+    margin: 0 auto;
+
+    width: 425px;
+    height: 450px;
+
+    background-color: white;
+    border: 3px solid gray;
+    border-radius: 30px;
+
+}
+
+.registInput {
+    position: relative;
+
+    width: inherit;
+    height: inherit;
+
+    margin: 0 auto;
+
+    justify-content: center;
+    text-align: center;
+}
+
+.registInput label {
+    position: relative;
+    display: block;
+
+    line-height: 20px;
+
+    top: 30px;
+
+    margin: 2px auto;
+
+    padding-bottom: 10px;
+
+    width: 100%;
+    height: 50px;
+}
+
+.registInput p {
+    position: relative;
+    display: inline-flex;
+
+    width: 50px;
+}
+
+.registInput input {
+    position: relative;
+    display: inline-block;
+
+    width: 275px;
+    height: 40px;
+    padding-left: 15px;
+
+    background-color: rgb(235, 235, 235);
+    border-radius: 10px;
+}
+
+#idError {
+    position: absolute;
+    opacity: 0;
+
+    width: 100%;
+    top: 45px;
+    left: 102px;
+
+    color: red;
+    font-size: 8px;
+    text-align: left;
+}
+
+#pwError {
+    position: absolute;
+    opacity: 0;
+
+    width: 100%;
+    top: 40px;
+    left: 78px;
+
+    font-size: 8px;
+    text-align: left;
+}
+
+.registInput input::placeholder {
+    font-size: 11px;
+}
+
+#passwordCheck {
+    left: 25px;
+    display: none;
+}
+
+.idCheck {
+    position: absolute;
+    
+    top: 16px;
+    right: 60px;
+
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.telCheck {
+    position: absolute;
+
+    top: 16px;
+    right: 60px;
+
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#telChk {
+    width: 95px;
+    left: 115px;
+}
+
+button[type="submit"] {
+    width: 70px;
+    top: 85px;
+    left: 311px
 }

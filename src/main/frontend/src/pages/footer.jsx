@@ -1,12 +1,12 @@
-import "../components/css/footer.css"
+import "../components/css/home.css"
 
 const Footer = () => {
 
 
     return (
         <>
-        <footer className="footer-wrapper">
-            <div className="footer">
+        <footer>
+            <div className="footer-wrapper">
                 제작자: @이정식
             </div>
         </footer>

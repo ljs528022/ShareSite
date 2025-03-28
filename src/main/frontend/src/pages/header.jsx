@@ -47,12 +47,12 @@ const Header = () => {
                 <div className="Menu">
                     <ul>
                         <li>
-                            <button onClick={null}>
+                            <button onClick={() => {user ? "" : navigate("/login")}}>
                                 <p>채팅하기</p>
                             </button>
                         </li>
                         <li>
-                            <a href="/sell">
+                            <a href={user ? "/sell" : "/login"}>
                                 <p>판매하기</p>
                             </a>
                         </li>

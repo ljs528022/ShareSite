@@ -1,3 +1,11 @@
+html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-feature-settings: normal;
+}
+
 hr {
     height: 0;
     color: inherit;
@@ -65,10 +73,38 @@ main {
     box-sizing: border-box;
     display: block;
 
+    padding-bottom: 100px;
+
     top: 180px;
 
     flex-grow: 1;
 
     min-height: 0px !important;
     height: auto !important;
+}
+
+footer {
+    position: relative;
+    
+    top: 100px;
+    bottom: 0;
+
+    width: 100%;
+    height: 180px;
+
+    border-top: 1px solid rgb(220, 220, 220);
+    background-color: rgb(240, 240, 240);
+}
+
+.footer-wrapper {
+    position: relative;
+    box-sizing: border-box;
+    display: block;
+    margin: 0 auto;
+    top: 50px;
+
+    font-weight: bold;
+
+    width: 1024px;
+    align-items: center;
 }
