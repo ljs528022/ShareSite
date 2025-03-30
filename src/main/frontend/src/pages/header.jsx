@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import "../components/css/header.css";
 import Categorybox from '../components/categorybox.jsx';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const Header = () => {
 
-    const [ user, setUser ] = useState();
+    const [ user, setUser ] = useState([]);
     const [categories, setCategories] = useState([]);
     const navigate = useNavigate("/");
 
@@ -47,17 +47,17 @@ const Header = () => {
                 <div className="Menu">
                     <ul>
                         <li>
-                            <button onClick={() => {user ? "" : navigate("/login")}}>
+                            <button onClick={() => {user === "" ? "" : navigate("/login")}}>
                                 <p>채팅하기</p>
                             </button>
                         </li>
                         <li>
-                            <a href={user ? "/sell" : "/login"}>
+                            <a href={user === "" ? "/sell" : "/login"}>
                                 <p>판매하기</p>
                             </a>
                         </li>
                         <li>
-                            <button onClick={() => {user ? navigate(`/user?${1}`): navigate(`/login`)}}>
+                            <button onClick={() => {user === "" ? navigate(`/user?${1}`): navigate(`/login`)}}>
                             <p>MY</p>
                             </button>
                         </li>

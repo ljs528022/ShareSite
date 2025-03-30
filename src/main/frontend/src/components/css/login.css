@@ -88,7 +88,7 @@ h3 {
     display: block;
     margin: 0 auto;
 
-    top: 30%;
+    top: 130px;
 
     color: rgb(110, 110, 110);
     text-decoration: underline;
@@ -105,10 +105,10 @@ h3 {
 button[type= "submit"] {
     position: relative;
     display: block;
-    width: 100px;
+    width: 110px;
 
-    top: 22%;
-    left: 275px;
+    top: 98px;
+    left: 272px;
 
     padding: 4px;
 
@@ -267,7 +267,7 @@ input[type= "checkbox"] {
     position: absolute;
     opacity: 0;
 
-    width: 100%;
+    width: 100px;
     top: 45px;
     left: 102px;
 
@@ -322,8 +322,8 @@ input[type= "checkbox"] {
     left: 115px;
 }
 
-button[type="submit"] {
-    width: 70px;
+.registBox button[type="submit"] {
+    width: 80px;
     top: 85px;
-    left: 311px
+    left: 302px;
 }

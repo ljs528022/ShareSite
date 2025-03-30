@@ -15,8 +15,10 @@ const Register = () => {
     })
     const { username, userpass, userpassChk, useralias, tel } = userData;
 
+    // 패스워드 검사
     const passIsCollect = userpass === userpassChk;
 
+    // 입력되는 값들 저장장
     const handleInput = (e) => {
         setUserData({
             ...userData,
@@ -31,14 +33,19 @@ const Register = () => {
             x.style.display = "none";
         }
     }
-    console.log(userData);
+    // console.log(userData);
 
-
+    // ID 중복확인
+    const userKeyChk = 0;
     const usernameChk = () => {
+        // console.log("Testing onClick!")
         
-
+        // 서버에 저장된 username 중 중복된 값이 있는지 확인
+        // TODO
     }
 
+    
+    // 회원가입
     const register = () => {
         const isValid = null;
     }
@@ -54,9 +61,9 @@ const Register = () => {
                         <div className="registInput">
                             <label id="id">
                                 <p>ID:</p>
-                                <input id="username" type="text" onChange={handleInput} onClick={() => usernameChk()}/>
-                                <button className="idCheck" onClick={null}>중복확인</button>
-                                <span id="idError" style={"" ? {opacity: 1} : {opacity: 0}}>이미 사용중인 ID 입니다!</span>
+                                <input id="username" type="text" onChange={handleInput}/>
+                                <button type="button" className="idCheck" onClick={() => usernameChk()}>중복확인</button>
+                                <span id="idError" style={userKeyChk > 0 ? {opacity: 1} : {opacity: 0}}>{userKeyChk > 0 ? "이미 사용중인 ID 입니다!" : userKeyChk > 1 ? "사용 가능한 ID 입니다!" : ""}</span>
                             </label>
                             <label>
                                 <p>PW:</p>
