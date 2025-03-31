@@ -16,6 +16,9 @@ public interface UserService {
     // Register
     int register (User user);
 
+    // Login
+//    User login(String username, String password);
+
     // Auth as each UserKey
     List<Authority> selectAuthByUserKey (Long userKey);
 

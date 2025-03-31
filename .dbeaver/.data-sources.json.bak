@@ -1,17 +1,17 @@
 {
 	"folders": {},
 	"connections": {
-		"mysql8-194f348e945-70d93381a5fcb252": {
+		"mysql8-194f83133c7-47bf409ddf53b817": {
 			"provider": "mysql",
 			"driver": "mysql8",
-			"name": "sharesite",
+			"name": "sharesiteDB",
 			"save-password": true,
 			"configuration": {
 				"host": "localhost",
 				"port": "3306",
-				"database": "sharesite",
-				"url": "jdbc:mysql://localhost:3306/sharesite",
-				"configurationType": "URL",
+				"database": "sharesiteDB",
+				"url": "jdbc:mysql://localhost:3306/sharesiteDB",
+				"configurationType": "MANUAL",
 				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
 				"type": "dev",
 				"properties": {

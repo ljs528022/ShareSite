@@ -2,6 +2,85 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
+<mapper namespace="com.lec.spring.repository.UserRepository">
+    <resultMap id="mapAuth" type="com.lec.spring.domain.Authority">
+        <result column="a_id" property="authKey" />
+        <result column="a_name" property="auth" />
+    </resultMap>
+
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="u_userKey" property="userKey" />
+        <result column="u_username" property="username" />
+        <result column="u_password" property="password" />
+        <result column="u_useralias" property="useralias" />
+        <result column="u_tel" property="tel" />
+        <result column="u_regtype" property="regtype" />
+        <result column="u_userimg" property="userimg" />
+        <result column="u_regDate" property="regDate" />
+        <result column="u_state" property="state" />
+        <result column="u_visitcnt" property="visitcnt" />
+        <result column="u_tradecnt" property="tradecnt" />
+        <collection property="u_auth" resultMap="mapAuth"/>
+    </resultMap>
+
+    <resultMap id="mapItem" type="com.lec.spring.domain.Item">
+        <result column="i_itemKey" property="itemkey" />
+        <result column="i_subject" property="subject" />
+        <result column="i_price" property="price" />
+        <result column="i_tradestatus" property="tradestatus" />
+        <result column="i_writeDate" property="writeDate" />
+        <result column="i_img1" property="img1" />
+    </resultMap>
+
+    <sql id="SELECT">
+        SELECT
+            userKey "userKey",
+            username "username",
+            password "password",
+            useralias "useralias",
+            tel "tel",
+            regtype "regtype",
+            userimg "userimg",
+            regDate "regDate",
+            state "state",
+            visitcnt "visitcnt",
+            tradecnt "tradecnt",
+        FROM
+            d1_user
+        WHERE
+            1 = 1
+    </sql>
+
+    <select id="findByUserKey" resultType="com.lec.spring.domain.User">
+        <include refid="SELECT"/>
+        AND userKey = #{userKey}
+    </select>
+
+    <select id="findByUserName" resultType="com.lec.spring.domain.User">
+        <include refid="SELECT"/>
+        AND userKey = #{username}
+    </select>
+
+    <select id="countByUserKeyStartWith" resultType="int">
+        SELECT COUNT(*)
+        FROM d1_user
+        WHERE userKey LIKE LOWER(CONCAT('%', #{dataPrefix}, '%'))
+    </select>
+
+    <!-- 회원가입 -->
+    <insert id="join"
+            flushCache="true"
+            parameterType="com.lec.spring.domain.User"
+            useGeneratedKeys="true"
+            keyColumn="userKey"
+            keyProperty="userKey">
+        INSERT INTO d1_user(username, password, useralias, tel)
+        VALUES(#{username}, #{password}, #{useralias}, #{tel})
+    </insert>
+
+    <!-- 회원 정보 수정 -->
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.User">
+
+    </update>
 
 </mapper>

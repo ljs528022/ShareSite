@@ -11,7 +11,7 @@
 				"port": "3306",
 				"database": "sharesiteDB",
 				"url": "jdbc:mysql://localhost:3306/sharesiteDB",
-				"configurationType": "MANUAL",
+				"configurationType": "URL",
 				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
 				"type": "dev",
 				"properties": {

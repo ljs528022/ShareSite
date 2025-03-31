@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import axios from 'axios';
 import "/src/components/css/login.css";
 
 const Login = () => {
 
     const [ userData, setUserData ] = useState({
         username: "",
-        userpass: "",
+        password: "",
     })
     const [ autoLoginChecked, setAutoLoginChecked ] = useState(false);
     const [ passShowChecked, setPassShowChecked ] = useState(false);
@@ -16,6 +17,10 @@ const Login = () => {
             [e.target.id]: e.target.value,
         });
     }
+
+    // const handleLogin = asysn (e) => {
+    //     e.pre
+    // }
 
     const togglePassShow = () => {
         const isChecked = document.getElementById("passShow").value;
@@ -78,7 +83,7 @@ const Login = () => {
     return (
         <>
         <main>
-            <form id="login" className="login-wrapper">
+            <form id="login" className="login-wrapper" onSubmit={null}>
                 <h3>어서오세요! 환영합니다.</h3>
                 <div className="loginBox">
                     <div className="loginInput">
@@ -89,7 +94,7 @@ const Login = () => {
                         </label>
                         <label>
                             <p>PW:</p>
-                            <input id="userpass" type={passShowChecked ? "text" : "password"} onChange={handleInput}/>
+                            <input id="password" type={passShowChecked ? "text" : "password"} onChange={handleInput}/>
                         </label>
                             <div className="passShow">
                                 <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 640 512" onClick={() => {togglePassShow()}}>

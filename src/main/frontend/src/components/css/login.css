@@ -265,9 +265,8 @@ input[type= "checkbox"] {
 
 #idError {
     position: absolute;
-    opacity: 0;
 
-    width: 100px;
+    width: 120px;
     top: 45px;
     left: 102px;
 

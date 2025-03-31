@@ -11,11 +11,6 @@ spring:
     ansi:
       enable: always
 
-  # thymeleaf
-  thymeleaf:
-    cache: false
-    prefix: classpath:templates/ss/
-
   # datasource config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -38,17 +33,22 @@ spring:
       name: user
       password: 0000
 
+logging:
+    level:
+      org:
+        springframework:
+          security: DEBUG
+
 #Mybatis config
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
 
 app:
 
-  # paging setting
-  pagination:
-    write_pages: 10
-    page_rows: 10
-
   # upload setting
   upload:
     path: upload
+
+jwt:
+  secret:
+    key: 7Iqk7YyM66W07YOA7L2U65Sp7YG065+9U3ByaW5n6rCV7J2Y7Yqc7YSw7LWc7JuQ67mI7J6F64uI64ukLg==

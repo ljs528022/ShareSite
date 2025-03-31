@@ -18,11 +18,6 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Value("${app.pagination.write_pages}")
-    private int WRITE_PAGES;
-    @Value("${app.pagination.page_rows}")
-    private int PAGE_ROWS;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
@@ -34,7 +29,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(SqlSession sqlSession) {
         userRepository = sqlSession.getMapper(UserRepository.class);
         authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
-        reviewRepository = sqlSession.getMapper(ReviewRepository.class);
+//        reviewRepository = sqlSession.getMapper(ReviewRepository.class);
         System.out.println(getClass().getName() + "() Created");
     }
 
@@ -51,20 +46,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public int register(User user) {
 
-        user.setUserpass(passwordEncoder.encode(user.getUserpass()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.join(user);
 
         Authority authority = authorityRepository.findByAuth("MEMBER");
 
         // Create User Serial Number
         String dataPrefix = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+
+        int year = Integer.parseInt(dataPrefix.substring(0, 4));
+        int month = Integer.parseInt(dataPrefix.substring(4, 8));
+        long result = year + month;
+
+        dataPrefix = String.format("%-4X", Long.toHexString(result).toUpperCase());
         Long count = userRepository.countByUserKeyStartWith(dataPrefix);
 
-        Long serialNumber = Long.parseLong(String.format("%o4d", count + 1));
+        Long serialNumber = Long.parseLong(String.format("%03d", count + 1));
         Long userKey = Long.parseLong(dataPrefix + serialNumber);
 
+        // userKey 와 authKey 지정
         user.setUserKey(userKey);
-
         Long authKey = authority.getAuthKey();
 
         authorityRepository.addAuth(userKey, authKey);

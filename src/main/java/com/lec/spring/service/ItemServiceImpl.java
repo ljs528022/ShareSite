@@ -1,15 +1,12 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Item;
-import com.lec.spring.domain.User;
 import com.lec.spring.repository.CategoryRepository;
 import com.lec.spring.repository.ItemRepository;
 import com.lec.spring.repository.UserRepository;
-import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,14 +54,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public int write(Item item) {
         // logged User's Info
-        User user = U.getLoggedUser();
-
-        user = userRepository.findByUserKey(user.getUserKey());
-        item.setUser(user);
-
-        int cnt = itemRepository.write(item);
-
-        return cnt;
+        return 0;
     }
 
     @Override

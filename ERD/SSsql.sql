@@ -35,7 +35,7 @@ CREATE TABLE d1_category
 CREATE TABLE d1_item
 (
 	itemKey int NOT NULL AUTO_INCREMENT,
-	userKey int NOT NULL,
+	userKey varchar(20) NOT NULL,
 	cateKey int NOT NULL,
 	subject varchar(200) NOT NULL,
 	content longtext,
@@ -58,7 +58,7 @@ CREATE TABLE d1_item
 CREATE TABLE d1_like
 (
 	wishKey int NOT NULL AUTO_INCREMENT,
-	userKey int NOT NULL,
+	userKey varchar(20) NULL,
 	itemKey int NOT NULL,
 	PRIMARY KEY (wishKey)
 );
@@ -66,7 +66,7 @@ CREATE TABLE d1_like
 
 CREATE TABLE d1_location
 (
-	userKey int NOT NULL,
+	userKey varchar(20) NOT NULL,
 	zipcode int,
 	addr varchar(300) NOT NULL,
 	addrDetail varchar(100)
@@ -76,7 +76,7 @@ CREATE TABLE d1_location
 CREATE TABLE d1_purchase
 (
 	purchaseKey int NOT NULL AUTO_INCREMENT,
-	userKey int NOT NULL,
+	userKey varchar(20) NOT NULL,
 	bank varchar(20) NOT NULL,
 	bankNum varchar(50) NOT NULL,
 	PRIMARY KEY (purchaseKey)
@@ -86,7 +86,7 @@ CREATE TABLE d1_purchase
 CREATE TABLE d1_review
 (
 	reviewKey int NOT NULL AUTO_INCREMENT,
-	userKey int NOT NULL,
+	userKey varchar(20) NOT NULL,
 	itemKey int NOT NULL,
 	reviewtag varchar(20) NOT NULL,
 	content longtext,
@@ -96,9 +96,9 @@ CREATE TABLE d1_review
 
 CREATE TABLE d1_user
 (
-	userKey int NOT NULL,
+	userKey varchar(20) NOT NULL,
 	username varchar(20) NOT NULL,
-	userpass varchar(150) NOT NULL,
+	password varchar(150) NOT NULL,
 	useralias varchar(50) NOT NULL,
 	tel varchar(15) NOT NULL,
 	regtype varchar(10) NOT NULL,

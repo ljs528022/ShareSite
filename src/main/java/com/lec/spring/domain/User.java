@@ -15,9 +15,9 @@ public class User {
 
     private Long userKey;                // PK
     private String username;        // ID
-    private String userpass;        // PW
+    private String password;        // PW
     @ToString.Exclude
-    private String userpassChk;     // PW checking
+    private String passwordChk;     // PW checking
     private String useralias;            // Username
     private String tel;         // Phone Number
     private String regtype;           // Regist Type (site(S), naver(N), kakao(K))

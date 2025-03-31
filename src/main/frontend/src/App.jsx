@@ -1,5 +1,6 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
 import Home from './pages/home';
 import Header from './pages/header';
 import Footer from './pages/footer';
@@ -7,6 +8,8 @@ import Login from './pages/user/login';
 import Register from './pages/user/register';
 
 function App() {
+
+  const [ user, setUser ] = useState();
 
   return (
     <>
