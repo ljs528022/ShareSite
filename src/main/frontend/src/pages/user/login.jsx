@@ -113,7 +113,7 @@ const Login = () => {
                             <input type="checkbox" id="checkbox"/>
                         </div>
                         <button type="submit" >시작하기</button>
-                        <a href="/regist">회원이 되고 싶으신가요?</a>
+                        <a href="/user/regist">회원이 되고 싶으신가요?</a>
 
                         <button onClick={null} className="naver-login">
                             네이버로 함께하기

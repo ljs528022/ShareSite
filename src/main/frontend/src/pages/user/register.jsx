@@ -57,12 +57,12 @@ const Register = () => {
     const handleSubmit = async(event) => {
         event.preventDefault();
         
-        try {
-            const response = await fetch("http://localhost:8093/regist")
+        // try {
+            
 
-        } catch (error) {
-            console.error("아직 입력하지 않은 항목이 있습니다.", error);
-        }
+        // } catch (error) {
+        //     console.error("아직 입력하지 않은 항목이 있습니다.", error);
+        // }
     }
 
     // 휴대폰 본인인증

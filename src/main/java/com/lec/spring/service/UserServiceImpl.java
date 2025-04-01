@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         userRepository = sqlSession.getMapper(UserRepository.class);
         authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
 //        reviewRepository = sqlSession.getMapper(ReviewRepository.class);
-        System.out.println(getClass().getName() + "() Created");
+        System.out.println("UserService() Created");
     }
 
     @Override

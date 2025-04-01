@@ -15,11 +15,6 @@ import java.util.List;
 @Service
 public class ItemServiceImpl implements ItemService {
 
-    @Value("${app.pagination.write_pages}")
-    private int WRITE_PAGES;
-    @Value("${app.pagination.page_rows}")
-    private int PAGE_ROWS;
-
     @Autowired
     private UserRepository userRepository;
     private ItemRepository itemRepository;
@@ -28,7 +23,7 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     public ItemServiceImpl(SqlSession sqlSession) {
         this.itemRepository = sqlSession.getMapper(ItemRepository.class);
-        System.out.println(getClass().getName() + "() Created");
+        System.out.println("ItemService() Created");
     }
 
     @Override

@@ -35,7 +35,7 @@ const Header = () => {
             <div className="Navbar1">
                 <a href="/">
                     <span>
-                        <img src=".\public\SSicon.png" className='SSLogo'></img>
+                        <img src="../public/SSicon.png" className='SSLogo'></img>
                     </span>
                 </a>
                 <div className="Searchbar">
@@ -47,17 +47,17 @@ const Header = () => {
                 <div className="Menu">
                     <ul>
                         <li>
-                            <button onClick={() => {user === "" ? "" : navigate("/login")}}>
+                            <button onClick={() => {user === "" ? "" : navigate("/user/login")}}>
                                 <p>채팅하기</p>
                             </button>
                         </li>
                         <li>
-                            <a href={user === "" ? "/sell" : "/login"}>
+                            <a href={user === "" ? "/sell" : "/user/login"}>
                                 <p>판매하기</p>
                             </a>
                         </li>
                         <li>
-                            <button onClick={() => {user === "" ? navigate(`/user?${1}`): navigate(`/login`)}}>
+                            <button onClick={() => {user === "" ? navigate(`/user?${1}`): navigate(`/user/login`)}}>
                             <p>MY</p>
                             </button>
                         </li>
