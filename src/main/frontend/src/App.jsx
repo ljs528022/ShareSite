@@ -6,16 +6,17 @@ import Header from './pages/header';
 import Footer from './pages/footer';
 import Login from './pages/user/login';
 import Register from './pages/user/register';
-import axios from 'axios';
+import { getData } from './services/api';
 
 function App() {
 
   const [ user, setUser ] = useState();
 
-  // useEffect(() => {
-  //   axios.get("http://localhost:8093")
-  //   .catch(error => console.log('Error fetching data:', error));
-  // }, []);
+  useEffect(() => {
+    getData('/')
+      .then(data => console.log('Response:', data))
+      .catch(error => console.error('Error:', error));
+  })
 
   return (
     <>
