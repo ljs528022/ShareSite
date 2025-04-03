@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:5178/")
 public class MainController {
 
-    @GetMapping("/")
+    @GetMapping("/home")
     @CrossOrigin
-    public String main() {
+    public String home() {
         return "forward:/index.html";
     }
 }

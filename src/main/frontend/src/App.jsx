@@ -12,18 +12,16 @@ function App() {
 
   const [ user, setUser ] = useState();
 
-  useEffect(() => {
-    getData('/')
-      .then(data => console.log('Response:', data))
-      .catch(error => console.error('Error:', error));
-  })
+  // if(user == null || undefined) {
+    
+  // }
 
   return (
     <>
       <Header />
       <Routes>
         {/* Main page */}
-        <Route path='/' Component={Home}></Route>
+        <Route path='/home' Component={Home}></Route>
 
         {/* Login & Register */}
         <Route path='/user/login' Component={Login}></Route>

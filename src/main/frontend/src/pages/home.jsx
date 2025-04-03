@@ -3,19 +3,20 @@ import { useEffect, useState } from "react";
 import Items from './items.jsx';
 
 const Home = () => {
-    const [ weekCateItems, setWeekCateItems ] = useState([]);           // 이번주 인기 카테고리 상품
-    const [ latestItems, setLatestItems ] = useState([]);            // 방금 등록된 상품
+    // 이번주 인기 카테고리 상품
+    const [ weekCateItems, setWeekCateItems ] = useState([]);  
+    // 방금 등록된 상품
+    const [ latestItems, setLatestItems ] = useState([]);
     const [ test, setTest ] = useState([]);
 
     // 이번주 인기 카테고리 상품들 받아오기 (20개)
     // useEffect(() => {
-        // setTag(0);
+        
     // })
 
     // 방금 등록된 상품들 받아오기 (20개)
     // useEffect(() => {
-
-        // setTag(1);
+        
     // })
 
     // 테스트 용

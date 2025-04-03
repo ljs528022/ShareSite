@@ -33,7 +33,7 @@ const Header = () => {
         <>
         <header className='Navber_wrapper'>
             <div className="Navbar1">
-                <a href="/">
+                <a href="/home">
                     <span>
                         <img src="../public/SSicon.png" className='SSLogo'></img>
                     </span>
