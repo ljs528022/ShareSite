@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Item;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,11 +13,16 @@ public interface ItemService {
     // Find Latest 5 Items
     List<Item> getLatestItems();
 
-    // Find Item By ItemKey
+    // Find Weekly Most Traded Items
+    List<Item> getWeeklyMostItem();
+
     Item findByItemKey(Long itemKey);
 
+    // Find By ItemKey
+    List<Item> findByCategory(Long cateKey);
+
     // Find Item By UserKey
-    Item findByUserKey(Long userKey);
+    List<Item> findByUserKey(Long userKey);
 
     int write(Item item);
 

@@ -13,21 +13,23 @@ public interface ItemRepository {
     // Regist Item
     int write(Item item);
 
-    // List Items
-    List<Item> list();
-    List<Item> list(Integer page, Model model, String keyword, String category);
-
     // Find All Item
     List<Item> findAllItem();
 
     // Find Latest 5 Item
     List<Item> getLatestItems();
 
+    // Find Weekly Most Traded Items
+    List<Item> getWeeklyMostItem();
+
     // Find By ItemKey
     Item findByItemKey(@Param("itemKey")Long itemKey);
 
+    // Find By Category
+    List<Item> findByCategory(@Param("cateKey")Long cateKey);
+
     // Find By UserKey
-    Item findByUserKey(@Param("userKey")Long userKey);
+    List<Item> findByUserKey(@Param("userKey")Long userKey);
 
     // Increment View Count
     int incViewCnt(Long itemKey);
@@ -41,9 +43,6 @@ public interface ItemRepository {
     // Change Trade State
     int chTradeState(Long itemKey);
 
-
-    // -- Paging --
-    int countAll();
 
     // -- User Page --
 

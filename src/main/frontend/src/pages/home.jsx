@@ -1,23 +1,32 @@
 import "../components/css/home.css";
 import { useEffect, useState } from "react";
 import Items from './items.jsx';
+import { getData } from "../services/api.jsx";
 
 const Home = () => {
     // 이번주 인기 카테고리 상품
-    const [ weekCateItems, setWeekCateItems ] = useState([]);  
+    const [ weeklyItems, setWeeklyItems ] = useState([]);  
     // 방금 등록된 상품
     const [ latestItems, setLatestItems ] = useState([]);
     const [ test, setTest ] = useState([]);
 
     // 이번주 인기 카테고리 상품들 받아오기 (20개)
-    // useEffect(() => {
-        
-    // })
+    useEffect(() => {
+        getData("/home")
+        .then(data => {
+            console.log(data);
+            setWeeklyItems(data);
+        });
+    }, [])
 
     // 방금 등록된 상품들 받아오기 (20개)
-    // useEffect(() => {
-        
-    // })
+    useEffect(() => {
+        getData("/home")
+        .then(data => {
+            console.log(data);
+            setLatestItems(data);
+        })  
+    }, [])
 
     // 테스트 용
     useEffect(() => {

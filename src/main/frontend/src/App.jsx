@@ -12,9 +12,11 @@ function App() {
 
   const [ user, setUser ] = useState();
 
-  // if(user == null || undefined) {
-    
-  // }
+  useEffect(() => {
+    getData('/api/')
+      .then(data => console.log('Response:', data))
+      .catch(error => console.error('Error:', error));
+  })
 
   return (
     <>

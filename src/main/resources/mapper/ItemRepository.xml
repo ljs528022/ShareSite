@@ -4,4 +4,115 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.ItemRepository">
 
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="u_userKey" property="userKey" />
+        <result column="u_username" property="username" />
+        <result column="u_useralias" property="useralias" />
+        <result column="u_tel" property="tel" />
+        <result column="u_userimg" property="userimg" />
+    </resultMap>
+
+    <resultMap id="mapItem" type="com.lec.spring.domain.Item">
+        <result column="i_itemKey" property="itemKey" />
+        <result column="i_userKey" property="userKey" />
+        <result column="i_cateKey" property="cateKey" />
+        <result column="i_subject" property="subject" />
+        <result column="i_content" property="content" />
+        <result column="i_price" property="price" />
+        <result column="i_location" property="location" />
+        <result column="i_itemtype" property="itemtype" />
+        <result column="i_purtype" property="purtype" />
+        <result column="i_tradeStatus" property="tradeStatus" />
+        <result column="i_writeDate" property="writeDate" />
+        <result column="i_viewcnt" property="viewcnt" />
+        <result column="i_img1" property="img1" />
+        <result column="i_img2" property="img2" />
+        <result column="i_img3" property="img3" />
+        <result column="i_img4" property="img4" />
+        <result column="i_img5" property="img5" />
+    </resultMap>
+
+    <resultMap id="mapCategory" type="com.lec.spring.domain.Category">
+        <result column="c_cateKey" property="cateKey" />
+        <result column="c_catename" property="catename" />
+    </resultMap>
+
+    <insert id="write" flushCache="true" parameterType="com.lec.spring.domain.Item"
+            useGeneratedKeys="true" keyColumn="itemKey" keyProperty="itemKey">
+        INSERT INTO d1_item
+        (userKey, cateKey, subject, content, price, location, itemtype, purtype, tradeStatus, writeDate, img1, img2, img3, img4, img5)
+        VALUES
+        (#{userKey}, #{cateKey}, #{subject}, #{content}, #{price}, #{location}, #{itemtype}, #{purtype}, #{tradeStatus}, #{writeDate}, #{img1}, #{img2}, #{img3}, #{img4}, #{img5})
+    </insert>
+
+    <update id="chTradeState" flushCache="true">
+        UPDATE d1_item
+        SET tradeStatus = 1
+        WHERE itemKey = #{itemKey}
+    </update>
+
+    <update id="incViewCnt" flushCache="true">
+        UPDATE d1_item
+        SET viewcnt = viewcnt + 1
+        WHERE itemKey = #{itemKey}
+    </update>
+
+    <update id="modify" flushCache="true"
+            parameterType="com.lec.spring.domain.Item">
+        UPDATE d1_item
+        SET subject = #{subject}, content = #{content}, price = #{price}, cateKey = #{cateKey}, location = #{location}, itemtype = #{itemtype}, purtype = #{purtype}, img1 = #{img1}, img2 = #{img2}, img3 = #{img3}, img4 = #{img4}, img5 = #{img5}
+        WHERE itemKey = #{itemKey}
+    </update>
+
+
+
+    <delete id="delete" flushCache="true"
+            parameterType="com.lec.spring.domain.Item">
+        DELETE FROM d1_item WHERE itemKey = #{itemKey}
+    </delete>
+
+    <select id="findAllItem" resultMap="mapItem">
+        <include refid="SELECT" />
+        WHERE 1 = 1
+    </select>
+
+    <select id="getLatestItems" resultMap="mapItem">
+        SELECT i.*
+        FROM d1_item i
+        ORDER BY I.writeDate DESC
+        LIMIT 20
+    </select>
+
+    <select id="getWeeklyMostItem" resultMap="mapItem">
+        SELECT i.*, c.cateKey
+        FROM d1_item i
+        JOIN d1_category c ON i.cateKey = c.cateKey
+        WHERE i.cateKey = (
+            SELECT d1_item.cateKey
+            FROM d1_item
+            WHERE i.tradestatus = 0 AND i.writeDate >= date_sub(NOW(), INTERVAL 7 DAY)
+            GROUP BY d1_item.cateKey
+            ORDER BY count(*) DESC
+            LIMIT 1
+        );
+    </select>
+
+    <select id="findByItemKey" resultType="com.lec.spring.domain.Item">
+        SELECT itemKey
+        FROM d1_item
+        WHERE itemKey = #{itemKey}
+    </select>
+
+    <select id="findByCategory" resultMap="mapItem">
+        SELECT i.*
+        FROM d1_item i
+        WHERE i.cateKey = #{cateKey}
+    </select>
+
+    <select id="findByUserKey" resultMap="mapItem">
+        SELECT i.*
+        FROM d1_item i
+        WHERE i.userKey = #{userKey}
+    </select>
+
 </mapper>

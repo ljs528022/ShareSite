@@ -17,3 +17,13 @@ export const getData = async (endpoint) => {
         throw error;
     }
 };
+
+export const postData = async (endpoint) => {
+    try {
+        const response = await api.post(endpoint);
+        return response.data;
+    } catch (error) {
+        console.error("Error Post data:", error);
+        throw error;
+    }
+};

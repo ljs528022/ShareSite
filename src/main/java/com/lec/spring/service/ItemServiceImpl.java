@@ -37,12 +37,18 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item findByItemKey(Long itemKey) {
-        return itemRepository.findByItemKey(itemKey);
+    public List<Item> getWeeklyMostItem() {return itemRepository.getWeeklyMostItem();}
+
+    @Override
+    public Item findByItemKey(Long itemKey) {return itemRepository.findByItemKey(itemKey);}
+
+    @Override
+    public List<Item> findByCategory(Long cateKey) {
+        return itemRepository.findByCategory(cateKey);
     }
 
     @Override
-    public Item findByUserKey(Long userKey) {
+    public List<Item> findByUserKey(Long userKey) {
         return itemRepository.findByUserKey(userKey);
     }
 
@@ -87,7 +93,6 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findByItemKey(itemKey);
         if (item != null) {
             result = itemRepository.delete(item);
-
         }
         return result;
     }

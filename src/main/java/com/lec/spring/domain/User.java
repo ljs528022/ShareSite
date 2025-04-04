@@ -42,4 +42,13 @@ public class User {
     // For ADMIN
 
 
+    // Logined User Info
+    public static class CurrentUser {
+        private String username;
+
+        public CurrentUser(String username) {
+            this.username = username;
+        }
+    }
+
 }
