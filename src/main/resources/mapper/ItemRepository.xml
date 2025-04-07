@@ -4,37 +4,80 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.ItemRepository">
 
+    <sql id="SELECT_BASE">
+        SELECT
+            itemKey,
+            userKey,
+            cateKey,
+            subject,
+            content,
+            price,
+            location,
+            itemtype,
+            purtype,
+            location,
+            tradestatus,
+            writeDate,
+            viewcnt,
+            img1,
+            img2,
+            img3,
+            img4,
+            img5
+    </sql>
+
+    <sql id="d1_item_base">
+        itemKey,
+        userKey,
+        cateKey,
+        subject,
+        content,
+        price,
+        location,
+        itemtype,
+        purtype,
+        location,
+        tradestatus,
+        writeDate,
+        viewcnt,
+        img1,
+        img2,
+        img3,
+        img4,
+        img5
+    </sql>
+
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
-        <result column="u_userKey" property="userKey" />
-        <result column="u_username" property="username" />
-        <result column="u_useralias" property="useralias" />
-        <result column="u_tel" property="tel" />
-        <result column="u_userimg" property="userimg" />
+        <id column="userKey" property="userKey" />
+        <result column="username" property="username" />
+        <result column="useralias" property="useralias" />
+        <result column="tel" property="tel" />
+        <result column="userimg" property="userimg" />
     </resultMap>
 
     <resultMap id="mapItem" type="com.lec.spring.domain.Item">
-        <result column="i_itemKey" property="itemKey" />
-        <result column="i_userKey" property="userKey" />
-        <result column="i_cateKey" property="cateKey" />
-        <result column="i_subject" property="subject" />
-        <result column="i_content" property="content" />
-        <result column="i_price" property="price" />
-        <result column="i_location" property="location" />
-        <result column="i_itemtype" property="itemtype" />
-        <result column="i_purtype" property="purtype" />
-        <result column="i_tradeStatus" property="tradeStatus" />
-        <result column="i_writeDate" property="writeDate" />
-        <result column="i_viewcnt" property="viewcnt" />
-        <result column="i_img1" property="img1" />
-        <result column="i_img2" property="img2" />
-        <result column="i_img3" property="img3" />
-        <result column="i_img4" property="img4" />
-        <result column="i_img5" property="img5" />
+        <id column="itemKey" property="itemKey" />
+        <result column="userKey" property="userKey" />
+        <result column="cateKey" property="cateKey" />
+        <result column="subject" property="subject" />
+        <result column="content" property="content" />
+        <result column="price" property="price" />
+        <result column="location" property="location" />
+        <result column="itemtype" property="itemtype" />
+        <result column="purtype" property="purtype" />
+        <result column="tradestatus" property="tradestatus" />
+        <result column="writeDate" property="writeDate" />
+        <result column="viewcnt" property="viewcnt" />
+        <result column="img1" property="img1" />
+        <result column="img2" property="img2" />
+        <result column="img3" property="img3" />
+        <result column="img4" property="img4" />
+        <result column="img5" property="img5" />
     </resultMap>
 
     <resultMap id="mapCategory" type="com.lec.spring.domain.Category">
-        <result column="c_cateKey" property="cateKey" />
-        <result column="c_catename" property="catename" />
+        <id column="cateKey" property="cateKey" />
+        <result column="catename" property="catename" />
     </resultMap>
 
     <insert id="write" flushCache="true" parameterType="com.lec.spring.domain.Item"
@@ -47,7 +90,7 @@
 
     <update id="chTradeState" flushCache="true">
         UPDATE d1_item
-        SET tradeStatus = 1
+        SET tradeStatus = true
         WHERE itemKey = #{itemKey}
     </update>
 
@@ -64,37 +107,29 @@
         WHERE itemKey = #{itemKey}
     </update>
 
-
-
     <delete id="delete" flushCache="true"
             parameterType="com.lec.spring.domain.Item">
         DELETE FROM d1_item WHERE itemKey = #{itemKey}
     </delete>
 
     <select id="findAllItem" resultMap="mapItem">
-        <include refid="SELECT" />
+        <include refid="SELECT_BASE" />
+        FROM d1_item
         WHERE 1 = 1
     </select>
 
     <select id="getLatestItems" resultMap="mapItem">
-        SELECT i.*
-        FROM d1_item i
-        ORDER BY I.writeDate DESC
+        <include refid="SELECT_BASE" />
+        FROM d1_item
+        ORDER BY writeDate DESC
         LIMIT 20
     </select>
 
-    <select id="getWeeklyMostItem" resultMap="mapItem">
-        SELECT i.*, c.cateKey
-        FROM d1_item i
-        JOIN d1_category c ON i.cateKey = c.cateKey
-        WHERE i.cateKey = (
-            SELECT d1_item.cateKey
-            FROM d1_item
-            WHERE i.tradestatus = 0 AND i.writeDate >= date_sub(NOW(), INTERVAL 7 DAY)
-            GROUP BY d1_item.cateKey
-            ORDER BY count(*) DESC
-            LIMIT 1
-        );
+    <select id="getWeeklyItems" resultMap="mapItem">
+        <include refid="SELECT_BASE" />
+        FROM d1_item
+        ORDER BY writeDate DESC
+        LIMIT 20
     </select>
 
     <select id="findByItemKey" resultType="com.lec.spring.domain.Item">

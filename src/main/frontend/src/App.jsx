@@ -12,11 +12,11 @@ function App() {
 
   const [ user, setUser ] = useState();
 
-  useEffect(() => {
-    getData('/api/')
-      .then(data => console.log('Response:', data))
-      .catch(error => console.error('Error:', error));
-  })
+  // useEffect(() => {
+  //   getData('/api/')
+  //     .then(data => console.log('Response:', data))
+  //     .catch(error => console.error('Error:', error));
+  // })
 
   return (
     <>
@@ -41,4 +41,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

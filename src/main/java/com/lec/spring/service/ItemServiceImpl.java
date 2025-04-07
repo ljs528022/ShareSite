@@ -15,15 +15,19 @@ import java.util.List;
 @Service
 public class ItemServiceImpl implements ItemService {
 
-    @Autowired
     private UserRepository userRepository;
     private ItemRepository itemRepository;
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public ItemServiceImpl(SqlSession sqlSession) {
-        this.itemRepository = sqlSession.getMapper(ItemRepository.class);
-        System.out.println("ItemService() Created");
+    public ItemServiceImpl(UserRepository userRepository,
+                           ItemRepository itemRepository,
+                           CategoryRepository categoryRepository) {
+        this.userRepository = userRepository;
+        this.itemRepository = itemRepository;
+        this.categoryRepository = categoryRepository;
+
+        System.out.println("✅ ItemService() Created");
     }
 
     @Override
@@ -37,7 +41,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getWeeklyMostItem() {return itemRepository.getWeeklyMostItem();}
+    public List<Item> getWeeklyItems() {return itemRepository.getWeeklyItems();}
 
     @Override
     public Item findByItemKey(Long itemKey) {return itemRepository.findByItemKey(itemKey);}
@@ -75,9 +79,8 @@ public class ItemServiceImpl implements ItemService {
     public int chTradeState(Long itemKey) {
         Item item = itemRepository.findByItemKey(itemKey);
         if (item != null) {
-            if (item.getTradeStatus() != Boolean.FALSE) {
+            if (item.getTradestatus() != Boolean.FALSE) {
                 itemRepository.chTradeState(itemKey);
-
             }
             return 1;
         } else {

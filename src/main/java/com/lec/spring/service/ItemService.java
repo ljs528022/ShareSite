@@ -14,7 +14,7 @@ public interface ItemService {
     List<Item> getLatestItems();
 
     // Find Weekly Most Traded Items
-    List<Item> getWeeklyMostItem();
+    List<Item> getWeeklyItems();
 
     Item findByItemKey(Long itemKey);
 

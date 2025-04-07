@@ -45,14 +45,14 @@ public class SecurityConfig {
                             .requestMatchers("/home", "/error", "/api/**", "/user/login", "/user/regist").permitAll()
                             .anyRequest().authenticated()
                     )
-                    .cors(withDefaults())
-
+                    .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                     .sessionManagement(session -> session
                             .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
 
-    @Bean public CorsConfigurationSource corsConfigurationSource() {
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("http://localhost:5178");
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));

@@ -11,13 +11,12 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public CategoryServiceImpl(SqlSession sqlSession) {
-        categoryRepository = sqlSession.getMapper(CategoryRepository.class);
-        System.out.println("CategoryService() Created");
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+        System.out.println("✅ CategoryService() Created");
     }
 
     @Override

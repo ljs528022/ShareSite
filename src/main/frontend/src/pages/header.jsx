@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../components/css/header.css";
 import Categorybox from '../components/categorybox.jsx';
 import { useNavigate } from "react-router-dom";
+import { getData } from "../services/api.jsx";
 
 
 const Header = () => {
@@ -11,23 +12,14 @@ const Header = () => {
     const navigate = useNavigate("/");
 
     // 유저 정보 받아오기
-    
+    // TODO
 
     // 카테고리 받아오기
     useEffect(() => {
-        fetch("/categories.json")
-            .then((response) => response.json())
-            .then((data) => {
-                if(data && Array.isArray(data.d1_category)) {
-                    setCategories(data.d1_category);
-                } else {
-                    throw new Error('Is Not Array Type');
-                }
-            })
-            .catch((e) => console.error('데이터 로딩 실패', e));
-    }, []);
-
-    
+        getData("/api/category")
+        .then(data => setCategories(data))
+        .catch(err => console.log("Failed Load Category: ", err));
+    }, [])    
 
     return (
         <>

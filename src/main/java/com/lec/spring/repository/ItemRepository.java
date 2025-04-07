@@ -20,7 +20,7 @@ public interface ItemRepository {
     List<Item> getLatestItems();
 
     // Find Weekly Most Traded Items
-    List<Item> getWeeklyMostItem();
+    List<Item> getWeeklyItems();
 
     // Find By ItemKey
     Item findByItemKey(@Param("itemKey")Long itemKey);
