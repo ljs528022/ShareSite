@@ -50,3 +50,9 @@ app:
 
 jwt:
   secret-key: lbhGKV0802
+
+# ProtOne Key Config
+portone:
+  api:
+    key: 4782006341465564
+    secret: TBtiz06ypjUMjfIkcnSKWRf7t3imS5p654MNHZis2Q3DyUrqvC57LBnBW1GCQezBgVEBobIy9KlqQAsb

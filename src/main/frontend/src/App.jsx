@@ -6,7 +6,6 @@ import Header from './pages/header';
 import Footer from './pages/footer';
 import Login from './pages/user/login';
 import Register from './pages/user/register';
-import { getData } from './services/api';
 
 function App() {
 
@@ -27,7 +26,7 @@ function App() {
 
         {/* Login & Register */}
         <Route path='/user/login' Component={Login}></Route>
-        <Route path='/user/regist' Component={Register}></Route>
+        <Route path='/user/register' Component={Register}></Route>
 
         {/* User Page */}
         <Route></Route>

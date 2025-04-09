@@ -13,9 +13,6 @@ public interface AuthorityRepository {
     // Search User's Auth
     List<Authority> findByUser (User user);
 
-    // Add Auth to User
-    int addAuth(Long userKey, Long authKey);
-
     // Change Auth
     int chAuth(Long userKey, Long authKey);
 }

@@ -1,19 +1,22 @@
 package com.lec.spring.service;
 
+import com.lec.spring.DTO.LoginRequest;
+import com.lec.spring.DTO.RegisterRequest;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.ReviewRepository;
 import com.lec.spring.repository.UserRepository;
+import com.lec.spring.util.JwtUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
     private ReviewRepository reviewRepository;
+    private JwtUtil jwtUtil;
 
 
     @Autowired
@@ -39,15 +43,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findbyUserName(String username) {
+    public Optional<User> findbyUserName(String username) {
         return userRepository.findByUserName(username);
     }
 
     @Override
-    public int register(User user) {
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.join(user);
+    public int register(RegisterRequest request) {
+        if(userRepository.findByUserName(request.getUsername()).isPresent()) {
+            throw new RuntimeException("이미 존재하는 ID 입니다!");
+        }
 
         Authority authority = authorityRepository.findByAuth("MEMBER");
 
@@ -64,14 +68,36 @@ public class UserServiceImpl implements UserService {
         Long serialNumber = Long.parseLong(String.format("%03d", count + 1));
         Long userKey = Long.parseLong(dataPrefix + serialNumber);
 
-        // userKey 와 authKey 지정
+        // User 에 새로운 유저 정보 저장
+        User user = new User();
         user.setUserKey(userKey);
-        Long authKey = authority.getAuthKey();
-
-        authorityRepository.addAuth(userKey, authKey);
+        user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setEmail(request.getEmail());
+        user.setUseralias(request.getUseralias());
+        user.setState("N");
+        user.setUserimg("");
+        user.setRegtype("S");
+        user.setAuthority(authority.getAuth());
+        user.setRegDate(LocalDateTime.now());
+        // User 등록
+        userRepository.join(user);
 
         return 1;
     }
+
+    @Override
+    public String login(LoginRequest request) {
+        User user = userRepository.findByUserName(request.getUsername())
+                .orElseThrow(() -> new RuntimeException("해당 ID를 찾을 수 없습니다.."));
+
+        if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Password가 일치하지 않습니다!");
+        }
+
+        return jwtUtil.generateToken(user.getUsername());
+    }
+
 
     @Override
     public List<Authority> selectAuthByUserKey(Long userKey) {
@@ -100,7 +126,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePassword(String newPassword, Long userKey) {
         if (!isValidPassword(newPassword)) {
-            //throw new IllegalAccessException("유효하지 않은 비밀번호 형식입니다.");
+//            throw new IllegalAccessException("유효하지 않은 비밀번호 형식입니다.");
         }
 
         String hashedPassword = passwordEncoder.encode(newPassword);
@@ -114,16 +140,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateTel(String newTel, Long userKey) {
-        if (!isVaildTel(newTel)) {
-            //throw new IllegalAccessException("유효하지 않은 핸드폰 번호 입니다.");
-        }
+    public void updateEmail(String newEmail, Long userKey) {
+        // 유효성 검사가...필요할까?
 
-        userRepository.updateTel(newTel, userKey);
-    }
-
-    private boolean isVaildTel(String tel) {
-        String telRegex = "^010\\d{8}$";
-        return  tel.matches(telRegex);
+        userRepository.updateEmail(newEmail, userKey);
     }
 }

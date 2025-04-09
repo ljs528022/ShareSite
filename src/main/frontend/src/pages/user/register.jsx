@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "/src/components/css/login.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import CertificationPage from "../../services/portOne";
 
 const Register = () => {
 
@@ -14,12 +14,12 @@ const Register = () => {
         useralias: "",
         tel: "",
         regtype: "",
-    })
+    });
+
     const { username, password, passwordChk, useralias, tel } = userData;
 
     // 패스워드 검사
     const passIsCollect = password === passwordChk;
-    const isTelChk = false;   // 휴대폰 본인인증 확인
 
 
     // 입력되는 값들 저장장
@@ -64,11 +64,6 @@ const Register = () => {
         //     console.error("아직 입력하지 않은 항목이 있습니다.", error);
         // }
     }
-
-    // 휴대폰 본인인증
-    const telChk = () => {
-        
-    }
     
 
     return (
@@ -102,13 +97,13 @@ const Register = () => {
                                 <input id="useralias" type="text" onChange={handleInput}/>
                             </label>
                             <label>
-                                <p>TEL:</p>
-                                <input id="tel" type="text" onChange={handleInput} placeholder="'-' 없이 숫자만 입력해주세요." />
-                                <button className="telCheck" onClick={null}>본인인증</button>
-                                <input id="telChk" type="text" />
+                                <p>EMAIL:</p>
+                                <input id="email" type="text" onChange={handleInput} placeholder="Email을 입력해주세요" />
+                                <input id="email" type="text" />
                             </label>
-
-                            <button type="submit" onClick={() => register()}>제출</button>
+                                    
+                            {/* sumbit 구현해야 함 */}
+                            <button type="submit">제출</button>
                         </div>
                     </form>
                 </div>

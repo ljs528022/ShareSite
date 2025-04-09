@@ -4,51 +4,66 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.UserRepository">
     <resultMap id="mapAuth" type="com.lec.spring.domain.Authority">
-        <result column="a_id" property="authKey" />
-        <result column="a_name" property="auth" />
+        <result column="authKey" property="authKey" />
+        <result column="authname" property="authname" />
     </resultMap>
 
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
-        <result column="u_userKey" property="userKey" />
-        <result column="u_username" property="username" />
-        <result column="u_password" property="password" />
-        <result column="u_useralias" property="useralias" />
-        <result column="u_tel" property="tel" />
-        <result column="u_regtype" property="regtype" />
-        <result column="u_userimg" property="userimg" />
-        <result column="u_regDate" property="regDate" />
-        <result column="u_state" property="state" />
-        <result column="u_visitcnt" property="visitcnt" />
-        <result column="u_tradecnt" property="tradecnt" />
+        <result column="userKey" property="userKey" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="useralias" property="useralias" />
+        <result column="email" property="email" />
+        <result column="regtype" property="regtype" />
+        <result column="userimg" property="userimg" />
+        <result column="regDate" property="regDate" />
+        <result column="state" property="state" />
+        <result column="visitcnt" property="visitcnt" />
+        <result column="tradecnt" property="tradecnt" />
         <collection property="u_auth" resultMap="mapAuth"/>
     </resultMap>
 
     <resultMap id="mapItem" type="com.lec.spring.domain.Item">
-        <result column="i_itemKey" property="itemkey" />
-        <result column="i_subject" property="subject" />
-        <result column="i_price" property="price" />
-        <result column="i_tradestatus" property="tradestatus" />
-        <result column="i_writeDate" property="writeDate" />
-        <result column="i_img1" property="img1" />
+        <result column="itemkey" property="itemkey" />
+        <result column="subject" property="subject" />
+        <result column="price" property="price" />
+        <result column="tradestatus" property="tradestatus" />
+        <result column="writeDate" property="writeDate" />
+        <result column="img1" property="img1" />
     </resultMap>
 
     <sql id="SELECT">
         SELECT
-            userKey "userKey",
-            username "username",
-            password "password",
-            useralias "useralias",
-            tel "tel",
-            regtype "regtype",
-            userimg "userimg",
-            regDate "regDate",
-            state "state",
-            visitcnt "visitcnt",
-            tradecnt "tradecnt",
+            userKey,
+            username,
+            password,
+            useralias,
+            email,
+            regtype,
+            userimg,
+            regDate,
+            state,
+            visitcnt,
+            tradecnt,
         FROM
             d1_user
         WHERE
             1 = 1
+    </sql>
+
+    <sql id="d1_user_base">
+        userKey,
+        username,
+        password,
+        useralias,
+        email,
+        regtype,
+        userimg,
+        regDate,
+        state,
+        visitcnt,
+        tradecnt,
+        auth
     </sql>
 
     <select id="findByUserKey" resultType="com.lec.spring.domain.User">

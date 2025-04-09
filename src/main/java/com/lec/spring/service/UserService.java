@@ -1,23 +1,26 @@
 package com.lec.spring.service;
 
+import com.lec.spring.DTO.LoginRequest;
+import com.lec.spring.DTO.RegisterRequest;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
     // Search by UserKey
     User findbyUserKey (Long userKey);
     // Search by User ID
-    User findbyUserName (String username);
+    Optional<User> findbyUserName (String username);
 
     // Register
-    int register (User user);
+    int register (RegisterRequest request);
 
     // Login
-//    User login(String username, String password);
+    String login(LoginRequest request);
 
     // Auth as each UserKey
     List<Authority> selectAuthByUserKey (Long userKey);
@@ -27,7 +30,7 @@ public interface UserService {
     User getUserByUserKey(Long userKey);
     void deleteAccount(Long userKey);
     void updatePassword(String newPassword, Long userKey);
-    void updateTel(String newTel, Long userKey);
+    void updateEmail(String newEmail, Long userKey);
 
 
 

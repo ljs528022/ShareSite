@@ -23,11 +23,6 @@
             a.authKey = u.authKey AND u.userKey = #{id}
     </select>
 
-    <insert id="addAuth" flushCache="true">
-        INSERT INTO d1_user_authority(userKey, auth)
-        VALUES(#{param1}, #{param2})
-    </insert>
-
     <update id="chAuth" flushCache="true" parameterType="com.lec.spring.domain.Authority">
         UPDATE d1_user_authority
         SET authKey = #{authKey}

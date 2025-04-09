@@ -9,7 +9,6 @@ const Home = () => {
 
     // 방금 등록된 상품
     const [ latestItems, setLatestItems ] = useState([]);
-    const [ test, setTest ] = useState([]);
 
     // 상품들 받아오기
     useEffect(() => {

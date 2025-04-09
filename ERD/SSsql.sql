@@ -100,7 +100,7 @@ CREATE TABLE d1_user
 	username varchar(20) NOT NULL,
 	password varchar(150) NOT NULL,
 	useralias varchar(50) NOT NULL,
-	tel varchar(15) NOT NULL,
+	email varchar(50) NOT NULL,
 	regtype varchar(10) NOT NULL,
 	userimg varchar(600),
 	regDate datetime,

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface UserRepository {
@@ -15,7 +16,7 @@ public interface UserRepository {
     User findByUserKey(@Param("userKey") Long userKey);
 
     // Return User By username
-    User findByUserName(@Param("username") String username);
+    Optional<User> findByUserName(@Param("username") String username);
 
     Long countByUserKeyStartWith(@Param("dataPrefix") String dataPrefix);
 
@@ -50,8 +51,8 @@ public interface UserRepository {
     );
 
     // Change Phone Number
-    void updateTel(
-            @Param("newTel") String newTel,
+    void updateEmail(
+            @Param("newEmail") String newEmail,
             @Param("userKey") Long userKey
     );
 
