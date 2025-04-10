@@ -287,6 +287,20 @@ input[type= "checkbox"] {
     text-align: left;
 }
 
+#mailError {
+    position: absolute;
+    opacity: 1;
+
+    padding: 0px 30px;
+
+    width: 100%;
+    top: 65px;
+    left: 5px;
+
+    color: red;
+    font-size: 15px;
+}
+
 .registInput input::placeholder {
     font-size: 11px;
 }
@@ -306,7 +320,7 @@ input[type= "checkbox"] {
     text-decoration: underline;
 }
 
-.telCheck {
+.mailCheck {
     position: absolute;
 
     top: 16px;
@@ -316,13 +330,48 @@ input[type= "checkbox"] {
     text-decoration: underline;
 }
 
-#telChk {
+#mailChk {
     width: 95px;
+    top: 10px;
     left: 115px;
 }
 
 .registBox button[type="submit"] {
+    position: absolute;
     width: 80px;
-    top: 85px;
+    top: 390px;
     left: 302px;
+}
+
+#timer {
+    position: absolute;
+
+    width: 130px;
+    top: 55px;
+    left: 230px;
+
+    color: red;
+    font-size: 15px;
+}
+
+#timeOut {
+    position: absolute;
+
+    width: 300px;
+    top: 95px;
+    left: 100px;
+
+    color: red;
+    font-size: 12px;
+}
+
+#verify-success {
+    position: absolute;
+
+    width: 130px;
+    left: 135px;
+    top: 60px;
+
+    color: green;
+    font-size: 12px;
 }

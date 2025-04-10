@@ -18,9 +18,9 @@ export const getData = async (endpoint) => {
     }
 };
 
-export const postData = async (endpoint) => {
+export const postData = async (endpoint, data = {}) => {
     try {
-        const response = await api.post(endpoint);
+        const response = await api.post(endpoint, data);
         return response.data;
     } catch (error) {
         console.error("Error Post data:", error);

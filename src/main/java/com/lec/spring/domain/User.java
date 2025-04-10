@@ -13,8 +13,6 @@ public class User {
     private Long userKey;           // PK
     private String username;        // ID
     private String password;        // PW
-    @ToString.Exclude
-    private String passwordChk;     // PW checking
     private String useralias;       // Username
     private String email;           // User Email
     private String regtype;         // Regist Type (site(S), naver(N), kakao(K))
@@ -23,10 +21,15 @@ public class User {
     private LocalDateTime regDate;  // Register Date
     private Long visitcnt;          // Visit Count
     private Long tradecnt;          // Trade Success Count
+    private boolean emailVerified;  // Email Verification
+
+    @ToString.Exclude
+    private String passwordChk;     // PW checking
 
     // MEMBER Authority
     @ToString.Exclude
     private String authority;
+
 
 
     // User Page - Modify

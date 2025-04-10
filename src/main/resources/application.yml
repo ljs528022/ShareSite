@@ -27,6 +27,20 @@ spring:
       ddl-auto: update
       physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
+  # Email 인증 관련
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ljs528022@gmail.com
+    password: jooc bfom xkwl uehn
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
   # Security setting
   security:
     user:
@@ -51,8 +65,3 @@ app:
 jwt:
   secret-key: lbhGKV0802
 
-# ProtOne Key Config
-portone:
-  api:
-    key: 4782006341465564
-    secret: TBtiz06ypjUMjfIkcnSKWRf7t3imS5p654MNHZis2Q3DyUrqvC57LBnBW1GCQezBgVEBobIy9KlqQAsb

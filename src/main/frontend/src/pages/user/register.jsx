@@ -1,28 +1,38 @@
 import { useState, useEffect } from "react";
 import "/src/components/css/login.css";
 import { useNavigate } from "react-router-dom";
-import CertificationPage from "../../services/portOne";
+import { postData } from "../../services/api";
+import Buttons from "../../util/buttons";
+import MailVerification from "../../util/mailVerification";
 
 const Register = () => {
 
     const navigate = useNavigate();
-    const [ userKeyChk, setUserKeyChk ] = useState(0);
     const [ userData, setUserData ] = useState({
         username: "",
         password: "",
         passwordChk: "",
         useralias: "",
-        tel: "",
+        email: "",
         regtype: "",
     });
 
-    const { username, password, passwordChk, useralias, tel } = userData;
+    const { username, password, passwordChk, useralias, email } = userData;
 
-    // 패스워드 검사
-    const passIsCollect = password === passwordChk;
+    // 회원가입 양식 확인 
+    const [ useVerify, setUseVerify ] = useState({
+        usernameChk: 0,
+        passwordChk: true,
+        emailChk: false,
+    });
+
+    const isFormVaild =
+        useVerify.usernameChk === 3 &&
+        useVerify.passwordChk &&
+        useVerify.emailChk;
 
 
-    // 입력되는 값들 저장장
+    // 입력되는 값들 저장
     const handleInput = (e) => {
         setUserData({
             ...userData,
@@ -37,32 +47,39 @@ const Register = () => {
             x.style.display = "none";
         }
     }
-    // console.log(userData);
 
     // ID 중복확인
-    const usernameChk = () => {
-        // console.log("Testing onClick!")
+    const idChk = () => {
+        console.log("Testing onClick!")
         
         // 서버에 저장된 username 중 중복된 값이 있는지 확인
-        let nameChk = document.getElementById("username").value;
 
-        if(username == '' || username.length == 0) {
-            setUserKeyChk(2);
-            return false;
-        }
     }
 
     
     // 회원가입
-    const handleSubmit = async(event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        // try {
-            
 
-        // } catch (error) {
-        //     console.error("아직 입력하지 않은 항목이 있습니다.", error);
-        // }
+        if(!isFormVaild) {
+            alert("모든 항목을 올바르게 입력해주세요.");
+            return;
+        }
+
+        try {
+            const res = await postData("/user/register", {
+                username: userData.username,
+                password: userData.password,
+                useralias: userData.useralias,
+                email: userData.email,
+            });
+
+            alert("회원가입이 완료되었습니다!");
+            navigate("/login")
+        } catch (err) {
+            console.log("회원가입이 실패했습니다...", err);
+            alert("회원가입이 실패했습니다... 다시 시도해주세요.");
+        }
     }
     
 
@@ -76,11 +93,11 @@ const Register = () => {
                             <label id="id">
                                 <p>ID:</p>
                                 <input id="username" type="text" onChange={handleInput}/>
-                                <button type="button" className="idCheck" onClick={() => usernameChk()}>중복확인</button>
-                                <span id="idError" style={userKeyChk <= 2 ? {color: "red"} : {color: "green"}}>
-                                    {userKeyChk <= 0 ? "" : 
-                                        userKeyChk <= 1 ? "이미 사용중인 ID 입니다!" :
-                                            userKeyChk <= 2 ? "아이디는 필수 입력 사항입니다!" : "사용 가능한 ID 입니다!"}
+                                <Buttons btnClassname={"idCheck"} btnType={"button"} btnText={"중복확인"} btnOnClick={idChk} />
+                                <span id="idError" style={useVerify.usernameChk <= 2 ? {color: "red"} : {color: "green"}}>
+                                    {useVerify.usernameChk <= 0 ? "" : 
+                                        useVerify.usernameChk <= 1 ? "이미 사용중인 ID 입니다!" :
+                                        useVerify.usernameChk <= 2 ? "아이디는 필수 입력 사항입니다!" : "사용 가능한 ID 입니다!"}
                                 </span>
                             </label>
                             <label>
@@ -90,20 +107,20 @@ const Register = () => {
                             </label>
                             <label id="passwordCheck" display="none">
                                 <input id="passwordChk" type="text" onChange={handleInput}/>
-                                <span id="pwError" style={passIsCollect ? {color: "green", opacity: 1} : {color: "red", opacity: 1}}>{passIsCollect ? "패스워드가 일치합니다" : "패스워드가 일치하지 않습니다"}</span>
+                                <span id="pwError" style={useVerify.passwordChk ? {color: "green", opacity: 1} : {color: "red", opacity: 1}}>{useVerify.passwordChk ? "패스워드가 일치합니다" : "패스워드가 일치하지 않습니다"}</span>
                             </label>
                             <label>
                                 <p>NICK:</p>
                                 <input id="useralias" type="text" onChange={handleInput}/>
                             </label>
                             <label>
-                                <p>EMAIL:</p>
-                                <input id="email" type="text" onChange={handleInput} placeholder="Email을 입력해주세요" />
-                                <input id="email" type="text" />
+                                <p>MAIL:</p>
+                                <input id="email" type="email" onChange={handleInput} placeholder="Email을 입력해주세요" />
+                                <MailVerification email={email} onVerify={useVerify.emailChk}/>
                             </label>
                                     
                             {/* sumbit 구현해야 함 */}
-                            <button type="submit">제출</button>
+                            <button type="submit" onClick={handleSubmit}>제출</button>
                         </div>
                     </form>
                 </div>

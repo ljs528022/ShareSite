@@ -10,9 +10,7 @@ DROP TABLE IF EXISTS d1_category;
 DROP TABLE IF EXISTS d1_location;
 DROP TABLE IF EXISTS d1_purchase;
 DROP TABLE IF EXISTS d1_user;
-
-
-
+DROP TABLE IF EXISTS d1_verifytoken;
 
 /* Create Tables */
 
@@ -108,11 +106,11 @@ CREATE TABLE d1_user
 	visitcnt int,
 	tradecnt int,
 	auth varchar(10),
+	email_verified BOOLEAN DEFAULT FALSE,
 	PRIMARY KEY (userKey),
 	UNIQUE (userKey),
 	UNIQUE (username)
 );
-
 
 
 /* Create Foreign Keys */

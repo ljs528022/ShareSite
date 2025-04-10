@@ -17,12 +17,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
     private ReviewRepository reviewRepository;
@@ -49,10 +51,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int register(RegisterRequest request) {
-        if(userRepository.findByUserName(request.getUsername()).isPresent()) {
-            throw new RuntimeException("이미 존재하는 ID 입니다!");
-        }
-
         Authority authority = authorityRepository.findByAuth("MEMBER");
 
         // Create User Serial Number
@@ -80,6 +78,8 @@ public class UserServiceImpl implements UserService {
         user.setRegtype("S");
         user.setAuthority(authority.getAuth());
         user.setRegDate(LocalDateTime.now());
+        user.setEmailVerified(true);
+
         // User 등록
         userRepository.join(user);
 
