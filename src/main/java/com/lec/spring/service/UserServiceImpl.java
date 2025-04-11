@@ -50,6 +50,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isUsernameTaken(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    @Override
     public int register(RegisterRequest request) {
         Authority authority = authorityRepository.findByAuth("MEMBER");
 
@@ -65,6 +70,8 @@ public class UserServiceImpl implements UserService {
 
         Long serialNumber = Long.parseLong(String.format("%03d", count + 1));
         Long userKey = Long.parseLong(dataPrefix + serialNumber);
+
+        // 만약에 NICKNAME이 빈값이면 정해둔 이름을 넣는다.
 
         // User 에 새로운 유저 정보 저장
         User user = new User();

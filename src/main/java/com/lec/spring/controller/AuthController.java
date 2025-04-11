@@ -1,6 +1,7 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.service.EmailService;
+import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +12,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5178/")
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:5178/")
 public class AuthController {
 
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private UserService userService;
+
+    // ID Verification
+    @PostMapping("/usernameChk")
+    public ResponseEntity<?> checkUsername(@RequestBody Map<String, String> body) {
+        String username = body.get("username");
+
+        boolean isTaken = userService.isUsernameTaken(username);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isTaken", isTaken);
+
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping("/send-code")
     public ResponseEntity<?> sendCode(@RequestBody Map<String, String> body) {

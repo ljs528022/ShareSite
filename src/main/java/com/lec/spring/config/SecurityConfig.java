@@ -42,7 +42,7 @@ public class SecurityConfig {
 
                     .authorizeHttpRequests(auth -> auth
                             // 인증이 필요한 사이트 추후에 추가
-                            .requestMatchers("/home", "/error", "/api/**", "/user/login", "/user/regist").permitAll()
+                            .requestMatchers("/home", "/error", "/api/**", "/user/register", "/user/login").permitAll()
                             .anyRequest().authenticated()
                     )
                     .cors(cors -> cors.configurationSource(corsConfigurationSource()))

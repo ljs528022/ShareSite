@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { postData } from "../services/api.jsx";
 import Buttons from "./buttons";
 
@@ -7,7 +7,7 @@ export default function MailVerification({ email, onVerify }) {
         sent: false,
         code: "",
         serverCode: "",
-        verfied: false,
+        verified: false,
         showInput: false,
         expired: true,
         secondsLeft: 0
@@ -15,7 +15,7 @@ export default function MailVerification({ email, onVerify }) {
     const [ loading, setLoading ] = useState(false);
 
     useEffect(() => {
-        if(!emailVerification.showInput || emailVerification.secondsLeft <= 0 || emailVerification.verfied) return;
+        if(!emailVerification.showInput || emailVerification.secondsLeft <= 0 || emailVerification.verified) return;
     
         const timer = setInterval(() => {
             setEmailVerification(prev => {
@@ -26,8 +26,8 @@ export default function MailVerification({ email, onVerify }) {
                     return {
                         ...prev,
                         secondsLeft: 0,
-                        expired: !prev.verfied,
-                        showInput: !prev.verfied,
+                        expired: !prev.verified,
+                        showInput: !prev.verified,
                     };
                 }
                 return {
@@ -38,7 +38,15 @@ export default function MailVerification({ email, onVerify }) {
         }, 1000);
     
         return () => clearInterval(timer);
-    }, [emailVerification.secondsLeft, emailVerification.showInput, emailVerification.verfied]);
+    }, [emailVerification.secondsLeft, emailVerification.showInput, emailVerification.verified]);
+
+    const hasVerifiedRef = useRef(false);   // 한번만 실행되게 만들기기
+    useEffect(() => {
+        if(emailVerification.verified && typeof onVerify === "function") {
+            hasVerifiedRef.current = true;
+            onVerify(true);
+        }
+    }, [emailVerification.verified, onVerify]);
     
     const handleSendCode = async () => {
         if(!email) {
@@ -57,7 +65,7 @@ export default function MailVerification({ email, onVerify }) {
                 showInput: true,
                 expired: false,
                 secondsLeft: 60,
-                verfied: false,
+                verified: false,
             }));
         } catch (err) {
             console.log("이메일 인증 오류: ", err);
@@ -72,13 +80,8 @@ export default function MailVerification({ email, onVerify }) {
         setEmailVerification(prev => ({
             ...prev,
             code: inputCode,
-            verfied: inputCode === prev.serverCode
+            verified: inputCode === prev.serverCode 
         }));
-        
-        // 인증코드가 맞으면 onVerify를 true로 만들어 부모개체의 값을 변경.
-        if(emailVerification.verfied && !onVerify) {
-            onVerify(true);
-        }
     };
     
     const formatTime = (sec) => {
@@ -98,18 +101,17 @@ export default function MailVerification({ email, onVerify }) {
             {emailVerification.sent && (
                 <>
                     <input id="mailChk" type="text" placeholder="인증번호 입력" onChange={handleCodeChange}/>
-                    {!emailVerification.verfied && (
+                    {!emailVerification.verified && (
                         <p id="timer">{formatTime(emailVerification.secondsLeft)}</p>
                     )}
                 </>
             )}
-            {emailVerification.sent && emailVerification.expired && !emailVerification.verfied && (
+            {emailVerification.sent && emailVerification.expired && !emailVerification.verified && (
                 <p id="timeOut">인증 시간이 만료되었습니다. 다시 요청해주세요.</p>
             )}
-            {emailVerification.sent && emailVerification.verfied && (
+            {emailVerification.sent && emailVerification.verified && (
                 <p id="verify-success">인증이 완료되었습니다.</p>
             )}
         </>
     )
 }
-

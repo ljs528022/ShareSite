@@ -16,6 +16,9 @@ public interface UserService {
     // Search by User ID
     Optional<User> findbyUserName (String username);
 
+    // ID Verification
+    boolean isUsernameTaken(String username);
+
     // Register
     int register (RegisterRequest request);
 

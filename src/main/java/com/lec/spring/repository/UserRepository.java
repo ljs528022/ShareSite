@@ -18,6 +18,9 @@ public interface UserRepository {
     // Return User By username
     Optional<User> findByUserName(@Param("username") String username);
 
+    // ID Verification
+    boolean existsByUsername(@Param("username") String username);
+
     Long countByUserKeyStartWith(@Param("dataPrefix") String dataPrefix);
 
     // Regist New User

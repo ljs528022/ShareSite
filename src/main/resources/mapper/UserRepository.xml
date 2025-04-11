@@ -76,6 +76,12 @@
         AND userKey = #{username}
     </select>
 
+    <select id="existsByUsername" resultType="boolean" parameterType="String">
+        SELECT COUNT(*) > 0
+        FROM d1_user
+        WHERE username = #{username}
+    </select>
+
     <select id="countByUserKeyStartWith" resultType="int">
         SELECT COUNT(*)
         FROM d1_user

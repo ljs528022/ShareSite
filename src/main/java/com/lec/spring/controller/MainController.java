@@ -43,8 +43,6 @@ public class MainController {
         return response;
     }
 
-
-
     private void addUserInfo(Model model, Authentication authentication) {
         if(authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();

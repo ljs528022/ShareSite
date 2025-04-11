@@ -204,7 +204,7 @@ input[type= "checkbox"] {
     padding-bottom: 100px;
 }
 
-.registBox {
+.registerBox {
     margin: 0 auto;
 
     width: 425px;
@@ -216,7 +216,7 @@ input[type= "checkbox"] {
 
 }
 
-.registInput {
+.registerInput {
     position: relative;
 
     width: inherit;
@@ -228,7 +228,7 @@ input[type= "checkbox"] {
     text-align: center;
 }
 
-.registInput label {
+.registerInput label {
     position: relative;
     display: block;
 
@@ -244,14 +244,14 @@ input[type= "checkbox"] {
     height: 50px;
 }
 
-.registInput p {
+.registerInput p {
     position: relative;
     display: inline-flex;
 
     width: 50px;
 }
 
-.registInput input {
+.registerInput input {
     position: relative;
     display: inline-block;
 
@@ -277,12 +277,12 @@ input[type= "checkbox"] {
 
 #pwError {
     position: absolute;
-    opacity: 0;
 
     width: 100%;
-    top: 40px;
-    left: 78px;
+    top: 43px;
+    left: 100px;
 
+    color: red;
     font-size: 8px;
     text-align: left;
 }
@@ -301,13 +301,25 @@ input[type= "checkbox"] {
     font-size: 15px;
 }
 
-.registInput input::placeholder {
+.registerInput input::placeholder {
     font-size: 11px;
 }
 
 #passwordCheck {
     left: 25px;
     display: none;
+}
+
+#pwChkError {
+    position: absolute;
+    opacity: 0;
+
+    width: 100%;
+    top: 40px;
+    left: 75px;
+
+    font-size: 8px;
+    text-align: left;
 }
 
 .idCheck {
@@ -336,7 +348,7 @@ input[type= "checkbox"] {
     left: 115px;
 }
 
-.registBox button[type="submit"] {
+.registerBox button[type="submit"] {
     position: absolute;
     width: 80px;
     top: 390px;
