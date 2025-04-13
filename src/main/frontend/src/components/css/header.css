@@ -144,13 +144,15 @@ p {
     vertical-align: middle;
 }
 
-input[name = "search"] {
+.Searchbar-input {
     width: 396px;
     font-size: .875rem;
     line-height: 35px;
+
+    background-color: rgba(241, 244, 246, 1);
 }
 
-input[name = "search"]:focus {
+.Searchbar-input:focus {
     outline: none;
 }
 

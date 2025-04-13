@@ -24,7 +24,7 @@ label {
     padding: 0px 10px;
 }
 
-button[type= "submit"] {
+.register-btn {
     position: relative;
 
     width: 90px;
@@ -41,7 +41,7 @@ button[type= "submit"] {
     border-radius: 5px;
 }
 
-button[type= "submit"]:hover {
+.register-btn:hover {
     background-color: rgb(220, 220, 220);
 }
 
