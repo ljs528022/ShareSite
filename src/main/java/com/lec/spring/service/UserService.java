@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserService {
 
     // Search by UserKey
-    User findbyUserKey (Long userKey);
+    User findbyUserKey (String userKey);
     // Search by User ID
     Optional<User> findbyUserName (String username);
 
@@ -26,14 +26,14 @@ public interface UserService {
     String login(LoginRequest request);
 
     // Auth as each UserKey
-    List<Authority> selectAuthByUserKey (Long userKey);
+    List<Authority> selectAuthByUserKey (String userKey);
 
     // -- User Page --
     User getUserByUserName(String username);
-    User getUserByUserKey(Long userKey);
-    void deleteAccount(Long userKey);
-    void updatePassword(String newPassword, Long userKey);
-    void updateEmail(String newEmail, Long userKey);
+    User getUserByUserKey(String userKey);
+    void deleteAccount(String userKey);
+    void updatePassword(String newPassword, String userKey);
+    void updateEmail(String newEmail, String userKey);
 
 
 

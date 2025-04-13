@@ -82,26 +82,24 @@
         WHERE username = #{username}
     </select>
 
-    <select id="countByUserKeyStartWith" resultType="int">
+    <select id="countByUserKeyStartWith" resultType="long" parameterType="string">
         SELECT COUNT(*)
         FROM d1_user
-        WHERE userKey LIKE LOWER(CONCAT('%', #{dataPrefix}, '%'))
+        WHERE CAST(userKey AS CHAR) LIKE CONCAT(#{dataPrefix}, '%')
     </select>
 
     <!-- 회원가입 -->
-    <insert id="join"
+    <insert id="register"
             flushCache="true"
             parameterType="com.lec.spring.domain.User"
-            useGeneratedKeys="true"
             keyColumn="userKey"
             keyProperty="userKey">
-        INSERT INTO d1_user(username, password, useralias, tel)
-        VALUES(#{username}, #{password}, #{useralias}, #{tel})
+        INSERT INTO d1_user(userKey, username, password, useralias, email, userimg, regtype, state, regDate, visitcnt, tradecnt, auth, emailVerified)
+        VALUES(#{userKey}, #{username}, #{password}, #{useralias}, #{email}, #{userimg}, #{regtype}, #{state}, #{regDate}, 1, 0, #{auth}, #{emailVerified})
     </insert>
 
     <!-- 회원 정보 수정 -->
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.User">
 
     </update>
-
 </mapper>

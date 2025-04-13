@@ -8,7 +8,7 @@ DELETE FROM d1_category;
 INSERT INTO d1_authority (auth) VALUES
 ('ADMIN'), ('MEMBER');
 
-INSERT INTO d1_user (userKey, username, password, useralias, email, regtype, userimg, regDate, state, visitcnt, tradecnt, auth, email_verified)
+INSERT INTO d1_user (userKey, username, password, useralias, email, regtype, userimg, regDate, state, visitcnt, tradecnt, auth, emailVerified)
 VALUES
 (9160001, 'alicegreen', '$2a$12$Xv8t7jT/NYO/MxHl0y9bHezxHiUPyk0qHq9gwY/0IE0v1f2uqTxO6', 'AliceG', 'alicegreen@example.com', 'S', '', '2025-03-08 10:00:00', 'A', 5, 2, 'MEMBER', TRUE),
 (9160002, 'bobwhite', '$2a$12$Z3G9fPpxj2X7t0H7iw2a9o2BO6zZG1B7s2tF7Xak7M1l2IjaNhp0a', 'BobW', 'bobwhite@example.com', 'N', '', '2025-03-07 09:30:00', 'B', 3, 1, 'MEMBER', TRUE),

@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findbyUserKey(Long userKey) {
+    public User findbyUserKey(String userKey) {
         return userRepository.findByUserKey(userKey);
     }
 
@@ -62,16 +62,15 @@ public class UserServiceImpl implements UserService {
         String dataPrefix = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
 
         int year = Integer.parseInt(dataPrefix.substring(0, 4));
-        int month = Integer.parseInt(dataPrefix.substring(4, 8));
-        long result = year + month;
+        int month = Integer.parseInt(dataPrefix.substring(4, 6));
+        int day = Integer.parseInt((dataPrefix.substring(6, 8)));
+        long result = year + month + day;
 
-        dataPrefix = String.format("%-4X", Long.toHexString(result).toUpperCase());
+        dataPrefix = String.format("%-4s", Long.toHexString(result).toUpperCase()).replace(' ', '0');
         Long count = userRepository.countByUserKeyStartWith(dataPrefix);
 
-        Long serialNumber = Long.parseLong(String.format("%03d", count + 1));
-        Long userKey = Long.parseLong(dataPrefix + serialNumber);
-
-        // 만약에 NICKNAME이 빈값이면 정해둔 이름을 넣는다.
+        String serialNumber = String.format("%03d", count + 1);
+        String userKey = dataPrefix + serialNumber;
 
         // User 에 새로운 유저 정보 저장
         User user = new User();
@@ -79,16 +78,23 @@ public class UserServiceImpl implements UserService {
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setEmail(request.getEmail());
-        user.setUseralias(request.getUseralias());
+
+        // 만약에 NICKNAME이 빈값이면 정해둔 이름을 넣는다.
+        if(request.getUseralias() == null || request.getUseralias().trim().isEmpty()) {
+            user.setUseralias("user" + userKey);
+        } else {
+            user.setUseralias(request.getUseralias());
+        }
+
         user.setState("N");
         user.setUserimg("");
         user.setRegtype("S");
-        user.setAuthority(authority.getAuth());
+        user.setAuth(authority.getAuth());
         user.setRegDate(LocalDateTime.now());
         user.setEmailVerified(true);
 
         // User 등록
-        userRepository.join(user);
+        userRepository.register(user);
 
         return 1;
     }
@@ -107,7 +113,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<Authority> selectAuthByUserKey(Long userKey) {
+    public List<Authority> selectAuthByUserKey(String userKey) {
         return null;
     }
 
@@ -117,12 +123,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUserKey(Long userKey) {
+    public User getUserByUserKey(String userKey) {
         return null;
     }
 
     @Override
-    public void deleteAccount(Long userKey) {
+    public void deleteAccount(String userKey) {
         User user = userRepository.findByUserKey(userKey);
         if (user != null) {
             user.setState("B");
@@ -131,7 +137,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePassword(String newPassword, Long userKey) {
+    public void updatePassword(String newPassword, String userKey) {
         if (!isValidPassword(newPassword)) {
 //            throw new IllegalAccessException("유효하지 않은 비밀번호 형식입니다.");
         }
@@ -147,7 +153,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateEmail(String newEmail, Long userKey) {
+    public void updateEmail(String newEmail, String userKey) {
         // 유효성 검사가...필요할까?
 
         userRepository.updateEmail(newEmail, userKey);

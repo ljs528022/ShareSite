@@ -106,7 +106,7 @@ CREATE TABLE d1_user
 	visitcnt int,
 	tradecnt int,
 	auth varchar(10),
-	email_verified BOOLEAN DEFAULT FALSE,
+	emailVerified BOOLEAN DEFAULT FALSE,
 	PRIMARY KEY (userKey),
 	UNIQUE (userKey),
 	UNIQUE (username)

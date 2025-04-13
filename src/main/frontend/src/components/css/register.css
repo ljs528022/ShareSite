@@ -1,0 +1,180 @@
+html {
+    user-select: none;
+}
+
+h3 {
+    display: block;
+    margin: 0 auto;
+    
+    text-align: center;
+    
+    font-size: 25px;
+    font-weight: bold;
+    
+    padding-bottom: 20px;
+    
+}
+
+label {
+    display: inline-block;  
+    width: 50px;
+
+    text-align: right;
+    font-weight: bold;
+    padding: 0px 10px;
+}
+
+button[type= "submit"] {
+    position: relative;
+
+    width: 90px;
+    height: 35px;
+
+    top: 40px;
+    left: 295px;
+
+    padding: 4px;
+
+    font-weight: bold;
+    text-align: center;
+    background-color: rgb(235, 235, 235);
+    border-radius: 5px;
+}
+
+button[type= "submit"]:hover {
+    background-color: rgb(220, 220, 220);
+}
+
+
+.register-container {
+    width: 100%;
+    height: 100%;
+
+    padding-bottom: 100px;
+}
+
+.register-box {
+    margin: 0 auto;
+    padding-top: 20px;
+
+    width: 425px;
+    height: 450px;
+
+    background-color: white;
+    border: 3px solid gray;
+    border-radius: 30px;
+
+}
+
+.form-row {
+    display: block;
+    align-items: center;
+    padding: 10px;
+}
+
+.register-input {
+    position: relative;
+
+    width: inherit;
+    height: inherit;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+input {
+    position: relative;
+
+    width: 275px;
+    height: 40px;
+    padding-left: 15px;
+
+    background-color: rgb(235, 235, 235);
+    border-radius: 10px;
+}
+
+.side-btn {
+    position: absolute;
+
+    top: 10px;
+    right: 40px;
+
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.error-message {
+    position: absolute;
+    padding: 2px 0;
+
+    top: 40px;
+    left: 100px;
+
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.mailCheck {
+    position: absolute;
+    
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#mailChk {
+    width: 95px;
+    top: 10px;
+    left: 124px;
+}
+
+#mailChk::placeholder {
+    font-size: 12px;
+}
+
+#mailError {
+    position: absolute;
+    opacity: 1;
+
+    padding: 0px 30px;
+
+    width: 100%;
+    top: 65px;
+    left: 5px;
+
+    color: red;
+    font-size: 15px;
+}
+
+#timer {
+    position: absolute;
+
+    width: 130px;
+    top: 44px;
+    left: 180px;
+
+    color: red;
+    font-size: 15px;
+}
+
+#timeOut {
+    position: absolute;
+
+    width: 300px;
+    top: 85px;
+    left: 90px;
+
+    color: red;
+    font-size: 12px;
+}
+
+#verify-success {
+    position: absolute;
+
+    width: 130px;
+    top: 50px;
+    left: 135px;
+
+    color: green;
+    font-size: 12px;
+}

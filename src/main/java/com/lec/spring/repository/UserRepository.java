@@ -1,5 +1,6 @@
 package com.lec.spring.repository;
 
+import com.lec.spring.DTO.RegisterRequest;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.Like;
 import com.lec.spring.domain.User;
@@ -13,7 +14,7 @@ import java.util.Optional;
 public interface UserRepository {
 
     // Return User By userKey
-    User findByUserKey(@Param("userKey") Long userKey);
+    User findByUserKey(@Param("userKey") String userKey);
 
     // Return User By username
     Optional<User> findByUserName(@Param("username") String username);
@@ -23,8 +24,8 @@ public interface UserRepository {
 
     Long countByUserKeyStartWith(@Param("dataPrefix") String dataPrefix);
 
-    // Regist New User
-    int join(User user);
+    // Register New User
+    int register(User user);
 
     // Update User Info
     int update(User user);
@@ -33,39 +34,39 @@ public interface UserRepository {
     // -- User Page --
 
     // Get All User's Item
-    List<Item> findAllItemByUserKey(@Param("userKey")Long userKey);
+    List<Item> findAllItemByUserKey(@Param("userKey")String userKey);
 
     // User's Item Count
-    int userItemCountAll(@Param("userKey")Long userKey);
+    int userItemCountAll(@Param("userKey")String userKey);
 
     // User's Trading Item Count
-    int userItemTradingCountAll(@Param("userKey")Long userKey);
+    int userItemTradingCountAll(@Param("userKey")String userKey);
 
     // User's Traded Item Count
-    int userItemTradedCountAll(@Param("userKey")Long userKey);
+    int userItemTradedCountAll(@Param("userKey")String userKey);
 
     // User's Review Count
-    int userReviewCountAll(@Param("userKey")Long userKey);
+    int userReviewCountAll(@Param("userKey")String userKey);
 
     // Change User's Password
     void updatePassword(
             @Param("newPassword") String newPassword,
-            @Param("userKey") Long userKey
+            @Param("userKey") String userKey
     );
 
     // Change Phone Number
     void updateEmail(
             @Param("newEmail") String newEmail,
-            @Param("userKey") Long userKey
+            @Param("userKey") String userKey
     );
 
     // Delete Account
     void deleteAccount(
-            @Param("userKey") Long userKey
+            @Param("userKey") String userKey
     );
 
     // Get User's Like
-    List<Item> findLikeByUserKey(@Param("userKey") Long userKey);
+    List<Item> findLikeByUserKey(@Param("userKey") String userKey);
 
     // Pagination
     List<User> searchWithPaging();
@@ -81,7 +82,4 @@ public interface UserRepository {
 
     // List All Users
     List<User> userList();
-
-
-
 }

@@ -93,7 +93,7 @@ export default function MailVerification({ email, onVerify }) {
     return (
         <>
             <Buttons 
-                btnClassname={"mailCheck"} 
+                btnClassname={"side-btn"} 
                 btnType={"button"} 
                 btnText={loading ? "요청중..." : "메일인증"} 
                 btnOnClick={handleSendCode}

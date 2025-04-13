@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 public class User {
 
-    private Long userKey;           // PK
+    private String userKey;           // PK
     private String username;        // ID
     private String password;        // PW
     private String useralias;       // Username
@@ -28,7 +28,7 @@ public class User {
 
     // MEMBER Authority
     @ToString.Exclude
-    private String authority;
+    private String auth;
 
 
 
