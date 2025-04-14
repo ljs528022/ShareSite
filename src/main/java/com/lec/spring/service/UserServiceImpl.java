@@ -22,21 +22,25 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
+
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
+//    private final ReviewRepository reviewRepository;
+    private final JwtUtil jwtUtil;
+
+
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserServiceImpl(PasswordEncoder passwordEncoder,
+                           SqlSession sqlSession,
+                           JwtUtil jwtUtil) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = sqlSession.getMapper(UserRepository.class);
+        this.authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
+//        this.reviewRepository = sqlSession.getMapper(ReviewRepository.class);
+        this.jwtUtil = jwtUtil;
 
-    private UserRepository userRepository;
-    private AuthorityRepository authorityRepository;
-    private ReviewRepository reviewRepository;
-    private JwtUtil jwtUtil;
-
-
-    @Autowired
-    public UserServiceImpl(SqlSession sqlSession) {
-        userRepository = sqlSession.getMapper(UserRepository.class);
-        authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
-//        reviewRepository = sqlSession.getMapper(ReviewRepository.class);
-        System.out.println("UserService() Created");
+        System.out.println("✅ UserService() Created");
     }
 
     @Override
@@ -102,11 +106,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public String login(LoginRequest request) {
         User user = userRepository.findByUserName(request.getUsername())
-                .orElseThrow(() -> new RuntimeException("해당 ID를 찾을 수 없습니다.."));
+                .orElseThrow(() -> new RuntimeException("아이디 또는 비밀번호가 일치하지 않습니다."));
 
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Password가 일치하지 않습니다!");
+            throw new RuntimeException("아이디 또는 비밀번호가 일치하지 않습니다.");
         }
+
+        System.out.println("받아온 Username 값 : " + user.getUsername());
 
         return jwtUtil.generateToken(user.getUsername());
     }

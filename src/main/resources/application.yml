@@ -63,5 +63,5 @@ app:
     path: upload
 
 jwt:
-  secret-key: lbhGKV0802
+  secret-key: kPn0cEAt8+QSRynzRhWQw6uFpp9KzC37yQsZzD6MxK4=
 

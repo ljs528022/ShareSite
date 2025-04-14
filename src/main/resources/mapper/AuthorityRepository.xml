@@ -5,27 +5,20 @@
 <mapper namespace="com.lec.spring.repository.AuthorityRepository">
 
     <select id="findByAuth" resultType="com.lec.spring.domain.Authority">
-        SELECT
-            authKey "authKey",
-            auth "auth"
-        FROM
-            d1_authority
-        WHERE
-            auth = #{auth}
+        SELECT authKey, auth
+        FROM d1_authority
+        WHERE auth = #{auth}
     </select>
 
     <select id="findByUser" resultType="com.lec.spring.domain.Authority" parameterType="com.lec.spring.domain.User">
-        SELECT
-            a.authKey "authKey", a.auth "auth"
-        FROM
-            d1_authority a, d1_user_authority u
-        WHERE
-            a.authKey = u.authKey AND u.userKey = #{id}
+        SELECT a.authKey, a.auth
+        FROM d1_authority a, d1_user u
+        WHERE a.auth = u.auth AND u.userKey = #{userKey}
     </select>
 
     <update id="chAuth" flushCache="true" parameterType="com.lec.spring.domain.Authority">
-        UPDATE d1_user_authority
-        SET authKey = #{authKey}
+        UPDATE d1_user
+        SET auth = #{auth}
         WHERE userKey = #{userKey}
     </update>
 

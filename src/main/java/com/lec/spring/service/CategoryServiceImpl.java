@@ -14,8 +14,9 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public CategoryServiceImpl(SqlSession sqlSession) {
+        this.categoryRepository = sqlSession.getMapper(CategoryRepository.class);
+
         System.out.println("✅ CategoryService() Created");
     }
 

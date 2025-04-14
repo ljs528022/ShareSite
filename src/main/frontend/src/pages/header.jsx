@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import "../components/css/header.css";
-import Categorybox from '../components/categorybox.jsx';
 import { useNavigate } from "react-router-dom";
 import { getData } from "../services/api.jsx";
+import Categorybox from '../components/categorybox.jsx';
 
 
-const Header = () => {
+const Header = ({ user }) => {
 
-    const [ user, setUser ] = useState([]);
     const [categories, setCategories] = useState([]);
-    const navigate = useNavigate("/");
+    const navigate = useNavigate();
 
     // 유저 정보 받아오기
-    // TODO
 
     // 카테고리 받아오기
     useEffect(() => {
@@ -20,6 +18,12 @@ const Header = () => {
         .then(data => setCategories(data))
         .catch(err => console.log("Failed Load Category: ", err));
     }, [])    
+
+    // MY PAGE Button
+    const [showPopup, setShowPopup] = useState(false);
+    const handlePopupShow = () => {
+        setShowPopup(prev => !prev);
+    }
 
     return (
         <>
@@ -41,7 +45,7 @@ const Header = () => {
                 <div className="Menu">
                     <ul>
                         <li>
-                            <button onClick={() => {user === "" ? "" : navigate("/user/login")}}>
+                            <button onClick={() => {user ? "" : navigate("/user/login")}}>
                                 <p>채팅하기</p>
                             </button>
                         </li>
@@ -51,12 +55,15 @@ const Header = () => {
                             </a>
                         </li>
                         <li>
-                            <button onClick={() => {user === "" ? navigate(`/user?${1}`): navigate(`/user/login`)}}>
+                            <button onClick={() => {user ? handlePopupShow : navigate(`/user/login`)}}>
                             <p>MY</p>
                             </button>
-                            <div className="UserMenu">
-                                
-                            </div>
+                            {showPopup ? 
+                                <div className="UserMenu">
+                                    <a href={``}>마이페이지</a>
+                                    <a onClick={null}>로그아웃</a>
+                                </div>
+                            : ""}
                         </li>
                     </ul>
                 </div>

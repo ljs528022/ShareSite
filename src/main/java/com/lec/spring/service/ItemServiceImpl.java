@@ -20,12 +20,10 @@ public class ItemServiceImpl implements ItemService {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public ItemServiceImpl(UserRepository userRepository,
-                           ItemRepository itemRepository,
-                           CategoryRepository categoryRepository) {
-        this.userRepository = userRepository;
-        this.itemRepository = itemRepository;
-        this.categoryRepository = categoryRepository;
+    public ItemServiceImpl(SqlSession sqlSession) {
+        this.userRepository = sqlSession.getMapper(UserRepository.class);
+        this.itemRepository = sqlSession.getMapper(ItemRepository.class);
+        this.categoryRepository = sqlSession.getMapper(CategoryRepository.class);
 
         System.out.println("✅ ItemService() Created");
     }

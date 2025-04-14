@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "/src/components/css/login.css";
+import { postData } from "../../services/api";
+import { useUser } from "../../services/UserContext";
 
 const Login = () => {
 
@@ -7,19 +10,44 @@ const Login = () => {
         username: "",
         password: "",
     })
+    const navigate = useNavigate();
     const [ autoLoginChecked, setAutoLoginChecked ] = useState(false);
     const [ showPassword, setShowPassword ] = useState(false);
+
+    const { setUser } = useUser();
+
 
     const handleInput = (e) => {
         setUserData({
             ...userData,
             [e.target.id]: e.target.value,
         });
-    }
+    };
 
-    // const handleLogin = asysn (e) => {
-    //     e.pre
-    // }
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        try {
+            // Request Login
+            const res = await postData("/user/login", userData);
+
+            // if Login Success, Save Token
+            const token = res.token;
+            if(autoLoginChecked) {
+                localStorage.setItem("token", token);
+            } else {
+                sessionStorage.setItem("token", token);
+            }
+
+            setUser(res.data);
+
+            navigate("/home");
+        } catch (err) {
+            console.log("로그인 실패...", err);
+            alert("로그인 정보가 올바르지 않습니다");
+        }
+
+    };
 
     const toggleAutoLoginChekc = () => {
         setAutoLoginChecked(prev=> !prev);
@@ -29,10 +57,6 @@ const Login = () => {
         setShowPassword(prev => !prev);
     }
 
-    const renderAutoLoginChecked = () => {
-        
-    }
-
 
     return (
         <>
@@ -40,7 +64,7 @@ const Login = () => {
             <div className="login-container">
                 <h3>어서오세요! 환영합니다.</h3>
                 <div className="login-box">
-                    <form className="login-form" onSubmit={null}>
+                    <form className="login-form" onSubmit={handleLogin}>
                         {/* ID & PW INPUT Part */}
                         <div className="form-row">
                             <div className="login-input">

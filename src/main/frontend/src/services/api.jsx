@@ -8,6 +8,20 @@ const api = axios.create({
     withCredentials: true,
 });
 
+api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+
+        if(token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 export const getData = async (endpoint) => {
     try {
         const response = await api.get(endpoint);
@@ -27,3 +41,5 @@ export const postData = async (endpoint, data = {}) => {
         throw error;
     }
 };
+
+export default api;

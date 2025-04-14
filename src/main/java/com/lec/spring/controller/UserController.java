@@ -1,13 +1,20 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.DTO.LoginRequest;
+import com.lec.spring.DTO.LoginResponse;
 import com.lec.spring.DTO.RegisterRequest;
+import com.lec.spring.DTO.UserInfoResponse;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.EmailService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +29,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private EmailService emailService;
+
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
@@ -45,11 +52,29 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    @CrossOrigin(origins = "http://localhost:5178/")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public LoginResponse login(@RequestBody LoginRequest request) {
         String token = userService.login(request);
-        return ResponseEntity.ok(Collections.singletonMap("token", token));
+        return new LoginResponse(token);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<UserInfoResponse> getCurrentUserInfo(@AuthenticationPrincipal UserDetails userDetails) {
+        if(userDetails == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
+        String username = userDetails.getUsername();
+        User user = userService.findbyUserName(username)
+                .orElseThrow(() -> new RuntimeException("유저 정보를 찾을 수 없습니다.."));
+
+        UserInfoResponse response = new UserInfoResponse(
+                user.getUserKey(),
+                user.getUsername(),
+                user.getUseralias(),
+                user.getEmail(),
+                user.getAuth()
+        );
+
+        return ResponseEntity.ok(response);
+    }
 }

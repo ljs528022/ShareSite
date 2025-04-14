@@ -1,40 +1,39 @@
 import { Route, Routes } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import Home from './pages/home';
 import Header from './pages/header';
 import Footer from './pages/footer';
 import Login from './pages/user/login';
 import Register from './pages/user/register';
+import { UserProvider } from './services/UserContext';
+import { useEffect, useState } from 'react';
 
 function App() {
 
-  const [ user, setUser ] = useState();
-
-  // useEffect(() => {
-  //   getData('/api/')
-  //     .then(data => console.log('Response:', data))
-  //     .catch(error => console.error('Error:', error));
-  // })
+  //현재 로그인한 유저
+  const [ currentUser, setCurrentUser ] = useState(null);
 
   return (
     <>
-      <Header />
-      <Routes>
-        {/* Main page */}
-        <Route path='/home' Component={Home}></Route>
+      <UserProvider>
+        <Header user={currentUser}/>
+        <Routes>
 
-        {/* Login & Register */}
-        <Route path='/user/login' Component={Login}></Route>
-        <Route path='/user/register' Component={Register}></Route>
+          {/* Main page */}
+          <Route path='/home' Component={Home}></Route>
 
-        {/* User Page */}
-        <Route></Route>
+          {/* Login & Register */}
+          <Route path='/user/login' Component={Login}></Route>
+          <Route path='/user/register' Component={Register}></Route>
 
-        {/* Item Page */}
-        <Route></Route>
+          {/* User Page */}
+          <Route></Route>
 
-      </Routes>
-      <Footer />
+          {/* Item Page */}
+          <Route></Route>
+
+        </Routes>
+        <Footer />
+      </UserProvider>
     </>
   )
 }

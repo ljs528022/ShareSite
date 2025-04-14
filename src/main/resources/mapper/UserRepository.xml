@@ -67,13 +67,15 @@
     </sql>
 
     <select id="findByUserKey" resultType="com.lec.spring.domain.User">
-        <include refid="SELECT"/>
-        AND userKey = #{userKey}
+        SELECT userKey
+        FROM d1_user
+        WHERE userKey = #{userKey}
     </select>
 
     <select id="findByUserName" resultType="com.lec.spring.domain.User">
-        <include refid="SELECT"/>
-        AND userKey = #{username}
+        SELECT *
+        FROM d1_user
+        WHERE username = #{username}
     </select>
 
     <select id="existsByUsername" resultType="boolean" parameterType="String">
