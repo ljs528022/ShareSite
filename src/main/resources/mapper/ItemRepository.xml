@@ -18,12 +18,7 @@
             location,
             tradestatus,
             writeDate,
-            viewcnt,
-            img1,
-            img2,
-            img3,
-            img4,
-            img5
+            viewcnt
     </sql>
 
     <sql id="d1_item_base">
@@ -39,12 +34,7 @@
         location,
         tradestatus,
         writeDate,
-        viewcnt,
-        img1,
-        img2,
-        img3,
-        img4,
-        img5
+        viewcnt
     </sql>
 
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
@@ -68,11 +58,6 @@
         <result column="tradestatus" property="tradestatus" />
         <result column="writeDate" property="writeDate" />
         <result column="viewcnt" property="viewcnt" />
-        <result column="img1" property="img1" />
-        <result column="img2" property="img2" />
-        <result column="img3" property="img3" />
-        <result column="img4" property="img4" />
-        <result column="img5" property="img5" />
     </resultMap>
 
     <resultMap id="mapCategory" type="com.lec.spring.domain.Category">
@@ -83,9 +68,9 @@
     <insert id="write" flushCache="true" parameterType="com.lec.spring.domain.Item"
             useGeneratedKeys="true" keyColumn="itemKey" keyProperty="itemKey">
         INSERT INTO d1_item
-        (userKey, cateKey, subject, content, price, location, itemtype, purtype, tradeStatus, writeDate, img1, img2, img3, img4, img5)
+        (userKey, cateKey, subject, content, price, location, itemtype, purtype, tradeStatus, writeDate)
         VALUES
-        (#{userKey}, #{cateKey}, #{subject}, #{content}, #{price}, #{location}, #{itemtype}, #{purtype}, #{tradeStatus}, #{writeDate}, #{img1}, #{img2}, #{img3}, #{img4}, #{img5})
+        (#{userKey}, #{cateKey}, #{subject}, #{content}, #{price}, #{location}, #{itemtype}, #{purtype}, #{tradeStatus}, #{writeDate})
     </insert>
 
     <update id="chTradeState" flushCache="true">
@@ -103,7 +88,7 @@
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Item">
         UPDATE d1_item
-        SET subject = #{subject}, content = #{content}, price = #{price}, cateKey = #{cateKey}, location = #{location}, itemtype = #{itemtype}, purtype = #{purtype}, img1 = #{img1}, img2 = #{img2}, img3 = #{img3}, img4 = #{img4}, img5 = #{img5}
+        SET subject = #{subject}, content = #{content}, price = #{price}, cateKey = #{cateKey}, location = #{location}, itemtype = #{itemtype}, purtype = #{purtype}
         WHERE itemKey = #{itemKey}
     </update>
 

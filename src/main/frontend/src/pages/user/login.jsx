@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "/src/components/css/login.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { postData } from "../../services/api";
 import { useUser } from "../../services/UserContext";
+import { getUserInfo } from "../../services/getUserInfo";
+import { useToast } from "../../util/ToastContext";
 
 const Login = () => {
 
@@ -15,6 +17,7 @@ const Login = () => {
     const [ showPassword, setShowPassword ] = useState(false);
 
     const { setUser } = useUser();
+    const { showToast } = useToast();
 
 
     const handleInput = (e) => {
@@ -39,8 +42,9 @@ const Login = () => {
                 sessionStorage.setItem("token", token);
             }
 
-            setUser(res.data);
-
+            const userInfo = await getUserInfo();
+            setUser(userInfo);
+            showToast(`로그인 성공! ${userData.username}님 어서오세요!`);
             navigate("/home");
         } catch (err) {
             console.log("로그인 실패...", err);

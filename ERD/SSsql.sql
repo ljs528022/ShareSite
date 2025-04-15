@@ -44,12 +44,15 @@ CREATE TABLE d1_item
 	tradestatus boolean,
 	writeDate datetime,
 	viewcnt int,
-	img1 varchar(600),
-	img2 varchar(600),
-	img3 varchar(600),
-	img4 varchar(600),
-	img5 varchar(600),
 	PRIMARY KEY (itemKey)
+);
+
+CREATE TABLE d1_item_image
+(
+	imageKey int NOT NULL AUTO_INCREMENT,
+	itemKey int,
+	imgUrl VARCHAR(255),
+	PRIMARY KEY (imageKey)
 );
 
 
@@ -142,6 +145,13 @@ ALTER TABLE d1_review
 ALTER TABLE d1_item
 	ADD FOREIGN KEY (userKey)
 	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+ALTER TABLE d1_item_image
+	ADD FOREIGN KEY (itemKey)
+	REFERENCES d1_item (itemKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;

@@ -5,35 +5,35 @@ import Footer from './pages/footer';
 import Login from './pages/user/login';
 import Register from './pages/user/register';
 import { UserProvider } from './services/UserContext';
-import { useEffect, useState } from 'react';
+import { ToastProvider } from './util/ToastContext';
+import ItemWrite from './pages/item/itemWrite';
 
 function App() {
 
-  //현재 로그인한 유저
-  const [ currentUser, setCurrentUser ] = useState(null);
-
   return (
     <>
-      <UserProvider>
-        <Header user={currentUser}/>
-        <Routes>
+      <ToastProvider>
+        <UserProvider>
+          <Header />
+          <Routes>
 
-          {/* Main page */}
-          <Route path='/home' Component={Home}></Route>
+            {/* Main page */}
+            <Route path='/home' Component={Home}></Route>
 
-          {/* Login & Register */}
-          <Route path='/user/login' Component={Login}></Route>
-          <Route path='/user/register' Component={Register}></Route>
+            {/* Login & Register */}
+            <Route path='/user/login' Component={Login}></Route>
+            <Route path='/user/register' Component={Register}></Route>
 
-          {/* User Page */}
-          <Route></Route>
+            {/* User Page */}
+            <Route></Route>
 
-          {/* Item Page */}
-          <Route></Route>
+            {/* Item Page */}
+            <Route path='/product/write' Component={ItemWrite}></Route>
 
-        </Routes>
-        <Footer />
-      </UserProvider>
+          </Routes>
+          <Footer />
+        </UserProvider>
+      </ToastProvider>
     </>
   )
 }

@@ -1,6 +1,6 @@
 import "../components/css/header.css";
 
-const Categorybox = ({ categories }) => {
+const Categorybox = ({ categories, className }) => {
 
     const parentCate = [];
     const subCate = [];
@@ -20,7 +20,7 @@ const Categorybox = ({ categories }) => {
             {parentCate.length > 0 && parentCate.map((pcate) => (
                 <li key={pcate.cateKey}>
                     <a href={`/search?category=${pcate.cateKey}`}>{pcate.catename}</a>
-                    <div className="SubCategory">
+                    <div className={className}>
                         <ul>
                             {subCate
                                 .filter((cate) => Math.floor(cate.cateKey / 100) === Math.floor(pcate.cateKey / 100))

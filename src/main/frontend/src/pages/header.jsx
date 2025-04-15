@@ -1,28 +1,47 @@
-import { useEffect, useState } from "react";
 import "../components/css/header.css";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getData } from "../services/api.jsx";
 import Categorybox from '../components/categorybox.jsx';
+import { useUser } from "../services/UserContext.jsx";
+import { useToast } from "../util/ToastContext.jsx";
+import { getCategory } from "../services/getCategory.jsx";
 
 
-const Header = ({ user }) => {
+const Header = () => {
+
+    // 유저 정보
+    const { user, setUser } = useUser();
+    const { showToast } = useToast();
 
     const [categories, setCategories] = useState([]);
     const navigate = useNavigate();
 
-    // 유저 정보 받아오기
-
     // 카테고리 받아오기
     useEffect(() => {
-        getData("/api/category")
-        .then(data => setCategories(data))
-        .catch(err => console.log("Failed Load Category: ", err));
-    }, [])    
+        const fetchCategories = async () => {
+            const data = await getCategory();
+            setCategories(data);
+        };
+
+        fetchCategories();
+    }, [])
 
     // MY PAGE Button
     const [showPopup, setShowPopup] = useState(false);
     const handlePopupShow = () => {
         setShowPopup(prev => !prev);
+    }
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("refreshToken");
+    
+        setUser(null);
+        showToast("로그아웃 완료! 나중에 또 들러주세요~");
+        navigate("/home");
     }
 
     return (
@@ -45,23 +64,44 @@ const Header = ({ user }) => {
                 <div className="Menu">
                     <ul>
                         <li>
-                            <button onClick={() => {user ? "" : navigate("/user/login")}}>
+                            {/* 옆에서 채팅창 나오게 만들기 (추후에) */}
+                            <button onClick={() => {
+                                if(user) {
+                                    null;
+                                } else {
+                                    alert("로그인이 필요한 기능입니다!")
+                                    navigate("/user/login");
+                                }
+                                }}>
                                 <p>채팅하기</p>
                             </button>
                         </li>
                         <li>
-                            <a href={user === "" ? "/sell" : "/user/login"}>
+                            <a onClick={() => {
+                                if(user) {
+                                    navigate("/product/write")
+                                } else {
+                                    alert("로그인이 필요한 기능입니다!")
+                                    navigate("/user/login");
+                                }
+                            }}>
                                 <p>판매하기</p>
                             </a>
                         </li>
                         <li>
-                            <button onClick={() => {user ? handlePopupShow : navigate(`/user/login`)}}>
+                            <button onClick={() => {
+                                if(user) {
+                                    handlePopupShow();
+                                } else {
+                                    navigate("/user/login");
+                                }
+                            }}>
                             <p>MY</p>
                             </button>
-                            {showPopup ? 
+                            {showPopup && user ? 
                                 <div className="UserMenu">
-                                    <a href={``}>마이페이지</a>
-                                    <a onClick={null}>로그아웃</a>
+                                    <a href={`/user?${user.userKey}`}>마이페이지</a>
+                                    <div className="logout" onClick={handleLogout}>로그아웃</div>
                                 </div>
                             : ""}
                         </li>
@@ -76,7 +116,7 @@ const Header = ({ user }) => {
                     ☰ 카테고리
                     <div className="CategoryDetail">
                         <ul>
-                            <Categorybox categories={categories} />
+                            <Categorybox categories={categories} className={"SubCategory"} />
                         </ul>
                     </div>
                 </div>

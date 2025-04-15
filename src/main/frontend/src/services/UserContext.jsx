@@ -13,13 +13,23 @@ export const UserProvider = ({ children }) => {
                 const data = await getUserInfo();
                 setUser(data);
             } catch (err) {
+                if(err.response?.status === 401) {
+                    localStorage.removeItem("token");
+                    sessionStorage.removeItem("token");
+                    setUser(null);
+                }
                 setUser(null);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchUser();
+        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+        if(token) {
+            fetchUser();
+        } else {
+            setLoading(false);
+        };
     }, []);
 
     return (

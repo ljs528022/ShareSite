@@ -1,0 +1,35 @@
+.write-container {
+    width: 100%;
+    height: 100%;
+
+    margin: 0 auto;
+}
+
+.write-from {
+    margin: 0 auto;
+    max-width: 1024px;
+}
+
+.form-row {
+    display: block;
+
+    text-align: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.input-img input {
+    width: 90px;
+    height: 90px;
+}
+
+.input-img span {
+    position: relative;
+    
+    left: -68px;
+    top: 55px;
+
+    color: gray;
+    font-weight: bold;
+    text-align: center;
+}

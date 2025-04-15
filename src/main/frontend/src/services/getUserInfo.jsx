@@ -1,15 +1,15 @@
 import api from "./api";
 
-
 export const getUserInfo = async () => {
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
     if(!token) {
-        throw new Error("No Token Found...");
+        console.log("No Token Found...Skipping /user/me Request!")
+        return null;
     }
 
     try {
-        const res = await api.get("/user/me", {
+        const res = await api.get("/api/profile", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -17,6 +17,6 @@ export const getUserInfo = async () => {
         return res.data;
     } catch (err) {
         console.log("Failed To Fetch User Info...", err);
-        throw err;
+        return null;
     }
 };

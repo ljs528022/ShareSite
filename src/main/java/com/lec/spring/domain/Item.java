@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -28,11 +30,7 @@ public class Item {
     private LocalDateTime writeDate;// Write Date
     private Long viewcnt;           // View Count
 
-    private String img1;
-    private String img2;
-    private String img3;
-    private String img4;
-    private String img5;
+    private List<MultipartFile> img;
 
     private User user;
     private Category category;

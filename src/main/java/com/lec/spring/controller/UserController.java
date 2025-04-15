@@ -57,24 +57,4 @@ public class UserController {
         return new LoginResponse(token);
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<UserInfoResponse> getCurrentUserInfo(@AuthenticationPrincipal UserDetails userDetails) {
-        if(userDetails == null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        String username = userDetails.getUsername();
-        User user = userService.findbyUserName(username)
-                .orElseThrow(() -> new RuntimeException("유저 정보를 찾을 수 없습니다.."));
-
-        UserInfoResponse response = new UserInfoResponse(
-                user.getUserKey(),
-                user.getUsername(),
-                user.getUseralias(),
-                user.getEmail(),
-                user.getAuth()
-        );
-
-        return ResponseEntity.ok(response);
-    }
 }

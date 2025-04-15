@@ -1,11 +1,18 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.DTO.UserInfoResponse;
+import com.lec.spring.domain.User;
 import com.lec.spring.service.EmailService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.JwtUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,6 +27,9 @@ public class AuthController {
     private EmailService emailService;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     // ID Verification
     @PostMapping("/usernameChk")
@@ -63,6 +73,43 @@ public class AuthController {
             return ResponseEntity.ok("인증 성공");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증 실패 또는 시간이 초과되었습니다.");
+        }
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<UserInfoResponse> getCurrentUserInfo(@AuthenticationPrincipal UserDetails userDetails) {
+        if(userDetails == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String username = userDetails.getUsername();
+        User user = userService.findbyUserName(username)
+                .orElseThrow(() -> new RuntimeException("유저 정보를 찾을 수 없습니다.."));
+
+        UserInfoResponse response = new UserInfoResponse(
+                user.getUserKey(),
+                user.getUsername(),
+                user.getUseralias(),
+                user.getEmail(),
+                user.getAuth()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> payload) {
+        String refreshToken = payload.get("refreshToken");
+
+        try {
+            Claims claims = jwtUtil.getClaims(refreshToken);
+            String username = claims.getSubject();
+            String newAccessToken = jwtUtil.generateToken(username);
+            return ResponseEntity.ok(Map.of("accessToken", newAccessToken));
+        } catch (ExpiredJwtException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token expired");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid refresh token");
         }
     }
 }
