@@ -13,11 +13,15 @@ export const UserProvider = ({ children }) => {
                 const data = await getUserInfo();
                 setUser(data);
             } catch (err) {
-                if(err.response?.status === 401) {
+                const status = err.response?.status;
+
+                if(status === 401 || status === 500) {
                     localStorage.removeItem("token");
                     sessionStorage.removeItem("token");
-                    setUser(null);
+                    alert("시간이 너무 지나서 자동 로그아웃 되었어요! 다시 로그인 해주세요!");
+                    window.location.href = "/user/login";
                 }
+
                 setUser(null);
             } finally {
                 setLoading(false);

@@ -17,10 +17,10 @@ public class JwtUtil {
 
     @Value("${jwt.secret-key}")
     private String secretKeyPlain;
-
     private Key secretKey;
-
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 10;   // 10 Hours
+//    private final long EXPIRATION_TIME = 1000 * 60 * 5;   // 테스트 용 5분
+
 
     @PostConstruct
     protected void init() {

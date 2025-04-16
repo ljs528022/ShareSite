@@ -10,8 +10,11 @@ import java.util.List;
 @Mapper
 public interface ItemRepository {
 
-    // Regist Item
+    // Write Item
     int write(Item item);
+
+    // Write Item's Imgs
+    int insertImage(Long itemKey, String url);
 
     // Find All Item
     List<Item> findAllItem();

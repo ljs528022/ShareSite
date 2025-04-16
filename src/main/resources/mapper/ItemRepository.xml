@@ -73,6 +73,12 @@
         (#{userKey}, #{cateKey}, #{subject}, #{content}, #{price}, #{location}, #{itemtype}, #{purtype}, #{tradeStatus}, #{writeDate})
     </insert>
 
+    <insert id="insertImage" flushCache="true" parameterType="com.lec.spring.domain.Item"
+            useGeneratedKeys="true" keyColumn="imageKey" keyProperty="imageKey">
+        INSERT INTO d1_item_image (itemKey, imgUrl)
+        VALUES (#{itemKey}, #{imgUrl})
+    </insert>
+
     <update id="chTradeState" flushCache="true">
         UPDATE d1_item
         SET tradeStatus = true

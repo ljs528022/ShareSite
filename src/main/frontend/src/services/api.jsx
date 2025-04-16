@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useToast } from "../util/ToastContext";
 
 const api = axios.create({
     baseURL: 'http://localhost:8093',
@@ -34,44 +35,22 @@ function addSubscriber(callback) {
     subscribers.push(callback);
 }
 
+let isLoggingOut = false;
+
 api.interceptors.response.use(
     response => response,
     async error => {
-        const originalRequest = error.config;
+        const status = error.response?.status;
 
-        if(error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        if((status === 500 || status === 401) && !isLoggingOut) {
+            isLoggingOut = true;
 
-            if(isRefreshing) {
-                return new Promise(resolve => {
-                    addSubscriber(token => {
-                        originalRequest.headers.Authorization = `Bearer ${token}`;
-                        resolve(api(originalRequest));
-                    });
-                });
-            }
+            localStorage.removeItem("token");
+            localStorage.removeItem("refreshToken");
 
-            isRefreshing = true;
-
-            const refreshToken = localStorage.getItem("refreshToken");
-            try {
-                const { data } = await postData("/auth/refresh", {
-                    refreshToken,
-                });
-
-                localStorage.setItem("token", data.accessToken);
-                isRefreshing = false;
-                onRefreshed(data.accessToken);
-
-                originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-                return api(originalRequest);
-            } catch (refreshError) {
-                localStorage.removeItem("token");
-                localStorage.removeItem("refreshToken");
-                window.location.href = "/user/login";
-                return Promise.reject(refreshError);
-            }
-        }
+            alert("시간이 너무 지나서 자동 로그아웃 되었어요! 다시 로그인 해주세요!");
+            window.location.href = "/user/login";
+        }    
         
         return Promise.reject(error);
     }

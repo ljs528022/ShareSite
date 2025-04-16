@@ -24,7 +24,7 @@ public interface ItemService {
     // Find Item By UserKey
     List<Item> findByUserKey(Long userKey);
 
-    int write(Item item);
+    int write(Item item, List<String> urls);
 
     // Item's Detail
     Item detail(Long itemKey);

@@ -96,20 +96,4 @@ public class AuthController {
 
         return ResponseEntity.ok(response);
     }
-
-    @PostMapping("/refresh")
-    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> payload) {
-        String refreshToken = payload.get("refreshToken");
-
-        try {
-            Claims claims = jwtUtil.getClaims(refreshToken);
-            String username = claims.getSubject();
-            String newAccessToken = jwtUtil.generateToken(username);
-            return ResponseEntity.ok(Map.of("accessToken", newAccessToken));
-        } catch (ExpiredJwtException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token expired");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid refresh token");
-        }
-    }
 }

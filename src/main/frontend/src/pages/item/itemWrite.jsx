@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getCategory } from "../../services/getCategory";
 import { useUser } from "../../services/UserContext";
 import { useToast } from "../../util/ToastContext";
+import { postData } from "../../services/api";
 
 
 const ItemWrite = () => {
@@ -63,6 +64,23 @@ const ItemWrite = () => {
 
     const toggleCateSelector = () => {
         
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("item", new Blob([JSON.stringify(itemData)], { type: "application/json" }));
+
+        for(let i = 0; i < itemData.img.length; i++) {
+            formData.append("img", itemData.img[i]);
+        }
+
+        await postData("/product/item", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
     }
 
 

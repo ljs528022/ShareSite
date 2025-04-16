@@ -55,9 +55,15 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public int write(Item item) {
-        // logged User's Info
-        return 0;
+    public int write(Item item, List<String> urls) {
+        int result = itemRepository.write(item);
+        if(result > 0) {
+            Long itemKey = item.getItemKey();
+            for(String url : urls) {
+                itemRepository.insertImage(itemKey, url);
+            }
+        }
+        return result;
     }
 
     @Override

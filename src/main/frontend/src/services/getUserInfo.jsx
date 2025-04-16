@@ -1,5 +1,7 @@
 import api from "./api";
 
+let isAlreadyLoggedOut = false;
+
 export const getUserInfo = async () => {
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
@@ -17,6 +19,6 @@ export const getUserInfo = async () => {
         return res.data;
     } catch (err) {
         console.log("Failed To Fetch User Info...", err);
-        return null;
+        throw err;
     }
 };

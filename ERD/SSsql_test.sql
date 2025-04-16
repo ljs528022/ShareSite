@@ -8,6 +8,8 @@ SELECT * FROM d1_item;
 
 SELECT * FROM d1_verifytoken;
 
+SELECT * FROM d1_item_image;
+
 SELECT count(*)
 FROM d1_user 
 WHERE userKey LIKE LOWER(CONCAT('%', 9160, '%'));

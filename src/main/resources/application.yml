@@ -65,3 +65,5 @@ app:
 jwt:
   secret-key: kPn0cEAt8+QSRynzRhWQw6uFpp9KzC37yQsZzD6MxK4=
 
+file:
+  upload-dir: uploads/item-images
