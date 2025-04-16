@@ -15,21 +15,192 @@
 
     text-align: center;
     align-items: center;
+
     padding: 10px;
 }
 
-.input-img input {
-    width: 90px;
-    height: 90px;
+.input-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
 }
 
-.input-img span {
-    position: relative;
-    
-    left: -68px;
-    top: 55px;
+.input-img label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
 
+    gap: 10px;
+
+    width: 90px;
+    height: 90px;
+
+    border-radius: 10px;
+    border: 2px solid #777;
+    background-color: rgb(235, 235, 235);
+
+    cursor: pointer;
+}
+
+.input-img label span {
     color: gray;
     font-weight: bold;
     text-align: center;
+
+    cursor: pointer;
+}
+
+.input-subject input {
+    width: 260px;
+    padding-right: 15px;
+
+    font-size: 13.5px;
+    font-weight: bold;
+
+    border: 2px solid #777;
+}
+
+
+.input-price {
+    position: relative;
+
+    width: 300px;
+
+    margin: 0 auto;
+}
+
+.input-price input {
+    width: 260px;
+    padding-left: 30px;
+    
+    font-size: 13.5px;
+    font-weight: bold;
+    color: #777;
+
+    border: 2px solid #777;
+}
+
+.input-price-wrapper span {
+    position: absolute;
+
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    color: #777;
+    font-size: 13.5px;
+    font-weight: bold;
+
+    z-index: 1;
+}
+
+.input-content textarea {
+    width: 260px;
+    height: 100px;
+
+    resize: none;
+    overflow: hidden;
+    
+    padding: 15px;
+    
+    font-size: 13.5px;
+
+    border: 2px solid #777;
+    border-radius: 10px;
+    background-color: rgb(235, 235, 235);
+}
+
+.input-itemtype {
+    position: relative;
+}
+
+.input-itemtype label {
+    width: 300px;
+
+    text-align: left;
+    font-size: 20px;
+}
+
+.radio-group {
+    display: flex;
+    margin: 0 auto;
+
+    padding-right: 80px;
+    width: 230px;
+}
+
+.radio-box {
+    position: relative;
+    display: flex;
+    cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+    display: none;
+}
+
+.radio-group span {
+    width: 70px;
+    
+    margin-top: 10px;
+    
+    padding: 10px;
+
+    text-align: center;
+    font-size: 15px;
+
+    color: #91B4FF;
+    background-color: white;
+    border: 2px solid #91B4FF;
+    border-radius: 10px;
+}
+
+.radio-group input[type="radio"]:checked + span {
+    color: white;
+    background-color: #91B4FF;
+}
+
+.input-purtype {
+    position: relative;
+}
+
+.input-purtype label {
+    width: 300px;
+
+    text-align: left;
+    font-size: 20px;
+}
+
+.location-btn {
+    position: relative;
+}
+
+.location-btn label {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+
+    width: 300px;
+    text-align: left;
+
+    font-size: 20px;
+}
+
+.location-btn button {
+    width: 110px;
+    margin-top: 10px;
+    margin-right: 180px;
+    padding: 10px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    color: white;
+    background-color: #91B4FF;
+    border: 2px solid #91B4FF;
+    border-radius: 10px;
 }
