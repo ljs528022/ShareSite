@@ -25,7 +25,9 @@ const ItemWrite = () => {
         img: [],
     });
 
-    const [ formattedPrice, setFormattedPrice ] = useState('');
+    const [ formattedPrice, setFormattedPrice ] = useState(0);
+    const [ selectedCate, setSelectedCate ] = useState(null);
+    const [ pcateSelected, setPcateSelected ] = useState(false);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -62,10 +64,28 @@ const ItemWrite = () => {
         } else {
             subCate.push(cate)
         }
-    })
+    });
 
-    const toggleCateSelector = () => {
-        
+    const handleCateClick = (cateKey) => {
+        const fakeEvent = {
+            target: {
+                id: "cateKey",
+                value: cateKey
+            }
+        };
+        handleInput(fakeEvent);
+        setSelectedCate(cateKey);
+    }
+
+    const togglePcateSelected = (e) => {
+        if(selectedCate === null) {
+            handleCateClick(e.target.value);
+            setPcateSelected(true);
+        }
+        if(selectedCate != e.target.value) {
+            handleCateClick(e.target.value);
+            setPcateSelected(true);
+        }
     }
 
     const handlePriceChange = (e) => {
@@ -97,9 +117,7 @@ const ItemWrite = () => {
                                 <span>{`${itemData.img.length} / 5`}</span>
                             </label>
                             <input id="img" type="file" accept="image/*" multiple onChange={handleImageChange} style={{ display: "none"}} />
-                            <div>
-
-                            </div>
+                            <div className="img-box"></div>
                         </div>
                     </div> 
                     {/* 상품명 */}
@@ -112,7 +130,36 @@ const ItemWrite = () => {
                     <div className="form-row">
                         {/* 카테고리를 분류하여 세부적으로 선택할 수 있게 해야함 */}
                         <div className="input-category">
-                            
+                            <label>카테고리 선택</label>
+                            <div className="category-wrapper">
+                                <div className={pcateSelected ? "parent-category-selected" : "parent-category"}>
+                                    {parentCate.map((pcate) => (
+                                        <button 
+                                            key={pcate.cateKey}
+                                            type="button"
+                                            className={selectedCate == pcate.cateKey ? "selected" : ""}
+                                            value={pcate.cateKey}
+                                            onClick={togglePcateSelected}>
+                                            {pcate.catename}
+                                        </button>
+                                        ))}
+                                </div>
+                                {pcateSelected &&
+                                <div className="sub-category">
+                                    {subCate
+                                        .filter(sub => Math.floor(sub.cateKey / 100) * 100 === Math.floor(selectedCate / 100) * 100)
+                                        .map(scate => (
+                                            <button
+                                                key={scate.cateKey}
+                                                className={selectedCate === scate.cateKey ? "selected" : ""}
+                                                type="button"
+                                                value={scate.cateKey}                                                onClick={() => handleCateClick(scate.cateKey)}>
+                                            {scate.catename}
+                                            </button>
+                                    ))}
+                                </div>
+                                }
+                            </div>
                         </div>
                     </div>
                     {/* 가격란 */}
