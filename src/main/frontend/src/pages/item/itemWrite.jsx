@@ -12,7 +12,7 @@ const ItemWrite = () => {
     const { user } = useUser();
     const { showToast } = useToast();
 
-    const [ categories, setCategories ] = useState([]);
+    const [ categories, setCategories ] = useState([]); // 카테고리 정보
     const [ itemData, setItemData ] = useState({
         userKey: "",
         cateKey: "",
@@ -23,7 +23,8 @@ const ItemWrite = () => {
         itemtype: "",
         purtype: 0,
         img: [],
-    });
+    }); // 상품 정보
+    
 
     const [ formattedPrice, setFormattedPrice ] = useState(0);
     const [ selectedCate, setSelectedCate ] = useState(null);
@@ -46,13 +47,50 @@ const ItemWrite = () => {
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        if(files.length > 5) {
+
+        e.target.value = null;
+
+        if(files.length > 5 || itemData.img.length + files.length > 5) {
             showToast("이미지는 최대 5장까지만 가능해요!");
             return;
         }
 
-        setItemData(prev => ({ ...prev, img: files}));
+        const newImgs = files.map((file, index) => ({
+            file,
+            isMain: itemData.img.length === 0 && index === 0 
+        }));
+
+        setItemData(prev => ({ ...prev, img: [...prev.img, ...newImgs]}));
     }
+
+    const setMainImage = (index) => {
+        setItemData(prev => ({
+            ...prev,
+            img: prev.img.map((img, i) => ({
+                ...img,
+                isMain: i === index
+            }))
+        }));
+    };
+    
+    const handleDeleteImage = (index) => {
+        setItemData(prev => {
+            const wasMainDeleted = prev.img[index]?.isMain;
+            const newImgList = prev.img.filter((_, idx) => idx !== index);
+
+            const updated = wasMainDeleted && newImgList > 0 
+                ? newImgList.map((img, idx) => ({
+                    ...img,
+                    isMai: idx === 0
+                }))
+                : newImgList
+
+            return {
+                ...prev,
+                img: updated
+            }
+        });
+    };
 
     // 카테고리 분류용
     const parentCate = [];
@@ -117,7 +155,21 @@ const ItemWrite = () => {
                                 <span>{`${itemData.img.length} / 5`}</span>
                             </label>
                             <input id="img" type="file" accept="image/*" multiple onChange={handleImageChange} style={{ display: "none"}} />
-                            <div className="img-box"></div>
+                            <div className="img-box">
+                                {itemData.img.map((img, index) => (
+                                    <div
+                                        key={index}
+                                        className={`img-thumb${img.isMain ? " main" : ""}`}
+                                        onClick={() => setMainImage(index)}
+                                    >
+                                        <img
+                                            src={URL.createObjectURL(img.file)}
+                                            alt={`preview-${index}`} />
+                                        <span className="img-delete-btn" onClick={() => handleDeleteImage(index)}>x</span>
+                                        {img.isMain ? <span className="badge">대표이미지</span> : <span className="empty">임시데이터</span>}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div> 
                     {/* 상품명 */}
