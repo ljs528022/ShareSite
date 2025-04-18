@@ -2,8 +2,9 @@ import "../../components/css/itemWrite.css";
 import { useEffect, useState } from "react";
 import { getCategory } from "../../services/getCategory";
 import { useUser } from "../../services/UserContext";
-import { useToast } from "../../util/ToastContext";
+import { useToast } from "../../components/ToastContext";
 import { postData } from "../../services/api";
+import MapSearch from "../../components/MapSearch";
 
 
 const ItemWrite = () => {
@@ -19,7 +20,7 @@ const ItemWrite = () => {
         subject: "",
         content: "",
         price: 0,
-        loacation: "",
+        location: [],
         itemtype: "",
         purtype: 0,
         img: [],
@@ -29,6 +30,7 @@ const ItemWrite = () => {
     const [ formattedPrice, setFormattedPrice ] = useState(0);
     const [ selectedCate, setSelectedCate ] = useState(null);
     const [ pcateSelected, setPcateSelected ] = useState(false);
+    const [ mapSearchOpen, setMapSearchOpen ] = useState(false);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -133,12 +135,19 @@ const ItemWrite = () => {
         setFormattedPrice(formatted);
     }
 
-    const handleSubmit = async (e) => {
+    const handleKeyDown = (e) => {
         e.preventDefault();
 
         
     }
+ 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
+
+    }
+
+    console.log(itemData.location);
 
     return (
         <>
@@ -269,18 +278,40 @@ const ItemWrite = () => {
 
                     {/* 희망지역 */}
                     <div className="form-row">
-                        <div className="location-btn">
+                        <div className="location-wrapper">
                             <label>희망지역</label>
-                            <button type="button" onClick={null}>
-                                + 추가하기
-                            </button>
-                            <div className="location-box">
-                                <ul>
-                                    
-                                </ul>
+                            <div className="location-btn">
+                                <button type="button" onClick={() => setMapSearchOpen(true)}>
+                                    + 추가하기
+                                </button>
+                                <div className="location-box">
+                                    <ul>
+                                        {itemData.location.map((loc) => (
+                                            <li key={loc.id}>
+                                                {loc.place_name}
+                                                <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setItemData(prev => ({
+                                                        ...prev,
+                                                        loacation: prev.location.filter(item => item.id !== loc.id)
+                                                    }))}
+                                                >x</button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>  
+                    </div> 
+                    
+                    <MapSearch
+                        isOpen={mapSearchOpen}
+                        onClose={() => setMapSearchOpen(false)}
+                        itemData={itemData}
+                        setItemData={setItemData}
+                    />
+
                     {/* 등록버튼 */}
                 </form>
             </div>

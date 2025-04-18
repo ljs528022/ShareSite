@@ -336,14 +336,15 @@
 }
 
 /* 희망지역 부분 */
-.location-btn {
+.location-wrapper {
     position: relative;
+
+    display: flex;
+    flex-direction: column;
 }
 
-.location-btn label {
-    display: flex;
+.location-wrapper label {
     margin: 0 auto;
-    flex-direction: column;
 
     width: 300px;
     text-align: left;
@@ -351,11 +352,22 @@
     font-size: 20px;
 }
 
-.location-btn button {
-    width: 110px;
-    margin-top: 10px;
-    margin-right: 180px;
+.location-btn {
+    display: flex;
+    flex-direction: row;
+
+    width: 300px;
+    height: 50px;
+
+    margin: 0 auto;
+    
+    text-align: left;
+
     padding: 10px;
+}
+
+.location-btn button {
+    padding: 10px 15px;
 
     font-size: 15px;
     font-weight: bold;
@@ -364,4 +376,34 @@
     background-color: #91B4FF;
     border: 2px solid #91B4FF;
     border-radius: 10px;
+}
+
+.location-box {
+    position: absolute;
+    width: 700px;
+    margin: -7px 110px;
+}
+
+.location-box ul {
+    display: flex;
+    flex-direction: row;
+    padding: 0px 10px;
+    float: left;
+}
+
+.location-box li {
+    width: inherit;
+
+    color: #777;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.location-box button {
+
+    padding: 5px;
+
+    color: #777;
+    background-color: white;
+    border: none;
 }
