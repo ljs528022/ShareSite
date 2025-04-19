@@ -25,7 +25,6 @@ const ItemWrite = () => {
         purtype: 0,
         img: [],
     }); // 상품 정보
-    
 
     const [ formattedPrice, setFormattedPrice ] = useState(0);
     const [ selectedCate, setSelectedCate ] = useState(null);
@@ -38,8 +37,12 @@ const ItemWrite = () => {
             setCategories(data);
         };
 
+        if(user) {
+            setItemData(prev => ({ ...prev, userKey: user.userKey}));
+        }
+
         fetchCategories();
-    }, []);
+    }, [ user ]);
 
     // 상품의 값들
     const handleInput = (e) => {
@@ -47,6 +50,8 @@ const ItemWrite = () => {
         setItemData(prev => ({ ...prev, [id]: value }));
     }
 
+
+    // 이미지 삽입 부분분
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
 
@@ -77,13 +82,13 @@ const ItemWrite = () => {
     
     const handleDeleteImage = (index) => {
         setItemData(prev => {
-            const wasMainDeleted = prev.img[index]?.isMain;
             const newImgList = prev.img.filter((_, idx) => idx !== index);
 
-            const updated = wasMainDeleted && newImgList > 0 
+            const hasMain = newImgList.some(img => img.isMain);
+            const updated = hasMain && newImgList.length > 0 
                 ? newImgList.map((img, idx) => ({
                     ...img,
-                    isMai: idx === 0
+                    isMain: idx === 0
                 }))
                 : newImgList
 
@@ -134,18 +139,58 @@ const ItemWrite = () => {
         setItemData(prev => ({ ...prev, price: rawValue}));
         setFormattedPrice(formatted);
     }
-
+    
+    // keydown handler
     const handleKeyDown = (e) => {
         e.preventDefault();
 
-        
     }
  
+    // Submit Part
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if(!itemData.subject || !itemData.content || !itemData.price || !itemData.cateKey || !itemData.itemtype) {
+            showToast("입력되지 않은 항목이 있는거 같습니다. 확인해주세요!");
+            return;
+        } 
 
-    }
+        try {
+            const formData = new FormData();
+
+            formData.append("userKey", user.userKey);
+            console.log(user.userKey);
+            formData.append("cateKey", itemData.cateKey);
+            formData.append("subject", itemData.subject);
+            formData.append("content", itemData.content);
+            formData.append("price", itemData.price);
+            formData.append("itemtype", itemData.itemtype);
+            formData.append("purtype", itemData.purtype);
+
+            formData.append("location", JSON.stringify(itemData.location));
+
+            itemData.img.forEach((img, index) => {
+                formData.append("img", img.file);
+                formData.append("isMain", img.isMain);
+            })
+
+            const response = await postData("/product/write", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+
+            if(response.status === 200) {
+                showToast("상품 등록이 완료되었습니다!");
+                // 상품 세부페이지로 이동 필요
+            } else {
+                showToast("상품 등록에 실패했습니다...");
+            }
+        } catch (err) {
+            console.log("Failed To Post Item...", err);
+            showToast("오류가 발생했습니다!");
+        }
+    };
 
     console.log(itemData.location);
 
@@ -153,7 +198,7 @@ const ItemWrite = () => {
         <>
         <main>
             <div className="write-container">
-                <form className="write-from" onSubmit={null}>
+                <form className="write-from" onSubmit={handleSubmit}>
                     {/* 이미지 첨부 */}
                     <div className="form-row">
                         <div className="input-img">
@@ -294,7 +339,7 @@ const ItemWrite = () => {
                                                 onClick={() =>
                                                     setItemData(prev => ({
                                                         ...prev,
-                                                        loacation: prev.location.filter(item => item.id !== loc.id)
+                                                        location: prev.location.filter(item => item.id !== loc.id)
                                                     }))}
                                                 >x</button>
                                             </li>
@@ -313,6 +358,8 @@ const ItemWrite = () => {
                     />
 
                     {/* 등록버튼 */}
+                    <button className="item-submit" type="submit">등록</button>
+
                 </form>
             </div>
         </main>

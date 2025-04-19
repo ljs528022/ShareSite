@@ -30,8 +30,6 @@ public class Item {
     private LocalDateTime writeDate;// Write Date
     private Long viewcnt;           // View Count
 
-    private List<MultipartFile> img;
-
     private User user;
     private Category category;
 }
