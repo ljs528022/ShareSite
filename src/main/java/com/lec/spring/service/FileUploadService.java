@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -16,10 +17,14 @@ public class FileUploadService {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    public List<String> saveFiles(List<MultipartFile> files) throws IOException {
+    public List<String> saveFiles(
+            @RequestPart(value = "img", required = false) List<MultipartFile> img
+    ) throws IOException {
+
+
         List<String> savedFilePaths = new ArrayList<>();
 
-        for (MultipartFile file : files) {
+        for (MultipartFile file : img) {
             if(!file.isEmpty()) {
                 String originFilename = file.getOriginalFilename();
                 String ext = originFilename.substring(originFilename.lastIndexOf("."));

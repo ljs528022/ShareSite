@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +16,7 @@ import java.util.List;
 public class Item {
 
     private Long itemKey;                // Post PK
-    private Long userKey;           // User PK(FK)
+    private String userKey;           // User PK(FK)
     private Long cateKey;       // Category PK(FK)
     private String subject;         // Subject NN
     private String content;         // Content
@@ -29,7 +27,4 @@ public class Item {
     private Boolean tradestatus;    // false: In progress / true:Done
     private LocalDateTime writeDate;// Write Date
     private Long viewcnt;           // View Count
-
-    private User user;
-    private Category category;
 }

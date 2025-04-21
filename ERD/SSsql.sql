@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS d1_location;
 DROP TABLE IF EXISTS d1_purchase;
 DROP TABLE IF EXISTS d1_user;
 DROP TABLE IF EXISTS d1_verifytoken;
+DROP TABLE IF EXISTS d1_item_image;
 
 /* Create Tables */
 
@@ -68,8 +69,8 @@ CREATE TABLE d1_like
 CREATE TABLE d1_location
 (
 	userKey varchar(20) NOT NULL,
-	zipcode int,
-	addr varchar(300) NOT NULL,
+	addrName varchar(300) NOT NULL,
+	placeName varchar(300) NOT NULL,
 	addrDetail varchar(100)
 );
 

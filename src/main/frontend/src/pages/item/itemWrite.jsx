@@ -156,27 +156,31 @@ const ItemWrite = () => {
         } 
 
         try {
+            const itemPart = {
+                userKey: itemData.userKey,
+                cateKey: itemData.cateKey,
+                subject: itemData.subject,
+                content: itemData.content,
+                price: itemData.price,
+                itemtype: itemData.itemtype,
+                purtype: itemData.purtype,
+                locations: itemData.location,
+            }
+
             const formData = new FormData();
+            formData.append("item", new Blob([JSON.stringify(itemPart)], { type: "application/json" }));
 
-            formData.append("userKey", user.userKey);
-            console.log(user.userKey);
-            formData.append("cateKey", itemData.cateKey);
-            formData.append("subject", itemData.subject);
-            formData.append("content", itemData.content);
-            formData.append("price", itemData.price);
-            formData.append("itemtype", itemData.itemtype);
-            formData.append("purtype", itemData.purtype);
+            if(itemData.img.length > 0) {
+                itemData.img.forEach((img, index) => {
+                    formData.append("img", img.file);
+                    formData.append("isMain", img.isMain);
+                });
+            }
 
-            formData.append("location", JSON.stringify(itemData.location));
-
-            itemData.img.forEach((img, index) => {
-                formData.append("img", img.file);
-                formData.append("isMain", img.isMain);
-            })
-
+            const token = localStorage.getItem("token");
             const response = await postData("/product/write", formData, {
                 headers: {
-                    "Content-Type": "multipart/form-data"
+                    Authorization: `Bearer ${token}`,
                 }
             });
 
@@ -191,8 +195,6 @@ const ItemWrite = () => {
             showToast("오류가 발생했습니다!");
         }
     };
-
-    console.log(itemData.location);
 
     return (
         <>

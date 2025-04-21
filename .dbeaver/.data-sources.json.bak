@@ -6,7 +6,6 @@
 			"driver": "mysql8",
 			"name": "sharesiteDB",
 			"save-password": true,
-			"read-only": true,
 			"configuration": {
 				"host": "localhost",
 				"port": "3306",
@@ -22,6 +21,23 @@
 					"allowPublicKeyRetrieval": "TRUE",
 					"useSSL": "FALSE"
 				},
+				"auth-model": "native"
+			}
+		},
+		"postgres-jdbc-19651eb8061-7f58cdc9e8e3e684": {
+			"provider": "postgresql",
+			"driver": "postgres-jdbc",
+			"name": "postgres",
+			"save-password": true,
+			"configuration": {
+				"host": "localhost",
+				"port": "5432",
+				"database": "postgres",
+				"url": "jdbc:postgresql://localhost:5432/postgres",
+				"configurationType": "MANUAL",
+				"home": "postgresql_client",
+				"type": "dev",
+				"provider-properties": {},
 				"auth-model": "native"
 			}
 		}

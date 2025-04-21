@@ -3,9 +3,6 @@ import { useToast } from "../components/ToastContext";
 
 const api = axios.create({
     baseURL: 'http://localhost:8093',
-    headers: {
-        "Content-Type": 'application/json'
-    },
     withCredentials: true,
 });
 
@@ -23,18 +20,6 @@ api.interceptors.request.use(
     }
 );
 
-let isRefreshing = false;
-let subscribers = [];
-
-function onRefreshed(newToken) {
-    subscribers.forEach(callback => callback(newToken));
-    subscribers = [];
-}
-
-function addSubscriber(callback) {
-    subscribers.push(callback);
-}
-
 let isLoggingOut = false;
 
 api.interceptors.response.use(
@@ -42,7 +27,7 @@ api.interceptors.response.use(
     async error => {
         const status = error.response?.status;
 
-        if((status === 500 || status === 401) && !isLoggingOut) {
+        if(status === 401 && !isLoggingOut) {
             isLoggingOut = true;
 
             localStorage.removeItem("token");

@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Location {
 
-    private Long userKey;       // user's PK (FK)
-    private Long zipcode;       // Address Number
-    private String addr;        // Address
-    private String addrDetail;  // Detail Address
+    private String userKey;         // user's PK (FK)
+    private String addrName;        // Address Name
+    private String placeName;       // Location's Name
+    private String addrDetail;      // Detail Address
 
 
 }

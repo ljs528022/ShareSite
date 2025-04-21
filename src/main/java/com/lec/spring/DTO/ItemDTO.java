@@ -1,19 +1,24 @@
 package com.lec.spring.DTO;
 
+import com.lec.spring.domain.Category;
+import com.lec.spring.domain.Location;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class ItemDTO {
-    private Long userKey;
+    private String userKey;
     private Long cateKey;
     private String subject;
     private String content;
     private Long price;
-    private String location;
+
+    private List<LocationDTO> locations;
 }

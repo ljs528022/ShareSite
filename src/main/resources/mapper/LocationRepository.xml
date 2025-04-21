@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.ItemRepository">
+
+    <insert id="saveLocation" parameterType="com.lec.spring.domain.Location">
+        INSERT INTO d1_location (userKey, addrName, placeName, addrDetail)
+        VALUES (#{userKey}, #{addrName}, #{placeName}, #{addrDetail})
+    </insert>
+
+    <select id="findLocationByUserKey" resultType="com.lec.spring.domain.Location">
+        SELECT * FROM d1_location WHERE userKey = #{userKey}
+    </select>
+</mapper>
