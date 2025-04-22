@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ItemImage {
 
-    private Long imageKey;
-    private Long itemKey;
-    private String imgUrl;
+    private Long imageKey;      // Image's PK
+    private Long itemKey;       // Item's PK (FK)
+    private String imgUrl;      // Image's URL
+    private boolean isMain;     // is Thumbnail ? true or false
 
 }

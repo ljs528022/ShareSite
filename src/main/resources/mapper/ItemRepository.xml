@@ -68,15 +68,15 @@
     <insert id="write" flushCache="true" parameterType="com.lec.spring.domain.Item"
             useGeneratedKeys="true" keyColumn="itemKey" keyProperty="itemKey">
         INSERT INTO d1_item
-        (userKey, cateKey, subject, content, price, location, itemtype, purtype, tradeStatus, writeDate)
+        (userKey, cateKey, subject, content, price, location, itemtype, purtype, tradestatus, writeDate, viewcnt)
         VALUES
-        (#{userKey}, #{cateKey}, #{subject}, #{content}, #{price}, #{location}, #{itemtype}, #{purtype}, #{tradeStatus}, #{writeDate})
+        (#{userKey}, #{cateKey}, #{subject}, #{content}, #{price}, #{location}, #{itemtype}, #{purtype}, #{tradestatus}, #{writeDate}, #{viewcnt})
     </insert>
 
-    <insert id="insertImage" flushCache="true" parameterType="com.lec.spring.domain.Item"
+    <insert id="insertImage" flushCache="true" parameterType="com.lec.spring.domain.ItemImage"
             useGeneratedKeys="true" keyColumn="imageKey" keyProperty="imageKey">
-        INSERT INTO d1_item_image (itemKey, imgUrl)
-        VALUES (#{itemKey}, #{imgUrl})
+        INSERT INTO d1_item_image (itemKey, imgUrl, isMain)
+        VALUES (#{itemKey}, #{imgUrl}, #{isMain})
     </insert>
 
     <update id="chTradeState" flushCache="true">

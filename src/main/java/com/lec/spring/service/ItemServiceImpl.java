@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Item;
+import com.lec.spring.domain.ItemImage;
 import com.lec.spring.repository.CategoryRepository;
 import com.lec.spring.repository.ItemRepository;
 import com.lec.spring.repository.UserRepository;
@@ -55,12 +56,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public int write(Item item, List<String> urls) {
+    public int write(Item item, List<ItemImage> imageList) {
         int result = itemRepository.write(item);
         if(result > 0) {
             Long itemKey = item.getItemKey();
-            for(String url : urls) {
-                itemRepository.insertImage(itemKey, url);
+            for(ItemImage image : imageList) {
+                image.setItemKey(itemKey);
+                result = itemRepository.insertImage(image);
             }
         }
         return result;

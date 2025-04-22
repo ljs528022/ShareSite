@@ -45,8 +45,9 @@ public class SecurityConfig {
                     .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
 
                     .authorizeHttpRequests(auth -> auth
-                            // 인증이 필요한 사이트 추후에 추가
+                            // 인증이 필요한 URL 추후에 추가
                             .requestMatchers("/home", "/error", "/api/**", "/user/register", "/user/login").permitAll()
+                            .requestMatchers("/product/write").authenticated()
                             .anyRequest().authenticated()
                     )
                     .cors(cors -> cors.configurationSource(corsConfigurationSource()))

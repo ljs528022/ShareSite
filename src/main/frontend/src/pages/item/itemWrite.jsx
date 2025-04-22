@@ -139,12 +139,6 @@ const ItemWrite = () => {
         setItemData(prev => ({ ...prev, price: rawValue}));
         setFormattedPrice(formatted);
     }
-    
-    // keydown handler
-    const handleKeyDown = (e) => {
-        e.preventDefault();
-
-    }
  
     // Submit Part
     const handleSubmit = async (e) => {
@@ -170,14 +164,16 @@ const ItemWrite = () => {
             const formData = new FormData();
             formData.append("item", new Blob([JSON.stringify(itemPart)], { type: "application/json" }));
 
-            if(itemData.img.length > 0) {
-                itemData.img.forEach((img, index) => {
+            if (itemData.img.length > 0) {
+                itemData.img.forEach((img) => {
                     formData.append("img", img.file);
-                    formData.append("isMain", img.isMain);
-                });
+                })
+
+                const imgMeta = itemData.img.map(img => ({ isMain: img.isMain }));
+                formData.append("imgMeta", new Blob([JSON.stringify(imgMeta)], { type:  "application/json" }));
             }
 
-            const token = localStorage.getItem("token");
+            const token = sessionStorage.getItem("token");
             const response = await postData("/product/write", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -335,7 +331,7 @@ const ItemWrite = () => {
                                     <ul>
                                         {itemData.location.map((loc) => (
                                             <li key={loc.id}>
-                                                {loc.place_name}
+                                                {loc.placeName}
                                                 <button
                                                 type="button"
                                                 onClick={() =>

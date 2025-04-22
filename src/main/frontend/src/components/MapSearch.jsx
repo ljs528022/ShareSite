@@ -80,9 +80,16 @@ const MapSearch = ({ isOpen, onClose, itemData, setItemData }) => {
         }
 
         if(!itemData.location.some(loc => loc.id === place.id)) {
+            const formattedPlace = {
+                id: place.id,
+                placeName: place.place_name,
+                addrName: place.address_name,
+                addrDetail: place.road_address_name || "",
+            }
+
             setItemData(prev => ({
                 ...prev,
-                location: [...prev.location, place]
+                location: [...prev.location, formattedPlace]
             }));
         }
 

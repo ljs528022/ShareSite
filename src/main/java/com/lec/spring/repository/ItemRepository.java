@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Item;
+import com.lec.spring.domain.ItemImage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.ui.Model;
@@ -14,7 +15,7 @@ public interface ItemRepository {
     int write(Item item);
 
     // Write Item's Imgs
-    int insertImage(Long itemKey, String url);
+    int insertImage(ItemImage itemImages);
 
     // Find All Item
     List<Item> findAllItem();

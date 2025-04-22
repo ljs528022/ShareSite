@@ -40,6 +40,13 @@ spring:
           starttls:
             enable: true
 
+  # Multipary 관련
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 30MB
+
 
   # Security setting
   security:
@@ -66,4 +73,4 @@ jwt:
   secret-key: kPn0cEAt8+QSRynzRhWQw6uFpp9KzC37yQsZzD6MxK4=
 
 file:
-  upload-dir: uploads/item-images
+  upload-dir: src/main/resources/static/item-images

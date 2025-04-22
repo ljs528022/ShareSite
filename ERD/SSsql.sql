@@ -51,8 +51,9 @@ CREATE TABLE d1_item
 CREATE TABLE d1_item_image
 (
 	imageKey int NOT NULL AUTO_INCREMENT,
-	itemKey int,
-	imgUrl VARCHAR(255),
+	itemKey int NOT NULL,
+	imgUrl VARCHAR(500),
+	isMain boolean NOT NULL,
 	PRIMARY KEY (imageKey)
 );
 

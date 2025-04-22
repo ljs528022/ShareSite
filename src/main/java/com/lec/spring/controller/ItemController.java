@@ -1,21 +1,28 @@
 package com.lec.spring.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.DTO.ItemDTO;
 import com.lec.spring.DTO.LocationDTO;
 import com.lec.spring.domain.Item;
+import com.lec.spring.domain.ItemImage;
 import com.lec.spring.domain.Location;
 import com.lec.spring.service.FileUploadService;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.LocationService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static java.lang.Long.parseLong;
 
 @RestController
 @RequestMapping("/product")
@@ -24,26 +31,40 @@ public class ItemController {
 
     @Autowired
     private FileUploadService fileUploadService;
+    @Autowired
     private ItemService itemService;
+    @Autowired
     private LocationService locationService;
 
-    @PostMapping("/write")
+    @PostMapping(value = "/write")
     public ResponseEntity<?> uploadItem(
             @RequestPart("item") ItemDTO itemDTO,
-            @RequestPart("img")List<MultipartFile> img) throws IOException {
+            @RequestPart(value = "img", required = false)List<MultipartFile> img,
+            @RequestPart(value = "imgMeta", required = false) String isMains) throws IOException {
         Item item = Item.builder()
                 .userKey(itemDTO.getUserKey())
                 .cateKey(itemDTO.getCateKey())
                 .subject(itemDTO.getSubject())
                 .content(itemDTO.getContent())
                 .price(itemDTO.getPrice())
+                .itemtype(itemDTO.getItemtype())
+                .purtype(itemDTO.getPurtype())
+                .tradestatus(false)
+                .writeDate(LocalDateTime.now())
+                .viewcnt(parseLong("0"))
                 .build();
 
-        List<String> urls = new ArrayList<>();
-        if(img != null && !img.isEmpty()) {
-            urls = fileUploadService.saveFiles(img);
+        List<ItemImage> imageList = new ArrayList<>();
+        if(img != null && !img.isEmpty() && isMains != null) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<Map<String, Boolean>> metaList = objectMapper.readValue(isMains, new TypeReference<>() {});
+            List<Boolean> isMainList = metaList.stream()
+                    .map(meta -> meta.getOrDefault("isMain", false))
+                    .toList();
+
+            imageList = fileUploadService.saveFiles(img, isMainList);
         }
-        itemService.write(item, urls);
+        itemService.write(item, imageList);
 
         List<LocationDTO> locations = itemDTO.getLocations();
         if(locations != null && !locations.isEmpty()) {

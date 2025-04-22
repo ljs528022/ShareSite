@@ -1,5 +1,6 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.ItemImage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -17,28 +18,37 @@ public class FileUploadService {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    public List<String> saveFiles(
-            @RequestPart(value = "img", required = false) List<MultipartFile> img
-    ) throws IOException {
+    public List<ItemImage> saveFiles(
+            List<MultipartFile> img, List<Boolean> isMainList) throws IOException {
+        List<ItemImage> imageList = new ArrayList<>();
 
+        for(int i = 0; i < img.size(); i++) {
+            MultipartFile file = img.get(i);
+            boolean isMain = isMainList != null && i < isMainList.size() ? isMainList.get(i) : false;
 
-        List<String> savedFilePaths = new ArrayList<>();
-
-        for (MultipartFile file : img) {
             if(!file.isEmpty()) {
                 String originFilename = file.getOriginalFilename();
-                String ext = originFilename.substring(originFilename.lastIndexOf("."));
+                String ext = originFilename.substring((originFilename.lastIndexOf(".")));
                 String uniqueName = UUID.randomUUID().toString() + ext;
                 String fullPath = uploadDir + "/" + uniqueName;
 
                 File dir = new File(uploadDir);
-                if(!dir.exists()) dir.mkdir();
+                if(!dir.exists()) dir.mkdirs();
 
                 file.transferTo(new File(fullPath));
-                savedFilePaths.add("/static/item-images/" + uniqueName);
+
+                ItemImage image = ItemImage.builder()
+                        .imgUrl("/static/item-images/" + uniqueName)
+                        .isMain(isMain)
+                        .build();
+
+                imageList.add(image);
+
+                System.out.println("저장된 파일 경로: " + fullPath);
+                System.out.println("이미지 URL: " + "/static/item-images/" + uniqueName);
             }
         }
 
-        return savedFilePaths;
+        return imageList;
     }
 }

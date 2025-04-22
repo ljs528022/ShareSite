@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Item;
+import com.lec.spring.domain.ItemImage;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface ItemService {
     // Find Item By UserKey
     List<Item> findByUserKey(Long userKey);
 
-    int write(Item item, List<String> urls);
+    int write(Item item, List<ItemImage> imageList);
 
     // Item's Detail
     Item detail(Long itemKey);
