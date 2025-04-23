@@ -1,5 +1,6 @@
 package com.lec.spring.service;
 
+import com.lec.spring.DTO.LocationDTO;
 import com.lec.spring.domain.Location;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.LocationRepository;
@@ -8,6 +9,8 @@ import jakarta.persistence.PreUpdate;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -30,5 +33,10 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public Location findLocationByUserKey(String userKey) {
         return locationRepository.findLocationByUserKey(userKey);
+    }
+
+    @Override
+    public List<LocationDTO> findByUserKeyAndItemKey(String userKey, Long itemKey) {
+        return locationRepository.findByUserKeyAndItemKey(userKey, itemKey);
     }
 }

@@ -4,7 +4,7 @@ const ItemCard = ({ item }) => {
     return (
         <>
             {item.map((i, index) => (
-                <a key={i.itemKey || index} href={`/product?${i.itemKey}`}>
+                <a key={i.itemKey || index} href={`/product/${i.itemKey}`}>
                 <div className={style.Normal_Card_wrapper}>
                     <img className={style.Normal_Card_img_temp} src={!i.img ? "./SSicon.png" : i.img} />
                     <div className={style.Normal_CardBody}>

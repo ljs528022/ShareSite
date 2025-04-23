@@ -183,10 +183,10 @@ const ItemWrite = () => {
                 }
             });
 
-            if(response.status === 200 && response.data === "등록 성공!") {
+            if(response.status === 200) {
                 const itemKey = response.data.itemKey;
                 showToast("상품 등록이 완료되었습니다!");
-                navigate(`/product?${itemKey}`);
+                navigate(`/product/${itemKey}`);
             } else {
                 showToast("상품 등록에 실패했습니다...");
             }

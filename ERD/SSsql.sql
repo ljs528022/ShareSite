@@ -68,6 +68,7 @@ CREATE TABLE d1_like
 CREATE TABLE d1_location
 (
 	userKey varchar(20) NOT NULL,
+	itemKey int NOT NULL,
 	addrName varchar(300) NOT NULL,
 	placeName varchar(300) NOT NULL,
 	addrDetail varchar(100)
@@ -168,6 +169,13 @@ ALTER TABLE d1_like
 ALTER TABLE d1_location
 	ADD FOREIGN KEY (userKey)
 	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE CASCADE
+;
+
+ALTER TABLE d1_location
+	ADD FOREIGN KEY (itemKey)
+	REFERENCES d1_item (itemKey)
 	ON UPDATE RESTRICT
 	ON DELETE CASCADE
 ;

@@ -72,6 +72,7 @@ public class ItemController {
             for(LocationDTO locationDTO : locations) {
                 Location location = Location.builder()
                         .userKey(itemDTO.getUserKey())
+                        .itemKey(item.getItemKey())
                         .addrName(locationDTO.getAddrName())
                         .placeName(locationDTO.getPlaceName())
                         .addrDetail(locationDTO.getAddrDetail())
@@ -85,6 +86,17 @@ public class ItemController {
         responseBody.put("message", "등록 성공!");
         responseBody.put("itemKey", itemKey);
         return ResponseEntity.ok(responseBody);
+    }
+
+    @GetMapping("/{itemKey}")
+    public ResponseEntity<ItemDTO> getItemDetail(@PathVariable("itemKey") Long itemKey) {
+        ItemDTO item = itemService.detail(itemKey);
+
+        if (item != null) {
+            return ResponseEntity.ok(item);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 

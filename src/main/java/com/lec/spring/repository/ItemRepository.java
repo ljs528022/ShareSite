@@ -1,5 +1,6 @@
 package com.lec.spring.repository;
 
+import com.lec.spring.DTO.ItemDTO;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.ItemImage;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,19 +28,24 @@ public interface ItemRepository {
     List<Item> getWeeklyItems();
 
     // Find By ItemKey
-    Item findByItemKey(@Param("itemKey")Long itemKey);
+    ItemDTO findByItemKey(@Param("itemKey")Long itemKey);
 
     // Find By Category
     List<Item> findByCategory(@Param("cateKey")Long cateKey);
 
     // Find By UserKey
-    List<Item> findByUserKey(@Param("userKey")Long userKey);
+    List<Item> findByUserKey(@Param("userKey")String userKey);
+
+    // Find Img By ItemKey
+    List<ItemImage> findImgByItemKey(@Param("itemKey")Long itemKey);
+
+    Item findItemByItemKey(@Param("itemKey")Long itemKey);
 
     // Increment View Count
     int incViewCnt(Long itemKey);
 
     // Delete Item
-    int delete(Item item);
+    int delete(ItemDTO item);
 
     // Modify Item
     int modify(Item item);

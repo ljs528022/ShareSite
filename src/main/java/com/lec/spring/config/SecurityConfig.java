@@ -45,8 +45,9 @@ public class SecurityConfig {
                     .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
 
                     .authorizeHttpRequests(auth -> auth
-                            // 인증이 필요한 URL 추후에 추가
-                            .requestMatchers("/home", "/error", "/api/**", "/user/register", "/user/login").permitAll()
+                            // 인증이 필요 없는 URL
+                            .requestMatchers("/home", "/error", "/api/**", "/user/register", "/user/login", "/product/**").permitAll()
+                            // 인증이 필요한 URL
                             .requestMatchers("/product/write").authenticated()
                             .anyRequest().authenticated()
                     )

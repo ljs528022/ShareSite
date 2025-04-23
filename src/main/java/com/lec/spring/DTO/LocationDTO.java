@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LocationDTO {
 
+    private Long itemKey;
     private String addrName;
     private String placeName;
     private String addrDetail;

@@ -1,6 +1,7 @@
 package com.lec.spring.DTO;
 
 import com.lec.spring.domain.Category;
+import com.lec.spring.domain.ItemImage;
 import com.lec.spring.domain.Location;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,10 @@ public class ItemDTO {
     private Long price;
     private String itemtype;
     private Long purtype;
+    private Boolean tradestatus;
+    private LocalDateTime writeDate;
+    private Long viewcnt;
 
     private List<LocationDTO> locations;
+    private List<ItemImage> images;
 }

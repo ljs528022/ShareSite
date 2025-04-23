@@ -7,6 +7,7 @@ import Register from './pages/user/register';
 import { UserProvider } from './services/UserContext';
 import { ToastProvider } from './components/ToastContext';
 import ItemWrite from './pages/item/itemWrite';
+import ItemDetail from './pages/item/itemDetail';
 
 function App() {
 
@@ -29,7 +30,7 @@ function App() {
 
             {/* Item Page */}
             <Route path='/product/write' Component={ItemWrite}></Route>
-            {/* <Route path='/product?' Component={}></Route> */}
+            <Route path='/product/:itemKey' Component={ItemDetail}></Route>
 
           </Routes>
           <Footer />

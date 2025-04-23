@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Location {
 
     private String userKey;         // user's PK (FK)
+    private Long itemKey;           // item's PK (FK)
     private String addrName;        // Address Name
     private String placeName;       // Location's Name
     private String addrDetail;      // Detail Address
