@@ -1,5 +1,6 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.DTO.ItemDTO;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.ItemRepository;
@@ -33,11 +34,11 @@ public class MainController {
         Map<String, Object> response = new HashMap<>();
 
         // 주간 인기 카테고리 상품
-        List<Item> weeklyItems = itemService.getWeeklyItems();
+        List<ItemDTO> weeklyItems = itemService.getWeeklyItems();
         response.put("weeklyItems", weeklyItems);
 
         // 방금 등록된 상품
-        List<Item> latestItems = itemService.getLatestItems();
+        List<ItemDTO> latestItems = itemService.getLatestItems();
         response.put("latestItems", latestItems);
 
         return response;

@@ -15,7 +15,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -41,12 +44,40 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getLatestItems() {
-        return itemRepository.getLatestItems();
+    public List<ItemDTO> getLatestItems() {
+        List<ItemDTO> items = itemRepository.getLatestItems();
+        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
+
+        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
+        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(ItemImage::getImageKey));
+
+        for(ItemDTO item : items) {
+            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+        }
+
+        return items;
     }
 
     @Override
-    public List<Item> getWeeklyItems() {return itemRepository.getWeeklyItems();}
+    public List<ItemDTO> getWeeklyItems() {
+        List<ItemDTO> items = itemRepository.getWeeklyItems();
+        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
+
+        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
+        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
+
+        for(ItemDTO item : items) {
+            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+        }
+
+        return items;
+    }
 
     @Override
     public ItemDTO findByItemKey(Long itemKey) {return itemRepository.findByItemKey(itemKey);}

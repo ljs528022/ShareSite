@@ -13,10 +13,10 @@ public interface ItemService {
     List<Item> findAllItem();
 
     // Find Latest 5 Items
-    List<Item> getLatestItems();
+    List<ItemDTO> getLatestItems();
 
     // Find Weekly Most Traded Items
-    List<Item> getWeeklyItems();
+    List<ItemDTO> getWeeklyItems();
 
     ItemDTO findByItemKey(Long itemKey);
 

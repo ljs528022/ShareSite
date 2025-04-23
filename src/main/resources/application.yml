@@ -47,6 +47,10 @@ spring:
       max-file-size: 20MB
       max-request-size: 30MB
 
+  web:
+    resources:
+      static-locations: file:///C:/MyDev/uploads/
+
 
   # Security setting
   security:
@@ -73,4 +77,4 @@ jwt:
   secret-key: kPn0cEAt8+QSRynzRhWQw6uFpp9KzC37yQsZzD6MxK4=
 
 file:
-  upload-dir: C:\MyDev\uploads\item-images
+  upload-dir: C:\MyDev\uploads

@@ -22,10 +22,10 @@ public interface ItemRepository {
     List<Item> findAllItem();
 
     // Find Latest 5 Item
-    List<Item> getLatestItems();
+    List<ItemDTO> getLatestItems();
 
     // Find Weekly Most Traded Items
-    List<Item> getWeeklyItems();
+    List<ItemDTO> getWeeklyItems();
 
     // Find By ItemKey
     ItemDTO findByItemKey(@Param("itemKey")Long itemKey);
@@ -39,7 +39,11 @@ public interface ItemRepository {
     // Find Img By ItemKey
     List<ItemImage> findImgByItemKey(@Param("itemKey")Long itemKey);
 
+    List<ItemImage> findImagesByItemKeys(List<Long> itemKeys);
+
     Item findItemByItemKey(@Param("itemKey")Long itemKey);
+
+
 
     // Increment View Count
     int incViewCnt(Long itemKey);

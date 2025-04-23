@@ -24,4 +24,13 @@
     <select id="findByUserKeyAndItemKey" resultMap="mapLocation">
         SELECT * FROM d1_location WHERE userKey = #{userKey} AND itemKey = #{itemKey}
     </select>
+    
+    <select id="findLocationsByItemKeys" parameterType="list" resultType="com.lec.spring.DTO.LocationDTO">
+        SELECT *
+        FROM d1_location
+        WHERE itemKey in
+        <foreach collection="list" item="key" open="(" close=")" separator=",">
+            #{key}
+        </foreach>
+    </select>
 </mapper>

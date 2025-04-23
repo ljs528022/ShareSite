@@ -25,7 +25,9 @@ const ItemCardList = ({ items }) => {
 
     return (
         <>
-            <ItemCard item={currentItems} />
+            {currentItems.map((item, index) => (
+                <ItemCard key={item.itemKey || index} item={item} />
+            ))}
             <Pagination
                 totalPage={totalPage}
                 currentPage={currentPage}

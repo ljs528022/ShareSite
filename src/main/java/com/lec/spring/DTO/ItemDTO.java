@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ItemDTO {
+    private Long itemKey;
     private String userKey;
     private Long cateKey;
     private String subject;

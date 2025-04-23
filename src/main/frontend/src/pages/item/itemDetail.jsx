@@ -32,11 +32,20 @@ const ItemDetail = () => {
         }
     }, [itemKey]);
 
+    // const renderImage = ( imgs ) => {
+    //     if(imgs <= 0) {
+            
+    //     }
+
+    //     if(imgs.length > 1)
+
+
+    // }
+
     console.log(item);
 
     if (loading) return <div>상품을 가져오고 있어요!</div>;
     if (!item) return <div>어라..? 상품을 찾을 수 없어요..!</div>;
-
 
     return (
         <>
@@ -45,7 +54,7 @@ const ItemDetail = () => {
                 <div className="item-row">
                     {/* 상품 이미지 */}
                     <div className="item-Image">
-
+                        
                     </div>
                     {/* 상품 정보 */}
                     <div className="item-Info">

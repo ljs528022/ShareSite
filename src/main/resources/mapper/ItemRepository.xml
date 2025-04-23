@@ -62,6 +62,14 @@
         <result column="isMain" property="isMain"  />
     </resultMap>
 
+    <resultMap id="mapLocation" type="com.lec.spring.domain.Location">
+        <id column="userKey" property="userKey" />
+        <result column="itemKey" property="itemKey" />
+        <result column="addrName" property="addrName" />
+        <result column="placeName" property="placeName" />
+        <result column="addrDetail" property="addrDetail" />
+    </resultMap>
+
     <resultMap id="mapCategory" type="com.lec.spring.domain.Category">
         <id column="cateKey" property="cateKey" />
         <result column="catename" property="catename" />
@@ -111,16 +119,16 @@
         WHERE 1 = 1
     </select>
 
-    <select id="getLatestItems" resultMap="mapItem">
-        <include refid="SELECT_BASE" />
+    <select id="getLatestItems" resultType="com.lec.spring.DTO.ItemDTO">
+        SELECT *
         FROM d1_item
         WHERE tradestatus = false
         ORDER BY writeDate DESC
         LIMIT 20
     </select>
 
-    <select id="getWeeklyItems" resultMap="mapItem">
-        <include refid="SELECT_BASE" />
+    <select id="getWeeklyItems" resultType="com.lec.spring.DTO.ItemDTO">
+        SELECT *
         FROM d1_item
         WHERE tradestatus = false
         ORDER BY writeDate DESC
@@ -157,4 +165,12 @@
         WHERE itemKey = #{itemKey}
     </select>
 
+    <select id="findImagesByItemKeys" parameterType="list" resultType="com.lec.spring.domain.ItemImage">
+        SELECT *
+        FROM d1_item_image
+        WHERE itemKey IN
+        <foreach collection="list" item="key" open="(" close=")" separator=",">
+            #{key}
+        </foreach>
+    </select>
 </mapper>

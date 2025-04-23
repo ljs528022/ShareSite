@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +18,8 @@ public class FileUploadService {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
+
+    private static final List<String> SUPPORTED_EXTENSIONS = Arrays.asList("jpg", "jpeg", "png", "gif");
 
     public List<ItemImage> saveFiles(
             List<MultipartFile> img, List<Boolean> isMainList) throws IOException {
@@ -28,17 +31,22 @@ public class FileUploadService {
 
             if(!file.isEmpty()) {
                 String originFilename = file.getOriginalFilename();
-                String ext = originFilename.substring((originFilename.lastIndexOf(".")));
-                String uniqueName = UUID.randomUUID().toString() + ext;
-                String fullPath = uploadDir + "/" + uniqueName;
+                String ext = originFilename.substring(originFilename.lastIndexOf(".") + 1).toLowerCase();
 
-                File dir = new File(uploadDir);
+                if(!SUPPORTED_EXTENSIONS.contains(ext)) {
+                    throw new IOException("허용되지 않은 파일 형식입니다!");
+                }
+
+                String uniqueName = UUID.randomUUID().toString() + "." + ext;
+                String fullPath = uploadDir + "/item-images/" + uniqueName;
+
+                File dir = new File(uploadDir + "/item-images/");
                 if(!dir.exists()) dir.mkdirs();
 
                 file.transferTo(new File(fullPath));
 
                 ItemImage image = ItemImage.builder()
-                        .imgUrl("/static/item-images/" + uniqueName)
+                        .imgUrl("/item-images/" + uniqueName)
                         .isMain(isMain)
                         .build();
 
