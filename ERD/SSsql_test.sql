@@ -8,8 +8,6 @@ SELECT * FROM d1_location;
 
 SELECT * FROM d1_item;
 
-SELECT * FROM d1_verifytoken;
-
 SELECT * FROM d1_item_image;
 
 SELECT count(*)

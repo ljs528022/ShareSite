@@ -32,10 +32,10 @@ const Login = () => {
 
         try {
             // Request Login
-            const res = await postData("/user/login", userData);
+            const { data } = await postData("/user/login", userData);
 
             // if Login Success, Save Token
-            const token = res.token;
+            const token = data.token;
             if(autoLoginChecked) {
                 localStorage.setItem("token", token);
             } else {

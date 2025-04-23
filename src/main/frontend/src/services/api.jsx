@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useToast } from "../components/ToastContext";
 
 const api = axios.create({
     baseURL: 'http://localhost:8093',
@@ -44,7 +43,7 @@ api.interceptors.response.use(
 export const getData = async (endpoint) => {
     try {
         const response = await api.get(endpoint);
-        return response.data;
+        return response;
     } catch (error) {
         console.error('Error fetching data:', error);
         throw error;
@@ -54,7 +53,8 @@ export const getData = async (endpoint) => {
 export const postData = async (endpoint, data = {}) => {
     try {
         const response = await api.post(endpoint, data);
-        return response.data;
+        const { data: resData, status } = response;
+        return { data: resData, status };
     } catch (error) {
         console.error("Error Post data:", error);
         throw error;

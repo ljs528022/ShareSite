@@ -43,9 +43,6 @@ public class FileUploadService {
                         .build();
 
                 imageList.add(image);
-
-                System.out.println("저장된 파일 경로: " + fullPath);
-                System.out.println("이미지 URL: " + "/static/item-images/" + uniqueName);
             }
         }
 

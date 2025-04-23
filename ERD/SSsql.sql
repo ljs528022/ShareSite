@@ -10,7 +10,6 @@ DROP TABLE IF EXISTS d1_category;
 DROP TABLE IF EXISTS d1_location;
 DROP TABLE IF EXISTS d1_purchase;
 DROP TABLE IF EXISTS d1_user;
-DROP TABLE IF EXISTS d1_verifytoken;
 DROP TABLE IF EXISTS d1_item_image;
 
 /* Create Tables */
@@ -39,7 +38,6 @@ CREATE TABLE d1_item
 	subject varchar(200) NOT NULL,
 	content longtext,
 	price int,
-	location varchar(30),
 	itemtype varchar(20) NOT NULL,
 	purtype int NOT NULL,
 	tradestatus boolean,

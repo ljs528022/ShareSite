@@ -57,7 +57,7 @@ export default function MailVerification({ email, onVerify }) {
         setLoading(true);
 
         try {
-            const data = await postData("/api/send-code", { email });
+            const { data } = await postData("/api/send-code", { email });
             setEmailVerification(prev => ({
                 ...prev,
                 sent: true,

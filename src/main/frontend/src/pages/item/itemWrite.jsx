@@ -34,7 +34,7 @@ const ItemWrite = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             const data = await getCategory();
-            setCategories(data);
+            setCategories(data.data);
         };
 
         if(user) {
@@ -180,7 +180,7 @@ const ItemWrite = () => {
                 }
             });
 
-            if(response.status === 200) {
+            if(response.status === 200 && response.data === "등록 성공!") {
                 showToast("상품 등록이 완료되었습니다!");
                 // 상품 세부페이지로 이동 필요
             } else {

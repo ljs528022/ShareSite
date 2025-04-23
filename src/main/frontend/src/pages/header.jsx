@@ -20,7 +20,7 @@ const Header = () => {
     // 카테고리 받아오기
     useEffect(() => {
         const fetchCategories = async () => {
-            const data = await getCategory();
+            const { data } = await getCategory();
             setCategories(data);
         };
 

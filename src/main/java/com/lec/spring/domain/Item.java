@@ -21,7 +21,6 @@ public class Item {
     private String subject;         // Subject NN
     private String content;         // Content
     private Long price;             // Price
-    private String location;        // Location
     private String itemtype;        // item's type (NEW or OLD)
     private Long purtype;         // purchase type ( 1: POST, 2: TRADE, 3: BOTH )
     private Boolean tradestatus;    // false: In progress / true:Done

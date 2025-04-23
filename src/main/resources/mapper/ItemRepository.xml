@@ -12,10 +12,8 @@
             subject,
             content,
             price,
-            location,
             itemtype,
             purtype,
-            location,
             tradestatus,
             writeDate,
             viewcnt
@@ -28,10 +26,8 @@
         subject,
         content,
         price,
-        location,
         itemtype,
         purtype,
-        location,
         tradestatus,
         writeDate,
         viewcnt
@@ -52,7 +48,6 @@
         <result column="subject" property="subject" />
         <result column="content" property="content" />
         <result column="price" property="price" />
-        <result column="location" property="location" />
         <result column="itemtype" property="itemtype" />
         <result column="purtype" property="purtype" />
         <result column="tradestatus" property="tradestatus" />
@@ -68,9 +63,9 @@
     <insert id="write" flushCache="true" parameterType="com.lec.spring.domain.Item"
             useGeneratedKeys="true" keyColumn="itemKey" keyProperty="itemKey">
         INSERT INTO d1_item
-        (userKey, cateKey, subject, content, price, location, itemtype, purtype, tradestatus, writeDate, viewcnt)
+        (userKey, cateKey, subject, content, price, itemtype, purtype, tradestatus, writeDate, viewcnt)
         VALUES
-        (#{userKey}, #{cateKey}, #{subject}, #{content}, #{price}, #{location}, #{itemtype}, #{purtype}, #{tradestatus}, #{writeDate}, #{viewcnt})
+        (#{userKey}, #{cateKey}, #{subject}, #{content}, #{price}, #{itemtype}, #{purtype}, #{tradestatus}, #{writeDate}, #{viewcnt})
     </insert>
 
     <insert id="insertImage" flushCache="true" parameterType="com.lec.spring.domain.ItemImage"
@@ -94,7 +89,7 @@
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Item">
         UPDATE d1_item
-        SET subject = #{subject}, content = #{content}, price = #{price}, cateKey = #{cateKey}, location = #{location}, itemtype = #{itemtype}, purtype = #{purtype}
+        SET subject = #{subject}, content = #{content}, price = #{price}, cateKey = #{cateKey}, itemtype = #{itemtype}, purtype = #{purtype}
         WHERE itemKey = #{itemKey}
     </update>
 

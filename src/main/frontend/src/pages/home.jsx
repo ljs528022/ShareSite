@@ -15,8 +15,8 @@ const Home = () => {
         const fetchHomeData = async () => {
             try{
                 const data = await getData("/api/home");
-                setWeeklyItems(data.weeklyItems || []);
-                setLatestItems(data.latestItems || []);
+                setWeeklyItems(data.data.weeklyItems || []);
+                setLatestItems(data.data.latestItems || []);
             } catch (err) {
                 console.log("Failed Load Data...", err);
             }
