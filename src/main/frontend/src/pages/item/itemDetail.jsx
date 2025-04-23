@@ -18,6 +18,7 @@ const ItemDetail = () => {
         const fetchItem = async () => {
             try {
                 const response = await getData(`/product/${itemKey}`);
+                showToast("상품을 받아왔습니다!");
                 setItem(response.data);
             } catch (err) {
                 showToast("통신 장애로 상품을 가져오지 못했어요...");

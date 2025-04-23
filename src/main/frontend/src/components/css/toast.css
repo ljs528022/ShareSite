@@ -3,7 +3,6 @@
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #0061e2;
     color: white;
     padding: 10px 20px;
     border-radius: 999px;
@@ -11,6 +10,10 @@
     z-index: 9999;
     font-size: 14px;
     animation: fadein 0.3s, fadeout 0.3s ease-in-out 2.7s;
+}
+
+.toast-message.default {
+    background-color: #0061e2;
 }
 
 @keyframes fadein {
