@@ -56,7 +56,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public int write(Item item, List<ItemImage> imageList) {
+    public Long write(Item item, List<ItemImage> imageList) {
         int result = itemRepository.write(item);
         if(result > 0) {
             Long itemKey = item.getItemKey();
@@ -65,7 +65,7 @@ public class ItemServiceImpl implements ItemService {
                 result = itemRepository.insertImage(image);
             }
         }
-        return result;
+        return item.getItemKey();
     }
 
     @Override

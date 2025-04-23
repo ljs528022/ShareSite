@@ -25,7 +25,7 @@ public interface ItemService {
     // Find Item By UserKey
     List<Item> findByUserKey(Long userKey);
 
-    int write(Item item, List<ItemImage> imageList);
+    Long write(Item item, List<ItemImage> imageList);
 
     // Item's Detail
     Item detail(Long itemKey);

@@ -29,6 +29,7 @@ function App() {
 
             {/* Item Page */}
             <Route path='/product/write' Component={ItemWrite}></Route>
+            {/* <Route path='/product?' Component={}></Route> */}
 
           </Routes>
           <Footer />

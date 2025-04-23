@@ -65,13 +65,16 @@
 
 .paginaton {
     position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    bottom: -40px;
-    width: inherit;
-    height: 20px;
+    width: 1100px;
+    height: inherit;
 
-    justify-content: center;
     text-align: center;
+
+    z-index: -1;
 }
 
 .button{
@@ -79,10 +82,30 @@
     width: 5px;
     height: 5px;
 
+    margin-top: 330px;
+
     border-radius: 10px;
 
     background-color: gray;
     cursor: pointer;
+}
+
+.paginatonBtn {
+
+    width: 35px;
+    height: 35px;
+
+    line-height: 42px;
+
+    color: white;
+    background-color: #BBB;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.paginatonBtn:hover {
+    background-color: gray;
 }
 
 .buttonSelected {

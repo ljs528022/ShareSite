@@ -5,9 +5,11 @@ import { getData } from "../services/api.jsx";
 
 const Home = () => {
     // 이번주 인기 카테고리 상품
+    // 나중에 상품 많이 추가하고, WHERE절 손봐야함
     const [ weeklyItems, setWeeklyItems ] = useState([]);  
 
     // 방금 등록된 상품
+    // 나중에 상품 많이 추가하고, WHERE절 손봐야함
     const [ latestItems, setLatestItems ] = useState([]);
 
     // 상품들 받아오기

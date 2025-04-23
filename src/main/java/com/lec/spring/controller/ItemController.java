@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +65,7 @@ public class ItemController {
 
             imageList = fileUploadService.saveFiles(img, isMainList);
         }
-        itemService.write(item, imageList);
+        Long itemKey = itemService.write(item, imageList);
 
         List<LocationDTO> locations = itemDTO.getLocations();
         if(locations != null && !locations.isEmpty()) {
@@ -80,7 +81,10 @@ public class ItemController {
             }
         }
 
-        return ResponseEntity.ok("등록 성공!");
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("message", "등록 성공!");
+        responseBody.put("itemKey", itemKey);
+        return ResponseEntity.ok(responseBody);
     }
 
 

@@ -10,9 +10,11 @@ SELECT * FROM d1_item;
 
 SELECT * FROM d1_item_image;
 
-SELECT count(*)
-FROM d1_user 
-WHERE userKey LIKE LOWER(CONCAT('%', 9160, '%'));
+SELECT *
+FROM d1_item
+        WHERE tradestatus = false
+        ORDER BY writeDate DESC
+        LIMIT 20;
 
 SELECT
             itemKey,

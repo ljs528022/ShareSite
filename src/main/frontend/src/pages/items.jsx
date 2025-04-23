@@ -1,19 +1,8 @@
 import { useState } from 'react';
-import ItemCards from '../components/itemCard';
+import ItemCardList from '../components/itemCardList';
 import '../components/css/items.css'
 
 const Items = ({ items, tag }) => {
-
-    // const [ isWeekCateItems, setIsWeekCateItems ] = useState(false);
-    // const [ isLatestItems, setIsLatestItems ] = useState(false);
-
-    // if (weekCateItems != null && latestItems == null) {
-    //     setIsWeekCateItems(true);
-    // }
-
-    // if (latestItems != null && weekCateItems == null) {
-    //     setIsLatestItems(true);
-    // }
 
     return (
         <div className="Contents_wrapper">
@@ -27,7 +16,7 @@ const Items = ({ items, tag }) => {
                     </div>
                     <div className="Items">
                         {/* 상품카드 담을 곳 + Pagination */}
-                        <ItemCards items={items}/>
+                        <ItemCardList items={items}/>
                     </div>
                 </section>
             </div>

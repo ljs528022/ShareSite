@@ -5,9 +5,12 @@ import { useUser } from "../../services/UserContext";
 import { useToast } from "../../components/ToastContext";
 import { postData } from "../../services/api";
 import MapSearch from "../../components/MapSearch";
+import { useNavigate } from "react-router-dom";
 
 
 const ItemWrite = () => {
+
+    const navigate = useNavigate();
 
     // 작성중인 유저 정보
     const { user } = useUser();
@@ -181,8 +184,9 @@ const ItemWrite = () => {
             });
 
             if(response.status === 200 && response.data === "등록 성공!") {
+                const itemKey = response.data.itemKey;
                 showToast("상품 등록이 완료되었습니다!");
-                // 상품 세부페이지로 이동 필요
+                navigate(`/product?${itemKey}`);
             } else {
                 showToast("상품 등록에 실패했습니다...");
             }

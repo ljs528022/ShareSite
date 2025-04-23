@@ -107,6 +107,7 @@
     <select id="getLatestItems" resultMap="mapItem">
         <include refid="SELECT_BASE" />
         FROM d1_item
+        WHERE tradestatus = false
         ORDER BY writeDate DESC
         LIMIT 20
     </select>
@@ -114,6 +115,7 @@
     <select id="getWeeklyItems" resultMap="mapItem">
         <include refid="SELECT_BASE" />
         FROM d1_item
+        WHERE tradestatus = false
         ORDER BY writeDate DESC
         LIMIT 20
     </select>
