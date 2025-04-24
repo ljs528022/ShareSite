@@ -2,12 +2,14 @@ import { useState, useEffect, useCallback } from "react";
 import "/src/components/css/register.css";
 import { useNavigate } from "react-router-dom";
 import { getData, postData } from "../../services/api";
+import { useToast } from "../../components/ToastContext";
 import Buttons from "../../util/buttons";
 import MailVerification from "../../util/mailVerification";
 
 const Register = () => {
 
     const navigate = useNavigate();
+    const { showToast } = useToast();
     const [ userData, setUserData ] = useState({
         username: "",
         password: "",
@@ -112,7 +114,7 @@ const Register = () => {
             }));
         } catch (err) {
             console.error("아이디 중복 확인 오류:", err);
-            alert("서버와의 통신 중 오류가 발생했습니다...");
+        showToast("서버와의 통신 중 오류가 발생했습니다...", "error");
         }
     };
     
@@ -126,7 +128,7 @@ const Register = () => {
         event.preventDefault();
 
         if(!isFormVaild) {
-            alert("모든 항목을 올바르게 입력해주세요.");
+            showToast("모든 항목을 올바르게 입력해주세요.", "error");
             return;
         }
 
@@ -138,11 +140,11 @@ const Register = () => {
                 email: userData.email,
             });
 
-            alert("회원가입이 완료되었습니다!");
+            showToast("회원가입이 완료되었습니다!", "success");
             navigate("/user/login")
         } catch (err) {
             console.log("회원가입이 실패했습니다...", err);
-            alert("회원가입이 실패했습니다... 다시 시도해주세요.");
+            showToast("회원가입이 실패했습니다... 다시 시도해주세요.", "error");
         }
     }
 

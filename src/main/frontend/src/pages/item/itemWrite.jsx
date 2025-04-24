@@ -61,7 +61,7 @@ const ItemWrite = () => {
         e.target.value = null;
 
         if(files.length > 5 || itemData.img.length + files.length > 5) {
-            showToast("이미지는 최대 5장까지만 가능해요!");
+            showToast("이미지는 최대 5장까지만 가능해요!", "error");
             return;
         }
 
@@ -148,7 +148,7 @@ const ItemWrite = () => {
         e.preventDefault();
 
         if(!itemData.subject || !itemData.content || !itemData.price || !itemData.cateKey || !itemData.itemtype) {
-            showToast("입력되지 않은 항목이 있는거 같습니다. 확인해주세요!");
+            showToast("입력되지 않은 항목이 있는거 같습니다. 확인해주세요!", "error");
             return;
         } 
 
@@ -185,14 +185,14 @@ const ItemWrite = () => {
 
             if(response.status === 200) {
                 const itemKey = response.data.itemKey;
-                showToast("상품 등록이 완료되었습니다!");
+                showToast("상품 등록이 완료되었습니다!", "success");
                 navigate(`/product/${itemKey}`);
             } else {
-                showToast("상품 등록에 실패했습니다...");
+                showToast("상품 등록에 실패했습니다...", "error");
             }
         } catch (err) {
             console.log("Failed To Post Item...", err);
-            showToast("오류가 발생했습니다!");
+            showToast("오류가 발생했습니다!", "error");
         }
     };
 

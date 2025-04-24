@@ -16,6 +16,19 @@
     background-color: #0061e2;
 }
 
+.toast-message.success {
+    background-color: #28a745;
+}
+
+.toast-message.error {
+    background-color: #dc3545;
+}
+
+.toast-message.warning {
+    background-color: #ffc107;
+    color: black;
+}
+
 @keyframes fadein {
     from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
     to   { opacity: 1; transform: translateX(-50%) translateY(0); }

@@ -70,12 +70,12 @@ const MapSearch = ({ isOpen, onClose, itemData, setItemData }) => {
 
     const handleSelectLocation = (place) => {
         if(itemData.location.length >= 3) {
-            showToast("최대 3개의 장소만 저장할 수 있어요!");
+            showToast("최대 3개의 장소만 저장할 수 있어요!", "error");
             return;
         }
 
         if(itemData.location.some(loc => loc.id === place.id)) {
-            showToast("이미 선택하신 장소입니다!");
+            showToast("이미 선택하신 장소입니다!", "error");
             return;
         }
 
@@ -93,7 +93,7 @@ const MapSearch = ({ isOpen, onClose, itemData, setItemData }) => {
             }));
         }
 
-        showToast("장소를 추가했습니다!");
+        showToast("장소를 추가했습니다!", "success");
     }
 
     const moveToLocation = (place) => {

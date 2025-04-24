@@ -9,6 +9,9 @@ import com.lec.spring.repository.CategoryRepository;
 import com.lec.spring.repository.ItemRepository;
 import com.lec.spring.repository.LocationRepository;
 import com.lec.spring.repository.UserRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -118,7 +121,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDTO detail(Long itemKey) {
-        itemRepository.incViewCnt(itemKey);
         Item item = itemRepository.findItemByItemKey(itemKey);
         List<LocationDTO> locations = locationRepository.findByUserKeyAndItemKey(item.getUserKey(), itemKey);
         List<ItemImage> images = itemRepository.findImgByItemKey(itemKey);
@@ -164,6 +166,11 @@ public class ItemServiceImpl implements ItemService {
             result = itemRepository.delete(item);
         }
         return result;
+    }
+
+    @Override
+    public void incViewCnt(Long itemKey) {
+        itemRepository.incViewCnt(itemKey);
     }
 
 }

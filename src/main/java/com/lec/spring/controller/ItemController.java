@@ -10,6 +10,9 @@ import com.lec.spring.domain.Location;
 import com.lec.spring.service.FileUploadService;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.LocationService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -89,8 +92,29 @@ public class ItemController {
     }
 
     @GetMapping("/{itemKey}")
-    public ResponseEntity<ItemDTO> getItemDetail(@PathVariable("itemKey") Long itemKey) {
+    public ResponseEntity<ItemDTO> getItemDetail(@PathVariable("itemKey") Long itemKey, HttpServletRequest request, HttpServletResponse response) {
         ItemDTO item = itemService.detail(itemKey);
+
+        Cookie[] cookies = request.getCookies();
+        boolean viewed = false;
+
+        if(cookies != null) {
+            for(Cookie cookie : cookies) {
+                if(cookie.getName().equals("viewed_" + itemKey)) {
+                    viewed = true;
+                    break;
+                }
+            }
+        }
+
+        if(!viewed) {
+            itemService.incViewCnt(itemKey);
+
+            Cookie viewCookie = new Cookie("viewed_" + itemKey, "true");
+            viewCookie.setMaxAge(30 * 60); // 30분
+            viewCookie.setPath("/product");
+            response.addCookie(viewCookie);
+        }
 
         if (item != null) {
             return ResponseEntity.ok(item);

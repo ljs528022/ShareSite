@@ -48,7 +48,7 @@ const Login = () => {
             navigate("/home");
         } catch (err) {
             console.log("로그인 실패...", err);
-            showToast("로그인 정보가 올바르지 않은거 같아요!");
+            showToast("로그인 정보가 올바르지 않은거 같아요!", "error");
         }
 
     };

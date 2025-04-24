@@ -3,6 +3,8 @@ package com.lec.spring.service;
 import com.lec.spring.DTO.ItemDTO;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.ItemImage;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -42,6 +44,8 @@ public interface ItemService {
 
     // Delete Item
     int delete(Long itemKey);
+
+    void incViewCnt(Long itemKey);
 
 
 
