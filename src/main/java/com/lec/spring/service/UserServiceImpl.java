@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findSellerInfoByUserKey(String userKey) {
+        return userRepository.findSellerInfoByUserKey(userKey);
+    }
+
+    @Override
     public boolean isUsernameTaken(String username) {
         return userRepository.existsByUsername(username);
     }

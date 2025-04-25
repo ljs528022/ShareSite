@@ -57,4 +57,14 @@ public class UserController {
         return new LoginResponse(token);
     }
 
+    @GetMapping("/find/{userKey}")
+    public ResponseEntity<?> getSellerInfo(@PathVariable("userKey") String userKey) {
+        if(userKey != null) {
+            User sellerInfo = userService.findbyUserKey(userKey);
+            return ResponseEntity.ok(sellerInfo);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

@@ -16,6 +16,8 @@ public interface UserService {
     // Search by User ID
     Optional<User> findbyUserName (String username);
 
+    User findSellerInfoByUserKey(String userKey);
+
     // ID Verification
     boolean isUsernameTaken(String username);
 

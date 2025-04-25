@@ -67,7 +67,13 @@
     </sql>
 
     <select id="findByUserKey" resultType="com.lec.spring.domain.User">
-        SELECT userKey
+        SELECT *
+        FROM d1_user
+        WHERE userKey = #{userKey}
+    </select>
+
+    <select id="findSellerInfoByUserKey" resultType="com.lec.spring.domain.User">
+        SELECT *
         FROM d1_user
         WHERE userKey = #{userKey}
     </select>

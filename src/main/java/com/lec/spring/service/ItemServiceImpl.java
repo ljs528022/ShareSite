@@ -5,6 +5,7 @@ import com.lec.spring.DTO.LocationDTO;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.ItemImage;
 import com.lec.spring.domain.Location;
+import com.lec.spring.domain.User;
 import com.lec.spring.repository.CategoryRepository;
 import com.lec.spring.repository.ItemRepository;
 import com.lec.spring.repository.LocationRepository;
@@ -125,10 +126,16 @@ public class ItemServiceImpl implements ItemService {
         List<LocationDTO> locations = locationRepository.findByUserKeyAndItemKey(item.getUserKey(), itemKey);
         List<ItemImage> images = itemRepository.findImgByItemKey(itemKey);
 
+        // 판매자 정보 가져오기
+        String userKey = item.getUserKey();
+        String useralias = userRepository.findByUserKey(userKey).getUseralias();
+
 
         // ItemDTO 로 정보 등록
         ItemDTO itemInfo = new ItemDTO();
+            itemInfo.setItemKey(item.getItemKey());
             itemInfo.setUserKey(item.getUserKey());
+            itemInfo.setUseralias(useralias);
             itemInfo.setCateKey(item.getCateKey());
             itemInfo.setSubject(item.getSubject());
             itemInfo.setContent(item.getContent());

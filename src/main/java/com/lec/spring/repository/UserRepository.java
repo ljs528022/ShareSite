@@ -30,6 +30,9 @@ public interface UserRepository {
     // Update User Info
     int update(User user);
 
+    // Get Item Seller's UserInfo
+    User findSellerInfoByUserKey(@Param("userKey")String userKey);
+
 
     // -- User Page --
 

@@ -19,6 +19,7 @@ import java.util.List;
 public class ItemDTO {
     private Long itemKey;
     private String userKey;
+    private String useralias;
     private Long cateKey;
     private String subject;
     private String content;
