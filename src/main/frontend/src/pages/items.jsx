@@ -16,7 +16,7 @@ const Items = ({ items, tag }) => {
                     </div>
                     <div className="Items">
                         {/* 상품카드 담을 곳 + Pagination */}
-                        <ItemCardList items={items}/>
+                        <ItemCardList items={items} style={"Normal"}/>
                     </div>
                 </section>
             </div>

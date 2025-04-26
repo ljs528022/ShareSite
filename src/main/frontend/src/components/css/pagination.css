@@ -1,0 +1,130 @@
+.paginaton {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 1100px;
+    height: inherit;
+
+    text-align: center;
+
+    z-index: -1;
+}
+
+.button{
+    margin: 0 1px;
+    width: 5px;
+    height: 5px;
+
+    margin-top: 330px;
+
+    border-radius: 10px;
+
+    background-color: gray;
+    cursor: pointer;
+}
+
+.paginatonBtn {
+
+    width: 35px;
+    height: 35px;
+
+    line-height: 42px;
+
+    color: white;
+    background-color: #BBB;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.paginatonBtn:hover {
+    background-color: gray;
+}
+
+.buttonSelected {
+    margin: 0 1px;
+    width: 20px;
+    height: 5px;
+
+    border-radius: 10px;
+    background-color: black;
+
+    cursor: pointer;
+}
+
+
+/* 상품 디테일 이미지 페이지 */
+.img_paginaton {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 400px;
+    height: inherit;
+
+    top: 15px;
+
+    text-align: center;
+
+    z-index: 1;
+}
+
+.button{
+    margin: 0 1px;
+    width: 5px;
+    height: 5px;
+
+    margin-top: 330px;
+
+    border-radius: 10px;
+
+    background-color: gray;
+    cursor: pointer;
+}
+
+.img_paginatonBtn {
+
+    width: 35px;
+    height: 35px;
+
+    line-height: 42px;
+
+    color: white;
+    background-color: #95b0ff;
+    opacity: 0.8;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.img_paginatonBtn:hover {
+    background-color: #3477de;
+    opacity: 0.8;
+}
+
+.img_buttonSelected {
+    margin: 0 1px;
+    width: 20px;
+    height: 5px;
+
+    border-radius: 10px;
+    background-color: #3477de;
+
+    cursor: pointer;
+}
+
+.img_button{
+    margin: 0 1px;
+    width: 5px;
+    height: 5px;
+
+    margin-top: 330px;
+
+    border-radius: 10px;
+
+    background-color: #95b0ff;
+    cursor: pointer;
+}

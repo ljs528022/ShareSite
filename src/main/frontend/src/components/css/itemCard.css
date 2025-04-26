@@ -1,0 +1,61 @@
+/* Normal Card CSS -> style={"Normal"} 필요함*/ 
+.Normal_Card_wrapper {
+    margin: 0px 20px;
+
+    cursor: pointer;
+}
+
+.Normal_Card_img {
+    width: 220px;
+    height: 160px;
+    object-fit: cover;
+}
+
+.Normal_CardBody {
+    display: block;
+}
+
+.Normal_CardBody p {
+    margin: 10px;
+    flex: 1;
+}
+
+.Normal_CardBody span {
+    margin: 5px 10px;
+    border-radius: 9px;
+}
+
+.Normal_Card_subject {
+    font-size: 15px;
+}
+
+.Normal_Card_price {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.Normal_Card_trading {
+    background-color: #ed5e60;
+    padding: 5px 10px;
+    color: white;
+    font-size: 12px;
+}
+
+.Normal_Card_traded {
+    background-color: #00a234;
+    padding: 5px 10px;
+    color: white;
+    font-size: 12px;
+}
+
+.Normal_Card_writeTime {
+    color: gray;
+    font-size: 14px;
+    float: right;
+}
+
+
+/* Small Card CSS -> style={"Small"} 필요함함*/ 
+.Small_Card_wrapper {
+
+}

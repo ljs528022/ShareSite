@@ -2,7 +2,7 @@ import { useState } from "react";
 import ItemCard from "./itemCard";
 import Pagination from "./Pagination";
 
-const ItemCardList = ({ items }) => {
+const ItemCardList = ({ items, style }) => {
 
     const [ currentPage, setCurrentPage ] = useState(1);
     const [ pagePerItem, setPagePerItem ] = useState(4);
@@ -26,12 +26,13 @@ const ItemCardList = ({ items }) => {
     return (
         <>
             {currentItems.map((item, index) => (
-                <ItemCard key={item.itemKey || index} item={item} />
+                <ItemCard key={item.itemKey || index} item={item} style={style} />
             ))}
             <Pagination
                 totalPage={totalPage}
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
+                style={""}
             />
         </>
     )

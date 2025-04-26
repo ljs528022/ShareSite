@@ -1,27 +1,27 @@
-import style from "../components/css/itemCard.module.css"
+import "../components/css/itemCard.css";
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item, style }) => {
 
     const mainImage = item.images.find(img => img.main) || { imgUrl: "/item-images/temp/SSicon.png" };
 
     return (
         <>
             <a href={`/product/${item.itemKey}`}>
-                <div className={style.Normal_Card_wrapper}>
+                <div className={`${style}_Card_wrapper`}>
                     <img 
-                        className={style.Normal_Card_img_temp} 
+                        className={`${style}_Card_img`}
                         src={`http://localhost:8093${mainImage.imgUrl}`}
                         alt="상품 이미지"
                     />
-                    <div className={style.Normal_CardBody}>
-                        <p className={style.subject}>{item.subject}</p>                                    
-                        <p className={style.price}>
+                    <div className={`${style}_CardBody`}>
+                        <p className={`${style}_Card_subject`}>{item.subject}</p>                                    
+                        <p className={`${style}_Card_price`}>
                             {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
                         </p>
-                        <span className={item.tradestatus == 0 ? style.span_trading : style.span_traded}>
+                        <span className={item.tradestatus == 0 ? `${style}_Card_trading` : `${style}_Card_traded`}>
                             {item.tradestatus == 0 ? "거래중" : "거래완료"}
                         </span>
-                        <span className={style.span_time}>{getDayMinuteCounter(item.writeDate)}</span>
+                        <span className={`${style}_Card_writeTime`}>{getDayMinuteCounter(item.writeDate)}</span>
                     </div>
                 </div>
             </a>

@@ -13,6 +13,7 @@ import com.lec.spring.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,6 +77,24 @@ public class ItemServiceImpl implements ItemService {
                 .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
 
         for(ItemDTO item : items) {
+            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+        }
+
+        return items;
+    }
+
+    @Override
+    public List<ItemDTO> getSellerItems(String userKey) {
+        List<ItemDTO> items = itemRepository.getSellerItems(userKey);
+        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
+
+        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
+        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
+
+        for(ItemDTO item: items) {
             item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
             item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
         }

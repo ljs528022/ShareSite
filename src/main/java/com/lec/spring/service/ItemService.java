@@ -20,6 +20,8 @@ public interface ItemService {
     // Find Weekly Most Traded Items
     List<ItemDTO> getWeeklyItems();
 
+    List<ItemDTO> getSellerItems(String userKey);
+
     ItemDTO findByItemKey(Long itemKey);
 
     // Find By ItemKey

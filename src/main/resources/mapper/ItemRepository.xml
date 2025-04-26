@@ -135,6 +135,14 @@
         LIMIT 20
     </select>
 
+    <select id="getSellerItems" resultType="com.lec.spring.DTO.ItemDTO">
+        SELECT *
+        FROM d1_item
+        WHERE tradestatus = false AND userKey = #{userKey}
+        ORDER BY writeDate DESC
+        LIMIT 10
+    </select>
+
     <select id="findByItemKey" resultType="com.lec.spring.domain.Item">
         SELECT itemKey
         FROM d1_item

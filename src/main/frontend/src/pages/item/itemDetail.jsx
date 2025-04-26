@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getData } from "../../services/api";
 import { useToast } from "../../components/ToastContext";
 import "../../components/css/itemDetail.css";
+import Pagination from "../../components/Pagination";
+import Items from "../items";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
@@ -11,6 +13,9 @@ const ItemDetail = () => {
     // Item's Info
     const [ item, setItem ] = useState(null);
     const [ loading, setLoading ] = useState(true);
+
+    // Image Pagination
+    const [ currentPage, setCurrentPage ] = useState(1);
 
     // Seller's Item
     const [ sellerItem, setSellerItem ] = useState(null);
@@ -41,33 +46,59 @@ const ItemDetail = () => {
     }, [itemKey]);
 
     useEffect(() => {
-        const fetchSellerItem = async () => {
+        if(!item) return;
 
+        const getSellerItem = async () => {
+            try {
+                const response = await getData(`/product/seller/${item.userKey}`, { withCredentials: true });
+                setSellerItem(response.data.sellerItems);
+            } catch (err) {
+                console.log("Failed Load Data...", err);
+            }
         }
-    })
+
+        getSellerItem();
+    }, [])
+
+    console.log(sellerItem);
 
     const renderImage = ( imgs ) => {
         const mainImage = imgs.find(img => img.main);
         const images = mainImage ? [mainImage, ...imgs.filter(img => img !== mainImage)] : [...imgs];
         
+        const totalPage = images.length;
+        const startIndex = currentPage - 1;
+        const currentImg = images.slice(startIndex, startIndex + 1);
+
+        const handlePageChange = (page) => {
+            if(page < 1 || page > totalPage) return;
+            setCurrentPage(page);
+        }
+
 
         if(imgs.length <= 0) {
             const temp = "/item-images/temp/SStemp.png";
             return <img
                     src={`http://localhost:8093${temp}`}
-                    alt="상품이미지"/>;
+                    alt="상품이미지"/>
         }
 
         if(imgs.length > 1) {
             return (
                 <>
-                    {images.map((img, index) => (
+                    {currentImg.map((img, index) => (
                         <img
                             key={index}
                             src={`http://localhost:8093${img.imgUrl}`}
                             alt="상품이미지"
                         />
                     ))}
+                    <Pagination
+                        totalPage={totalPage}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                        style={"img_"}
+                    />
                 </>
             );
         }
@@ -186,9 +217,14 @@ const ItemDetail = () => {
                                 <p onClick={() => navigate(`/user/${item.userKey}`)}>{item.useralias}</p>
                                 <img onClick={() => navigate(`/user/${item.userKey}`)} src={`http://localhost:8093/item-images/temp/userImgTemp.png`}/>
                             </div>
-                            <div className="item-seller-product">
-
-                            </div>
+                        </div>
+                    </div>                    
+                </div>
+                <div className="item-row">
+                    <div className="seller-product">
+                        <label>판매자가 판매하는 다른 상품</label>
+                        <div className="seller-product-box">
+                            {/* <Items items={} /> */}
                         </div>
                     </div>
                 </div>

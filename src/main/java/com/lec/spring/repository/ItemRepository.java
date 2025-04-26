@@ -27,6 +27,9 @@ public interface ItemRepository {
     // Find Weekly Most Traded Items
     List<ItemDTO> getWeeklyItems();
 
+    // Find Item's Seller Items
+    List<ItemDTO> getSellerItems(@Param("userKey")String userKey);
+
     // Find By ItemKey
     ItemDTO findByItemKey(@Param("itemKey")Long itemKey);
 

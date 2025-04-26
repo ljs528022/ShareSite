@@ -123,5 +123,14 @@ public class ItemController {
         }
     }
 
+    @GetMapping("/seller/{userKey}")
+    public Map<String, Object> getSellerItems(@PathVariable("userKey")String userKey) {
+        Map<String, Object> response = new HashMap<>();
+
+        List<ItemDTO> sellerItems = itemService.getSellerItems(userKey);
+        response.put("sellerItems", sellerItems);
+
+        return response;
+    }
 
 }
