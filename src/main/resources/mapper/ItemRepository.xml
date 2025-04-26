@@ -140,7 +140,15 @@
         FROM d1_item
         WHERE tradestatus = false AND userKey = #{userKey}
         ORDER BY writeDate DESC
-        LIMIT 10
+        LIMIT 20
+    </select>
+
+    <select id="getItemsLikeCate" resultType="com.lec.spring.DTO.ItemDTO">
+        SELECT *
+        FROM d1_item
+        WHERE tradestatus = false AND cateKey = #{cateKey}
+        ORDER BY writeDate DESC
+        LIMIT 20
     </select>
 
     <select id="findByItemKey" resultType="com.lec.spring.domain.Item">

@@ -22,6 +22,8 @@ public interface ItemService {
 
     List<ItemDTO> getSellerItems(String userKey);
 
+    List<ItemDTO> getItemsLikeCate(Long cateKey);
+
     ItemDTO findByItemKey(Long itemKey);
 
     // Find By ItemKey

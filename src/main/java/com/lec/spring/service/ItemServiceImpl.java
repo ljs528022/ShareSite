@@ -103,6 +103,24 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<ItemDTO> getItemsLikeCate(Long cateKey) {
+        List<ItemDTO> items = itemRepository.getItemsLikeCate(cateKey);
+        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
+
+        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
+        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
+
+        for(ItemDTO item: items) {
+            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+        }
+
+        return items;
+    }
+
+    @Override
     public ItemDTO findByItemKey(Long itemKey) {return itemRepository.findByItemKey(itemKey);}
 
     @Override

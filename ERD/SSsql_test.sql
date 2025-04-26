@@ -11,6 +11,12 @@ SELECT * FROM d1_item;
 SELECT * FROM d1_item_image;
 
 SELECT *
+        FROM d1_item
+        WHERE tradestatus = false AND cateKey = 902
+        ORDER BY writeDate DESC
+        LIMIT 20;
+
+SELECT *
 FROM d1_item
         WHERE tradestatus = false
         ORDER BY writeDate DESC

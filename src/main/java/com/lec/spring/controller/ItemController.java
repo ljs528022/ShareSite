@@ -14,7 +14,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -129,6 +128,16 @@ public class ItemController {
 
         List<ItemDTO> sellerItems = itemService.getSellerItems(userKey);
         response.put("sellerItems", sellerItems);
+
+        return response;
+    }
+
+    @GetMapping("/cate/{cateKey}")
+    public Map<String, Object> getSameCateItems(@PathVariable("cateKey")Long cateKey) {
+        Map<String, Object> response = new HashMap<>();
+
+        List<ItemDTO> sameCateItems = itemService.getItemsLikeCate(cateKey);
+        response.put("sameCateItems", sameCateItems);
 
         return response;
     }

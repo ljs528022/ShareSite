@@ -203,6 +203,11 @@
 
 .item-content {
     margin-top: 10px;
+    margin-bottom: 30px;
+
+    height: 220px;
+
+    border-bottom: 1px solid #CCC;
 
     padding: 15px;
 }
@@ -215,7 +220,7 @@
 .item-seller {
     display: flex;
     flex-direction: row;
-    margin-top: 10px;
+    margin-top: 20px;
     height: 54px;
     justify-content: space-between;
 }
@@ -236,7 +241,7 @@
     width: 50px;
     height: 50px;
 
-    margin-right: 30px;
+    margin-right: 35px;
 
     object-fit: cover;
     border: 2px solid #777;
@@ -247,6 +252,7 @@
 
 .seller-product {
     margin: 0 auto;
+    margin-bottom: 30px;
 
     display: flex;
     flex-direction: column;
@@ -257,8 +263,55 @@
 .seller-product label {
     padding: 0;
     width: 480px;
-    border-bottom: 2px solid #CCC;
+    margin-bottom: 30px;
     text-align: left;
     font-size: 25px;
 }
 
+.seller-product-box {
+    display: flex;
+    flex-direction: row;
+
+    background-color: white;
+    height: 200px;
+}
+
+.category-product {
+    margin: 0 auto;
+    margin-bottom: 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 810px;
+}
+
+.category-product label {
+    padding: 0;
+    width: 480px;
+    margin-bottom: 30px;
+    text-align: left;
+    font-size: 25px;
+}
+
+
+.item-empty {
+    display: flex;
+    flex-direction: row;
+    padding-left: 50px;
+
+    border: 1px solid #AAA;
+    border-radius: 20px;
+}
+
+.item-empty a {
+    margin-top: 55px;
+    margin-right: 10px;
+}
+
+.item-empty p {
+    line-height: 110px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #AAA;
+}

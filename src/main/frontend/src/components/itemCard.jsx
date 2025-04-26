@@ -18,10 +18,14 @@ const ItemCard = ({ item, style }) => {
                         <p className={`${style}_Card_price`}>
                             {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
                         </p>
-                        <span className={item.tradestatus == 0 ? `${style}_Card_trading` : `${style}_Card_traded`}>
-                            {item.tradestatus == 0 ? "거래중" : "거래완료"}
-                        </span>
-                        <span className={`${style}_Card_writeTime`}>{getDayMinuteCounter(item.writeDate)}</span>
+                        {style == "Normal" &&
+                        <div className={`${style}_CardsubBody`}>
+                            <span className={item.tradestatus == 0 ? `${style}_Card_trading` : `${style}_Card_traded`}>
+                                {item.tradestatus == 0 ? "거래중" : "거래완료"}
+                            </span>
+                            <span className={`${style}_Card_writeTime`}>{getDayMinuteCounter(item.writeDate)}</span>
+                        </div>
+                        }
                     </div>
                 </div>
             </a>

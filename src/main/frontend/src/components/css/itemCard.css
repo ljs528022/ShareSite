@@ -12,30 +12,42 @@
 }
 
 .Normal_CardBody {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
 }
 
 .Normal_CardBody p {
-    margin: 10px;
+    margin-left: 10px;
     flex: 1;
 }
 
 .Normal_CardBody span {
-    margin: 5px 10px;
     border-radius: 9px;
 }
 
 .Normal_Card_subject {
+    margin: 5px 10px;
+
     font-size: 15px;
 }
 
 .Normal_Card_price {
+    margin: 5px 0px;
     font-size: 25px;
     font-weight: bold;
 }
 
+.Normal_CardsubBody {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
 .Normal_Card_trading {
     background-color: #ed5e60;
+    margin-left: 5px;
     padding: 5px 10px;
     color: white;
     font-size: 12px;
@@ -44,12 +56,15 @@
 .Normal_Card_traded {
     background-color: #00a234;
     padding: 5px 10px;
+    margin-left: 5px;
     color: white;
     font-size: 12px;
 }
 
 .Normal_Card_writeTime {
     color: gray;
+    padding-top: 5px;
+    margin-right: 5px;
     font-size: 14px;
     float: right;
 }
@@ -57,5 +72,38 @@
 
 /* Small Card CSS -> style={"Small"} 필요함함*/ 
 .Small_Card_wrapper {
+    margin: 0px 20px;
 
+    cursor: pointer;
+}
+
+.Small_Card_img {
+    width: 130px;
+    height: 140px;
+    object-fit: cover;
+}
+
+.Small_CardBody {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.Small_CardBody p {
+    margin-left: 5px;
+}
+
+.Small_CardBody span {
+    border-radius: 9px;
+}
+
+.Small_Card_subject {
+    margin: 0;
+    font-size: 15px;
+}
+
+.Small_Card_price {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
 }

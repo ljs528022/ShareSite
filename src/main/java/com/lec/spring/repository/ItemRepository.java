@@ -30,6 +30,9 @@ public interface ItemRepository {
     // Find Item's Seller Items
     List<ItemDTO> getSellerItems(@Param("userKey")String userKey);
 
+    // Find Items same category
+    List<ItemDTO> getItemsLikeCate(@Param("cateKey")Long cateKey);
+
     // Find By ItemKey
     ItemDTO findByItemKey(@Param("itemKey")Long itemKey);
 

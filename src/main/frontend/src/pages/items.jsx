@@ -2,21 +2,22 @@ import { useState } from 'react';
 import ItemCardList from '../components/itemCardList';
 import '../components/css/items.css'
 
-const Items = ({ items, tag }) => {
+const Items = ({ items, content, style, pageStyle }) => {
 
     return (
         <div className="Contents_wrapper">
             <div className="Product_wrapper">
                 <section>
+                    {content &&
                     <div className="Contents_label">
                         <h3>
-                            {tag == 0 ? "이번주 인기 카테고리 상품" 
-                                : "방금 추가된 상품들"}
+                            {content}
                         </h3>
                     </div>
+                    }
                     <div className="Items">
                         {/* 상품카드 담을 곳 + Pagination */}
-                        <ItemCardList items={items} style={"Normal"}/>
+                        <ItemCardList items={items} style={style} pageStyle={pageStyle}/>
                     </div>
                 </section>
             </div>

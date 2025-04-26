@@ -4,21 +4,24 @@ import { getData } from "../../services/api";
 import { useToast } from "../../components/ToastContext";
 import "../../components/css/itemDetail.css";
 import Pagination from "../../components/Pagination";
-import Items from "../items";
+import ItemCardList from "../../components/itemCardList";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
     const { itemKey } = useParams();
 
     // Item's Info
-    const [ item, setItem ] = useState(null);
+    const [ item, setItem ] = useState([]);
     const [ loading, setLoading ] = useState(true);
 
     // Image Pagination
     const [ currentPage, setCurrentPage ] = useState(1);
 
-    // Seller's Item
-    const [ sellerItem, setSellerItem ] = useState(null);
+    // Seller's Items
+    const [ sellerItem, setSellerItem ] = useState([]);
+
+    // Same Category's Items
+    const [ itemsSameCate, setItemsSameCate ] = useState([]);
 
     // Like Toggle
     const [ isItemLike, setIsItemLike ] = useState(false);
@@ -46,21 +49,36 @@ const ItemDetail = () => {
     }, [itemKey]);
 
     useEffect(() => {
-        if(!item) return;
+        if(item.userKey === undefined) return;
 
-        const getSellerItem = async () => {
+        const getOtherItems = async () => {
             try {
                 const response = await getData(`/product/seller/${item.userKey}`, { withCredentials: true });
-                setSellerItem(response.data.sellerItems);
+                setSellerItem(response.data.sellerItems.filter(items => items.itemKey != itemKey));
             } catch (err) {
                 console.log("Failed Load Data...", err);
             }
         }
 
-        getSellerItem();
-    }, [])
+        getOtherItems();
+    }, [item.userKey]);
 
-    console.log(sellerItem);
+    useEffect(() => {
+        if(item.cateKey === undefined) return;
+
+        const getItemsSameCateKey = async () => {
+            try {
+                const response = await getData(`/product/cate/${item.cateKey}`, { withCredentials: true });
+                setItemsSameCate(response.data.sameCateItems.filter(items => items.itemKey != itemKey));
+            } catch (err) {
+                console.log("Failed Load Data...", err);
+            }
+        }
+
+        getItemsSameCateKey();
+    }, [item.cateKey]);
+
+    console.log(itemsSameCate);
 
     const renderImage = ( imgs ) => {
         const mainImage = imgs.find(img => img.main);
@@ -217,15 +235,49 @@ const ItemDetail = () => {
                                 <p onClick={() => navigate(`/user/${item.userKey}`)}>{item.useralias}</p>
                                 <img onClick={() => navigate(`/user/${item.userKey}`)} src={`http://localhost:8093/item-images/temp/userImgTemp.png`}/>
                             </div>
+                            {/* 추가적인 판매자 정보 추가 필요함 */}
+                            {/* ex) 신뢰 점수, 거래 완료 수, 리뷰 수 등... */}
                         </div>
                     </div>                    
                 </div>
                 <div className="item-row">
                     <div className="seller-product">
-                        <label>판매자가 판매하는 다른 상품</label>
-                        <div className="seller-product-box">
-                            {/* <Items items={} /> */}
-                        </div>
+                        <label>판매자의 다른 상품</label>
+                        {sellerItem.length != 0 ?
+                            <div className="seller-product-box">
+                                <ItemCardList items={sellerItem} style={"Small"} pageStyle={""} />
+                            </div>
+                            :
+                            <div className="item-empty">
+                                <a>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={40} height={30} viewBox="0 0 512 512">
+                                    <path fill="#AAA" d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"/>
+                                </svg>
+                                </a>
+                                <p>
+                                    이런..! 판매자의 다른 상품이 없네요.. 나중에 다시 확인해주세요!
+                                </p>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div className="item-row">
+                    <div className="category-product">
+                        <label>관련된 다른 상품들</label>
+                        {itemsSameCate.length != 0 ?
+                        <></>
+                        : 
+                        <div className="item-empty">
+                            <a>
+                            <svg xmlns="http://www.w3.org/2000/svg" width={40} height={30} viewBox="0 0 512 512">
+                                <path fill="#AAA" d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"/>
+                            </svg>
+                            </a>
+                            <p>
+                                관련된 상품이 없네요.. 나중에 다시 확인해주세요!
+                            </p>
+                        </div>   
+                        }
                     </div>
                 </div>
             </div>
