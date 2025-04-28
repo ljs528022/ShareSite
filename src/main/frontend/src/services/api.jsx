@@ -61,4 +61,14 @@ export const postData = async (endpoint, data = {}) => {
     }
 };
 
+export const deleteData = async (endpoint) => {
+    try {
+        const response = await api.delete(endpoint);
+        return response;
+    } catch (error) {
+        console.log("Error Delete data:", error);
+        throw error;
+    }
+}
+
 export default api;

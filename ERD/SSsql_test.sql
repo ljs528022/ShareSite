@@ -10,6 +10,8 @@ SELECT * FROM d1_item;
 
 SELECT * FROM d1_item_image;
 
+SELECT * FROM d1_like;
+
 SELECT *
         FROM d1_item
         WHERE tradestatus = false AND cateKey = 902

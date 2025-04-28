@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getData } from "../../services/api";
-import { useToast } from "../../components/ToastContext";
+import { deleteData, getData, postData } from "../../services/api";
+import { useToast } from "../../util/ToastContext";
 import "../../components/css/itemDetail.css";
-import Pagination from "../../components/Pagination";
+import Pagination from "../../util/Pagination";
 import ItemCardList from "../../components/itemCardList";
+import LikeButton from "../../util/LikeButton";
+import { useUser } from "../../services/UserContext";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
     const { itemKey } = useParams();
+    const { user } = useUser();
+    const userKey = user !== null ? user.userKey : null;
 
     // Item's Info
     const [ item, setItem ] = useState([]);
     const [ loading, setLoading ] = useState(true);
+    const [ showDelete, setShowDelete ] = useState(false);
 
     // Image Pagination
     const [ currentPage, setCurrentPage ] = useState(1);
@@ -23,12 +28,10 @@ const ItemDetail = () => {
     // Same Category's Items
     const [ itemsSameCate, setItemsSameCate ] = useState([]);
 
-    // Like Toggle
-    const [ isItemLike, setIsItemLike ] = useState(false);
-
     // Utils
     const { showToast } = useToast();
     const navigate = useNavigate();
+    
  
     useEffect(() => {
         const fetchItem = async () => {
@@ -77,8 +80,6 @@ const ItemDetail = () => {
 
         getItemsSameCateKey();
     }, [item.cateKey]);
-
-    console.log(itemsSameCate);
 
     const renderImage = ( imgs ) => {
         const mainImage = imgs.find(img => img.main);
@@ -147,10 +148,8 @@ const ItemDetail = () => {
         )
     }
 
-    const toggleItemLike = () => {
-        setIsItemLike(prev => !prev);
-
-        // 누르면 서버에 like 생성, 한번 더 누르면 모달 띄우고 확인하면 제거
+    const deleteItem = async () => {
+        // 삭제 기능
 
     }
 
@@ -205,20 +204,32 @@ const ItemDetail = () => {
                             <label>- 희망거래지역</label>
                             {renderLocations(item.locations)}
                         </div>
+                        {item.userKey !== userKey ?
                         <div className="item-Btns">
-                            <button type="button" onClick={toggleItemLike}>
-                                <svg xmlns="http://www.w3.org/2000/svg" height="35" width="35" viewBox="0 0 512 512">
-                                    {isItemLike ?
-                                    <path fill="#FFD43B" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
-                                    : <path fill="#FFD43B" d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/>
-                                    }
-                                </svg>
-                                
-
-                            </button>
+                            <LikeButton item={item} />
                             <button type="button" className="item-chat-btn">채팅하기</button>
                             <button type="button" className="item-purchase-btn">구매하기</button>
                         </div>
+                        :
+                        <div className="item-user-btn">
+                            <button type="button" className="edit-btn" onClick={() => navigate(`/product/modify/${itemKey}`)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 512 512">
+                                    <path fill="#ffffff" d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-96c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7-14.3 32-32 32L96 448c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 64z"/>
+                                </svg>
+                                <p>수정하기</p>
+                            </button>
+                            <button type="button" className="delete-btn" onClick={() => setShowDelete(true)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="22.5" viewBox="0 0 448 512">
+                                    <path fill="#ffffff" d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                </svg>
+                                <p>삭제하기</p>
+                            </button>
+                            {showDelete && 
+                                // 모달 작성 예정 
+                                <></>
+                            }
+                        </div>
+                        }   
                     </div>
                 </div>
                 <div className="item-row">
@@ -255,7 +266,7 @@ const ItemDetail = () => {
                                 </svg>
                                 </a>
                                 <p>
-                                    이런..! 판매자의 다른 상품이 없네요.. 나중에 다시 확인해주세요!
+                                    판매자의 다른 상품이 없네요.. 나중에 다시 확인해주세요!
                                 </p>
                             </div>
                         }
@@ -307,9 +318,9 @@ const getDayMinuteCounter = (date) => {
     } else if (elapsedTime < hour) {
         elapsedText = Math.trunc(elapsedTime / minute) + "분 전";
     } else if (elapsedTime < day) {
-        elapsedText = Math.trunc(elapsedTime / hour) + "시간간 전";
+        elapsedText = Math.trunc(elapsedTime / hour) + "시간 전";
     } else if (elapsedTime < (day * 15)) {
-        elapsedText = Math.trunc(elapsedTime / day) + "분 전";
+        elapsedText = Math.trunc(elapsedTime / day) + "일 전";
     } else {
         elapsedText = postdate.toLocaleDateString("ko-KR", {dateStyle: "medium",})
     }

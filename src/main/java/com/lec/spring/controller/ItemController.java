@@ -142,4 +142,7 @@ public class ItemController {
         return response;
     }
 
+
+    // 상품 찜 기능
+
 }

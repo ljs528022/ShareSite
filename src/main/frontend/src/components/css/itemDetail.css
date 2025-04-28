@@ -16,7 +16,7 @@
 }
 
 
-/* 상품 이미지 및 상품 정보, 찜, 채팅, 구매 란 */
+/* 상품 이미지 및 상품 정보 란 */
 .item-Image {
     margin: 10px auto;
     margin-right: 15px;
@@ -27,6 +27,7 @@
     width: 400px;
     height: 350px;
     object-fit: cover;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
 }
 
 .item-Info {
@@ -51,7 +52,7 @@
     padding: 5px 10px;
 
     font-size: 11.8px;
-    color: gray;
+    color: #777;
 }
 
 .item-label label {
@@ -59,13 +60,15 @@
 
     font-size: 25px;
     text-align: left;
+    
 }
 
 .item-label p {
     width: 300px;
     margin: 2px 0;
-    padding: 0px 10px;
+    padding: 0px 12px;
     font-size: 10px;
+    color: #AAA;
 }
 
 .item-status-box {
@@ -83,6 +86,7 @@
 
     background-color: #DDD;
     border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
 }
 
 .item-status-box a {
@@ -132,6 +136,7 @@
     cursor: pointer;
 }
 
+/* 찜, 채팅, 구매 버튼 란 */
 .item-Btns {
     display: flex;
     flex-direction: row;
@@ -146,7 +151,7 @@
 .item-chat-btn {
     border: 2px solid #777;
     border-radius: 8px;
-    padding: 0px 40px;
+    padding: 5px 40px;
     font-size: 15px;
     font-weight: bold;
     color: #777;
@@ -160,7 +165,7 @@
 .item-purchase-btn {
     border: 2px solid #7badff;
     border-radius: 8px;
-    padding: 0px 40px;
+    padding: 7px 40px;
     font-size: 15px;
     font-weight: bold;
     background-color: white;
@@ -168,13 +173,12 @@
 }
 
 .item-purchase-btn:hover {
-    border: 2px solid #7badff;
-    border-radius: 8px;
-    padding: 0px 40px;
-    font-size: 15px;
-    font-weight: bold;
     background-color: #7badff;
     color: white;
+}
+
+.like-modal {
+
 }
 
 /* 상품 설명 및 판매자 정보 란 */
@@ -314,4 +318,70 @@
     font-size: 15px;
     font-weight: bold;
     color: #AAA;
+}
+
+/* 상품 수정 및 삭제 버튼 */
+.item-user-btn {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-left: 10px;
+    gap: 50px;
+}
+
+.item-user-btn p {
+    display: none;
+}
+
+.edit-btn {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    padding-top: 11px;
+    padding-left: 13px;
+    border-radius: 50px;
+    background-color: #7badff;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn:hover {
+    width: 130px;
+    background-color: #3477de;
+}
+
+.edit-btn:hover > p {
+    display: flex;
+    color: white;
+    margin-top: 2px;
+    margin-left: 8px;
+}
+
+.delete-btn {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    padding-top: 13px;
+    padding-left: 14px;
+    border-radius: 50px;
+    background-color: #ee0000;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    width: 130px;
+    background-color: #be0000;
+}
+
+.delete-btn:hover > p {
+    display: flex;
+    color: white;
+    margin-top: 0px;
+    margin-left: 8px;
+}
+
+/* 상품 삭제 확인 모달 */
+.delete-modal {
+
 }

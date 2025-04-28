@@ -59,9 +59,10 @@ CREATE TABLE d1_item_image
 CREATE TABLE d1_like
 (
 	wishKey int NOT NULL AUTO_INCREMENT,
-	userKey varchar(20) NULL,
+	userKey varchar(20) NOT NULL,
 	itemKey int NOT NULL,
-	PRIMARY KEY (wishKey)
+	PRIMARY KEY (wishKey),
+	UNIQUE KEY uq_user_item (userKey, itemKey)
 );
 
 

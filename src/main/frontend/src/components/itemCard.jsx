@@ -54,9 +54,9 @@ const getDayMinuteCounter = (date) => {
     } else if (elapsedTime < hour) {
         elapsedText = Math.trunc(elapsedTime / minute) + "분 전";
     } else if (elapsedTime < day) {
-        elapsedText = Math.trunc(elapsedTime / hour) + "시간간 전";
+        elapsedText = Math.trunc(elapsedTime / hour) + "시간 전";
     } else if (elapsedTime < (day * 15)) {
-        elapsedText = Math.trunc(elapsedTime / day) + "분 전";
+        elapsedText = Math.trunc(elapsedTime / day) + "일 전";
     } else {
         elapsedText = postdate.toLocaleDateString("ko-KR", {dateStyle: "medium",})
     }

@@ -2,9 +2,9 @@ import "../../components/css/itemWrite.css";
 import { useEffect, useState } from "react";
 import { getCategory } from "../../services/getCategory";
 import { useUser } from "../../services/UserContext";
-import { useToast } from "../../components/ToastContext";
+import { useToast } from "../../util/ToastContext";
 import { postData } from "../../services/api";
-import MapSearch from "../../components/MapSearch";
+import MapSearch from "../../util/MapSearch";
 import { useNavigate } from "react-router-dom";
 
 

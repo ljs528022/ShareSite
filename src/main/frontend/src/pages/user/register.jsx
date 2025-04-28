@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import "/src/components/css/register.css";
 import { useNavigate } from "react-router-dom";
-import { getData, postData } from "../../services/api";
-import { useToast } from "../../components/ToastContext";
-import Buttons from "../../util/buttons";
-import MailVerification from "../../util/mailVerification";
+import { postData } from "../../services/api";
+import { useToast } from "../../util/ToastContext";
+import MailVerification from "../../services/mailVerification";
 
 const Register = () => {
 
@@ -160,7 +159,7 @@ const Register = () => {
                                 <div className="register-input">
                                     <label>ID :</label>
                                     <input id="username" type="text" value={userData.username} onChange={handleInput} onKeyDown={handleKeyDown}/>
-                                    <Buttons btnClassname={"side-btn"} btnType={"button"} btnText={"중복확인"} btnOnClick={idChk} />
+                                    <button className="side-btn" type="button" onClick={idChk}>중복확인</button>
                                     <span className="error-message" style={userVerify.usernameChk <= 2 ? {color: "red"} : {color: "green"}}>
                                         {userVerify.usernameChk <= 0 ? "" : 
                                         userVerify.usernameChk <= 1 ? "이미 사용중인 ID 입니다!" 

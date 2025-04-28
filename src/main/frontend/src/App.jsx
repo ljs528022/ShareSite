@@ -5,7 +5,7 @@ import Footer from './pages/footer';
 import Login from './pages/user/login';
 import Register from './pages/user/register';
 import { UserProvider } from './services/UserContext';
-import { ToastProvider } from './components/ToastContext';
+import { ToastProvider } from './util/ToastContext';
 import ItemWrite from './pages/item/itemWrite';
 import ItemDetail from './pages/item/itemDetail';
 
@@ -31,6 +31,7 @@ function App() {
             {/* Item Page */}
             <Route path='/product/write' Component={ItemWrite}></Route>
             <Route path='/product/:itemKey' Component={ItemDetail}></Route>
+            <Route path='/product/modify/:itemKey' Component={null}></Route>
 
           </Routes>
           <Footer />

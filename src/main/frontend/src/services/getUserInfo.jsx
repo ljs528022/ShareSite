@@ -1,7 +1,5 @@
 import api from "./api";
 
-let isAlreadyLoggedOut = false;
-
 export const getUserInfo = async () => {
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 

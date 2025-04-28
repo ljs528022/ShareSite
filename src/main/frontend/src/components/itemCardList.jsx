@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ItemCard from "./itemCard";
-import Pagination from "./Pagination";
+import Pagination from "../util/Pagination";
 
 const ItemCardList = ({ items, style, pageStyle }) => {
 
