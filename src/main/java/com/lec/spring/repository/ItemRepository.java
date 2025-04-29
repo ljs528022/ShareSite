@@ -55,7 +55,7 @@ public interface ItemRepository {
     int incViewCnt(Long itemKey);
 
     // Delete Item
-    int delete(ItemDTO item);
+    int delete(@Param("itemKey")Long itemKey);
 
     // Modify Item
     int modify(Item item);

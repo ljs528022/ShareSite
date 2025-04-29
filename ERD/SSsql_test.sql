@@ -13,6 +13,13 @@ SELECT * FROM d1_item_image;
 SELECT * FROM d1_like;
 
 SELECT *
+FROM d1_category
+WHERE cateKey IN (
+    101,                
+    FLOOR(101 / 10) * 10
+);
+
+SELECT *
         FROM d1_item
         WHERE tradestatus = false AND cateKey = 902
         ORDER BY writeDate DESC

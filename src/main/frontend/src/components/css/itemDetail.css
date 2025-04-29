@@ -47,12 +47,24 @@
     width: 300px;
 }
 
-.item-label a {
+.item-category {
     width: 300px;
     padding: 5px 10px;
+    padding-left: 0;
 
     font-size: 11.8px;
     color: #777;
+}
+
+.item-category a {
+    padding: 5px;
+
+    font-size: 11.8px;
+    color: #777;
+}
+
+.item-category a:hover {
+    color: black;
 }
 
 .item-label label {
@@ -211,9 +223,16 @@
 
     height: 220px;
 
+    overflow: scroll;
+    overflow-x: hidden;
+
     border-bottom: 1px solid #CCC;
 
     padding: 15px;
+}
+
+.item-content::-webkit-scrollbar {
+    display: none;
 }
 
 .item-seller-box {
@@ -298,6 +317,13 @@
     font-size: 25px;
 }
 
+.category-product-box {
+    display: flex;
+    flex-direction: row;
+
+    background-color: white;
+    height: 200px;
+}
 
 .item-empty {
     display: flex;

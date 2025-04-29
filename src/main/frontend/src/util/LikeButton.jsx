@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postData, deleteData } from "../services/api.jsx";
+import { postData, deleteData, getData } from "../services/api.jsx";
 import { useUser } from "../services/UserContext.jsx";
 import { useToast } from "./ToastContext.jsx";
 import "../components/css/itemDetail.css";
+import { use } from "react";
+import Modal from "./Modal.jsx";
 
 function LikeButton({ item }) {
 
+    const [ like, setLike ] = useState(null);
     const [ isItemLike, setIsItemLike ] = useState(false);
     const [ showConfirmModal, setShowConfirmModal ] = useState(false);
 
@@ -17,6 +20,27 @@ function LikeButton({ item }) {
     const navigate = useNavigate();
 
     const userKey = user !== null ? user.userKey : null;
+
+    useEffect(() => {
+        if(!user) return;
+
+        const getLikeisExist = async () => {
+            try {
+                const response = await getData(`/like?userKey=${userKey}&itemKey=${item.itemKey}`);
+                if(!response.data) {
+                    setIsItemLike(false);
+                } else {
+                    setLike(response.data);
+                    setIsItemLike(true);
+                }
+            } catch (err) {
+                showToast("네트워크 오류 발생..!", "error");
+                console.log(err);
+            }
+        }
+
+        getLikeisExist();
+    }, [like]);
 
     const toggleItemLike = () => {
         if(!isItemLike) {
@@ -36,6 +60,7 @@ function LikeButton({ item }) {
             const response = await postData("/like", { userKey: userKey, itemKey: item.itemKey }, { withCredentials: true });
             if(response) {
                 showToast("해당 상품을 찜 했습니다!", "success");
+                setIsItemLike(true);
             } else {
                 showToast("찜 등록에 실패했습니다..", "error");
             }
@@ -47,9 +72,11 @@ function LikeButton({ item }) {
 
     const unlikeItem = async () => {
         try {
-            const response = await deleteData(`/like?userKey=${userKey}&itemKey=${itemKey}`);
+            const response = await deleteData(`/like?userKey=${userKey}&itemKey=${item.itemKey}`);
             if(response) {
                 showToast("찜이 해제 되었습니다.", "success");
+                setIsItemLike(false);
+                setShowConfirmModal(false);
             } else {
                 showToast("찜 해제에 실패했습니다..", "error");
             }
@@ -71,14 +98,15 @@ function LikeButton({ item }) {
                     }
                 </svg>
             </button>
-
-            {showConfirmModal && (
-            <div className="like-modal">
-                <p>찜을 해제하시겠습니까?</p>
-                <button onClick={unlikeItem}>예</button>
-                <button onClick={() => setShowConfirmModal(false)}>아니오</button>
-            </div>
-            )}
+            <Modal
+                isOpen={showConfirmModal}
+                onClose={() => setShowConfirmModal(false)}
+                onConfirm={unlikeItem}
+                title={"등록한 찜 해제"}
+                message={"이 찜의 등록을 해제하시겠어요?"}
+                confirmText={"네 해제할게요!"}
+                cancelText={"아니요 남겨둘게요!"}
+            />
             </>
             }
         </>

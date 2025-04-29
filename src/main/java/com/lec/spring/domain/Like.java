@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Like {
 
     private Long wishKey;       // PK
-    private Long userKey;       // user's PK (FK)
+    private String userKey;       // user's PK (FK)
     private Long itemKey;       // item's PK (FK)
 
 }

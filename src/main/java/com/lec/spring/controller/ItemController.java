@@ -3,12 +3,15 @@ package com.lec.spring.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.DTO.ItemDTO;
+import com.lec.spring.DTO.LikeDTO;
 import com.lec.spring.DTO.LocationDTO;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.ItemImage;
+import com.lec.spring.domain.Like;
 import com.lec.spring.domain.Location;
 import com.lec.spring.service.FileUploadService;
 import com.lec.spring.service.ItemService;
+import com.lec.spring.service.LikeService;
 import com.lec.spring.service.LocationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,9 +41,12 @@ public class ItemController {
     private ItemService itemService;
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private LikeService likeService;
 
+    // Write Item
     @PostMapping(value = "/write")
-    public ResponseEntity<?> uploadItem(
+    public ResponseEntity<?> write(
             @RequestPart("item") ItemDTO itemDTO,
             @RequestPart(value = "img", required = false)List<MultipartFile> img,
             @RequestPart(value = "imgMeta", required = false) String isMains) throws IOException {
@@ -90,6 +96,7 @@ public class ItemController {
         return ResponseEntity.ok(responseBody);
     }
 
+    // Get Item's Detail
     @GetMapping("/{itemKey}")
     public ResponseEntity<ItemDTO> getItemDetail(@PathVariable("itemKey") Long itemKey, HttpServletRequest request, HttpServletResponse response) {
         ItemDTO item = itemService.detail(itemKey);
@@ -122,6 +129,15 @@ public class ItemController {
         }
     }
 
+    // Delete Item
+    @DeleteMapping("/delete/{itemKey}")
+    public ResponseEntity<?> delete(@PathVariable("itemKey")Long itemKey) {
+        itemService.delete(itemKey);
+
+        return ResponseEntity.ok("삭제 성공!");
+    }
+
+
     @GetMapping("/seller/{userKey}")
     public Map<String, Object> getSellerItems(@PathVariable("userKey")String userKey) {
         Map<String, Object> response = new HashMap<>();
@@ -141,8 +157,4 @@ public class ItemController {
 
         return response;
     }
-
-
-    // 상품 찜 기능
-
 }

@@ -126,6 +126,8 @@ input {
     width: 95px;
     top: 10px;
     left: 124px;
+
+    z-index: 10;
 }
 
 #mailChk::placeholder {

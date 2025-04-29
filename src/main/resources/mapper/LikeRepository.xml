@@ -1,0 +1,23 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.LikeRepository">
+
+    <insert id="addLike" flushCache="true" parameterType="com.lec.spring.domain.Like"
+            useGeneratedKeys="true" keyColumn="wishKey" keyProperty="wishKey">
+        INSERT d1_like (userKey, itemKey)
+        VALUES (#{userKey}, #{itemKey})
+    </insert>
+
+    <delete id="deleteLike" flushCache="true"
+            parameterType="com.lec.spring.domain.Like">
+        DELETE FROM d1_like WHERE userKey = #{userKey} AND itemKey = #{itemKey}
+    </delete>
+
+    <select id="findLike" resultType="com.lec.spring.domain.Like">
+        SELECT *
+        FROM d1_like
+        WHERE userKey = #{userKey} AND itemKey = #{itemKey}
+    </select>
+
+</mapper>

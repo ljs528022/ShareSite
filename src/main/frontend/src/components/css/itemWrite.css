@@ -388,7 +388,10 @@
     display: flex;
     flex-direction: row;
     padding: 0px 10px;
+    list-style: none;
     float: left;
+
+    gap: 10px;
 }
 
 .location-box li {

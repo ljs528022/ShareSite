@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { deleteData, getData, postData } from "../../services/api";
+import { deleteData, getData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";
 import "../../components/css/itemDetail.css";
 import Pagination from "../../util/Pagination";
 import ItemCardList from "../../components/itemCardList";
 import LikeButton from "../../util/LikeButton";
+import Modal from "../../util/Modal";
 import { useUser } from "../../services/UserContext";
+import { getCategory } from "../../services/getCategory";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
@@ -18,6 +20,12 @@ const ItemDetail = () => {
     const [ item, setItem ] = useState([]);
     const [ loading, setLoading ] = useState(true);
     const [ showDelete, setShowDelete ] = useState(false);
+    
+    // Item's Category
+    const [ cate, setCate ] = useState([]);
+    const parentKey = Math.floor(item.cateKey / 100) * 100;
+    const parentCate = cate.find(c => c.cateKey === parentKey);
+    const currentCate = cate.find(c => c.cateKey === item.cateKey);
 
     // Image Pagination
     const [ currentPage, setCurrentPage ] = useState(1);
@@ -33,6 +41,7 @@ const ItemDetail = () => {
     const navigate = useNavigate();
     
  
+    // 해당 상품의 정보 받아오기기
     useEffect(() => {
         const fetchItem = async () => {
             try {
@@ -51,6 +60,7 @@ const ItemDetail = () => {
         }
     }, [itemKey]);
 
+    // 판매자가 판매 중인 다른 상품 불러오기기
     useEffect(() => {
         if(item.userKey === undefined) return;
 
@@ -66,6 +76,7 @@ const ItemDetail = () => {
         getOtherItems();
     }, [item.userKey]);
 
+    // 연관된 카테고리 상품들 받아오기기
     useEffect(() => {
         if(item.cateKey === undefined) return;
 
@@ -80,6 +91,18 @@ const ItemDetail = () => {
 
         getItemsSameCateKey();
     }, [item.cateKey]);
+
+    // 카테고리 받아오기
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const { data } = await getCategory();
+            setCate(data);
+        };
+    
+        fetchCategories();
+    }, [])
+
+    // 해당 상품의 찜 개수 받아오기
 
     const renderImage = ( imgs ) => {
         const mainImage = imgs.find(img => img.main);
@@ -149,8 +172,18 @@ const ItemDetail = () => {
     }
 
     const deleteItem = async () => {
-        // 삭제 기능
-
+        try {
+            const response = await deleteData(`/product/delete/${itemKey}`);
+            if(response.status === 200) {
+                showToast("상품을 삭제했습니다!", "success");
+                navigate("/home");
+            } else {
+                showToast("상품을 삭제하지 못했습니다...", "error")
+            }
+        } catch (err) {
+            showToast("네트워크 오류가 발생했습니다!", "error");
+            console.log(err);
+        }
     }
 
     if (loading) return <div>상품을 가져오고 있어요!</div>;
@@ -169,9 +202,23 @@ const ItemDetail = () => {
                     <div className="item-Info">
                         <div className="item-label">
                             {/* 카테고리 정렬란 */}
-                            <a href="/">
-                                카테고리 표시용
-                            </a>
+                            {(parentCate && currentCate) &&
+                            <div className="item-category">
+                                <a href="/search">메인</a>
+                                &gt;
+                                {parentCate && 
+                                <>
+                                    <a href={`/search?${parentKey}`}>{parentCate.catename}</a>
+                                    {currentCate != parentCate &&
+                                    <>
+                                        &gt;
+                                        <a href={`/search?${currentCate.cateKey}`}>{currentCate.catename}</a>
+                                    </>
+                                    }
+                                </>
+                                }
+                            </div>
+                            }
                             {/* 제목 */}
                             <label>{item.subject}</label>
                             {/* 가격 */}
@@ -224,12 +271,17 @@ const ItemDetail = () => {
                                 </svg>
                                 <p>삭제하기</p>
                             </button>
-                            {showDelete && 
-                                // 모달 작성 예정 
-                                <></>
-                            }
                         </div>
                         }   
+                        <Modal
+                            isOpen={showDelete}
+                            onClose={() => setShowDelete(false)}
+                            onConfirm={deleteItem}
+                            title={"상품 삭제하기"}
+                            message={"해당 상품을 삭제 하시겠어요?"}
+                            cancelText={"아니요 남겨둘게요!"}
+                            confirmText={"네 삭제할게요!"}
+                        />
                     </div>
                 </div>
                 <div className="item-row">
@@ -276,7 +328,9 @@ const ItemDetail = () => {
                     <div className="category-product">
                         <label>관련된 다른 상품들</label>
                         {itemsSameCate.length != 0 ?
-                        <></>
+                        <div className="category-product-box">
+                            <ItemCardList items={itemsSameCate} style={"Small"} pageStyle={""} />
+                        </div>
                         : 
                         <div className="item-empty">
                             <a>

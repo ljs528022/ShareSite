@@ -201,14 +201,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @Transactional
     public int delete(Long itemKey) {
         int result = 0;
 
-        ItemDTO item = itemRepository.findByItemKey(itemKey);
-        if (item != null) {
-            result = itemRepository.delete(item);
+        if(itemKey != null) {
+            result = itemRepository.delete(itemKey);
         }
+
         return result;
     }
 
