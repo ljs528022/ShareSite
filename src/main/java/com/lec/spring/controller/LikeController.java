@@ -31,16 +31,23 @@ public class LikeController {
     }
 
     @DeleteMapping("/like")
-    public ResponseEntity<?> deleteLike(@RequestParam String userKey, @RequestParam Long itemKey) {
+    public ResponseEntity<?> deleteLike(@RequestParam("userKey")String userKey, @RequestParam("itemKey")Long itemKey) {
         likeService.deleteLike(userKey, itemKey);
 
         return ResponseEntity.ok("삭제 성공");
     }
 
     @GetMapping("/like")
-    public ResponseEntity<?> findLike(@RequestParam String userKey, @RequestParam Long itemKey) {
+    public ResponseEntity<?> findLike(@RequestParam("userKey") String userKey, @RequestParam("itemKey") Long itemKey) {
         Like like = likeService.findLike(userKey, itemKey);
 
         return ResponseEntity.ok(like);
+    }
+
+    @GetMapping("/like/{itemKey}")
+    public ResponseEntity<?> countLike(@PathVariable("itemKey")Long itemKey) {
+        int result = likeService.countLike(itemKey);
+
+        return ResponseEntity.ok(result);
     }
 }

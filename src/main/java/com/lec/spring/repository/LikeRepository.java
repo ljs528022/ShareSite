@@ -16,4 +16,6 @@ public interface LikeRepository {
 
     Like findLike(@Param("userKey")String userKey,
                   @Param("itemKey")Long itemKey);
+
+    int countLike(@Param("itemKey")Long itemKey);
 }

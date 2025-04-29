@@ -34,4 +34,9 @@ public class LikeServiceImpl implements LikeService {
     public Like findLike(String userKey, Long itemKey) {
         return likeRepository.findLike(userKey, itemKey);
     }
+
+    @Override
+    public int countLike(Long itemKey) {
+        return likeRepository.countLike(itemKey);
+    }
 }

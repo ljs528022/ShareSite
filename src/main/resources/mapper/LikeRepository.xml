@@ -20,4 +20,10 @@
         WHERE userKey = #{userKey} AND itemKey = #{itemKey}
     </select>
 
+    <select id="countLike" resultType="int">
+        SELECT COUNT(*)
+        FROM d1_like
+        WHERE itemKey = #{itemKey}
+    </select>
+
 </mapper>

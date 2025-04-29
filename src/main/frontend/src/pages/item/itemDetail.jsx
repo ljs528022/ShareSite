@@ -36,12 +36,15 @@ const ItemDetail = () => {
     // Same Category's Items
     const [ itemsSameCate, setItemsSameCate ] = useState([]);
 
+    // Item's Likes
+    const [ itemsLike, setitemLike ] = useState(0);
+
     // Utils
     const { showToast } = useToast();
     const navigate = useNavigate();
     
  
-    // 해당 상품의 정보 받아오기기
+    // 해당 상품의 정보 받아오기
     useEffect(() => {
         const fetchItem = async () => {
             try {
@@ -60,7 +63,7 @@ const ItemDetail = () => {
         }
     }, [itemKey]);
 
-    // 판매자가 판매 중인 다른 상품 불러오기기
+    // 판매자가 판매 중인 다른 상품 불러오기
     useEffect(() => {
         if(item.userKey === undefined) return;
 
@@ -76,7 +79,7 @@ const ItemDetail = () => {
         getOtherItems();
     }, [item.userKey]);
 
-    // 연관된 카테고리 상품들 받아오기기
+    // 연관된 카테고리 상품들 받아오기
     useEffect(() => {
         if(item.cateKey === undefined) return;
 
@@ -103,6 +106,20 @@ const ItemDetail = () => {
     }, [])
 
     // 해당 상품의 찜 개수 받아오기
+    useEffect(() => {
+        if(!itemKey) return;
+
+        const getItemsLike = async () => {
+            const response = await getData(`/like/${itemKey}`, { withCredentials: true });
+            if(response.data > 0) {
+                setitemLike(response.data);
+            } else {
+                setitemLike(0);
+            }
+        }
+
+        getItemsLike();
+    }, [itemsLike]);
 
     const renderImage = ( imgs ) => {
         const mainImage = imgs.find(img => img.main);
@@ -167,7 +184,7 @@ const ItemDetail = () => {
         }
 
         return (
-            <p>🚩 {locations}</p>
+            <p onClick={null}>🚩 {locations}</p>
         )
     }
 
@@ -227,7 +244,7 @@ const ItemDetail = () => {
                             </label>
 
                             {/* 몇분전, 조회, 채팅방 수, 찜 수 */}
-                            <p>{getDayMinuteCounter(item.writeDate)} | 조회 {item.viewcnt} | 채팅 {0} | 찜 {0}</p>
+                            <p>{getDayMinuteCounter(item.writeDate)} | 조회 {item.viewcnt} | 채팅 {0} | 찜 {itemsLike}</p>
 
                         </div>
                         <div className="item-status-box">

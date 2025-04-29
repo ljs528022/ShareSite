@@ -12,4 +12,6 @@ public interface LikeService {
 
     Like findLike (String userKey, Long itemKey);
 
+    int countLike(Long itemKey);
+
 }

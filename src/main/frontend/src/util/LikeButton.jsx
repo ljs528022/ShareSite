@@ -25,8 +25,9 @@ function LikeButton({ item }) {
         if(!user) return;
 
         const getLikeisExist = async () => {
+            if(!userKey && !item ) return;
             try {
-                const response = await getData(`/like?userKey=${userKey}&itemKey=${item.itemKey}`);
+                const response = await getData(`/like?userKey=${userKey}&itemKey=${item.itemKey}`, { withCredentials: true });
                 if(!response.data) {
                     setIsItemLike(false);
                 } else {

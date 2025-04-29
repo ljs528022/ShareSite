@@ -46,9 +46,9 @@ public class SecurityConfig {
 
                     .authorizeHttpRequests(auth -> auth
                             // 인증이 필요 없는 URL
-                            .requestMatchers("/home", "/error", "/api/**", "/user/register", "/user/login", "/product/**", "/item-images/**").permitAll()
+                            .requestMatchers("/home", "/error", "/api/**", "/user/register", "/user/login", "/product/**", "/item-images/**", "/like/**").permitAll()
                             // 인증이 필요한 URL
-                            .requestMatchers("/product/write", "/product/delete/**", "/like/**", "/like?**").authenticated()
+                            .requestMatchers("/product/write", "/product/delete/**", "/like?**").authenticated()
                             .anyRequest().authenticated()
                     )
                     .cors(cors -> cors.configurationSource(corsConfigurationSource()))
