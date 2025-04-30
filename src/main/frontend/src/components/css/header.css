@@ -61,6 +61,8 @@
 
     text-align: left;
     vertical-align: middle;
+
+    cursor: pointer;
 }
 
 .Navbar-search input {

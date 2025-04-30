@@ -1,10 +1,7 @@
-section {
-    box-sizing: border-box;
-}
 
 .Contents_wrapper {
-    box-sizing: content-box;
-    display: block;
+    display: flex;
+    flex-direction: column;
 
     margin: 0 auto;
     padding: 0 32px;
@@ -13,27 +10,16 @@ section {
 }
 
 .Product_wrapper {
-    position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
 
     height: inherit;
 
     margin-bottom: 125px;
 }
 
-.Contents_label {
+.Product_wrapper h3 {
     display: flex;
-    justify-content: space-between;
-
-    margin-top: 8px;
-    margin-bottom: 24px;
-
-    padding-bottom: 2px;
-}
-
-.Contents_label>h3 {
-    text-size-adjust: 100%;
-
     font-size: 24px;
     font-weight: bold;
     line-height: 40px;
@@ -42,9 +28,8 @@ section {
 }
 
 .Items {
-    position: relative;
-    box-sizing: content-box;
     display: flex;
+    position: relative;
 
     justify-content: center;
 

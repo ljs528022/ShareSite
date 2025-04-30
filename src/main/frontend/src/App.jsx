@@ -8,6 +8,7 @@ import { UserProvider } from './services/UserContext';
 import { ToastProvider } from './util/ToastContext';
 import ItemWrite from './pages/item/itemWrite';
 import ItemDetail from './pages/item/itemDetail';
+import ItemSearch from './pages/item/itemSearch';
 
 function App() {
 
@@ -32,6 +33,9 @@ function App() {
             <Route path='/product/write' Component={ItemWrite}></Route>
             <Route path='/product/:itemKey' Component={ItemDetail}></Route>
             <Route path='/product/modify/:itemKey' Component={null}></Route>
+
+            {/* Item Search */}
+            <Route path='/search' Component={ItemSearch}></Route>
 
           </Routes>
           <Footer />

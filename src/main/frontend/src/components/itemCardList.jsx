@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ItemCard from "./itemCard";
 import Pagination from "../util/Pagination";
 
-const ItemCardList = ({ items, style, pageStyle }) => {
+const ItemCardList = ({ items, style, pageStyle, pagePerItems }) => {
 
     const [ currentPage, setCurrentPage ] = useState(1);
     const [ pagePerItem, setPagePerItem ] = useState(4);
@@ -12,6 +12,14 @@ const ItemCardList = ({ items, style, pageStyle }) => {
     items.map((i) => {
         item.push(i);
     });
+
+    useEffect(() => {
+        if(pagePerItems > 4) {
+            setPagePerItem(pagePerItems);
+        } else {
+            setPagePerItem(4);
+        }
+    }, [pagePerItems]);
 
     const totalPage = Math.ceil(item.length / pagePerItem);
     const startIndex = (currentPage - 1) * pagePerItem;

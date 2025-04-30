@@ -15,6 +15,7 @@ const Header = () => {
     const { showToast } = useToast();
 
     const [categories, setCategories] = useState([]);
+    const [ keyword, setKeyword ] = useState('');
     const navigate = useNavigate();
     
     const [ showCategories, setShowCategories ] = useState(false);
@@ -46,6 +47,20 @@ const Header = () => {
         navigate("/home");
     }
 
+    const handleKeyword = (e) => {
+        setKeyword(e.target.value);
+    }
+
+    const hanSearch = () => {
+        navigate(`/search?keyword=${keyword}`);
+    }
+
+    const handleSearchKeyword = (e) => {        
+        if(e.key === "Enter") {
+            navigate("/search");
+        }
+    }
+
     return (
         <>
         <header className='Navber_wrapper'>
@@ -55,14 +70,13 @@ const Header = () => {
                 </a>
                 <div className="Navbar-search">
                     <form role="search" >
-                        {/* 검색 기능 만들어야 함 */}
-                        <label onClick={null}>
+                        <label onClick={hanSearch}>
                             <svg xmlns="http://www.w3.org/2000/svg" height={15} width={15} viewBox="0 0 512 512">
                                 <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
                             </svg>
                         </label>
-                        <input id="search" aria-label="search-box" autoComplete="off" placeholder="어떤 상품을 찾으시나요?" name="search"
-                            onKeyDown={null} />
+                        <input id="search" aria-label="search-box" autoComplete="off" placeholder="어떤 상품을 찾으시나요?" name="keyword"
+                            onChange={handleKeyword} onKeyDown={handleSearchKeyword} />
                     </form>
                 </div>
                 <div className="Navbar-menu">
