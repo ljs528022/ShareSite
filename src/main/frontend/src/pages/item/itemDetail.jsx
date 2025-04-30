@@ -9,6 +9,9 @@ import LikeButton from "../../util/LikeButton";
 import Modal from "../../util/Modal";
 import { useUser } from "../../services/UserContext";
 import { getCategory } from "../../services/getCategory";
+import SidePage from "../../util/sidePage";
+import MapSearch from "../../util/MapSearch";
+import MapShow from "../../util/MapShow";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
@@ -40,6 +43,8 @@ const ItemDetail = () => {
     const [ itemsLike, setitemLike ] = useState(0);
 
     // Utils
+    const [ showMap, setShowMap ] = useState(false);    // 지도 창
+    const [ sideMapLocation, setSideMapLocation ] = useState(''); // 지도 창 정보
     const { showToast } = useToast();
     const navigate = useNavigate();
     
@@ -117,9 +122,8 @@ const ItemDetail = () => {
                 setitemLike(0);
             }
         }
-
         getItemsLike();
-    }, [itemsLike]);
+    }, [itemKey]);
 
     const renderImage = ( imgs ) => {
         const mainImage = imgs.find(img => img.main);
@@ -135,7 +139,7 @@ const ItemDetail = () => {
         }
 
 
-        if(imgs.length <= 0) {
+        if(!imgs || imgs.length === 0) {
             const temp = "/item-images/temp/SStemp.png";
             return <img
                     src={`http://localhost:8093${temp}`}
@@ -170,6 +174,13 @@ const ItemDetail = () => {
         )
     }
 
+    const handleMapOpen = (loc) => {
+        if(!loc) return;
+
+        setSideMapLocation(loc);
+        setShowMap(true);
+    }
+
     const renderLocations = ( locs ) => {
         const locations = locs.map((loc) => loc.placeName);
 
@@ -178,13 +189,14 @@ const ItemDetail = () => {
         if(locations.length > 1) {
             return (
             <>
-                {locations.map((loc, index) => <p key={index}>🚩 {loc}</p>)}
+                {locations.map((loc, index) => 
+                <p key={index} onClick={() => handleMapOpen(loc)}>🚩 {loc}</p>)}
             </>
             );
         }
 
         return (
-            <p onClick={null}>🚩 {locations}</p>
+            <p onClick={handleMapOpen(locations)}>🚩 {locations}</p>
         )
     }
 
@@ -204,7 +216,10 @@ const ItemDetail = () => {
     }
 
     if (loading) return <div>상품을 가져오고 있어요!</div>;
-    if (!item) return <div>어라..? 상품을 찾을 수 없어요..!</div>;
+    if (!item || Object.keys(item).length === 0) {
+        showToast("상품이 없습니다!", "error");
+        navigate("/home");
+    }
 
     return (
         <>
@@ -362,6 +377,19 @@ const ItemDetail = () => {
                         }
                     </div>
                 </div>
+                <SidePage 
+                    className={"kakaoMap"} 
+                    isOpen={showMap} 
+                    onClose={() => setShowMap(false)}
+                    headerText={"희망거래지역"} 
+                    content={
+                    <MapShow 
+                        isOpen={showMap}
+                        className={"side-kakaomap"}
+                        data={sideMapLocation}
+                    />
+                    } 
+                />
             </div>
         </main>
         </>

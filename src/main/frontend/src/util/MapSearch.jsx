@@ -24,7 +24,7 @@ const MapSearch = ({ isOpen, onClose, itemData, setItemData }) => {
     }, [isOpen, kakaoLoaded]);
 
     const handleSearch = () => {
-        if(!keyword.trim) return;
+        if(!keyword.trim()) return;
 
         const ps = new window.kakao.maps.services.Places();
         ps.keywordSearch(keyword, (data, status) => {

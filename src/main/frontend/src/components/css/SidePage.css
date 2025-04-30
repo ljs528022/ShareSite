@@ -1,0 +1,89 @@
+.side-page {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    width: 300px;
+    height: 100%;
+
+    text-align: center;
+
+    background-color: #fff;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    animation: leftSlide 0.5s ease-out forwards;
+
+    z-index: 100;
+}
+
+.side-page-close {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    width: 300px;
+    height: 100%;
+
+    text-align: center;
+
+    background-color: #fff;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    animation: rightSlide 0.5s ease-out forwards;
+
+    z-index: 100;
+}
+
+@keyframes leftSlide {
+    from {
+        transform: translateX(300px);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes rightSlide {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(300px);
+    }
+}
+
+.side-header {
+    display: flex;
+    flex-direction: row;
+
+    box-shadow: 0 3px 4px -2px rgba(0, 0, 0, 0.2);
+}
+
+.side-header button {
+    padding-left: 20px;
+}
+
+.side-header label {
+    width: 100%;
+    height: 45px;
+    text-align: center;
+    font-size: 20px;
+    padding-top: 10px;
+}
+
+.side-content-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* 각 컨탠츠의 설정 */
+
+/* 카카오 지도 */
+.side-kakaomap {
+    width: 100%;
+    height: 100%;
+}
+
+/* 채팅 리스트 */
+
+/* 채팅 창 */
