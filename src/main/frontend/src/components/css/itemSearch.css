@@ -8,11 +8,8 @@
 .item-search-row {
     display: flex;
     flex-direction: column;
-
     max-width: 1024px;
-
     margin: 0 auto;
-
     border-bottom: 1.5px solid rgba(0,0,0, 0.3);
 }
 
@@ -32,23 +29,30 @@
 
 .item-inner-box {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin: 0 auto;
 
-    width: 900px;
-    height: 50px;
 
-    border: 1px solid #555;
-    border-radius: 5px;
+    width: 900px;
+    height: inherit;
+
     color: #555;
 }
 
 .item-inner-box label {
-    width: 200px;
-    height: 100%;
-    text-align: center;
+    width: 180px;
+    height: inherit;
+    margin-bottom: 0;
+    padding-left: 15px;
+    
     line-height: 45px;
+    
+    text-align: center;
+    justify-content: space-between;
 
+    border-radius: 10px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     border-right: 1px solid #555;
     background-color: #aaa;
     
@@ -57,11 +61,77 @@
 .item-search-category {
     display: flex;
     flex-direction: row;
+    
+    background-color: #aaa;
+    border: 2px solid #555;
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    align-items: center;
+    
+    width: inherit;
+    height: inherit;
+}
+
+.item-search-category p {
+    font-weight: 500;
+    padding: 0px 20px;
+    line-height: 15px;
+}
+
+.item-search-category p:hover {
+    color: black;
+}
+
+.item-search-category button {
+    margin-left: 65px;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+
+.item-select-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 100%;
+    height: inherit;
 
     background-color: #aaa;
+    border: 2px solid #555;
     border-bottom: none;
+}
 
-    width: inherit;
+.item-select-box label {
+    width: 245px;
+    text-align: center;
+    font-weight: 500;
+    margin: 0 auto;
+    color: #555;
+    font-size: 20px;
+}
+
+.item-select-category {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    width: 100%;
+    height: 100%;
+    padding: 10px 20px;
+}
+
+.item-select-category p {
+    padding: 10px 0;
+    margin: 0;
+    width: 150px;
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.item-select-category p:hover {
+    color: white;
 }
 
 .item-search-price {
@@ -69,10 +139,13 @@
     flex-direction: row;
     gap: 10px;
     
+    border: 2px solid #555;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     background-color: #aaa;
-    border-top: none;
 
     width: inherit;
+    height: inherit;
 }
 
 .item-search-price input {
