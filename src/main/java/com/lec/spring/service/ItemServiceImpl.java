@@ -121,21 +121,39 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDTO findByItemKey(Long itemKey) {return itemRepository.findByItemKey(itemKey);}
+    public List<ItemDTO> searchItems(Long category, Long min, Long max) {
+        List<ItemDTO> items = itemRepository.searchItems(category, min, max);
+        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
 
-    @Override
-    public List<Item> findByCategory(Long cateKey) {
-        return itemRepository.findByCategory(cateKey);
+        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
+        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
+
+        for(ItemDTO item: items) {
+            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+        }
+
+        return items;
     }
 
     @Override
-    public List<Item> findByUserKey(String userKey) {
-        return itemRepository.findByUserKey(userKey);
-    }
+    public List<ItemDTO> searchItemsByKeyword(String keyword) {
+        List<ItemDTO> items = itemRepository.searchItemsByKeyword(keyword);
+        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
 
-    @Override
-    public List<ItemImage> findImgByItemKey(Long itemKey) {
-        return itemRepository.findImgByItemKey(itemKey);
+        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
+        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
+
+        for(ItemDTO item: items) {
+            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+        }
+
+        return items;
     }
 
     @Override

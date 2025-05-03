@@ -261,7 +261,8 @@ const ItemWrite = () => {
                                                 key={scate.cateKey}
                                                 className={selectedCate === scate.cateKey ? "selected" : ""}
                                                 type="button"
-                                                value={scate.cateKey}                                                onClick={() => handleCateClick(scate.cateKey)}>
+                                                value={scate.cateKey} 
+                                                onClick={() => handleCateClick(scate.cateKey)}>
                                             {scate.catename}
                                             </button>
                                     ))}

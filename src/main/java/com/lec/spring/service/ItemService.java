@@ -24,16 +24,13 @@ public interface ItemService {
 
     List<ItemDTO> getItemsLikeCate(Long cateKey);
 
-    ItemDTO findByItemKey(Long itemKey);
+    // Search Items By category, min-price, max-price
+    List<ItemDTO> searchItems(Long category, Long min, Long max);
 
-    // Find By ItemKey
-    List<Item> findByCategory(Long cateKey);
+    // Search Items By Keyword
+    List<ItemDTO> searchItemsByKeyword(String keyword);
 
-    // Find Item By UserKey
-    List<Item> findByUserKey(String userKey);
 
-    // Find Img By ItemKey
-    List<ItemImage> findImgByItemKey(Long itemKey);
 
     Long write(Item item, List<ItemImage> imageList);
 

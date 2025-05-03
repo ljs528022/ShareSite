@@ -9,14 +9,25 @@ const ItemSearch = () => {
     const navigate = useNavigate();
     const [ serchParams ] = useSearchParams();
 
+    // 카테고리 검색 란
     const [ allCate, setAllCate ] = useState([]);
     const [ itemCateKey, setItemCateKey ] = useState(0);
     const parCateKey = Math.floor(itemCateKey / 100) * 100;
     const parCate = allCate.find(c => c.cateKey === parCateKey);
     const subCate = allCate.find(c => c.cateKey === itemCateKey);
 
+    // 카테고리 선택란 보기/숨기기
     const [ showCateQuery, setShowCateQuery ]= useState(false);
 
+    // 가격대 검색 란
+    const [ minPrice, setMinPrice ] = useState('');
+    const [ maxPrice, setMaxPrice ] = useState('');
+
+    // 검색한 상품들
+    const [ queryKeyword, setQueryKeyword ] = useState('');
+    const [ queriedItems, setQueriedItem ] = useState([]);
+
+    // 주소에 category 검색 값이 있으면 받아와서 저장하기
     useEffect(() => {
         const cateKey = Number(serchParams.get("category")) || 0;
 
@@ -28,14 +39,23 @@ const ItemSearch = () => {
         }
     }, [serchParams]);
 
+    // 카테고리를 전부 받아오기
     useEffect(() => {
-            const fetchCategories = async () => {
-                const { data } = await getCategory();
-                setAllCate(data);
-            };
+        const fetchCategories = async () => {
+            const { data } = await getCategory();
+            setAllCate(data);
+        };
         
-            fetchCategories();
+        fetchCategories();
     }, []);
+
+    // 검색 값에 해당되는 상품들 받아오기
+    useEffect(() => {
+        const queryItems = async () => {
+
+        };
+
+    }, [queriedItems])
 
     const renderCateQuery = () => {
         const cates = allCate.filter((cate) => {
@@ -72,20 +92,52 @@ const ItemSearch = () => {
         )
     }
 
-    const handleSubmit = () => {
+    const handlePriceChange = (e) => {
+        const rawValue = e.target.value.replace(/[^0-9]/g, "");
+        
+        if(rawValue === "") {
+            if(e.target.name === 'min-price') setMinPrice('');
+            if(e.target.name === 'max-price') setMaxPrice('');
+            return;
+        }
+        
+        const formatted = Number(rawValue).toLocaleString("ko-KR").toString();
 
+        if(e.target.name === 'min-price') {
+            setMinPrice(formatted);
+        }
+        if(e.target.name === 'max-price') {
+            setMaxPrice(formatted);
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const query = new URLSearchParams();
+
+        if(itemCateKey > 0) query.append("category", itemCateKey);
+
+        const min = minPrice.replace(/,/g, "");
+        const max = maxPrice.replace(/,/g, "");
+
+        if(min !== 0) query.append("min", min);
+        if(max !== 0) query.append("max", max);
+
+        setQueryKeyword(query.toString());
+        navigate(`/search?${query.toString()}`);
     }
 
     return (
         <main>
             <div className="item-search-container">
                 <form>
-
                 <div className="item-search-row">
                     <div className="item-search-box">
                         <label>검색 결과</label>
                         <div className="item-inner-box">
                             <div className="item-search-category">
+                                {/* 카테고리 선택 란 */}
                                 <label>카테고리
                                     <button type="button" onClick={() => setShowCateQuery(prev => !prev)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.5" viewBox="0 0 448 512">
@@ -99,19 +151,23 @@ const ItemSearch = () => {
                                 </label>
                                 <p onClick={() => {
                                     setItemCateKey(0)
-                                    navigate("/search?keyword=")}}>메인</p>
+                                    navigate("/search")}}>메인</p>
                                 {parCate &&
                                 <>
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="15"  viewBox="0 0 320 512">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="20" width="13"  viewBox="0 0 320 512">
                                         <path fill="#555" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
                                 </svg>
-                                <p onClick={() => navigate(`/search?category=${parCate.cateKey}`)}>{parCate.catename}</p>
+                                <p onClick={
+                                    () => { navigate(`/search`)
+                                            setItemCateKey(0)}}>
+                                    {parCate.catename}
+                                </p>
                                     {subCate !== parCate &&
                                     <>
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24" width="15" viewBox="0 0 320 512">
                                         <path fill="#555" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
                                     </svg>
-                                    <p onClick={() => navigate(`/search?category=${subCate.cateKey}`)}>{subCate.catename}</p>
+                                    <p onClick={() => navigate(`/search?category=${parCate.cateKey}`)}>{subCate.catename}</p>
                                     </>
                                     }
                                 </>
@@ -121,12 +177,13 @@ const ItemSearch = () => {
 
                         {showCateQuery && renderCateQuery()}
 
+                        {/* 가격대 검색 란 */}
                         <div className="item-inner-box">
                             <div className="item-search-price">
                                 <label>가격대</label>
-                                <input type="text" autoComplete="off" placeholder="최소 금액" className="item-price-input" name="min-price"/>
+                                <input type="text" autoComplete="off" value={minPrice} onChange={handlePriceChange} placeholder="최소 금액" className="item-price-input" name="min-price"/>
                                 <p>~</p>
-                                <input type="text" autoComplete="off" placeholder="최대 금액" className="item-price-input" name="max-price"/>
+                                <input type="text" autoComplete="off" value={maxPrice} onChange={handlePriceChange} placeholder="최대 금액" className="item-price-input" name="max-price"/>
                                 <button type="submit" onClick={handleSubmit}>
                                     검색
                                 </button>
@@ -135,13 +192,15 @@ const ItemSearch = () => {
                     </div>
                 </div>
                 </form>
+                {/* 검색한 상품들 표시 란 */}
                 <div className="item-search-row">
                     
                 </div>
             </div>
         </main>
     )
-
 }
+
+
 
 export default ItemSearch;

@@ -151,6 +151,30 @@
         LIMIT 20
     </select>
 
+    <select id="searchItems" resultType="com.lec.spring.DTO.ItemDTO">
+        SELECT *
+        FROM d1_item
+        WHERE 1 = 1
+        <if test="cateKey != null">
+            AND cateKey = #{category}
+        </if>
+        <if test="min != null">
+            AND price &gt;= #{min}
+        </if>
+        <if test="max != null">
+            AND price &lt;= #{max}
+        </if>
+    </select>
+
+    <select id="searchItemsByKeyword" resultType="com.lec.spring.DTO.ItemDTO">
+        SELECT *
+        FROM d1_item
+        WHERE 1 = 1
+        <if test="keyword != null and keyword != ''">
+            AND (title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </select>
+
     <select id="findByItemKey" resultType="com.lec.spring.domain.Item">
         SELECT itemKey
         FROM d1_item

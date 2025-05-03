@@ -33,6 +33,12 @@ public interface ItemRepository {
     // Find Items same category
     List<ItemDTO> getItemsLikeCate(@Param("cateKey")Long cateKey);
 
+    // Search Items By category, min-price, max-price
+    List<ItemDTO> searchItems(@Param("category")Long category, @Param("min")Long min, @Param("max")Long max);
+
+    // Search Items By Keyword
+    List<ItemDTO> searchItemsByKeyword(@Param("keyword")String keyword);
+
     // Find By ItemKey
     ItemDTO findByItemKey(@Param("itemKey")Long itemKey);
 
@@ -48,8 +54,6 @@ public interface ItemRepository {
     List<ItemImage> findImagesByItemKeys(List<Long> itemKeys);
 
     Item findItemByItemKey(@Param("itemKey")Long itemKey);
-
-
 
     // Increment View Count
     int incViewCnt(Long itemKey);
