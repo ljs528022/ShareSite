@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ItemCard from "./itemCard";
 import Pagination from "../util/Pagination";
 
-const ItemCardList = ({ items, style, pageStyle, pagePerItems }) => {
+const ItemCardList = ({ items, style, perItems, showPageBtn, pageBtnStyle }) => {
 
     const [ currentPage, setCurrentPage ] = useState(1);
     const [ pagePerItem, setPagePerItem ] = useState(4);
@@ -14,12 +14,12 @@ const ItemCardList = ({ items, style, pageStyle, pagePerItems }) => {
     });
 
     useEffect(() => {
-        if(pagePerItems > 4) {
-            setPagePerItem(pagePerItems);
+        if(perItems > 4) {
+            setPagePerItem(perItems);
         } else {
             setPagePerItem(4);
         }
-    }, [pagePerItems]);
+    }, [perItems]);
 
     const totalPage = Math.ceil(item.length / pagePerItem);
     const startIndex = (currentPage - 1) * pagePerItem;
@@ -40,7 +40,8 @@ const ItemCardList = ({ items, style, pageStyle, pagePerItems }) => {
                 totalPage={totalPage}
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
-                style={pageStyle}
+                showPageBtn = {showPageBtn}
+                style={pageBtnStyle}
             />
         </>
     )

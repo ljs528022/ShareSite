@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCategory } from "../../services/getCategory";
+import { getData } from "../../services/api";
+import { useToast } from "../../util/ToastContext";
+import ItemCardList from "../../components/itemCardList";
 import "../../components/css/itemSearch.css";
 
 
 const ItemSearch = () => {
 
     const navigate = useNavigate();
-    const [ serchParams ] = useSearchParams();
+    const [ searchParams ] = useSearchParams();
+    const { showToast } = useToast();
 
     // 카테고리 검색 란
     const [ allCate, setAllCate ] = useState([]);
@@ -23,21 +27,9 @@ const ItemSearch = () => {
     const [ minPrice, setMinPrice ] = useState('');
     const [ maxPrice, setMaxPrice ] = useState('');
 
-    // 검색한 상품들
-    const [ queryKeyword, setQueryKeyword ] = useState('');
+    // 검색한 상품들 관련
     const [ queriedItems, setQueriedItem ] = useState([]);
-
-    // 주소에 category 검색 값이 있으면 받아와서 저장하기
-    useEffect(() => {
-        const cateKey = Number(serchParams.get("category")) || 0;
-
-        if(cateKey > 0) {
-            setItemCateKey(cateKey);
-        } 
-        if(cateKey % 100 !== 0) {
-            setItemCateKey(cateKey);
-        }
-    }, [serchParams]);
+    
 
     // 카테고리를 전부 받아오기
     useEffect(() => {
@@ -49,13 +41,39 @@ const ItemSearch = () => {
         fetchCategories();
     }, []);
 
+    // 카테고리 버튼에서 누른 카테고리가 있으면 받아오기
+    useEffect(() => {
+        const cateKey = Number(searchParams.get("category")) || 0;
+
+        if(cateKey > 0 && cateKey !== itemCateKey) {
+            setItemCateKey(cateKey);
+        }
+    }, [searchParams]);
+
     // 검색 값에 해당되는 상품들 받아오기
     useEffect(() => {
-        const queryItems = async () => {
-
+        const params = {
+            keyword: searchParams.get("keyword") || undefined,
+            category: itemCateKey || undefined,
+            min: minPrice || undefined,
+            max: maxPrice || undefined,
         };
 
-    }, [queriedItems])
+        const queryItems = async () => {
+            try {
+                const response = await getData("/search", { params });
+                showToast("검색한 상품들을 불러왔습니다!", "default");
+                setQueriedItem(response.data);
+            } catch (err) {
+                showToast("통신에러가 발생했습니다...", "error");
+                console.log(err);
+            }
+        };
+
+        queryItems();
+    }, [ itemCateKey, minPrice, maxPrice, searchParams.get("keyword") ]);
+
+    console.log(queriedItems);
 
     const renderCateQuery = () => {
         const cates = allCate.filter((cate) => {
@@ -81,7 +99,9 @@ const ItemSearch = () => {
                     <div className="item-select-category">
                     {cates.map((cate) => {
                         return (
-                            <p key={cate.cateKey} onClick={() => navigate(`/search?category=${cate.cateKey}`)}>
+                            <p key={cate.cateKey} onClick={() => {
+                                setItemCateKey(cate.cateKey)
+                                navigate(`/search?category=${cate.cateKey}`)}}>
                                 {cate.catename}
                             </p>
                         )
@@ -124,7 +144,6 @@ const ItemSearch = () => {
         if(min !== 0) query.append("min", min);
         if(max !== 0) query.append("max", max);
 
-        setQueryKeyword(query.toString());
         navigate(`/search?${query.toString()}`);
     }
 
@@ -193,8 +212,24 @@ const ItemSearch = () => {
                 </div>
                 </form>
                 {/* 검색한 상품들 표시 란 */}
-                <div className="item-search-row">
-                    
+                <div className="item-reslt-row">
+                    <label></label>
+                    <div className="item-result-box">
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+                <div className="item-result-sort">
+                        <p></p> / <p></p> / <p></p>
+                </div>
+                <div className="item-result-row">
+                    <ItemCardList 
+                        items={queriedItems} 
+                        style={"Normal"} 
+                        pageBtnStyle={"search_"}
+                        perItems={50}
+                    />
                 </div>
             </div>
         </main>

@@ -5,6 +5,7 @@ import com.lec.spring.domain.Item;
 import com.lec.spring.domain.ItemImage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.ui.Model;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public interface ItemRepository {
     List<ItemDTO> getItemsLikeCate(@Param("cateKey")Long cateKey);
 
     // Search Items By category, min-price, max-price
-    List<ItemDTO> searchItems(@Param("category")Long category, @Param("min")Long min, @Param("max")Long max);
+    List<ItemDTO> searchItems(@Param("rangeStart")Long rangeStart, @Param("rangeEnd")Long rangeEnd, @Param("min")Long min, @Param("max")Long max);
 
     // Search Items By Keyword
     List<ItemDTO> searchItemsByKeyword(@Param("keyword")String keyword);

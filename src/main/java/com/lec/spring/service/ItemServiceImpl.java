@@ -51,108 +51,48 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemDTO> getLatestItems() {
         List<ItemDTO> items = itemRepository.getLatestItems();
-        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
 
-        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
-        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(ItemImage::getImageKey));
-
-        for(ItemDTO item : items) {
-            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-        }
-
+        loadItemsLocationAndImage(items);
         return items;
     }
 
     @Override
     public List<ItemDTO> getWeeklyItems() {
         List<ItemDTO> items = itemRepository.getWeeklyItems();
-        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
 
-        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
-        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
-
-        for(ItemDTO item : items) {
-            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-        }
-
+        loadItemsLocationAndImage(items);
         return items;
     }
 
     @Override
     public List<ItemDTO> getSellerItems(String userKey) {
         List<ItemDTO> items = itemRepository.getSellerItems(userKey);
-        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
 
-        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
-        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
-
-        for(ItemDTO item: items) {
-            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-        }
-
+        loadItemsLocationAndImage(items);
         return items;
     }
 
     @Override
     public List<ItemDTO> getItemsLikeCate(Long cateKey) {
         List<ItemDTO> items = itemRepository.getItemsLikeCate(cateKey);
-        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
 
-        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
-        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
-
-        for(ItemDTO item: items) {
-            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-        }
-
+        loadItemsLocationAndImage(items);
         return items;
     }
 
     @Override
-    public List<ItemDTO> searchItems(Long category, Long min, Long max) {
-        List<ItemDTO> items = itemRepository.searchItems(category, min, max);
-        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
+    public List<ItemDTO> searchItems(Long rangeStart, Long rangeEnd, Long min, Long max) {
+        List<ItemDTO> items = itemRepository.searchItems(rangeStart, rangeEnd, min, max);
 
-        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
-        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
-
-        for(ItemDTO item: items) {
-            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-        }
-
+        loadItemsLocationAndImage(items);
         return items;
     }
 
     @Override
     public List<ItemDTO> searchItemsByKeyword(String keyword) {
         List<ItemDTO> items = itemRepository.searchItemsByKeyword(keyword);
-        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
 
-        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
-        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
-                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
-
-        for(ItemDTO item: items) {
-            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
-        }
-
+        loadItemsLocationAndImage(items);
         return items;
     }
 
@@ -234,4 +174,22 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.incViewCnt(itemKey);
     }
 
+
+
+    // 불러온 상품들의 거래 지역, 이미지를 불러오는 공통 로직
+    private void loadItemsLocationAndImage(List<ItemDTO> items) {
+        if(items.isEmpty()) return;
+
+        List<Long> itemKeys = items.stream().map(ItemDTO::getItemKey).toList();
+
+        Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
+        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
+                .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
+
+        for(ItemDTO item: items) {
+            item.setLocations(locationMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+            item.setImages(imageMap.getOrDefault(item.getItemKey(), new ArrayList<>()));
+        }
+    }
 }

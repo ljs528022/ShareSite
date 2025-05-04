@@ -13,6 +13,11 @@ SELECT * FROM d1_item_image;
 SELECT * FROM d1_like;
 
 SELECT *
+        FROM d1_item
+        WHERE cateKey = 108;
+       
+
+SELECT *
 FROM d1_category
 WHERE cateKey IN (
     101,                

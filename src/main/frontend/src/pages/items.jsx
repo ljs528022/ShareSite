@@ -2,7 +2,8 @@ import { useState } from 'react';
 import ItemCardList from '../components/itemCardList';
 import '../components/css/items.css'
 
-const Items = ({ items, content, style, pageStyle }) => {
+const Items = ({ items, content, style, pageBtnStyle, perItems, showPageBtn } ) => {
+    if(!items) return;
 
     return (
         <div className="Contents_wrapper">
@@ -13,7 +14,13 @@ const Items = ({ items, content, style, pageStyle }) => {
                 </h3>
                 }
                 <div className="Items">
-                    <ItemCardList items={items} style={style} pageStyle={pageStyle}/>
+                    <ItemCardList 
+                        items={items} 
+                        style={style} 
+                        perItems={perItems}
+                        showPageBtn={showPageBtn}
+                        pageBtnStyle={pageBtnStyle}
+                    />
                 </div>
             </div>
         </div>

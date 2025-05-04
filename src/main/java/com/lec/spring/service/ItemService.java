@@ -25,7 +25,7 @@ public interface ItemService {
     List<ItemDTO> getItemsLikeCate(Long cateKey);
 
     // Search Items By category, min-price, max-price
-    List<ItemDTO> searchItems(Long category, Long min, Long max);
+    List<ItemDTO> searchItems(Long rangeStart, Long rangeEnd, Long min, Long max);
 
     // Search Items By Keyword
     List<ItemDTO> searchItemsByKeyword(String keyword);

@@ -29,8 +29,10 @@ const Categorybox = ({ categories, className }) => {
                                 .filter((cate) => Math.floor(cate.cateKey / 100) === Math.floor(pcate.cateKey / 100))
                                 .map((scate) => {
                                     return (
-                                        <li key={scate.cateKey}>
-                                                <a href={`/search?category=${scate.cateKey}`}>{scate.catename}</a>
+                                        <li key={scate.cateKey} onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate(`/search?category=${scate.cateKey}`)}}>
+                                            {scate.catename}
                                         </li>
                                     );
                                 })}

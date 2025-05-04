@@ -40,9 +40,9 @@ api.interceptors.response.use(
     }
 )
 
-export const getData = async (endpoint) => {
+export const getData = async (endpoint, config = {}) => {
     try {
-        const response = await api.get(endpoint);
+        const response = await api.get(endpoint, config);
         return response;
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -61,9 +61,9 @@ export const postData = async (endpoint, data = {}) => {
     }
 };
 
-export const deleteData = async (endpoint) => {
+export const deleteData = async (endpoint, config = {}) => {
     try {
-        const response = await api.delete(endpoint);
+        const response = await api.delete(endpoint, config);
         return response;
     } catch (error) {
         console.log("Error Delete data:", error);
