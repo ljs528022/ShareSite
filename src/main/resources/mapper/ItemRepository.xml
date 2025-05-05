@@ -155,6 +155,7 @@
         SELECT *
         FROM d1_item
         WHERE 1 = 1
+        AND tradestatus = false
         <if test="rangeStart != null and rangeEnd != null">
             AND cateKey &gt;= #{rangeStart} AND cateKey &lt; #{rangeEnd}
         </if>
@@ -170,6 +171,7 @@
         SELECT *
         FROM d1_item
         WHERE subject LIKE CONCAT('%', #{keyword}, '%') ESCAPE '!'
+        AND tradestatus = false
     </select>
 
     <select id="findByItemKey" resultType="com.lec.spring.domain.Item">

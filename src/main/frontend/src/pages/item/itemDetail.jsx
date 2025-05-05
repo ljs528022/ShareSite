@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { deleteData, getData } from "../../services/api";
+import { useUser } from "../../services/UserContext";
 import { useToast } from "../../util/ToastContext";
-import "../../components/css/itemDetail.css";
+import { getCategory } from "../../services/getCategory";
 import Pagination from "../../util/Pagination";
 import ItemCardList from "../../components/itemCardList";
 import LikeButton from "../../util/LikeButton";
 import Modal from "../../util/Modal";
-import { useUser } from "../../services/UserContext";
-import { getCategory } from "../../services/getCategory";
 import SidePage from "../../util/sidePage";
-import MapSearch from "../../util/MapSearch";
 import MapShow from "../../util/MapShow";
+import EmptyBox from "../../components/EmptyBox";
+import "../../components/css/itemDetail.css";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
@@ -343,16 +343,7 @@ const ItemDetail = () => {
                                 <ItemCardList items={sellerItem} style={"Small"} pageStyle={""} />
                             </div>
                             :
-                            <div className="item-empty">
-                                <a>
-                                <svg xmlns="http://www.w3.org/2000/svg" width={40} height={30} viewBox="0 0 512 512">
-                                    <path fill="#AAA" d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"/>
-                                </svg>
-                                </a>
-                                <p>
-                                    판매자의 다른 상품이 없네요.. 나중에 다시 확인해주세요!
-                                </p>
-                            </div>
+                            <EmptyBox content={"판매자의 다른 상품이 없네요.. 나중에 다시 확인해주세요!"} />
                         }
                     </div>
                 </div>
@@ -364,16 +355,7 @@ const ItemDetail = () => {
                             <ItemCardList items={itemsSameCate} style={"Small"} pageStyle={""} />
                         </div>
                         : 
-                        <div className="item-empty">
-                            <a>
-                            <svg xmlns="http://www.w3.org/2000/svg" width={40} height={30} viewBox="0 0 512 512">
-                                <path fill="#AAA" d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"/>
-                            </svg>
-                            </a>
-                            <p>
-                                관련된 상품이 없네요.. 나중에 다시 확인해주세요!
-                            </p>
-                        </div>   
+                        <EmptyBox content={"관련된 상품이 없네요.. 나중에 다시 확인해주세요!"} />
                         }
                     </div>
                 </div>

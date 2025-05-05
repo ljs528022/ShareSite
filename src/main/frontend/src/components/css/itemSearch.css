@@ -192,10 +192,97 @@
     justify-content: center;
     
     margin: 0 auto;
-    margin-bottom: 30px;
-    padding-bottom: 40px;
+    margin-bottom: 10px;
 
     max-width: 1200px;
+}
 
-    border-bottom: 1.5px solid rgba(0,0,0, 0.3);
+/* 상품 검색 결과 가격비교 란 */
+.item-result-box {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 auto;
+    margin-bottom: 10px;
+    justify-content: center;
+    row-gap: 15px;
+
+    width: 1000px;
+    height: 120px;
+}
+
+.item-result-box label {
+    width: 100%;
+    text-align: left;
+    padding: 0;
+
+    font-size: 20px;
+}
+
+.item-result-price {
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+    height: 100px;
+
+    justify-content: space-evenly;
+    text-align: center;
+    align-items: center;
+
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.item-result-price label {
+    width: 110px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #555;
+}
+
+.item-result-price p {
+    max-width: 200px;
+    width: initial;
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+.item-result-price a {
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    height: 35px;
+}
+
+/* 상품 검색 결과 정렬 란 */
+.item-result-sort {
+    display: flex;
+
+    margin: 0 auto;
+    gap: 5px;
+    
+    width: 1000px;
+    justify-content: right;
+}
+
+.item-result-sort p {
+    font-weight: 500;
+    color: #777;
+}
+
+.item-result-sort button {
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.item-result-sort button:hover {
+    color: black;
+}
+
+.sort-botton {
+    color: #777;
+}
+
+.sort-botton-selected {
+    color: black;
 }

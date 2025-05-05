@@ -328,6 +328,10 @@
 .item-empty {
     display: flex;
     flex-direction: row;
+
+    width: 100%;
+    max-width: 950px;
+
     padding-left: 50px;
 
     border: 1px solid #AAA;

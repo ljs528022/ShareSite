@@ -3,8 +3,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCategory } from "../../services/getCategory";
 import { getData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";
-import ItemCardList from "../../components/itemCardList";
+import ItemCard from "../../components/itemCard";
 import "../../components/css/itemSearch.css";
+import EmptyBox from "../../components/EmptyBox";
 
 
 const ItemSearch = () => {
@@ -29,7 +30,8 @@ const ItemSearch = () => {
 
     // 검색한 상품들 관련
     const [ queriedItems, setQueriedItem ] = useState([]);
-    
+    const [ sortOption, setSortOption ] = useState("recent");
+    const { avg, max, min } = getPriceStats(queriedItems);
 
     // 카테고리를 전부 받아오기
     useEffect(() => {
@@ -73,8 +75,7 @@ const ItemSearch = () => {
         queryItems();
     }, [ itemCateKey, minPrice, maxPrice, searchParams.get("keyword") ]);
 
-    console.log(queriedItems);
-
+    // 카테고리 선택 란
     const renderCateQuery = () => {
         const cates = allCate.filter((cate) => {
             if(itemCateKey === 0) {
@@ -112,6 +113,7 @@ const ItemSearch = () => {
         )
     }
 
+    // 최소, 최대 금액 입력 란
     const handlePriceChange = (e) => {
         const rawValue = e.target.value.replace(/[^0-9]/g, "");
         
@@ -131,6 +133,21 @@ const ItemSearch = () => {
         }
     }
 
+    // 상품 정렬 기능
+    const sortedItems = [...queriedItems].sort((a, b) => {
+        switch (sortOption) {
+            case "recent" :
+                return new Date(b.writeDate) - new Date(a.writeDate);
+            case "price-asc" :
+                return a.price - b.price;
+            case "price-desc" :
+                return b.price - a.price;
+            default:
+                return 0;
+        }
+    });
+
+    // 검색 버튼
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -212,30 +229,65 @@ const ItemSearch = () => {
                 </div>
                 </form>
                 {/* 검색한 상품들 표시 란 */}
-                <div className="item-reslt-row">
-                    <label></label>
-                    <div className="item-result-box">
-                        <div>
-
+                <div className="item-result-box">
+                        <label>검색한 상품들을 비교해봤습니다!</label>
+                        <div className="item-result-price">
+                            <label>평균 가격</label>
+                            <p>{avg.toLocaleString()}원</p>
+                            <a></a>
+                            <label>가장 높은 가격</label>
+                            <p>{max.toLocaleString()}원</p>
+                            <a></a>
+                            <label>가장 낮은 가격</label>
+                            <p>{min.toLocaleString()}원</p>
                         </div>
-                    </div>
                 </div>
                 <div className="item-result-sort">
-                        <p></p> / <p></p> / <p></p>
+                    <button 
+                        onClick={() => setSortOption("recent")}
+                        className={sortOption === "recent" ? "sort-button-selected" : "sort-botton"}
+                    >최신순</button>
+                    <p> / </p>
+                    <button 
+                        onClick={() => setSortOption("price-desc")}
+                        className={sortOption === "price-desc" ? "sort-button-selected" : "sort-botton"}
+                    >높은가격순</button>
+                    <p> / </p>
+                    <button 
+                        onClick={() => setSortOption("price-asc")}
+                        className={sortOption === "price-asc" ? "sort-button-selected" : "sort-botton"}
+                    >낮은가격순</button>
                 </div>
                 <div className="item-result-row">
-                    <ItemCardList 
-                        items={queriedItems} 
-                        style={"Normal"} 
-                        pageBtnStyle={"search_"}
-                        perItems={50}
-                    />
+                    {sortedItems.length !== 0 ? 
+                    sortedItems.map(item => (
+                        <ItemCard 
+                            key={item.itemKey}
+                            item={item} 
+                            style={"Normal"}
+                        />
+                    ))
+                    :
+                    <EmptyBox content={"관련된 상품이 없습니다..! 나중에 다시 확인해주세요!"} />
+                    }
                 </div>
             </div>
         </main>
     )
 }
 
+// 불러온 상품들의 평군 가격, 최대 가격, 최소 가격 구하기
+const getPriceStats = (items) => {
+    if(!items || items.length === 0) return { avg : 0, min : 0, max : 0};
+
+    const prices = items.map(item => Number(item.price));
+    const total = prices.reduce((sum, price) => sum + price, 0);
+    const avg = Math.round(total / prices.length);
+    const max = Math.max(...prices);
+    const min = Math.min(...prices);
+
+    return { avg, max, min };
+}
 
 
 export default ItemSearch;
