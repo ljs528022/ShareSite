@@ -12,9 +12,9 @@ import java.util.Optional;
 public interface UserService {
 
     // Search by UserKey
-    User findbyUserKey (String userKey);
+    User findByUserKey (String userKey);
     // Search by User ID
-    Optional<User> findbyUserName (String username);
+    Optional<User> findByUserName (String username);
 
     User findSellerInfoByUserKey(String userKey);
 

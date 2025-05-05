@@ -83,7 +83,7 @@ public class AuthController {
         }
 
         String username = userDetails.getUsername();
-        User user = userService.findbyUserName(username)
+        User user = userService.findByUserName(username)
                 .orElseThrow(() -> new RuntimeException("유저 정보를 찾을 수 없습니다.."));
 
         UserInfoResponse response = new UserInfoResponse(

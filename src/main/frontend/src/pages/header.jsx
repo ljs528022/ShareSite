@@ -1,7 +1,6 @@
 import "../components/css/header.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getData } from "../services/api.jsx";
 import Categorybox from '../components/categorybox.jsx';
 import { useUser } from "../services/UserContext.jsx";
 import { useToast } from "../util/ToastContext.jsx";
@@ -123,7 +122,7 @@ const Header = () => {
                             </button>
                             {(showPopup && user) && 
                                 <div className="Mavbar-user">
-                                    <a href={`/user/${user.userKey}`}>마이페이지</a>
+                                    <a onClick={() => navigate(`/user/${user.userKey}`)}>마이페이지</a>
                                     <div className="logout" onClick={handleLogout}>로그아웃</div>
                                 </div>
                             }

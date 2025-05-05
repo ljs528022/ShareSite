@@ -57,24 +57,25 @@ public class UserController {
         return new LoginResponse(token);
     }
 
-    @GetMapping("/find/{userKey}")
-    public ResponseEntity<?> getSellerInfo(@PathVariable("userKey") String userKey) {
-        if(userKey != null) {
-            User sellerInfo = userService.findbyUserKey(userKey);
-            return ResponseEntity.ok(sellerInfo);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @GetMapping("/{userKey}")
-    public ResponseEntity<?> getUserDetail(@PathVariable("userKey") String userKey) {
+    public ResponseEntity<?> getUserInfo(@PathVariable("userKey")String userKey) {
         if(userKey != null) {
-            User userInfo = userService.findbyUserKey(userKey);
+            User userInfo = userService.findByUserKey(userKey);
             return ResponseEntity.ok(userInfo);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
+//    @GetMapping("/find/{userKey}")
+//    public ResponseEntity<?> getSellerInfo(@PathVariable("userKey")String userKey) {
+//        if(userKey != null) {
+//            User sellerInfo = userService.findByUserKey(userKey);
+//            return ResponseEntity.ok(sellerInfo);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+
 
 }

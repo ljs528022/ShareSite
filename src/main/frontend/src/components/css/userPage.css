@@ -1,0 +1,118 @@
+.user-page-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    max-width: 1050px;
+    height: 100%;
+
+    margin: 0 auto;
+}
+
+/* 유저 정보 부분 */
+.user-page-box {
+    display: flex;
+    flex-direction: column;
+
+    width: 900px;
+
+    margin: 0 auto;
+}
+
+.user-info-box {
+    display: flex;
+    flex-direction: row;
+
+    margin-left: 10px;
+
+    max-width: 600px;
+    width: inherit;
+}
+
+.user-page-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-page-row label {
+    font-size: 27px;
+    padding-left: 25px;
+    width: inherit;
+    text-align: left;
+}
+
+.user-decoration {
+    margin: 0;
+    padding-left: 25px;
+    font-size: 12px;
+}
+
+.user-trade-status {
+    width: 400px;
+    height: 70px;
+
+    margin-top: 10px;
+    margin-left: 15px;
+
+    border-radius: 8px;
+    background-color: #ccc;
+}
+
+.user-img {
+
+}
+
+/* 유저 상품 부분 */
+.user-item-box {
+    display: flex;
+    flex-direction: row;
+
+    margin-top: 40px;
+    margin-left: 10px;
+
+    max-width: 600px;
+    width: inherit;
+}
+
+.user-item-box label {
+    font-size: 27px;
+    padding-left: 25px;
+    width: inherit;
+    text-align: left;
+}
+
+/* 마이페이지 부분 */
+.user-mypage-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-mypage-box label {
+    font-size: 27px;
+    width: inherit;
+}
+
+.user-mypage-row {
+    padding-top: 30px;
+    padding-bottom: 20px;
+
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.3);
+}
+
+.user-mypage-row ul {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.user-mypage-row li {
+    padding-bottom: 5px;
+    color: #666;
+}
+
+.user-mypage-row li:hover {
+    color: black;
+}
+
+.user-mypage-row label {
+    font-size: 22px;
+    margin-bottom: 0;
+}
