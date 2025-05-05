@@ -123,7 +123,7 @@ const Header = () => {
                             </button>
                             {(showPopup && user) && 
                                 <div className="Mavbar-user">
-                                    <a href={`/user?${user.userKey}`}>마이페이지</a>
+                                    <a href={`/user/${user.userKey}`}>마이페이지</a>
                                     <div className="logout" onClick={handleLogout}>로그아웃</div>
                                 </div>
                             }

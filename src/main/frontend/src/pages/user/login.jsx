@@ -79,7 +79,7 @@ const Login = () => {
                         <div className="form-row">
                             <div className="login-input">
                                 <label>PW :</label>
-                                <input id="password" type={showPassword ? "text" : "password"} onChange={handleInput}/>
+                                <input id="password" type={showPassword ? "text" : "password"} autoComplete="off" onChange={handleInput}/>
                                 <button type="button" className="side-btn" onClick={togglePasswordVisibility}>
                                 {showPassword ?
                                         <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 640 512">

@@ -67,4 +67,14 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{userKey}")
+    public ResponseEntity<?> getUserDetail(@PathVariable("userKey") String userKey) {
+        if(userKey != null) {
+            User userInfo = userService.findbyUserKey(userKey);
+            return ResponseEntity.ok(userInfo);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

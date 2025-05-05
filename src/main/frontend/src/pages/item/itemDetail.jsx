@@ -16,7 +16,7 @@ import "../../components/css/itemDetail.css";
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
     const { itemKey } = useParams();
-    const { user } = useUser();
+    const { user } = useUser();  // 상품이 로그인한 유저의 것인지 판별용
     const userKey = user !== null ? user.userKey : null;
 
     // Item's Info

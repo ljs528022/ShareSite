@@ -17,6 +17,7 @@ const ItemSearch = () => {
     // 카테고리 검색 란
     const [ allCate, setAllCate ] = useState([]);
     const [ itemCateKey, setItemCateKey ] = useState(0);
+    const [ keyword, setKeyword ] = useState('');
     const parCateKey = Math.floor(itemCateKey / 100) * 100;
     const parCate = allCate.find(c => c.cateKey === parCateKey);
     const subCate = allCate.find(c => c.cateKey === itemCateKey);
@@ -43,25 +44,26 @@ const ItemSearch = () => {
         fetchCategories();
     }, []);
 
-    // 카테고리 버튼에서 누른 카테고리가 있으면 받아오기
+    // 링크된 주소값에 카테고리나 검색값이 있으면 받아오기
     useEffect(() => {
         const cateKey = Number(searchParams.get("category")) || 0;
+        const query = searchParams.get("keyword") || "";
 
         if(cateKey > 0 && cateKey !== itemCateKey) {
             setItemCateKey(cateKey);
         }
+        if(query != null) setKeyword(query);
+
     }, [searchParams]);
 
     // 검색 값에 해당되는 상품들 받아오기
     useEffect(() => {
         const params = {
-            keyword: searchParams.get("keyword") || undefined,
+            keyword: keyword || undefined,
             category: itemCateKey || undefined,
-            min: minPrice || undefined,
-            max: maxPrice || undefined,
         };
 
-        const queryItems = async () => {
+        const fetchItems = async () => {
             try {
                 const response = await getData("/search", { params });
                 showToast("검색한 상품들을 불러왔습니다!", "default");
@@ -72,8 +74,8 @@ const ItemSearch = () => {
             }
         };
 
-        queryItems();
-    }, [ itemCateKey, minPrice, maxPrice, searchParams.get("keyword") ]);
+        fetchItems();
+    }, [ itemCateKey, keyword ]);
 
     // 카테고리 선택 란
     const renderCateQuery = () => {
@@ -148,21 +150,34 @@ const ItemSearch = () => {
     });
 
     // 검색 버튼
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const category = itemCateKey;
+        const min = Number(minPrice.replace(/,/g, ''));
+        const max = Number(maxPrice.replace(/,/g, ''));
+
+        const params = {
+            category : category || undefined,
+            min: min || undefined,
+            max: max || undefined,
+        }
+
         const query = new URLSearchParams();
+        if(category) query.set("category", category);
+        if(min) query.set("min", min);
+        if(max) query.set("max", max);
 
-        if(itemCateKey > 0) query.append("category", itemCateKey);
-
-        const min = minPrice.replace(/,/g, "");
-        const max = maxPrice.replace(/,/g, "");
-
-        if(min !== 0) query.append("min", min);
-        if(max !== 0) query.append("max", max);
-
-        navigate(`/search?${query.toString()}`);
-    }
+        try {
+            const response = await getData("/search", { params });
+            showToast("검색한 상품들을 가져왔습니다!", "default");
+            setQueriedItem(response.data);
+            navigate(`/search?${query.toString()}`);
+        } catch (err) {
+            showToast("통신 에러가 발생했습니다.." ,"error");
+            console.log(err);
+        }
+    };
 
     return (
         <main>
