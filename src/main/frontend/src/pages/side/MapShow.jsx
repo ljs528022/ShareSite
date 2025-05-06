@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import useKakaoLoader from "../hook/useKakaoLoader"
+import useKakaoLoader from "../../hook/useKakaoLoader";
 
 const MapShow = ({ isOpen, className, data }) => {
 

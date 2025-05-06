@@ -204,11 +204,10 @@
 .user-item-sort {
     display: flex;
     flex-direction: row;
-    margin-top: 10px;
+    margin: 10px 5px 0px 0px;
 
     justify-content: space-between;
     align-items: center;
-
 }
 
 .user-item-sort label {

@@ -9,7 +9,7 @@ import ItemCardList from "../../components/itemCardList";
 import LikeButton from "../../util/LikeButton";
 import Modal from "../../util/Modal";
 import SidePage from "../../util/sidePage";
-import MapShow from "../../util/MapShow";
+import MapShow from "../../pages/side/MapShow";
 import EmptyBox from "../../components/EmptyBox";
 import "../../components/css/itemDetail.css";
 

@@ -4,6 +4,8 @@ import { getData } from "../../services/api";
 import { useParams } from "react-router-dom";
 import { useToast } from "../../util/ToastContext";
 import "../../components/css/userPage.css";
+import ItemCard from "../../components/itemCard";
+import EmptyBox from "../../components/EmptyBox";
 
 const UserPage = () => {
 
@@ -17,7 +19,6 @@ const UserPage = () => {
     const [ userItem, setUserItem ] = useState(null);
     const [ trading, setTranding ] = useState(null);
     const [ traded, setTranded ] = useState(null);
-    const [ sortedItem, setSortedItem ] = useState(null);
 
     // 상품 정렬 기준
     const [ sortTrade, setSortTrade ] = useState("ALL");
@@ -46,31 +47,31 @@ const UserPage = () => {
         getUserInfo();
     }, [userKey]);
 
-    // const sortUserItem = () => {
-    //     switch (sortTrade) {
-    //         case "ALL" :
-    //             return setSortedItem(userItem);
-    //         case "TRADING" :
-    //             return setSortedItem(trading);
-    //         case "TRADED" :
-    //             return setSortedItem(traded);
-    //         default :
-    //             return 0;
-    //     }
-    // }
+    const getsortedItems = () => {
+        if(!userItem) return;
 
-    // const fetchSortedItem = [...sortedItem].sort((a, b) => {
-    //     switch (sortOption) {
-    //         case "recent" :
-    //             return new Date(b.writeDate) - new Date(a.writeDate);
-    //         case "price-asc" :
-    //             return a.price - b.price;
-    //         case "price-desc" :
-    //             return b.price - a.price;
-    //         default:
-    //             return 0;
-    //     }
-    // });
+        let baseList = [];
+        if(sortTrade === "ALL") baseList = userItem || [];
+        else if (sortTrade === "TRADING") baseList = trading || [];
+        else if (sortTrade === "TRADED") baseList = traded || [];
+
+        const sorted = [...baseList].sort((a, b) => {
+            switch (sortOption) {
+                case "recent" :
+                    return new Date(b.writeDate) - new Date(a.writeDate);
+                case "price-asc" :
+                    return a.price - b.price;
+                case "price-desc" :
+                    return b.price - a.price;
+                default:
+                    return 0;
+            }
+        });
+
+        return sorted;
+    };
+
+    const displayedItems = getsortedItems();
 
     if(!userInfo) return;
 
@@ -86,7 +87,6 @@ const UserPage = () => {
                     <div className="user-mypage-row">
                         <label>거래정보</label>
                         <ul>
-                            <li>판매 내역</li>
                             <li>구매 내역</li>
                             <li>찜한 상품</li>
                         </ul>
@@ -103,13 +103,16 @@ const UserPage = () => {
                     </div>
                 </div>
                 }
+                {/* 유저 정보 표시 부분분 */}
                 <div className="user-page-box">
                     <div className="user-info-box">
                         <div className="user-page-row">
+                            {/* 유저 이름 */}
                             <label>{userInfo.useralias}#{userInfo.userKey}</label>
                             <p className="user-decoration">
                                 더 다양한 상품을 다른 회원들과 거래 해보세요!
                             </p>
+                            {/* 유저의 상품 거래 현황 */}
                             <div className="user-trade-status">
                                 <div className="trade-status-box">
                                     <label>거래 중 상품</label>
@@ -130,6 +133,7 @@ const UserPage = () => {
                                 </div>
                             </div>
                         </div>
+                        {/* 유저 신뢰도 & 유저 이미지 & 채팅 or 상품 등록 버튼 부분 */}
                         <div className="user-page-row">
                             <div className="user-info">
                                 <div className="user-score"></div>
@@ -154,7 +158,8 @@ const UserPage = () => {
                                         }
                                     </p>
                                 </div>
-                                <button >
+                                
+                                <button onClick={null}>
                                     {isOwnPage ?
                                     "등록하기"
                                     :
@@ -162,9 +167,9 @@ const UserPage = () => {
                                     }
                                 </button>
                             </div>
-
                         </div>
                     </div>
+                    {/* 해당 유저의 상품 표시 부분 */}
                     <div className="user-item-box">
                         <label>유저 상품</label>
                         <div className="user-item-type">
@@ -188,7 +193,14 @@ const UserPage = () => {
                             </button>
                         </div>
                         <div className="user-item-sort">
-                            <label>총 {userItem.length} 개</label>
+                            <label>총 {
+                                sortTrade === "ALL" ? 
+                                `${userItem.length !== undefined ? userItem.length : 0}` 
+                                : sortTrade === "TRADING" ?
+                                `${trading.length !== undefined ? trading.length : 0}`
+                                :
+                                `${traded.length !== undefined ? traded.length : 0}`
+                            } 개</label>
                             <div className="item-result-sort">
                                 <button 
                                     onClick={() => setSortOption("recent")}
@@ -207,7 +219,13 @@ const UserPage = () => {
                             </div>
                         </div>
                         <div className="user-item-result">
-                            
+                            {displayedItems.length > 0 ?
+                            displayedItems.map(item => (
+                                <ItemCard key={item.itemKey} item={item} style={"Normal"} />
+                            ))
+                            :
+                            <EmptyBox content={"관련된 상품이 없습니다.. 나중에 다시 확인해주세요!"} />
+                            }
                         </div>
                     </div>
                 </div>
