@@ -1,12 +1,11 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.DTO.LoginRequest;
-import com.lec.spring.DTO.LoginResponse;
-import com.lec.spring.DTO.RegisterRequest;
-import com.lec.spring.DTO.UserInfoResponse;
+import com.lec.spring.DTO.*;
+import com.lec.spring.domain.Item;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.EmailService;
+import com.lec.spring.service.ItemService;
 import com.lec.spring.service.UserService;
 import com.lec.spring.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -29,6 +27,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ItemService itemService;
     @Autowired
     private EmailService emailService;
 
@@ -61,11 +61,26 @@ public class UserController {
     public ResponseEntity<?> getUserInfo(@PathVariable("userKey")String userKey) {
         if(userKey != null) {
             User userInfo = userService.findByUserKey(userKey);
-            return ResponseEntity.ok(userInfo);
+            List<ItemDTO> items = itemService.findByUserKey(userKey);
+
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("userInfo", userInfo);
+            responseBody.put("userItems", items);
+
+            return ResponseEntity.ok(responseBody);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
+//    @PostMapping("/modify/{userKey}")
+//    public ResponseEntity<?> modifyUserInfo(
+//            @PathVariable("userKey")String userKey,
+//            ) {
+//        if(userKey != null) {
+//            User userInfo = userService.modify(userKey);
+//        }
+//    }
 
 //    @GetMapping("/find/{userKey}")
 //    public ResponseEntity<?> getSellerInfo(@PathVariable("userKey")String userKey) {

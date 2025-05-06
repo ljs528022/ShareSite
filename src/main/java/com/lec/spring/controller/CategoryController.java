@@ -13,11 +13,11 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @GetMapping("/api/category")
     public List<Category> findAllCategories() {
-        return categoryRepository.findAll();
+        return categoryService.findAll();
     }
 
 }

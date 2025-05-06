@@ -4,12 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.CategoryRepository">
 
-    <resultMap id="mapCategory" type="com.lec.spring.domain.Category">
-        <id column="cateKey" property="cateKey" />
-        <result column="catename" property="catename" />
-    </resultMap>
-
-    <select id="findAll" resultMap="mapCategory">
+    <select id="findAll" resultType="com.lec.spring.domain.Category">
         SELECT
             cateKey,
             catename

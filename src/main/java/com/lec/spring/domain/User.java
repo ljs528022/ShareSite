@@ -22,6 +22,8 @@ public class User {
     private Long visitcnt;          // Visit Count
     private Long tradecnt;          // Trade Success Count
     private boolean emailVerified;  // Email Verification
+    private String userImg;         // User Image
+    private String userIntro;       // User Description
 
     @ToString.Exclude
     private String passwordChk;     // PW checking

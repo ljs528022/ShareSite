@@ -22,7 +22,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> findAll() {
-        return categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
+
+        return categories;
     }
 
     @Override

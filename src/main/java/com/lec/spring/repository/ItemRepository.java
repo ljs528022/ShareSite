@@ -47,7 +47,7 @@ public interface ItemRepository {
     List<Item> findByCategory(@Param("cateKey")Long cateKey);
 
     // Find By UserKey
-    List<Item> findByUserKey(@Param("userKey")String userKey);
+    List<ItemDTO> findByUserKey(@Param("userKey")String userKey);
 
     // Find Img By ItemKey
     List<ItemImage> findImgByItemKey(@Param("itemKey")Long itemKey);

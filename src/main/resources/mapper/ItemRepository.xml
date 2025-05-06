@@ -186,16 +186,16 @@
         WHERE itemKey = #{itemKey}
     </select>
 
-    <select id="findByCategory" resultMap="mapItem">
+    <select id="findByCategory" resultType="com.lec.spring.DTO.ItemDTO">
         SELECT i.*
         FROM d1_item i
         WHERE i.cateKey = #{cateKey}
     </select>
 
-    <select id="findByUserKey" resultMap="mapItem">
-        SELECT i.*
-        FROM d1_item i
-        WHERE i.userKey = #{userKey}
+    <select id="findByUserKey" resultType="com.lec.spring.DTO.ItemDTO">
+        SELECT *
+        FROM d1_item
+        WHERE userKey = #{userKey}
     </select>
 
     <select id="findImgByItemKey" resultMap="mapItemImage">

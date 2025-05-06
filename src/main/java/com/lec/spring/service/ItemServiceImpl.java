@@ -49,6 +49,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<ItemDTO> findByUserKey(String userKey) {
+        List<ItemDTO> items = itemRepository.findByUserKey(userKey);
+
+        loadItemsLocationAndImage(items);
+        return items;
+    }
+
+    @Override
     public List<ItemDTO> getLatestItems() {
         List<ItemDTO> items = itemRepository.getLatestItems();
 

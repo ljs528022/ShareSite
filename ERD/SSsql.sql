@@ -112,6 +112,8 @@ CREATE TABLE d1_user
 	tradecnt int,
 	auth varchar(10),
 	emailVerified BOOLEAN DEFAULT FALSE,
+	userImg varchar(500),
+	userIntro varchar(500),
 	PRIMARY KEY (userKey),
 	UNIQUE (userKey),
 	UNIQUE (username)

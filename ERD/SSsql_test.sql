@@ -14,7 +14,8 @@ SELECT * FROM d1_like;
 
 SELECT *
         FROM d1_item
-        WHERE cateKey = 108;
+        WHERE userKey  = '9160012';
+       
        
 
 SELECT *
