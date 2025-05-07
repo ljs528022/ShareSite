@@ -16,39 +16,12 @@
     z-index: 100;
 }
 
-.side-page-close {
-    position: fixed;
-
-    top: 0;
-    right: 0;
-
-    width: 300px;
-    height: 100%;
-
-    text-align: center;
-
-    background-color: #fff;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-    animation: rightSlide 0.5s ease-out forwards;
-
-    z-index: 100;
-}
-
 @keyframes leftSlide {
     from {
         transform: translateX(300px);
     }
     to {
         transform: translateX(0);
-    }
-}
-
-@keyframes rightSlide {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(300px);
     }
 }
 
@@ -61,6 +34,7 @@
 
 .side-header button {
     padding-left: 20px;
+    cursor: pointer;
 }
 
 .side-header label {

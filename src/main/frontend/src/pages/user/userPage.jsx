@@ -3,12 +3,13 @@ import { useUser } from "../../services/UserContext";
 import { getData } from "../../services/api";
 import { useParams } from "react-router-dom";
 import { useToast } from "../../util/ToastContext";
-import "../../css/pages/userPage.css";
 import ItemCard from "../../components/itemCard";
 import EmptyBox from "../../components/EmptyBox";
 import SidePage from "../../util/sidePage";
 import LikeShow from "../side/LikeShow";
-import Modal from "../../util/Modal";
+import UserModify from "./userModify";
+import EditModal from "../../util/EditModal";
+import "../../css/pages/userPage.css";
 
 const UserPage = () => {
 
@@ -29,6 +30,7 @@ const UserPage = () => {
 
     // 사이드 페이지 ON | OFF
     const [ showLikeItem, setShowLikeItem ] = useState(false);
+    const [ showModify, setShowModify] = useState(false);
 
     const logginUserKey = user !== null ? user.userKey : null;
     const isOwnPage = userKey === logginUserKey;
@@ -102,7 +104,9 @@ const UserPage = () => {
                     <div className="user-mypage-row">
                         <label>내 정보</label>
                         <ul>
-                            <li>내 정보 수정</li>
+                            <li onClick={() => setShowModify(true)}>
+                                내 정보 수정
+                            </li>
                             <li>계좌 관리</li>
                             <li>배송지 관리</li>
                             <li>거래 후기</li>
@@ -118,6 +122,7 @@ const UserPage = () => {
                             {/* 유저 이름 */}
                             <label>{userInfo.useralias}#{userInfo.userKey}</label>
                             <p className="user-decoration">
+                                {/* userIntro로 받아오게 변경 예정 */}
                                 더 다양한 상품을 다른 회원들과 거래 해보세요!
                             </p>
                             {/* 유저의 상품 거래 현황 */}
@@ -146,6 +151,7 @@ const UserPage = () => {
                             <div className="user-info">
                                 <div className="user-score"></div>
                                 <img className="user-img">
+                                    {/* userImg로 받아오게 할 예정 없으면 대체이미지지 */}
                                     {}
                                 </img>
                             </div>
@@ -255,7 +261,12 @@ const UserPage = () => {
             />
 
             {/* 내 정보 수정 페이지 */}
-            <Modal />
+            <EditModal 
+                isOpen={showModify}
+                onClose={() => setShowModify(false)}
+                title={"내 정보 수정"}
+                content={<UserModify user={userInfo} onClose={() => setShowModify(false)}/>}
+            />
 
 
             {/* 계좌 관리 페이지 */}

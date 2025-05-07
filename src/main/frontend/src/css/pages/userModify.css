@@ -1,0 +1,38 @@
+.modify-user-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.modify-user-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+    margin-top: 10px;
+}
+
+.modify-user-row label {
+    width: initial;
+}
+
+.modify-user-row input {
+    width: 250px;
+    font-size: 13px;
+}
+
+.modify-user-row input:focus {
+    outline: none;
+}
+
+/* Input CSS */
+.img-input {
+
+}
+
+.img-input input {
+    display: none;
+}
+
+.alias-input {
+
+}

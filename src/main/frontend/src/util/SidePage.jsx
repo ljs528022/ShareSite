@@ -4,7 +4,7 @@ const SidePage = ({ className, isOpen, onClose, headerText, content }) => {
     if (!isOpen) return null;
 
     return (
-        <div className={isOpen ? "side-page": "side-page-close"}>
+        <div className="side-page">
             <div className="side-header">
                 <button type="button" onClick={onClose}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="25" width="20.5" viewBox="0 0 320 512">
