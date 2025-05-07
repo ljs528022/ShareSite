@@ -174,10 +174,19 @@
         AND tradestatus = false
     </select>
 
-    <select id="findByItemKey" resultType="com.lec.spring.domain.Item">
+    <select id="findByItemKey" resultType="com.lec.spring.DTO.ItemDTO">
         SELECT itemKey
         FROM d1_item
         WHERE itemKey = #{itemKey}
+    </select>
+
+    <select id="findItemsByKeys" parameterType="list" resultType="com.lec.spring.DTO.ItemDTO">
+        SELECT *
+        FROM d1_item
+        WHERE itemKey IN
+        <foreach collection="list" item="key" open="(" separator="," close=")">
+            #{key}
+        </foreach>
     </select>
 
     <select id="findItemByItemKey" resultType="com.lec.spring.domain.Item">

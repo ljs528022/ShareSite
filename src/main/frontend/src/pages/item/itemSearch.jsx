@@ -4,8 +4,8 @@ import { getCategory } from "../../services/getCategory";
 import { getData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";
 import ItemCard from "../../components/itemCard";
-import "../../components/css/itemSearch.css";
 import EmptyBox from "../../components/EmptyBox";
+import "../../css/pages/itemSearch.css";
 
 
 const ItemSearch = () => {

@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,6 +52,20 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemDTO> findByUserKey(String userKey) {
         List<ItemDTO> items = itemRepository.findByUserKey(userKey);
+
+        loadItemsLocationAndImage(items);
+        return items;
+    }
+
+    @Override
+    public ItemDTO findByItemKey(Long itemKey) {
+        return itemRepository.findByItemKey(itemKey);
+    }
+
+    @Override
+    public List<ItemDTO> findItemsByKeys(List<Long> itemKeys) {
+        if(itemKeys == null || itemKeys.isEmpty()) return Collections.emptyList();
+        List<ItemDTO> items = itemRepository.findItemsByKeys(itemKeys);
 
         loadItemsLocationAndImage(items);
         return items;

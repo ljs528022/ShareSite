@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useToast } from "./ToastContext";
 import useKakaoLoader from "../hook/useKakaoLoader";
-import"../components/css/mapSearch.css";
+import"../css/util/mapSearch.css";
 
 const MapSearch = ({ isOpen, onClose, itemData, setItemData }) => {
 

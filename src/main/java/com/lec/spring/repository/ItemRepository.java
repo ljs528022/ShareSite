@@ -43,6 +43,9 @@ public interface ItemRepository {
     // Find By ItemKey
     ItemDTO findByItemKey(@Param("itemKey")Long itemKey);
 
+    // Find Items By ItemKeys
+    List<ItemDTO> findItemsByKeys(List<Long> itemKeys);
+
     // Find By Category
     List<Item> findByCategory(@Param("cateKey")Long cateKey);
 

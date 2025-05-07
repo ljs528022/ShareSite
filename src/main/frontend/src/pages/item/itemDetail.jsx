@@ -11,7 +11,7 @@ import Modal from "../../util/Modal";
 import SidePage from "../../util/sidePage";
 import MapShow from "../../pages/side/MapShow";
 import EmptyBox from "../../components/EmptyBox";
-import "../../components/css/itemDetail.css";
+import "../../css/pages/itemDetail.css";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
@@ -285,7 +285,7 @@ const ItemDetail = () => {
                         </div>
                         {item.userKey !== userKey ?
                         <div className="item-Btns">
-                            <LikeButton item={item} />
+                            <LikeButton item={item} size={35} />
                             <button type="button" className="item-chat-btn">채팅하기</button>
                             <button type="button" className="item-purchase-btn">구매하기</button>
                         </div>

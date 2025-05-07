@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "../components/css/header.css";
+import "../css/pages/header.css";
 
 const Categorybox = ({ categories, className }) => {
 

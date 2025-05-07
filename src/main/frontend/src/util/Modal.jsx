@@ -1,4 +1,4 @@
-import "../components/css/modal.css";
+import "../css/util/modal.css";
 
 const Modal = ({ isOpen, onClose, onConfirm, title, message, confirmText, cancelText }) => {
     if (!isOpen) return null;

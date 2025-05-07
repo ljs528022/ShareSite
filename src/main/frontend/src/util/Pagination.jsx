@@ -1,4 +1,4 @@
-import "../components/css/pagination.css";
+import "../css/util/pagination.css";
 
 const Pagination = ({ totalPage, currentPage, onPageChange, maxPageButtons = 5, showPageBtn = true, style }) => {
 

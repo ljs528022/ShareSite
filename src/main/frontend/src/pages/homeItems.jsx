@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import ItemCardList from '../components/itemCardList';
-import '../components/css/items.css'
+import "../css/pages/homeItems.css";
 
-const Items = ({ items, content, style, pageBtnStyle, perItems, showPageBtn } ) => {
+const HomeItems = ({ items, content, style, pageBtnStyle, perItems, showPageBtn } ) => {
     if(!items) return;
 
     return (
@@ -27,4 +26,4 @@ const Items = ({ items, content, style, pageBtnStyle, perItems, showPageBtn } ) 
     )
 }
 
-export default Items;
+export default HomeItems;

@@ -1,4 +1,4 @@
-import "../../components/css/itemWrite.css";
+import "../../css/pages/itemWrite.css";
 import { useEffect, useState } from "react";
 import { getCategory } from "../../services/getCategory";
 import { useUser } from "../../services/UserContext";

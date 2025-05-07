@@ -6,6 +6,8 @@ import com.lec.spring.domain.Like;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface LikeRepository {
 
@@ -18,4 +20,6 @@ public interface LikeRepository {
                   @Param("itemKey")Long itemKey);
 
     int countLike(@Param("itemKey")Long itemKey);
+
+    List<Like> findByUserKey(@Param("userKey")String userKey);
 }

@@ -1,4 +1,4 @@
-import "../components/css/itemDetail.css";
+import "../css/pages/itemDetail.css";
 
 const EmptyBox = ({ content }) => {
     if(!content) return;

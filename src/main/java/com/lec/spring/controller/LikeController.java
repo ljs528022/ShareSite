@@ -1,5 +1,6 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.DTO.ItemDTO;
 import com.lec.spring.DTO.LikeDTO;
 import com.lec.spring.domain.Like;
 import com.lec.spring.service.ItemService;
@@ -7,6 +8,11 @@ import com.lec.spring.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5178")
@@ -49,5 +55,20 @@ public class LikeController {
         int result = likeService.countLike(itemKey);
 
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/likeItem/{userKey}")
+    public ResponseEntity<?> getUserLikeItems(@PathVariable("userKey")String userKey) {
+        Map<String, Object> responseBody = new HashMap<>();
+
+        List<Like> likes = likeService.findByUserKey(userKey);
+        List<Long> likesItemKey = likes.stream().map(Like::getItemKey).toList();
+
+        List<ItemDTO> likedItems = itemService.findItemsByKeys(likesItemKey);
+
+        responseBody.put("likedItems", likedItems);
+        responseBody.put("count", likedItems.size());
+
+        return ResponseEntity.ok(responseBody);
     }
 }

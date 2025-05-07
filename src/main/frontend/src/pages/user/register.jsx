@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import "/src/components/css/register.css";
+import "../../css/pages/register.css";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";

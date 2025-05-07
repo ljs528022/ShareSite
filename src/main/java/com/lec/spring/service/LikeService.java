@@ -4,6 +4,8 @@ import com.lec.spring.DTO.LikeDTO;
 import com.lec.spring.domain.Like;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 public interface LikeService {
 
     int addLike (Like like);
@@ -13,5 +15,7 @@ public interface LikeService {
     Like findLike (String userKey, Long itemKey);
 
     int countLike(Long itemKey);
+
+    List<Like> findByUserKey(String userKey);
 
 }

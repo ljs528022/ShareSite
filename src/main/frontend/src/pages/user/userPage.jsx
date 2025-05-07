@@ -3,9 +3,12 @@ import { useUser } from "../../services/UserContext";
 import { getData } from "../../services/api";
 import { useParams } from "react-router-dom";
 import { useToast } from "../../util/ToastContext";
-import "../../components/css/userPage.css";
+import "../../css/pages/userPage.css";
 import ItemCard from "../../components/itemCard";
 import EmptyBox from "../../components/EmptyBox";
+import SidePage from "../../util/sidePage";
+import LikeShow from "../side/LikeShow";
+import Modal from "../../util/Modal";
 
 const UserPage = () => {
 
@@ -23,6 +26,9 @@ const UserPage = () => {
     // 상품 정렬 기준
     const [ sortTrade, setSortTrade ] = useState("ALL");
     const [ sortOption, setSortOption ] = useState("recent");
+
+    // 사이드 페이지 ON | OFF
+    const [ showLikeItem, setShowLikeItem ] = useState(false);
 
     const logginUserKey = user !== null ? user.userKey : null;
     const isOwnPage = userKey === logginUserKey;
@@ -88,7 +94,9 @@ const UserPage = () => {
                         <label>거래정보</label>
                         <ul>
                             <li>구매 내역</li>
-                            <li>찜한 상품</li>
+                            <li onClick={() => setShowLikeItem(prev => !prev)}>
+                                찜한 상품
+                            </li>
                         </ul>
                     </div>
                     <div className="user-mypage-row">
@@ -231,6 +239,36 @@ const UserPage = () => {
                 </div>
             </div>
             {/* 사이드 페이지 부분 */}
+
+            {/* 찜 목록 페이지 */}
+            <SidePage 
+                isOpen={showLikeItem} 
+                onClose={() => setShowLikeItem(false)}
+                className={"like"}
+                headerText={"내가 찜한 상품"}
+                content={
+                    <LikeShow 
+                        isOpen={showLikeItem}
+                        data={userKey}
+                    />
+                }
+            />
+
+            {/* 내 정보 수정 페이지 */}
+            <Modal />
+
+
+            {/* 계좌 관리 페이지 */}
+
+
+            {/* 배송지 관리 페이지 */}
+
+
+            {/* 거래 후기 페이지 */}
+
+
+            {/* 탈퇴하기 페이지지 */}
+
         </main>
         </>
     )

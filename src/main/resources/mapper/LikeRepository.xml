@@ -26,4 +26,9 @@
         WHERE itemKey = #{itemKey}
     </select>
 
+    <select id="findByUserKey" resultType="com.lec.spring.domain.Like">
+        SELECT *
+        FROM d1_like
+        WHERE userKey = #{userKey}
+    </select>
 </mapper>

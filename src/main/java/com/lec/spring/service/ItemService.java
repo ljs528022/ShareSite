@@ -17,6 +17,12 @@ public interface ItemService {
     // Find Items By UserKey
     List<ItemDTO> findByUserKey(String userKey);
 
+    // Find Items By ItemKey
+    ItemDTO findByItemKey(Long itemKey);
+
+    // Find Items By ItemKeys
+    List<ItemDTO> findItemsByKeys(List<Long> itemKeys);
+
     // Find Latest 5 Items
     List<ItemDTO> getLatestItems();
 

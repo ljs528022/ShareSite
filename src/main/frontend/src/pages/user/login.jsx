@@ -1,4 +1,4 @@
-import "/src/components/css/login.css";
+import "../../css/pages/login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../services/api";

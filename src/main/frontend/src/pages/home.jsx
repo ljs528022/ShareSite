@@ -1,7 +1,7 @@
-import "../components/css/home.css";
 import { useEffect, useState } from "react";
-import Items from './items.jsx';
 import { getData } from "../services/api.jsx";
+import HomeItems from './homeItems.jsx';
+import "../css/pages/home.css";
 
 const Home = () => {
     // 이번주 인기 카테고리 상품
@@ -31,8 +31,8 @@ const Home = () => {
     return (
         <>
         <main>
-            <Items items={weeklyItems} content={"이번주 인기 카테고리 상품"} style={"Normal"} pageBtnStyle={""} />
-            <Items items={latestItems} content={"방금 추가된 상품들"} style={"Normal"} pageBtnStyle={""} />
+            <HomeItems items={weeklyItems} content={"이번주 인기 카테고리 상품"} style={"Normal"} pageBtnStyle={""} />
+            <HomeItems items={latestItems} content={"방금 추가된 상품들"} style={"Normal"} pageBtnStyle={""} />
         </main>
         </>
 

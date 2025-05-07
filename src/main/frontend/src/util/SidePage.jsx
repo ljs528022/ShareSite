@@ -1,4 +1,4 @@
-import "../components/css/SidePage.css";
+import "../css/util/sidePage.css";
 
 const SidePage = ({ className, isOpen, onClose, headerText, content }) => {
     if (!isOpen) return null;
