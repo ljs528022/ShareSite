@@ -11,6 +11,11 @@
     margin-top: 10px;
 }
 
+.modify-user-row h4 {
+    margin: 0 auto;
+    font-size: 20px;
+}
+
 .modify-user-row label {
     width: initial;
 }
@@ -24,15 +29,99 @@
     outline: none;
 }
 
+.modify-user-row button {
+    position: relative;
+    top: 0;
+    right: 0;
+    padding: 5px 10px;
+
+    font-weight: 500;
+    color: #7badff;
+    border: 2px solid #7badff;
+    border-radius: 8px;
+}
+
+.modify-user-row button:hover {
+    color: white;
+    background-color: #7badff;
+}
+
 /* Input CSS */
-.img-input {
-
+.input-box-img {
+    margin: 0 auto;
 }
 
-.img-input input {
-    display: none;
+.input-box-img img {
+    width: 60px;
+
+    min-width: 60px;
+    min-height: 60px;
+    
+    border: 2px solid #aaa;
+    border-radius: 40px;
+    object-fit: cover;
+    cursor: pointer;
 }
 
-.alias-input {
+#userIntro {
+    margin: 0 auto;
+    margin-bottom: 5px;
+    padding: 0;
+    height: 20px;
+    border-left: 2px solid rgba(0, 0, 0, 0.3);
+    border-right: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 0px;
+    background-color: #fff;
+    text-align: center;
+    font-size: 12px;
+}
 
+#username {
+    background-color: #aaa;
+    color: black;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+#submit-btn {
+    margin: 0 auto;
+    margin-right: 0;
+    border: 2px solid #888;
+    color: #888;
+}
+
+#submit-btn:hover {
+    color: white;
+    background-color: #888;
+}
+
+#back-btn {
+    margin: 0 auto;
+    margin-right: 0;
+    border: 2px solid #888;
+    color: #888;
+}
+
+#back-btn:hover {
+    color: white;
+    background-color: #888;
+}
+
+.modify-email-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#email {
+    width: initial;
+    padding: 0;
+    background-color: white;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.modify-email-input select {
+    padding: 8px 2px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }

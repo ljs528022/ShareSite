@@ -54,7 +54,7 @@ const ItemWrite = () => {
     }
 
 
-    // 이미지 삽입 부분분
+    // 이미지 삽입 부분
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
 

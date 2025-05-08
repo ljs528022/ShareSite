@@ -97,7 +97,7 @@
     width: 400px;
     height: 80px;
 
-    margin-top: 10px;
+    margin-top: 7px;
     margin-left: 15px;
     padding: 0px 10px;
 
@@ -136,15 +136,44 @@
 }
 
 .user-info {
+    display: flex;
+    flex-direction: row;
 
+    justify-content: space-between;
 }
 
 .user-score {
+    width: inherit;
+    height: inherit;
 
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
+.user-score label {
+    padding: 0;
+    padding-left: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #7badff;
+}
+
+.user-score-bar {
+
+    width: 285px;
+    height: 15px;
+    
+    border-radius: 10px;
+    background-color: #555;
 }
 
 .user-img {
-
+    width: 60px;
+    min-width: 60px;
+    min-height: 60px;
+    margin-right: 30px;
+    object-fit: cover;
+    border-radius: 40px;
 }
 
 

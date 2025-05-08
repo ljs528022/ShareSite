@@ -28,6 +28,9 @@ const UserPage = () => {
     const [ sortTrade, setSortTrade ] = useState("ALL");
     const [ sortOption, setSortOption ] = useState("recent");
 
+    // 유저 신뢰도 -> 거래 리뷰의 좋아요, 싫어요에 따라 점수가 변동하는 값임
+    const [ userScore, setUSerScore ] = useState(0);
+
     // 사이드 페이지 ON | OFF
     const [ showLikeItem, setShowLikeItem ] = useState(false);
     const [ showModify, setShowModify] = useState(false);
@@ -115,7 +118,7 @@ const UserPage = () => {
                     </div>
                 </div>
                 }
-                {/* 유저 정보 표시 부분분 */}
+                {/* 유저 정보 표시 부분 */}
                 <div className="user-page-box">
                     <div className="user-info-box">
                         <div className="user-page-row">
@@ -149,11 +152,15 @@ const UserPage = () => {
                         {/* 유저 신뢰도 & 유저 이미지 & 채팅 or 상품 등록 버튼 부분 */}
                         <div className="user-page-row">
                             <div className="user-info">
-                                <div className="user-score"></div>
-                                <img className="user-img">
-                                    {/* userImg로 받아오게 할 예정 없으면 대체이미지지 */}
-                                    {}
-                                </img>
+                                {/* 유저 신뢰도 나중에 기능 추가해야 함 */}
+                                <div className="user-score">
+                                    <label>유저 신뢰도 : {userScore}</label>
+                                    <div className="user-score-bar" />
+                                </div>
+                                <img 
+                                    className="user-img"
+                                    src={userInfo.userimg !== '' ? {} : 'http://localhost:8093/item-images/temp/userImgTemp.png'}
+                                />
                             </div>
                             <div className="user-info-status">
                                 <div>
@@ -267,7 +274,6 @@ const UserPage = () => {
                 title={"내 정보 수정"}
                 content={<UserModify user={userInfo} onClose={() => setShowModify(false)}/>}
             />
-
 
             {/* 계좌 관리 페이지 */}
 
