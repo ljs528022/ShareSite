@@ -94,7 +94,7 @@ export default function MailVerification({ email, onVerify }) {
             <button className="side-btn" type="button" onClick={handleSendCode}>{loading ? "요청중..." : "메일인증"}</button>
             {emailVerification.sent && (
                 <>
-                    <input id="mailChk" type="text" placeholder="인증번호 입력" onChange={handleCodeChange}/>
+                    <input id="mailChk" type="text" placeholder="인증번호 입력" autoComplete="off" onChange={handleCodeChange}/>
                     {!emailVerification.verified && (
                         <p id="timer">{formatTime(emailVerification.secondsLeft)}</p>
                     )}

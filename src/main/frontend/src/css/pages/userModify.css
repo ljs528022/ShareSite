@@ -114,6 +114,14 @@
     font-weight: 500;
 }
 
+.email {
+    flex: 0;
+    background-color: white;
+    padding-left: 25px;
+    color: black;
+    font-weight: 500;
+}
+
 .new-password {
     color: black;
 }
@@ -148,12 +156,22 @@
     gap: 10px;
 }
 
-#email {
+#inputEmail {
     width: initial;
     padding: 0;
     background-color: white;
     border-radius: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.emailChk, .emailChk:focus {
+    width: 60px;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-right: 0px;
+    padding: 0px 15px;
+    font-size: 15px;
+    outline: none;
 }
 
 .modify-email-input select {
@@ -168,4 +186,87 @@
     padding-left: 145px;
     text-align: left;
     font-size: 12px;
+}
+
+.error-email {
+    font-size: 13px;
+    color: red;
+    text-align: right;
+    padding-top: 5px;
+}
+
+/* 메일 인증 css */
+.mail-verify {
+    display: grid;
+    align-items: center;
+    justify-content: right;
+}
+
+.side-btn {
+    grid-row: 1;
+    grid-column: 3;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-right: 0;
+    padding: 10px 15px;
+
+    top: 0;
+    right: 0;
+
+    border: 1px solid #444;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#mailChk {
+    grid-row: 1;
+    grid-column: 2;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-right: 5px;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#timer {
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    position: relative;
+    margin: 0px 10px;
+    margin-top: 10px;
+    width: initial;
+    top: 0;
+    left: 0;
+}
+
+#timeOut {
+    grid-row: 2;
+    grid-column: span 3;
+    display: flex;
+    position: relative;
+    justify-content: right;
+    margin: 0;
+    margin-top: 5px;
+
+    width: initial;
+    top: 0;
+    left: 0;
+}
+
+#verify-success {
+    grid-row: 2;
+    grid-column: span 3;
+    display: flex;
+    position: relative;
+    justify-content: right;
+    margin: 0;
+    margin-top: 5px;
+
+    width: initial;
+    top: 0;
+    left: 0;
 }

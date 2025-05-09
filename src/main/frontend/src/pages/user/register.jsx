@@ -54,7 +54,7 @@ const Register = () => {
     
     useEffect(() => {
         const passChk = (pw) => {
-            const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\[\]{};':",.<>/?\\|`~]).{8,16}$/;
+            const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':",.<>/?\\|`~]).{8,16}$/;
             return regex.test(pw);
         }
 

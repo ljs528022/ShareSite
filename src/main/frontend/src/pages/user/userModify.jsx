@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "../../css/pages/userModify.css";
 import { useToast } from "../../util/ToastContext";
 import Modal from "../../util/Modal";
 import { postData } from "../../services/api";
+import MailVerification from "../../services/mailVerification";
 
-const UserModify = ({ user, onClose }) => {
+const UserModify = ({ user }) => {
+
+    const { showToast } = useToast();
+
     // 0 : 기본 창, 1 : 비밀번호 변경 창, 2: 이메일 변경 창
     const [ modifyPage, setModifyPage ] = useState(0);
     const [ isPassCorrect, setIsPassCorrect ] = useState(false); // 수정 전 비밀번호 확인
@@ -32,21 +36,20 @@ const UserModify = ({ user, onClose }) => {
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showNewPasswordChk, setShowNewPasswordChk] = useState(false);
 
-
     // 이메일 변경, 확인
-    const [ emailChk, setEmailChk ] = useState({
+    const [ emailChk, setEmailChk ] = useState(false);   // 이메일 인증 확인
+    const [ sameEmail, setSameEmail ] = useState(false); // 중복 이메일 방지
+    const [ newEmail, setNewEmail ] = useState({
         email: '',
-        address: '',
-        emailChk: false,
+        inputEmail: '',
+        subEmail: '',
     });
-
-    const { showToast } = useToast();
 
     const [ submitModal, setSubmitModal ] = useState(false);
     
     useEffect(() => {
         const passChk = (pw) => {
-            const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\[\]{};':",.<>/?\\|`~]).{8,16}$/;
+            const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':",.<>/?\\|`~]).{8,16}$/;
             return regex.test(pw);
         }
     
@@ -65,7 +68,12 @@ const UserModify = ({ user, onClose }) => {
                 setPassVerify(3);
             }
         }
-    }, [ newPass.password, newPass.passwordChk ]);
+
+        if(userInfo.email === newEmail.email) {
+            setSameEmail(true);
+        } else setSameEmail(false);
+
+    }, [ newPass.password, newPass.passwordChk, newEmail.email ]);
 
     const handleInput = (e) => {
         const { id, value } = e.target;
@@ -78,8 +86,6 @@ const UserModify = ({ user, onClose }) => {
     }
 
     const modifyPass = ( verify ) => {
-        console.log(verify);
-
         if(verify === 4) {
             showToast("비밀번호를 입력해주세요!", "error");
         } else if (verify <= 2) {
@@ -119,7 +125,7 @@ const UserModify = ({ user, onClose }) => {
             setUserInfo(prev => ({...prev, userimg: files[0]}));
         }
 
-        e.target.files = '';
+        e.target.files = null;
     }
 
     const verifyPassword = async () => {
@@ -140,6 +146,10 @@ const UserModify = ({ user, onClose }) => {
         }
     }
 
+    const handleEmailVerify = useCallback((verified) => {
+            setEmailChk(verified);
+        }, []);
+
     const renderUserImg = ( img ) => {
         const temp = "/item-images/temp/userImgTemp.png";
 
@@ -155,23 +165,66 @@ const UserModify = ({ user, onClose }) => {
     };
 
     const handleEmailChange = (e) => {
-        const email = e.target.value;
-        const subEmail = emailChk.address;
+        const inputEmail = e.target.value;
+        const subEmail = newEmail.subEmail;
 
         switch (subEmail) {
             case "" :
-                return setUserInfo(prev => ({...prev, email: email}));
+                return setNewEmail(prev => ({...prev, inputEmail: inputEmail, email: inputEmail}));
             case "naver.com" :
-                return setUserInfo(prev => ({...prev, email: `${email}@${subEmail}`}))
+                return setNewEmail(prev => ({...prev, inputEmail: inputEmail, email: `${inputEmail}@${subEmail}`}))
             case "gmail.com" :
-                return setUserInfo(prev => ({...prev, email: `${email}@${subEmail}`}))
+                return setNewEmail(prev => ({...prev, inputEmail: inputEmail, email: `${inputEmail}@${subEmail}`}))
             case "daum.net" :
-                return setUserInfo(prev => ({...prev, email: `${email}@${subEmail}`}))
+                return setNewEmail(prev => ({...prev, inputEmail: inputEmail, email: `${inputEmail}@${subEmail}`}))
         }
     }
 
-    const handelSumbit = async () => {
+    const changeEmail = () => {
+        if(!emailChk) return;
 
+        setUserInfo(prev => ({...prev, email: newEmail.email}));
+        setModifyPage(0);
+        showToast("변경하신 이메일을 적용합니다. 제출하기를 누르면 정보가 반영됩니다", "success");
+    }
+
+    const handelSumbit = async (e) => {
+        e.preventDefault();
+
+        if(!userInfo) return;
+
+        try {
+            const userPart = {
+                userKey: userInfo.userKey,
+                username: userInfo.username,
+                password: userInfo.password || '',
+                useralias: userInfo.useralias,
+                email: userInfo.email || '',
+                userIntro: userInfo.userIntro || '',
+            }
+
+            const formData = new FormData();
+            const token = sessionStorage.getItem("token");
+
+            if(userInfo.userimg instanceof File) {
+                formData.append("userimg", userInfo.userimg);
+            }
+
+            formData.append("user", new Blob([JSON.stringify(userPart)], { type: "application/json" }));
+
+            const response = await postData("/user/modify" , formData , {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data"
+                },
+            });
+
+
+
+        } catch (err) {
+            showToast("통신 장애가 발생했습니다!", "error");
+            console.log(err);
+        }
     }
 
     if(!user && !userInfo) return;
@@ -239,6 +292,7 @@ const UserModify = ({ user, onClose }) => {
                 </div>
                 <div className="modify-user-row">
                     <label>이메일 변경 </label>
+                    <input type="text" id="email" className="email" readOnly placeholder={!emailChk ? "" : "이메일 변경됨!"}/>
                     <button type="button" onClick={() => setModifyPage(2)}>변경하기</button>
                 </div>
                 <div className="modify-user-row">
@@ -305,11 +359,11 @@ const UserModify = ({ user, onClose }) => {
             <div className="modify-user-row">
             <label>이메일: </label>
             <div className="modify-email-input">
-                        <input type="text" id="email" onChange={handleEmailChange} value={userInfo.email}/>
-                        {emailChk.address !== '' && 
+                        <input type="text" id="inputEmail" onChange={handleEmailChange} value={newEmail.inputEmail}/>
+                        {newEmail.subEmail !== '' && 
                         <p>@</p>
                         }
-                        <select onChange={(e) => setEmailChk(prev => ({...prev, address: e.target.value}))}>
+                        <select onChange={(e) => setNewEmail(prev => ({...prev, subEmail: e.target.value}))}>
                             <option value={""}>직접입력</option>
                             <option value={"naver.com"}>naver.com</option>
                             <option value={"gmail.com"}>gmail.com</option>
@@ -317,9 +371,18 @@ const UserModify = ({ user, onClose }) => {
                         </select>
                     </div>
                 </div>
-                <div className="modify-user-row">
-
+                <div className="mail-verify">
+                    {!sameEmail ?
+                    <MailVerification email={newEmail.email} onVerify={handleEmailVerify} />
+                    :
+                    <span className="error-email">동일한 이메일 입니다!</span>
+                    }
                 </div>
+                {emailChk &&
+                <div className="modify-user-row">
+                    <button type="button" className="back-btn" onClick={changeEmail}>변경하기</button>
+                </div>
+                }
                 <div className="modify-user-row">
                     <button type="button" className="back-btn" onClick={() => setModifyPage(0)}>돌아가기</button>
                 </div>
