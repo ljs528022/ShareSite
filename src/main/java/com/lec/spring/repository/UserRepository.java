@@ -33,7 +33,6 @@ public interface UserRepository {
     // Get Item Seller's UserInfo
     User findSellerInfoByUserKey(@Param("userKey")String userKey);
 
-
     // -- User Page --
 
     // Get All User's Item

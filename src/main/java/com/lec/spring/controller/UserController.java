@@ -1,24 +1,16 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.DTO.*;
-import com.lec.spring.domain.Item;
 import com.lec.spring.domain.User;
-import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.EmailService;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.UserService;
-import com.lec.spring.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
@@ -82,15 +74,19 @@ public class UserController {
 //        }
 //    }
 
-//    @GetMapping("/find/{userKey}")
-//    public ResponseEntity<?> getSellerInfo(@PathVariable("userKey")String userKey) {
-//        if(userKey != null) {
-//            User sellerInfo = userService.findByUserKey(userKey);
-//            return ResponseEntity.ok(sellerInfo);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @PostMapping("/passChk")
+    public ResponseEntity<?> verifyPassword(@RequestBody UserModifyRequest request) {
+        String userKey = request.getUserKey();
+        String password = request.getPassword();
+
+        boolean verifiedPass = userService.verifyPass(userKey, password);
+
+        if(!verifiedPass) {
+            return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다!");
+        } else {
+            return ResponseEntity.ok("비밀번호가 일치합니다!");
+        }
+    }
 
 
 }

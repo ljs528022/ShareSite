@@ -27,6 +27,9 @@ public interface UserService {
     // Login
     String login(LoginRequest request);
 
+    // Verify Password
+    boolean verifyPass(String userKey, String password);
+
     // Auth as each UserKey
     List<Authority> selectAuthByUserKey (String userKey);
 

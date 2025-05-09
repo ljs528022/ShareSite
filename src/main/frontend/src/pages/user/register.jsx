@@ -33,7 +33,6 @@ const Register = () => {
         userVerify.passwordChk === 3 &&
         userVerify.emailChk;
 
-
     // 입력되는 값들 저장
     const handleInput = (e) => {
         const { id, value } = e.target;
@@ -68,28 +67,13 @@ const Register = () => {
         } else 
         {
             if(!passVaild && !passChk(userData.password)) {
-                setUserVerify(prev => ({
-                    ...prev,
-                    passwordChk: 0,
-                }));
-            }
-            if (passVaild && !passChk(userData.password)) {
-                setUserVerify(prev => ({
-                    ...prev,
-                    passwordChk: 1,
-                }));
-            } 
-            if (!passVaild && passChk(userData.password)) {
-                setUserVerify(prev => ({
-                    ...prev,
-                    passwordChk: 2,
-                }));
-            } 
-            if (passVaild && passChk(userData.password)) {
-                setUserVerify(prev => ({
-                    ...prev,
-                    passwordChk: 3,
-                }));
+                setUserVerify(prev => ({ ...prev, passwordChk: 0 }));
+            } else if (passVaild && !passChk(userData.password)) {
+                setUserVerify(prev => ({ ...prev, passwordChk: 1 }));
+            } else if (!passVaild && passChk(userData.password)) {
+                setUserVerify(prev => ({ ...prev, passwordChk: 2 }));
+            } else if (passVaild && passChk(userData.password)) {
+                setUserVerify(prev => ({ ...prev, passwordChk: 3 }));
             }
         }
     }, [userData.password, userData.passwordChk, userVerify.passwordChk]);
@@ -193,7 +177,7 @@ const Register = () => {
                                                 userVerify.passwordChk >= 2 ? "green" : "red"}}>
                                         {(userData.password != null && userVerify.passwordChk >= 4) ? 
                                         "8~16글자, 대문자, 숫자 특수문자를 최소 한개 포함 해야합니다." 
-                                        : ((userData.password != null && userVerify.passwordChk) >= 2) ? "양식이 일치합니다!"
+                                        : ((userData.password != null && userVerify.passwordChk >= 2)) ? "양식이 일치합니다!"
                                         : "비밀번호 양식이 올바르지 않습니다!"}
                                     </span>
                                 </div>

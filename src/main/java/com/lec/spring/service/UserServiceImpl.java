@@ -117,11 +117,19 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("아이디 또는 비밀번호가 일치하지 않습니다.");
         }
 
-        System.out.println("받아온 Username 값 : " + user.getUsername());
-
         return jwtUtil.generateToken(user.getUsername());
     }
 
+    @Override
+    public boolean verifyPass(String userKey, String password) {
+        User user = userRepository.findByUserKey(userKey);
+
+        if(!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다!");
+        }
+
+        return true;
+    }
 
     @Override
     public List<Authority> selectAuthByUserKey(String userKey) {
