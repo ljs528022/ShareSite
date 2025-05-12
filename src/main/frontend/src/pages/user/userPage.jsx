@@ -280,7 +280,15 @@ const UserPage = () => {
             {/* 계좌 관리 페이지 */}
 
             {/* 배송지 관리 페이지 */}
-            {/*  */}
+            <SidePage 
+                isOpen={null}
+                onClose={() => {}}
+                className={""}
+                headerText={"배송지 관리"}
+                content={
+                    null
+                }
+            />
 
             {/* 거래 후기 페이지 */}
 
