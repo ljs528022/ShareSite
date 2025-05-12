@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.DTO.LoginRequest;
 import com.lec.spring.DTO.RegisterRequest;
+import com.lec.spring.DTO.UserModifyRequest;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
@@ -12,6 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,7 +24,6 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
@@ -31,9 +32,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Autowired
-    public UserServiceImpl(PasswordEncoder passwordEncoder,
-                           SqlSession sqlSession,
-                           JwtUtil jwtUtil) {
+    public UserServiceImpl(
+            PasswordEncoder passwordEncoder,
+            SqlSession sqlSession,
+            JwtUtil jwtUtil) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = sqlSession.getMapper(UserRepository.class);
         this.authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
@@ -60,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUsernameTaken(String username) {
-        return userRepository.existsByUsername(username);
+        return userRepository.existsByUsername(username) > 0;
     }
 
     @Override
@@ -118,6 +120,17 @@ public class UserServiceImpl implements UserService {
         }
 
         return jwtUtil.generateToken(user.getUsername());
+    }
+
+    @Override
+    public int modify(User user) {
+        if(!user.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        userRepository.update(user);
+
+        return 1;
     }
 
     @Override

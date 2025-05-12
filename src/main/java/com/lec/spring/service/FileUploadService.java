@@ -21,7 +21,7 @@ public class FileUploadService {
 
     private static final List<String> SUPPORTED_EXTENSIONS = Arrays.asList("jpg", "jpeg", "png", "gif");
 
-    public List<ItemImage> saveFiles(
+    public List<ItemImage> saveItemImages(
             List<MultipartFile> img, List<Boolean> isMainList) throws IOException {
         List<ItemImage> imageList = new ArrayList<>();
 
@@ -55,5 +55,30 @@ public class FileUploadService {
         }
 
         return imageList;
+    }
+
+    public String saveUserImage(MultipartFile userimg) throws IOException {
+        String userImagePath = null;
+
+        if(!userimg.isEmpty()) {
+            String originFilename = userimg.getOriginalFilename();
+            String ext = originFilename.substring(originFilename.lastIndexOf(".") + 1).toLowerCase();
+
+            if(!SUPPORTED_EXTENSIONS.contains(ext)) {
+                throw new IOException("허용되지 않은 파일 형식입니다!");
+            }
+
+            String uniqueName = UUID.randomUUID().toString() + "." + ext;
+            String fullPath = uploadDir + "/user-images/" + uniqueName;
+
+            File dir = new File(uploadDir + "/user-images/");
+            if(!dir.exists()) dir.mkdirs();
+
+            userimg.transferTo(new File(fullPath));
+
+            userImagePath = "/user-images/" + uniqueName;
+        }
+
+        return userImagePath;
     }
 }

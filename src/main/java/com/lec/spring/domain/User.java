@@ -31,11 +31,6 @@ public class User {
     @ToString.Exclude
     private String auth;
 
-
-
-    // User Page - Modify
-
-
     // User Page - Selling
 
 

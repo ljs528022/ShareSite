@@ -1,13 +1,15 @@
 import { useEffect, useState, useCallback } from "react";
-import "../../css/pages/userModify.css";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "../../util/ToastContext";
-import Modal from "../../util/Modal";
 import { postData } from "../../services/api";
 import MailVerification from "../../services/mailVerification";
+import Modal from "../../util/Modal";
+import "../../css/pages/userModify.css";
 
 const UserModify = ({ user }) => {
 
     const { showToast } = useToast();
+    const navigate = useNavigate();
 
     // 0 : 기본 창, 1 : 비밀번호 변경 창, 2: 이메일 변경 창
     const [ modifyPage, setModifyPage ] = useState(0);
@@ -22,6 +24,9 @@ const UserModify = ({ user }) => {
         userimg: user.userimg || '',
         userIntro: user.userIntro || '',
     });
+
+    // 유저 프로필 변경
+    const [ modifyImg, setModifyImg ] = useState('');
 
     // 비밀번호 변경, 확인
     const [ passVerify, setPassVerify ] = useState(4); 
@@ -47,6 +52,7 @@ const UserModify = ({ user }) => {
 
     const [ submitModal, setSubmitModal ] = useState(false);
     
+    // 비밀번호 확인
     useEffect(() => {
         const passChk = (pw) => {
             const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':",.<>/?\\|`~]).{8,16}$/;
@@ -74,6 +80,16 @@ const UserModify = ({ user }) => {
         } else setSameEmail(false);
 
     }, [ newPass.password, newPass.passwordChk, newEmail.email ]);
+
+    useEffect(() => {
+        if(userInfo.userimg === '') {
+            setModifyImg("/item-images/temp/userImgTemp.png");
+        } else if(typeof userInfo.userimg === "string" && userInfo.userimg.includes("/user-images")) {
+            setModifyImg(`http://localhost:8093${userInfo.userimg}`);
+        } else if(typeof userInfo.userimg === "object") {
+            setModifyImg(URL.createObjectURL(userInfo.userimg));
+        }
+    }, [userInfo.userimg]);
 
     const handleInput = (e) => {
         const { id, value } = e.target;
@@ -108,7 +124,7 @@ const UserModify = ({ user }) => {
                     setUserInfo(prev => ({ ...prev, password: newPass.password}))
                     setNewPass(({ password: '', passwordChk: '', passVerify: 4}));
                     setModifyPage(0);
-                    showToast("변경하신 비밀번호를 적용합니다. 제출하기를 누르면 정보가 반영됩니다", "success");
+                    showToast("변경하신 비밀번호를 적용합니다. 저장하기를 누르면 정보가 반영됩니다", "success");
                 }
             }
             checkPass();
@@ -150,18 +166,8 @@ const UserModify = ({ user }) => {
             setEmailChk(verified);
         }, []);
 
-    const renderUserImg = ( img ) => {
-        const temp = "/item-images/temp/userImgTemp.png";
-
-        if(!img) return <img src={`http://localhost:8093${temp}`} alt="유저이미지"/>;
-
-        try {
-            const previewUrl = URL.createObjectURL(img);
-            return <img src={previewUrl} alt="유저이미지" />
-        } catch (err) {
-            console.error(err);
-            return <img src={`http://localhost:8093${temp}`} alt="유저이미지"/>;
-        }
+    const renderUserImg = () => {
+        return <img src={modifyImg} alt="유저이미지"/>;
     };
 
     const handleEmailChange = (e) => {
@@ -185,12 +191,10 @@ const UserModify = ({ user }) => {
 
         setUserInfo(prev => ({...prev, email: newEmail.email}));
         setModifyPage(0);
-        showToast("변경하신 이메일을 적용합니다. 제출하기를 누르면 정보가 반영됩니다", "success");
+        showToast("변경하신 이메일을 적용합니다. 저장하기를 누르면 정보가 반영됩니다", "success");
     }
 
-    const handelSumbit = async (e) => {
-        e.preventDefault();
-
+    const handelSumbit = async () => {
         if(!userInfo) return;
 
         try {
@@ -218,9 +222,10 @@ const UserModify = ({ user }) => {
                     "Content-Type": "multipart/form-data"
                 },
             });
-
-
-
+            if(response.status === 200) {
+                showToast("수정이 완료 되었습니다!", "success");
+                navigate(0);
+            }
         } catch (err) {
             showToast("통신 장애가 발생했습니다!", "error");
             console.log(err);
@@ -269,7 +274,7 @@ const UserModify = ({ user }) => {
                 <div className="modify-user-row">
                     <div className="input-box-img">
                         <label htmlFor="userimg">
-                            {renderUserImg(userInfo.userimg)}
+                            {renderUserImg()}
                         </label>
                         <input id="userimg" type="file" accept="image/*" multiple onChange={handleImgChange} style={{ display: "none"}} />
                     </div>

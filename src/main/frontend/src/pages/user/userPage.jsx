@@ -110,7 +110,9 @@ const UserPage = () => {
                             <li onClick={() => setShowModify(true)}>
                                 내 정보 수정
                             </li>
-                            <li>계좌 관리</li>
+                            <li onClick={() => showToast("준비 중인 서비스입니다. 빠른 시일 내에 제공해드릴게요!", "warning")}>
+                                계좌 관리
+                            </li>
                             <li>배송지 관리</li>
                             <li>거래 후기</li>
                             <li>탈퇴하기</li>
@@ -159,7 +161,7 @@ const UserPage = () => {
                                 </div>
                                 <img 
                                     className="user-img"
-                                    src={userInfo.userimg !== '' ? {} : 'http://localhost:8093/item-images/temp/userImgTemp.png'}
+                                    src={userInfo.userimg !== '' ? `http://localhost:8093${userInfo.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'}
                                 />
                             </div>
                             <div className="user-info-status">
@@ -276,10 +278,9 @@ const UserPage = () => {
             />
 
             {/* 계좌 관리 페이지 */}
-            
 
             {/* 배송지 관리 페이지 */}
-            
+            {/*  */}
 
             {/* 거래 후기 페이지 */}
 

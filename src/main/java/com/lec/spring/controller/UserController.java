@@ -3,19 +3,28 @@ package com.lec.spring.controller;
 import com.lec.spring.DTO.*;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.EmailService;
+import com.lec.spring.service.FileUploadService;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "http://localhost:5178")
 public class UserController {
+
+    @Autowired
+    private FileUploadService fileUploadService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;
@@ -65,14 +74,47 @@ public class UserController {
         }
     }
 
-//    @PostMapping("/modify/{userKey}")
-//    public ResponseEntity<?> modifyUserInfo(
-//            @PathVariable("userKey")String userKey,
-//            ) {
-//        if(userKey != null) {
-//            User userInfo = userService.modify(userKey);
-//        }
-//    }
+    @PostMapping("/modify")
+    public ResponseEntity<?> modifyUserInfo(
+            @RequestPart("user") UserModifyRequest request,
+            @RequestPart(value = "userimg", required = false) MultipartFile userimg) {
+
+        try {
+            String userImagePath = null;
+
+            if(userimg != null && !userimg.isEmpty()) {
+                userImagePath = fileUploadService.saveUserImage(userimg);
+            }
+
+            User existingUser = userService.findByUserKey(request.getUserKey());
+
+            if(existingUser == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("해당 유저를 찾으라 수 없습니다");
+            }
+
+            existingUser.setUserKey(request.getUserKey());
+            existingUser.setUsername(request.getUsername());
+            existingUser.setPassword(request.getPassword());
+            existingUser.setUseralias(request.getUseralias());
+            existingUser.setEmail(request.getEmail());
+            existingUser.setUserIntro(request.getUserIntro());
+            if(userImagePath != null) {
+                existingUser.setUserimg(userImagePath);
+            }
+
+            userService.modify(existingUser);
+
+            return  ResponseEntity.ok("수정 완료!");
+
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("이미지 저장 중 오류 발생: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("회원 정보 수성 중 오류 발생: " + e.getMessage());
+        }
+    }
 
     @PostMapping("/passChk")
     public ResponseEntity<?> verifyPassword(@RequestBody UserModifyRequest request) {

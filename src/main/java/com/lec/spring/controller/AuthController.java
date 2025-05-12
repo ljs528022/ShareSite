@@ -91,6 +91,7 @@ public class AuthController {
                 user.getUsername(),
                 user.getUseralias(),
                 user.getEmail(),
+                user.getUserimg(),
                 user.getAuth()
         );
 

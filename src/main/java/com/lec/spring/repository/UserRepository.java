@@ -20,7 +20,7 @@ public interface UserRepository {
     Optional<User> findByUserName(@Param("username") String username);
 
     // ID Verification
-    boolean existsByUsername(@Param("username") String username);
+    int existsByUsername(@Param("username") String username);
 
     Long countByUserKeyStartWith(@Param("dataPrefix") String dataPrefix);
 

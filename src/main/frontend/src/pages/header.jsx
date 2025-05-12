@@ -13,7 +13,7 @@ const Header = () => {
     const { user, setUser } = useUser();
     const { showToast } = useToast();
 
-    const [categories, setCategories] = useState([]);
+    const [ categories, setCategories ] = useState([]);
     const [ keyword, setKeyword ] = useState('');
     const navigate = useNavigate();
     
@@ -88,9 +88,9 @@ const Header = () => {
                             {/* 옆에서 채팅창 나오게 만들기 (추후에) */}
                             <button onClick={() => {
                                 if(user) {
-                                    null;
+                                    showToast("준비 중인 서비스입니다. 빠른 시일 내에 제공해드릴게요!", "warning");
                                 } else {
-                                    showToast("로그인 후에 이용 가능한 기능입니다!", "error")
+                                    showToast("로그인 후에 이용 가능한 기능입니다!", "error");
                                 }
                                 }}>
                                 채팅하기
@@ -118,10 +118,13 @@ const Header = () => {
                                 }
                             }}>
                             {/* 로그인하면 유저 대표이미지로 변경 */}
-                            {user ? "MY" : "로그인"}
+                            {user ?
+                             <img src={`http://localhost:8093${user.userimg}`} alt={user.username} />
+                             :
+                             "로그인"}
                             </button>
                             {(showPopup && user) && 
-                                <div className="Mavbar-user">
+                                <div className="Navbar-user">
                                     <a onClick={() => navigate(`/user/${user.userKey}`)}>마이페이지</a>
                                     <div className="logout" onClick={handleLogout}>로그아웃</div>
                                 </div>
@@ -146,7 +149,7 @@ const Header = () => {
                         <a href="/price_search">시세조회</a>
                     </div>
                     <div className="Navbar-item">
-                        {/* 클릭하면 옆에 창 나오는 기능능 */}
+                        {/* 클릭하면 옆에 창 나오는 기능 */}
                         <button type="button" onClick={null}>찜한 상품</button>
                     </div>
                 </nav>

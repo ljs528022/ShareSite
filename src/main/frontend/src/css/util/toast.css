@@ -26,7 +26,7 @@
 
 .toast-message.warning {
     background-color: #ffc107;
-    color: black;
+    color: white;
 }
 
 @keyframes fadein {

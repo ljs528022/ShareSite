@@ -12,7 +12,6 @@ h3 {
     font-weight: bold;
     
     padding-bottom: 20px;
-    
 }
 
 label {
@@ -94,7 +93,7 @@ input {
     border-radius: 10px;
 }
 
-.side-btn {
+.register-side-btn {
     position: absolute;
 
     top: 10px;

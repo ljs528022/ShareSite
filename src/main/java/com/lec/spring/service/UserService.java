@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.DTO.LoginRequest;
 import com.lec.spring.DTO.RegisterRequest;
+import com.lec.spring.DTO.UserModifyRequest;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,8 @@ public interface UserService {
 
     // Login
     String login(LoginRequest request);
+
+    int modify(User user);
 
     // Verify Password
     boolean verifyPass(String userKey, String password);

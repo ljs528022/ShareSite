@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { postData } from "./api.jsx";
 
-export default function MailVerification({ email, onVerify }) {
+export default function MailVerification({ email, onVerify, style = "" }) {
     const [emailVerification, setEmailVerification] = useState({
         sent: false,
         code: "",
@@ -91,7 +91,7 @@ export default function MailVerification({ email, onVerify }) {
 
     return (
         <>
-            <button className="side-btn" type="button" onClick={handleSendCode}>{loading ? "요청중..." : "메일인증"}</button>
+            <button className={`${style}side-btn`} type="button" onClick={handleSendCode}>{loading ? "요청중..." : "메일인증"}</button>
             {emailVerification.sent && (
                 <>
                     <input id="mailChk" type="text" placeholder="인증번호 입력" autoComplete="off" onChange={handleCodeChange}/>

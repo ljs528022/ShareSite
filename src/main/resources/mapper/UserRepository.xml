@@ -84,8 +84,8 @@
         WHERE username = #{username}
     </select>
 
-    <select id="existsByUsername" resultType="boolean" parameterType="String">
-        SELECT COUNT(*) > 0
+    <select id="existsByUsername" resultType="int" parameterType="String">
+        SELECT COUNT(*)
         FROM d1_user
         WHERE username = #{username}
     </select>
@@ -108,6 +108,18 @@
 
     <!-- 회원 정보 수정 -->
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.User">
-
+        UPDATE d1_user
+        SET
+            username = #{username},
+            useralias = #{useralias},
+            userIntro = #{userIntro}
+            <if test="email != null and email != ''">
+                , email = #{email}
+            </if><if test="password != null and password != ''">
+                , password = #{password}
+            </if><if test="userimg != null and userimg != ''">
+                , userimg = #{userimg}
+            </if>
+        WHERE userKey = #{userKey}
     </update>
 </mapper>

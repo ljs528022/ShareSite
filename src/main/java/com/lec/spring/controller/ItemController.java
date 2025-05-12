@@ -71,7 +71,7 @@ public class ItemController {
                     .map(meta -> meta.getOrDefault("isMain", false))
                     .toList();
 
-            imageList = fileUploadService.saveFiles(img, isMainList);
+            imageList = fileUploadService.saveItemImages(img, isMainList);
         }
         Long itemKey = itemService.write(item, imageList);
 
