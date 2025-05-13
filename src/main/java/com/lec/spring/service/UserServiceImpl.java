@@ -186,8 +186,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateEmail(String newEmail, String userKey) {
-        // 유효성 검사가...필요할까?
-
         userRepository.updateEmail(newEmail, userKey);
     }
 }

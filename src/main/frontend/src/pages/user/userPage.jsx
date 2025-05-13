@@ -10,6 +10,7 @@ import LikeShow from "../side/LikeShow";
 import UserModify from "./userModify";
 import EditModal from "../../util/EditModal";
 import "../../css/pages/userPage.css";
+import LocationList from "../side/LocationList";
 
 const UserPage = () => {
 
@@ -31,9 +32,10 @@ const UserPage = () => {
     // 유저 신뢰도 -> 거래 리뷰의 좋아요, 싫어요에 따라 점수가 변동하는 값임
     const [ userScore, setUSerScore ] = useState(0);
 
-    // 사이드 페이지 ON | OFF
+    // 사이드 페이지 & 모달 ON | OFF
     const [ showLikeItem, setShowLikeItem ] = useState(false);
     const [ showModify, setShowModify] = useState(false);
+    const [ showLocation, setShowLocation ] = useState(false);
 
     const logginUserKey = user !== null ? user.userKey : null;
     const isOwnPage = userKey === logginUserKey;
@@ -113,9 +115,15 @@ const UserPage = () => {
                             <li onClick={() => showToast("준비 중인 서비스입니다. 빠른 시일 내에 제공해드릴게요!", "warning")}>
                                 계좌 관리
                             </li>
-                            <li>배송지 관리</li>
-                            <li>거래 후기</li>
-                            <li>탈퇴하기</li>
+                            <li onClick={() => setShowLocation(prev => !prev)}>
+                                배송지 관리
+                            </li>
+                            <li onClick={() => showToast("작성 예정!")}>
+                                거래 후기
+                            </li>
+                            <li onClick={() => showToast("작성 예정!")}>
+                                탈퇴하기
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -259,7 +267,6 @@ const UserPage = () => {
             <SidePage 
                 isOpen={showLikeItem} 
                 onClose={() => setShowLikeItem(false)}
-                className={"like"}
                 headerText={"내가 찜한 상품"}
                 content={
                     <LikeShow 
@@ -281,12 +288,11 @@ const UserPage = () => {
 
             {/* 배송지 관리 페이지 */}
             <SidePage 
-                isOpen={null}
-                onClose={() => {}}
-                className={""}
+                isOpen={showLocation}
+                onClose={() => {setShowLocation(false)}}
                 headerText={"배송지 관리"}
                 content={
-                    null
+                    <LocationList />
                 }
             />
 

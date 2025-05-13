@@ -1,6 +1,6 @@
 import "../css/util/sidePage.css";
 
-const SidePage = ({ className, isOpen, onClose, headerText, content }) => {
+const SidePage = ({ isOpen, onClose, headerText, content }) => {
     if (!isOpen) return null;
 
     return (
@@ -16,7 +16,7 @@ const SidePage = ({ className, isOpen, onClose, headerText, content }) => {
                 </label>
             </div>
             <div className="side-content-container">
-                <div className={`side-${className}`}>
+                <div className={`side`}>
                     {content}
                 </div>
             </div>

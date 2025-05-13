@@ -69,10 +69,12 @@ CREATE TABLE d1_like
 CREATE TABLE d1_location
 (
 	userKey varchar(20) NOT NULL,
-	itemKey int NOT NULL,
-	addrName varchar(300) NOT NULL,
-	placeName varchar(300) NOT NULL,
-	addrDetail varchar(100)
+	itemKey int,
+	useralias varchar(50) NOT NULL,
+	address varchar(300) NOT NULL,
+	zoneCode varchar(300) NOT NULL,
+	detail varchar(300),
+	label varchar(100) NOT NULL
 );
 
 

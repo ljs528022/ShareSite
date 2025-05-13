@@ -13,8 +13,13 @@ public interface LocationRepository {
     // Save Location
     int saveLocation(Location location);
 
+    // Delete Location
+    int deleteLocation(@Param("address")String address);
+
+    int checkSameLocation(@Param("address")String address, @Param("userKey")String userKey);
+
     // Find Location By UserKey
-    Location findLocationByUserKey(@Param("userKey")String userKey);
+    List<Location> findLocationByUserKey(@Param("userKey")String userKey);
 
     List<LocationDTO> findByUserKeyAndItemKey(@Param("userKey")String userKey,
                                               @Param("itemKey")Long itemKey);

@@ -119,7 +119,12 @@ const Header = () => {
                             }}>
                             {/* 로그인하면 유저 대표이미지로 변경 */}
                             {user ?
-                             <img src={`http://localhost:8093${user.userimg}`} alt={user.username} />
+                             <img src={
+                                user.userimg ?
+                                `http://localhost:8093${user.userimg}`
+                                :
+                                `http://localhost:8093/item-images/temp/userImgTemp.png`
+                            } alt={user.username} />
                              :
                              "로그인"}
                             </button>

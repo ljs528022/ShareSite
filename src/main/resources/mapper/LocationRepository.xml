@@ -7,15 +7,27 @@
     <resultMap id="mapLocation" type="com.lec.spring.domain.Location">
         <id column="userKey" property="userKey" />
         <result column="itemKey" property="itemKey" />
-        <result column="addrName" property="addrName" />
-        <result column="placeName" property="placeName" />
-        <result column="addrDetail" property="addrDetail" />
+        <result column="address" property="address" />
+        <result column="zoneCode" property="zoneCode" />
+        <result column="detail" property="detail" />
+        <result column="label" property="label" />
     </resultMap>
 
     <insert id="saveLocation" parameterType="com.lec.spring.domain.Location">
-        INSERT INTO d1_location (userKey, itemKey, addrName, placeName, addrDetail)
-        VALUES (#{userKey}, #{itemKey}, #{addrName}, #{placeName}, #{addrDetail})
+        INSERT INTO d1_location (userKey, itemKey, address, useralias, zoneCode, detail, label)
+        VALUES (#{userKey}, #{itemKey}, #{address}, #{useralias}, #{zoneCode}, #{detail}, #{label})
     </insert>
+
+    <delete id="deleteLocation" flushCache="true" parameterType="com.lec.spring.domain.Location">
+        DELETE FROM d1_location WHERE address = #{address}
+    </delete>
+
+    <select id="checkSameLocation" resultType="int" parameterType="String">
+        SELECT COUNT(*)
+        FROM d1_location
+        WHERE userKey = #{userKey}
+        AND address = #{address}
+    </select>
 
     <select id="findLocationByUserKey" resultType="com.lec.spring.domain.Location">
         SELECT * FROM d1_location WHERE userKey = #{userKey}

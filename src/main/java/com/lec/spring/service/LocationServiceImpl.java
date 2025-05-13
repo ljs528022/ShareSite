@@ -31,7 +31,17 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Location findLocationByUserKey(String userKey) {
+    public int deleteLocation(String address) {
+        return locationRepository.deleteLocation(address);
+    }
+
+    @Override
+    public boolean checkSameLocation(String address, String userKey) {
+        return locationRepository.checkSameLocation(address, userKey) > 0;
+    }
+
+    @Override
+    public List<Location> findLocationByUserKey(String userKey) {
         return locationRepository.findLocationByUserKey(userKey);
     }
 

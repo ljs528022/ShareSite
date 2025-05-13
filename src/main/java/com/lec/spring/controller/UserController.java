@@ -36,7 +36,6 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        System.out.println(">>>> POST /user/register hit!");
 
         // 필수값 확인
         if(request.getUsername() == null || request.getPassword() == null || request.getEmail() == null) {
@@ -90,7 +89,7 @@ public class UserController {
 
             if(existingUser == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("해당 유저를 찾으라 수 없습니다");
+                        .body("해당 유저를 찾을 수 없습니다");
             }
 
             existingUser.setUserKey(request.getUserKey());
@@ -129,6 +128,4 @@ public class UserController {
             return ResponseEntity.ok("비밀번호가 일치합니다!");
         }
     }
-
-
 }

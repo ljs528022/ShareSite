@@ -9,7 +9,11 @@ public interface LocationService {
 
     int saveLocation(Location location);
 
-    Location findLocationByUserKey(String userKey);
+    int deleteLocation(String address);
+
+    boolean checkSameLocation(String address, String userKey);
+
+    List<Location> findLocationByUserKey(String userKey);
 
     List<LocationDTO> findByUserKeyAndItemKey(String userKey, Long itemKey);
 }
