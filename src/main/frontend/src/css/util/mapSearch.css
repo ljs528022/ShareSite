@@ -34,20 +34,6 @@
     background-color: #AAA;
     border: 2px solid #777;
   }
-
-  .close {
-    position: relative;
-
-    padding: 3px 10px;
-
-    font-weight: bold;
-    color: white;
-
-    left: 94%;
-
-    border-radius: 5px;
-    background-color: red;
-  }
   
   .search-map {
     margin-top: 10px;

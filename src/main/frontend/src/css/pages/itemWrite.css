@@ -1,29 +1,26 @@
 .write-container {
     width: 100%;
     height: 100%;
-
-    margin: 0 auto;
 }
 
-.write-from {
+.write-form {
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
-    max-width: 1024px;
+    max-width: 700px;
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .form-row {
-    display: block;
-
-    text-align: center;
     align-items: center;
-
-    padding: 10px;
+    padding: 10px 30px;
 }
 
 /* 이미지 첨부 부분 */
 .input-img {
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .input-img label {
@@ -32,16 +29,11 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
-
     gap: 10px;
-
-    width: 90px;
-    height: 90px;
-
+    width: 70px;
+    height: 70px;
     border-radius: 10px;
-    border: 2px solid #777;
     background-color: rgb(235, 235, 235);
-
     cursor: pointer;
 }
 
@@ -60,8 +52,8 @@
 }
 
 .img-thumb {
-    width: 110px;
-    height: 110px;
+    width: 94px;
+    height: 94px;
     
     overflow: hidden;
     border-radius: 10px;
@@ -85,75 +77,63 @@
     object-fit: cover;
 }
 
-.img-thumb .badge {
-    position: relative;
-
-    bottom: 120px;
-    right: 36px;
+.badge {
+    position: absolute;
 
     background-color: #4caf50;
     color: white;
     font-size: 10px;
     font-weight: bold;
     padding: 4px 5px;
-    border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-left-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
-.img-thumb .empty {
-    position: relative;
-
+.empty {
+    position: absolute;
     opacity: 0;
-
     bottom: 120px;
     right: 36px;
     font-size: 10px;
     padding: 4px 5px;
 }
 
-.img-thumb .img-delete-btn {
-    position: relative;
-
-    bottom: 30px;
-    left: 76px;
-
-    font-size: 15px;
-    background-color: red;
+.img-delete-btn {
+    position: absolute;
+    background-color: #444;
     color: white;
-
-    padding: 0px 6px;
-    padding-bottom: 4px;
-    border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    font-size: 10px;
+    margin-left: 72px;
+    padding: 3.5px 8px;
+    border-radius: 20px;
 }
 
 /* 상품명 부분 */
 .input-subject input {
-    width: 260px;
+    width: 90%;
     padding-right: 15px;
 
     font-size: 13.5px;
-    font-weight: bold;
-
-    border: 2px solid #777;
+    font-weight: 500;
 }
 
 /* 상품 카테고리 부분 */
 .input-category {
-    position: relative;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
+    margin-left: 0;
     width: 410px;
 
     font-size: 15px;
 }
 
 .input-category label {
-    width: 300px;
+    width: initial;
     padding-bottom: 10px;
 
     margin: 0 auto;
+    margin-left: 0;
 
     text-align: left;
     font-size: 20px;
@@ -170,8 +150,7 @@
 
 .category-wrapper {
     display: flex;
-
-    justify-content: center;
+    justify-content: left;
 }
 
 .parent-category {
@@ -182,7 +161,7 @@
 
     padding: 20px 0px;
 
-    border: 2px solid #777;
+    border: 1.5px solid #777;
     border-radius: 10px;
     background-color: rgb(225, 225, 225);
 }
@@ -195,7 +174,7 @@
 
     padding: 20px 0px;
 
-    border: 2px solid #777;
+    border: 1.5px solid #777;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     background-color: rgb(235, 235, 235);
@@ -209,7 +188,7 @@
 
     padding: 20px 0px;
 
-    border: 2px solid #777;
+    border: 1.5px solid #777;
     border-left: none;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -223,21 +202,17 @@
 /* 가격 입력 부분 */
 .input-price {
     position: relative;
-
-    width: 300px;
-
     margin: 0 auto;
+    width: inherit;
 }
 
 .input-price input {
-    width: 260px;
+    width: 90%;
     padding-left: 30px;
     
     font-size: 13.5px;
-    font-weight: bold;
+    font-weight: 500;
     color: #777;
-
-    border: 2px solid #777;
 }
 
 .input-price-wrapper span {
@@ -249,7 +224,7 @@
 
     color: #777;
     font-size: 13.5px;
-    font-weight: bold;
+    font-weight: 500;
 
     z-index: 1;
 }
@@ -287,13 +262,13 @@
 .radio-group {
     display: flex;
     margin: 0 auto;
+    margin-left: 0;
 
     padding-right: 80px;
     width: 230px;
 }
 
 .radio-box {
-    position: relative;
     display: flex;
     cursor: pointer;
 }
@@ -304,14 +279,10 @@
 
 .radio-group span {
     width: 70px;
-    
     margin-top: 10px;
-    
     padding: 10px;
-
     text-align: center;
     font-size: 15px;
-
     color: #91B4FF;
     background-color: white;
     border: 2px solid #91B4FF;
@@ -330,7 +301,6 @@
 
 .input-purtype label {
     width: 300px;
-
     text-align: left;
     font-size: 20px;
 }
@@ -338,14 +308,13 @@
 /* 희망지역 부분 */
 .location-wrapper {
     position: relative;
-
     display: flex;
     flex-direction: column;
 }
 
 .location-wrapper label {
     margin: 0 auto;
-
+    margin-left: 0;
     width: 300px;
     text-align: left;
 
@@ -354,34 +323,32 @@
 
 .location-btn {
     display: flex;
-    flex-direction: row;
-
     width: 300px;
     height: 50px;
 
     margin: 0 auto;
-    
-    text-align: left;
-
+    margin-left: 0;
     padding: 10px;
+    text-align: left;
+    cursor: pointer;
 }
 
 .location-btn button {
-    padding: 10px 15px;
-
+    margin: 0;
     font-size: 15px;
     font-weight: bold;
-
+    width: 150px;
     color: white;
     background-color: #91B4FF;
     border: 2px solid #91B4FF;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .location-box {
-    position: absolute;
-    width: 700px;
-    margin: -7px 110px;
+    display: flex;
+    margin: 0;
+    margin-left: 20px;
 }
 
 .location-box ul {
@@ -390,34 +357,35 @@
     padding: 0px 10px;
     list-style: none;
     float: left;
+    align-items: center;
 
     gap: 10px;
 }
 
 .location-box li {
-    width: inherit;
-
+    flex-wrap: wrap;
+    width: initial;
     color: #777;
+    font-size: 15px;
     font-weight: bold;
     text-decoration: underline;
 }
 
 .location-box button {
-
     padding: 5px;
-
+    width: initial;
     color: #777;
     background-color: white;
     border: none;
+    cursor: pointer;
 }
 
 .item-submit {
-    position: fixed;
-    right: 150px;
-    top: 80%;
-    transform: translateY(-50%);
     width: 80px;
     padding: 10px;
+
+    margin: 0 auto;
+    margin-right: 50px;
 
     font-size: 16px;
     font-weight: bold;
@@ -427,7 +395,7 @@
 
     box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
     transition: background-color 0.3s ease;
-    z-index: 100;
+    cursor: pointer;
 }
 
 .item-submit:hover {

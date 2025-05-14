@@ -80,10 +80,10 @@ public class ItemController {
             for(LocationDTO locationDTO : locations) {
                 Location location = Location.builder()
                         .userKey(itemDTO.getUserKey())
+                        .itemKey(itemKey)
                         .address(locationDTO.getAddress())
+                        .useralias(locationDTO.getUseralias())
                         .zoneCode(locationDTO.getZoneCode())
-                        .detail(locationDTO.getDetail())
-                        .label(locationDTO.getLabel())
                         .build();
 
                 locationService.saveLocation(location);

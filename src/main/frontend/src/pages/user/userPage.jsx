@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../../services/UserContext";
 import { getData } from "../../services/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "../../util/ToastContext";
 import ItemCard from "../../components/itemCard";
 import EmptyBox from "../../components/EmptyBox";
@@ -18,6 +18,7 @@ const UserPage = () => {
     const { user } = useUser();
 
     const { showToast } = useToast();
+    const navigate = useNavigate();
 
     // 유저페이지 정보들
     const [ userInfo, setUserInfo ] = useState(null);
@@ -30,7 +31,7 @@ const UserPage = () => {
     const [ sortOption, setSortOption ] = useState("recent");
 
     // 유저 신뢰도 -> 거래 리뷰의 좋아요, 싫어요에 따라 점수가 변동하는 값임
-    const [ userScore, setUSerScore ] = useState(0);
+    const [ userScore, setUserScore ] = useState(0);
 
     // 사이드 페이지 & 모달 ON | OFF
     const [ showLikeItem, setShowLikeItem ] = useState(false);
@@ -190,7 +191,7 @@ const UserPage = () => {
                                     </p>
                                 </div>
                                 
-                                <button onClick={null}>
+                                <button onClick={isOwnPage ? () => navigate("/product/write") : ""}>
                                     {isOwnPage ?
                                     "등록하기"
                                     :

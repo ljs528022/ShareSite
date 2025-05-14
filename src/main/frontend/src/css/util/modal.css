@@ -71,6 +71,7 @@
     color: #777;
     border: 2px solid #777;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .modal-button-cancel:hover {
@@ -84,6 +85,7 @@
     color: #7badff;
     border: 2px solid #7badff;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .modal-button-confirm:hover {

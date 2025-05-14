@@ -1,9 +1,7 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.DTO.ItemDTO;
 import com.lec.spring.DTO.LocationDTO;
 import com.lec.spring.domain.Location;
-import com.lec.spring.domain.User;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.LocationService;
 import com.lec.spring.service.UserService;
@@ -11,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5178")

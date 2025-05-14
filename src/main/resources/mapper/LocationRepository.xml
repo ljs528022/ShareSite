@@ -30,7 +30,7 @@
     </select>
 
     <select id="findLocationByUserKey" resultType="com.lec.spring.domain.Location">
-        SELECT * FROM d1_location WHERE userKey = #{userKey}
+        SELECT * FROM d1_location WHERE userKey = #{userKey} AND itemKey IS NULL
     </select>
 
     <select id="findByUserKeyAndItemKey" resultMap="mapLocation">

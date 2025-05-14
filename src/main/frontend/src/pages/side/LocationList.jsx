@@ -62,6 +62,12 @@ const LocationList = () => {
         if(!locs || locs.length === 0) return;
 
         if(locs.length === 1) return (
+            <>
+            <button 
+                type="button" 
+                className="modify-btn"
+                onClick={() => setModify(prev => !prev)}
+            >✐ 편집</button>
             <div className="location-list-box">
                 <label>{locs[0].label}</label>
                 <p>{locs[0].useralias}</p>
@@ -71,12 +77,19 @@ const LocationList = () => {
                 <button onClick={() => deleteLocation(locs[0])}>삭제</button>
                 }
             </div>
+            </>
         );
 
         if(locs.length > 1) {
             return (
                 <>
                 {locs.map((loc, index) => (
+                <>
+                <button 
+                    type="button" 
+                    className="modify-btn"
+                    onClick={() => setModify(prev => !prev)}
+                >✐ 편집</button>
                 <div key={index} className="location-list-box">
                     <label>{loc.label}</label>
                     <p>{loc.useralias}</p>
@@ -86,6 +99,7 @@ const LocationList = () => {
                     <button onClick={() => deleteLocation(loc)}>삭제</button>
                     }
                 </div>
+                </>
                 ))}
                 </>
             )
@@ -229,7 +243,7 @@ const LocationList = () => {
                 >완료</button>
             </div>
             <button 
-                className="back-btn"
+                className="location-back-btn"
                 onClick={() => setShowAddLocation(false)}
             >돌아가기</button>
         </div>
@@ -237,11 +251,6 @@ const LocationList = () => {
         <div className="location-list-wrapper">
             {(userLocations && !showPostCode) && 
             <>
-                <button 
-                    type="button" 
-                    className="modify-btn"
-                    onClick={() => setModify(prev => !prev)}
-                >✐ 편집</button>
                 {fetchUserLocation(userLocations)}
             </>
             }    
@@ -251,7 +260,7 @@ const LocationList = () => {
             <>
                 <SearchPostCode onComplete={handleComplete} />
                 <button 
-                    className="back-btn"
+                    className="location-back-btn"
                     onClick={() => setShowPostCode(false)}
                 >돌아가기</button>
             </>

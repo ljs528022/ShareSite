@@ -74,7 +74,7 @@ CREATE TABLE d1_location
 	address varchar(300) NOT NULL,
 	zoneCode varchar(300) NOT NULL,
 	detail varchar(300),
-	label varchar(100) NOT NULL
+	label varchar(100)
 );
 
 

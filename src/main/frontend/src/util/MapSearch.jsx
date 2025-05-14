@@ -161,7 +161,6 @@ const MapSearch = ({ isOpen, onClose, itemData, setItemData }) => {
                     </li>
                 ))}
             </ul>
-            <button className="close" onClick={onClose}>닫기</button>
         </div>
     )
 }

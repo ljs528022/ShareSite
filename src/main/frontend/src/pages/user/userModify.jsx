@@ -83,7 +83,7 @@ const UserModify = ({ user }) => {
 
     useEffect(() => {
         if(userInfo.userimg === '') {
-            setModifyImg("/item-images/temp/userImgTemp.png");
+            setModifyImg("http://localhost:8093/item-images/temp/userImgTemp.png");
         } else if(typeof userInfo.userimg === "string" && userInfo.userimg.includes("/user-images")) {
             setModifyImg(`http://localhost:8093${userInfo.userimg}`);
         } else if(typeof userInfo.userimg === "object") {

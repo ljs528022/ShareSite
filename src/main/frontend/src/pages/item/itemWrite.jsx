@@ -1,11 +1,13 @@
 import "../../css/pages/itemWrite.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { getCategory } from "../../services/getCategory";
 import { useUser } from "../../services/UserContext";
 import { useToast } from "../../util/ToastContext";
 import { postData } from "../../services/api";
-import MapSearch from "../../util/MapSearch";
 import { useNavigate } from "react-router-dom";
+import TextEditor from "../../util/TextEditor";
+import SidePage from "../../util/sidePage";
+import SearchPostCode from "../../util/SearchPostCode";
 
 
 const ItemWrite = () => {
@@ -32,7 +34,7 @@ const ItemWrite = () => {
     const [ formattedPrice, setFormattedPrice ] = useState(0);
     const [ selectedCate, setSelectedCate ] = useState(null);
     const [ pcateSelected, setPcateSelected ] = useState(false);
-    const [ mapSearchOpen, setMapSearchOpen ] = useState(false);
+    const [ addLocation, setAddLocation ] = useState(false);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -51,8 +53,7 @@ const ItemWrite = () => {
     const handleInput = (e) => {
         const { id, value } = e.target;
         setItemData(prev => ({ ...prev, [id]: value }));
-    }
-
+    };
 
     // 이미지 삽입 부분
     const handleImageChange = (e) => {
@@ -136,11 +137,40 @@ const ItemWrite = () => {
         }
     }
 
+    // 가격
     const handlePriceChange = (e) => {
         const rawValue = e.target.value.replace(/[^0-9]/g, "");
         const formatted = Number(rawValue).toLocaleString("ko-KR");
         setItemData(prev => ({ ...prev, price: rawValue}));
         setFormattedPrice(formatted);
+    }
+
+    // 상품 정보
+    const handleEditorChange = (markdown) => {
+        setItemData(prev => ({
+            ...prev,
+            content: markdown
+        }));
+    };
+
+    // 희망 거래 지역
+    const handleLocationChange = ( newLocation) => {
+        if (itemData.location.length >= 3) {
+            alert("최대 3개까지 등록 가능합니다.");
+            setAddLocation(false);
+            return;
+        }
+
+        setItemData(prev => ({
+            ...prev,
+            location: [...prev.location, {
+                userKey: user.userKey,
+                useralias: user.useralias,
+                address: newLocation.address,
+                zoneCode: newLocation.zoneCode,
+            }]
+        }))
+        setAddLocation(false);
     }
  
     // Submit Part
@@ -200,7 +230,7 @@ const ItemWrite = () => {
         <>
         <main>
             <div className="write-container">
-                <form className="write-from" onSubmit={handleSubmit}>
+                <form className="write-form" onSubmit={handleSubmit}>
                     {/* 이미지 첨부 */}
                     <div className="form-row">
                         <div className="input-img">
@@ -218,11 +248,11 @@ const ItemWrite = () => {
                                         className={`img-thumb${img.isMain ? " main" : ""}`}
                                         onClick={() => setMainImage(index)}
                                     >
+                                        {img.isMain ? <span className="badge">MAIN</span> : <span className="empty">임시데이터</span>}
+                                        <span className="img-delete-btn" onClick={() => handleDeleteImage(index)}>X</span>
                                         <img
                                             src={URL.createObjectURL(img.file)}
                                             alt={`preview-${index}`} />
-                                        <span className="img-delete-btn" onClick={() => handleDeleteImage(index)}>x</span>
-                                        {img.isMain ? <span className="badge">대표이미지</span> : <span className="empty">임시데이터</span>}
                                     </div>
                                 ))}
                             </div>
@@ -283,7 +313,7 @@ const ItemWrite = () => {
                     {/* 상품 설명 란 */}
                     <div className="form-row">
                         <div className="input-content">
-                            <textarea id="content" onChange={handleInput}></textarea>
+                            <TextEditor onChange={handleEditorChange} />
                         </div>
                     </div>
                     {/* 상품 상태 선택란 */}
@@ -329,35 +359,38 @@ const ItemWrite = () => {
                         <div className="location-wrapper">
                             <label>희망지역</label>
                             <div className="location-btn">
-                                <button type="button" onClick={() => setMapSearchOpen(true)}>
-                                    + 추가하기
+                                <button type="button" onClick={() => setAddLocation(prev => !prev)}>
+                                    {addLocation ? "닫기" : "+ 추가하기"}
                                 </button>
+                            </div>
                                 <div className="location-box">
                                     <ul>
-                                        {itemData.location.map((loc) => (
-                                            <li key={loc.id}>
-                                                {loc.placeName}
-                                                <button
+                                        {itemData.location.map((loc, index) => (
+                                            <>
+                                            <li key={loc.id || index}>
+                                                {loc.address}
+                                            </li>
+                                            <button
                                                 type="button"
                                                 onClick={() =>
                                                     setItemData(prev => ({
                                                         ...prev,
-                                                        location: prev.location.filter(item => item.id !== loc.id)
-                                                    }))}
-                                                >x</button>
-                                            </li>
+                                                        location: prev.location.filter((_, i) => i !== index)
+                                                }))}
+                                            >x</button>
+                                            </>
                                         ))}
                                     </ul>
                                 </div>
-                            </div>
                         </div>
                     </div> 
-                    
-                    <MapSearch
-                        isOpen={mapSearchOpen}
-                        onClose={() => setMapSearchOpen(false)}
-                        itemData={itemData}
-                        setItemData={setItemData}
+                    <SidePage 
+                        isOpen={addLocation}
+                        onClose={() => {setAddLocation(false)}}
+                        headerText={"희망 거래 지역 추가"}
+                        content={
+                        <SearchPostCode onComplete={handleLocationChange} />
+                        }
                     />
 
                     {/* 등록버튼 */}

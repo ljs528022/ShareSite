@@ -182,7 +182,7 @@ const ItemDetail = () => {
     }
 
     const renderLocations = ( locs ) => {
-        const locations = locs.map((loc) => loc.placeName);
+        const locations = locs.map((loc) => loc.address);
 
         if(locations.length <= 0) return;
 
