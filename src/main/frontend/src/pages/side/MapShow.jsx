@@ -21,17 +21,36 @@ const MapShow = ({ isOpen, className, data }) => {
 
     useEffect(() => {
         if (data && kakaoLoaded && isOpen && mapInstance.current) {
-            const ps = new window.kakao.maps.services.Places();
-        ps.keywordSearch(data, (result, status) => {
-            if (status === window.kakao.maps.services.Status.OK) {
-                displayMarkers(result);
-                if (!locationInfo || locationInfo.id !== result[0].id) {
-                setLocationInfo(result[0]);
-                }
+            const geocoder = new window.kakao.maps.services.Geocoder();
+            geocoder.addressSearch(data, (result, status) => {
+                if(status === window.kakao.maps.services.Status.OK) {
+                    const { x, y, address_name } = result[0];
+                    const latLng = new window.kakao.maps.LatLng(y, x);
 
-                const latLng = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-                mapInstance.current.setCenter(latLng);
-            }})
+                    mapInstance.current.setCenter(latLng);
+                    
+                    const marker = new window.kakao.maps.Marker({
+                        map: mapInstance.current,
+                        position: latLng,
+                    });
+
+                    const infowindow = new window.kakao.maps.InfoWindow({
+                        content: `<div style="padding:5px; font-size:12px;">${address_name}</div>`,
+                    });
+
+                    marker.addListener("click", () => {
+                        infowindow.open(mapInstance.current, marker);
+                        setTimeout(() => {
+                            infowindow.close();
+                        }, 2000);
+                    });
+
+                    markersRef.current = marker;
+
+                    displayMarkers([result[0]]);
+                    setLocationInfo(result[0]);
+                }
+            })
         };
     }, [data, kakaoLoaded, isOpen]);
     
