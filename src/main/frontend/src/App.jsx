@@ -10,6 +10,7 @@ import ItemWrite from './pages/item/itemWrite';
 import ItemDetail from './pages/item/itemDetail';
 import ItemSearch from './pages/item/itemSearch';
 import UserPage from './pages/user/userPage';
+import ItemModify from './pages/item/itemModify';
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
             {/* Item Page */}
             <Route path='/product/write' Component={ItemWrite}></Route>
             <Route path='/product/:itemKey' Component={ItemDetail}></Route>
-            <Route path='/product/modify/:itemKey' Component={null}></Route>
+            <Route path='/product/modify/:itemKey' Component={ItemModify}></Route>
 
             {/* Item Search */}
             <Route path='/search' Component={ItemSearch}></Route>

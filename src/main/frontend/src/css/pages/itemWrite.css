@@ -401,3 +401,26 @@
 .item-submit:hover {
     background-color: #7a81ff;
 }
+
+.item-delete {
+    width: 80px;
+    padding: 10px;
+
+    margin: 0 auto;
+    margin-right: 50px;
+    margin-bottom: 20px;
+
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    background-color: #ee0000;
+
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}   
+
+.item-delete:hover {
+    background-color: #be0000;
+}

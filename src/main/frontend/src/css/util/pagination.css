@@ -37,6 +37,8 @@
     border-radius: 5px;
     font-size: 20px;
     font-weight: bold;
+
+    cursor: pointer;
 }
 
 .paginatonBtn:hover {
@@ -98,11 +100,13 @@
     border-radius: 5px;
     font-size: 20px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .img_paginatonBtn:hover {
     background-color: #3477de;
     opacity: 0.8;
+    cursor: pointer;
 }
 
 .img_buttonSelected {

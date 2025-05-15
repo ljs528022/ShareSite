@@ -18,7 +18,7 @@ const ItemCard = ({ item, style }) => {
                 <div className={`${style}_CardBody`}>
                     <p className={`${style}_Card_subject`}>{item.subject}</p>                                    
                     <p className={`${style}_Card_price`}>
-                        {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
+                    {item.price === 0 ? "무료" : item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원"}
                     </p>
                     {(style == "Normal" || style == "Side") &&
                     <div className={`${style}_CardsubBody`}>
