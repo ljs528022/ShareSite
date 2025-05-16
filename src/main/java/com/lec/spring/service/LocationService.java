@@ -9,6 +9,8 @@ public interface LocationService {
 
     int saveLocation(Location location);
 
+    void updateLocation(Long itemKey, String userKey, List<LocationDTO> location);
+
     int deleteLocation(String address);
 
     boolean checkSameLocation(String address, String userKey);
@@ -16,4 +18,6 @@ public interface LocationService {
     List<Location> findLocationByUserKey(String userKey);
 
     List<LocationDTO> findByUserKeyAndItemKey(String userKey, Long itemKey);
+
+
 }

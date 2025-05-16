@@ -127,7 +127,7 @@ const ItemDetail = () => {
     }, [itemKey]);
 
     const renderImage = ( imgs ) => {
-        const mainImage = imgs.find(img => img.main);
+        const mainImage = imgs.find(img => img.isMain);
         const images = mainImage ? [mainImage, ...imgs.filter(img => img !== mainImage)] : [...imgs];
         
         const totalPage = images.length;

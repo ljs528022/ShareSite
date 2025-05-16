@@ -14,6 +14,6 @@ public class ItemImage {
     private Long imageKey;      // Image's PK
     private Long itemKey;       // Item's PK (FK)
     private String imgUrl;      // Image's URL
-    private boolean isMain;     // is Thumbnail ? true or false
+    private Boolean isMain;     // is Thumbnail ? true or false
 
 }

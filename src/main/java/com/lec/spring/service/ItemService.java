@@ -56,8 +56,4 @@ public interface ItemService {
     int delete(Long itemKey);
 
     void incViewCnt(Long itemKey);
-
-
-
-
 }

@@ -6,10 +6,7 @@ import com.lec.spring.domain.Item;
 import com.lec.spring.domain.ItemImage;
 import com.lec.spring.domain.Location;
 import com.lec.spring.domain.User;
-import com.lec.spring.repository.CategoryRepository;
-import com.lec.spring.repository.ItemRepository;
-import com.lec.spring.repository.LocationRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.repository.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,6 +28,7 @@ public class ItemServiceImpl implements ItemService {
 
     private UserRepository userRepository;
     private ItemRepository itemRepository;
+    private ItemImageRepository itemImageRepository;
     private CategoryRepository categoryRepository;
     private LocationRepository locationRepository;
 
@@ -38,6 +36,7 @@ public class ItemServiceImpl implements ItemService {
     public ItemServiceImpl(SqlSession sqlSession) {
         this.userRepository = sqlSession.getMapper(UserRepository.class);
         this.itemRepository = sqlSession.getMapper(ItemRepository.class);
+        this.itemImageRepository = sqlSession.getMapper(ItemImageRepository.class);
         this.categoryRepository = sqlSession.getMapper(CategoryRepository.class);
         this.locationRepository = sqlSession.getMapper(LocationRepository.class);
 
@@ -126,7 +125,7 @@ public class ItemServiceImpl implements ItemService {
             Long itemKey = item.getItemKey();
             for(ItemImage image : imageList) {
                 image.setItemKey(itemKey);
-                result = itemRepository.insertImage(image);
+                result = itemImageRepository.insert(image);
             }
         }
         return item.getItemKey();
@@ -142,12 +141,11 @@ public class ItemServiceImpl implements ItemService {
     public ItemDTO detail(Long itemKey) {
         Item item = itemRepository.findItemByItemKey(itemKey);
         List<LocationDTO> locations = locationRepository.findByUserKeyAndItemKey(item.getUserKey(), itemKey);
-        List<ItemImage> images = itemRepository.findImgByItemKey(itemKey);
+        List<ItemImage> images = itemImageRepository.findByItemKey(itemKey);
 
         // 판매자 정보 가져오기
         String userKey = item.getUserKey();
         String useralias = userRepository.findByUserKey(userKey).getUseralias();
-
 
         // ItemDTO 로 정보 등록
         ItemDTO itemInfo = new ItemDTO();
@@ -198,8 +196,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-
-    // 불러온 상품들의 거래 지역, 이미지를 불러오는 공통 로직
+    // 불러온 상품 들의 거래 지역, 이미지를 불러오는 공통 로직
     private void loadItemsLocationAndImage(List<ItemDTO> items) {
         if(items.isEmpty()) return;
 
@@ -207,7 +204,7 @@ public class ItemServiceImpl implements ItemService {
 
         Map<Long, List<LocationDTO>> locationMap = locationRepository.findLocationsByItemKeys(itemKeys)
                 .stream().collect(Collectors.groupingBy(LocationDTO::getItemKey));
-        Map<Long, List<ItemImage>> imageMap = itemRepository.findImagesByItemKeys(itemKeys)
+        Map<Long, List<ItemImage>> imageMap = itemImageRepository.findImagesByItemKeys(itemKeys)
                 .stream().collect(Collectors.groupingBy(ItemImage::getItemKey));
 
         for(ItemDTO item: items) {

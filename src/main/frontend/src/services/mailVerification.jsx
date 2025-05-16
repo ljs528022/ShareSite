@@ -94,17 +94,17 @@ export default function MailVerification({ email, onVerify, style = "" }) {
             <button className={`${style}side-btn`} type="button" onClick={handleSendCode}>{loading ? "요청중..." : "메일인증"}</button>
             {emailVerification.sent && (
                 <>
-                    <input id="mailChk" type="text" placeholder="인증번호 입력" autoComplete="off" onChange={handleCodeChange}/>
-                    {!emailVerification.verified && (
-                        <p id="timer">{formatTime(emailVerification.secondsLeft)}</p>
+                    <input className={`${style}mailChk`} type="text" placeholder="인증번호 입력" autoComplete="off" onChange={handleCodeChange}/>
+                    {!emailVerification.verified && !emailVerification.expired && (
+                        <p className={`${style}timer`}>{formatTime(emailVerification.secondsLeft)}</p>
                     )}
                 </>
             )}
-            {emailVerification.sent && emailVerification.expired && !emailVerification.verified && (
-                <p id="timeOut">인증 시간이 만료되었습니다. 다시 요청해주세요.</p>
+            {emailVerification.sent && emailVerification.expired && (
+                <p className={`${style}timeOut`}>인증 시간이 만료되었습니다. 다시 요청해주세요.</p>
             )}
-            {emailVerification.sent && emailVerification.verified && (
-                <p id="verify-success">인증이 완료되었습니다.</p>
+            {emailVerification.sent && !emailVerification.expired && emailVerification.verified && (
+                <p className={`${style}verify-success`}>인증이 완료되었습니다</p>
             )}
         </>
     )

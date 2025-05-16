@@ -202,7 +202,7 @@
     justify-content: right;
 }
 
-.side-btn {
+.mail-verify-side-btn {
     grid-row: 1;
     grid-column: 3;
     position: relative;
@@ -220,7 +220,7 @@
     cursor: pointer;
 }
 
-#mailChk {
+.mail-verify-mailChk {
     grid-row: 1;
     grid-column: 2;
     margin: 0 auto;
@@ -231,7 +231,7 @@
     left: 0;
 }
 
-#timer {
+.mail-verify-timer {
     grid-row: 1;
     grid-column: 1;
     display: flex;
@@ -239,11 +239,12 @@
     margin: 0px 10px;
     margin-top: 10px;
     width: initial;
+    color: red;
     top: 0;
     left: 0;
 }
 
-#timeOut {
+.mail-verify-timeOut {
     grid-row: 2;
     grid-column: span 3;
     display: flex;
@@ -251,13 +252,13 @@
     justify-content: right;
     margin: 0;
     margin-top: 5px;
-
+    color: red;
     width: initial;
     top: 0;
     left: 0;
 }
 
-#verify-success {
+.mail-verify-verify-success {
     grid-row: 2;
     grid-column: span 3;
     display: flex;
@@ -265,7 +266,7 @@
     justify-content: right;
     margin: 0;
     margin-top: 5px;
-
+    color: green;
     width: initial;
     top: 0;
     left: 0;

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.ItemImageRepository">
+
+    <insert id="insert" flushCache="true" parameterType="com.lec.spring.domain.ItemImage"
+            useGeneratedKeys="true" keyColumn="imageKey" keyProperty="imageKey">
+        INSERT INTO d1_item_image (itemKey, imgUrl, isMain)
+        VALUES (#{itemKey}, #{imgUrl}, #{isMain})
+    </insert>
+
+    <select id="findByItemKey" resultType="com.lec.spring.domain.ItemImage">
+        SELECT *
+        FROM d1_item_image
+        WHERE itemKey = #{itemKey}
+    </select>
+
+    <select id="findImagesByItemKeys" parameterType="list" resultType="com.lec.spring.domain.ItemImage">
+        SELECT *
+        FROM d1_item_image
+        WHERE itemKey IN
+        <foreach collection="list" item="key" open="(" close=")" separator=",">
+            #{key}
+        </foreach>
+    </select>
+
+    <select id="findByUrl" resultType="com.lec.spring.domain.ItemImage">
+        SELECT *
+        FROM d1_item_image
+        WHERE imgUrl = #{imgUrl}
+    </select>
+
+    <update id="updateIsMain" flushCache="true">
+        UPDATE d1_item_image
+        SET isMain = #{isMain}
+        WHERE imgUrl = #{imgUrl}
+    </update>
+
+    <delete id="deleteImagesByUrls">
+        DELETE FROM d1_item_image
+        WHERE imgUrl IN
+        <foreach collection="imgUrls" item="url" open="(" separator="," close=")">
+            #{url}
+        </foreach>
+    </delete>
+</mapper>

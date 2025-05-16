@@ -16,9 +16,6 @@ public interface ItemRepository {
     // Write Item
     int write(Item item);
 
-    // Write Item's Imgs
-    int insertImage(ItemImage itemImages);
-
     // Find All Item
     List<Item> findAllItem();
 
@@ -51,9 +48,6 @@ public interface ItemRepository {
 
     // Find By UserKey
     List<ItemDTO> findByUserKey(@Param("userKey")String userKey);
-
-    // Find Img By ItemKey
-    List<ItemImage> findImgByItemKey(@Param("itemKey")Long itemKey);
 
     List<ItemImage> findImagesByItemKeys(List<Long> itemKeys);
 

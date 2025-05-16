@@ -18,6 +18,22 @@
         VALUES (#{userKey}, #{itemKey}, #{address}, #{useralias}, #{zoneCode}, #{detail}, #{label})
     </insert>
 
+    <insert id="insertAll" parameterType="list">
+        DELETE FROM d1_location
+        WHERE (userKey, itemKey, useralias, address, zoneCode) IN
+        <foreach collection="list" item="loc" open="(" separator="," close=")">
+            (#{loc.userKey}, #{loc.itemKey}, #{loc.useralias}, #{loc.address}, #{loc.zoneCode})
+        </foreach>
+    </insert>
+
+    <delete id="deleteAll" parameterType="list">
+        INSERT INTO d1_location (userKey, itemKey, useralias, address, zoneCode)
+        VALUES
+        <foreach collection="list" item="loc" separator=",">
+            (#{loc.userKey}, #{loc.itemKey}, #{loc.useralias}, #{loc.address}, #{loc.zoneCode})
+        </foreach>
+    </delete>
+
     <delete id="deleteLocation" flushCache="true" parameterType="com.lec.spring.domain.Location">
         DELETE FROM d1_location WHERE address = #{address}
     </delete>
@@ -35,6 +51,10 @@
 
     <select id="findByUserKeyAndItemKey" resultMap="mapLocation">
         SELECT * FROM d1_location WHERE userKey = #{userKey} AND itemKey = #{itemKey}
+    </select>
+
+    <select id="findLocationByUserKeyAndItemKey" resultType="com.lec.spring.domain.Location">
+        SELECT * FROM d1_location WHERE userKey = #{userKey} AND itemKey = #{itemKey} AND address = #{address}
     </select>
     
     <select id="findLocationsByItemKeys" parameterType="list" resultType="com.lec.spring.DTO.LocationDTO">

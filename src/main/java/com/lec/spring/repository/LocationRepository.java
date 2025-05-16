@@ -13,6 +13,10 @@ public interface LocationRepository {
     // Save Location
     int saveLocation(Location location);
 
+    void insertAll(List<LocationDTO> locationDTO);
+
+    void deleteAll(List<LocationDTO> locationDTO);
+
     // Delete Location
     int deleteLocation(@Param("address")String address);
 

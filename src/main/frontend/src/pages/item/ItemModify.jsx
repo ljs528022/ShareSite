@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { deleteData } from "../../services/api";
+import { deleteData, postData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";
 import { useUser } from "../../services/UserContext";
 import TextEditor from "../../util/TextEditor";
@@ -177,13 +177,63 @@ const ItemModify = () => {
         }
     }
 
-    console.log(modifiedItem.img);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if(!modifiedItem.subject || !modifiedItem.content || !modifiedItem.price || !modifiedItem.cateKey || !modifiedItem.itemtype) {
+            showToast("입력되지 않은 항목이 있는거 같습니다. 확인해주세요!", "error");
+            return;
+        }
 
-    }
+        try {
+            const itemPart = {
+                userKey: modifiedItem.userKey,
+                cateKey: modifiedItem.cateKey,
+                subject: modifiedItem.subject,
+                content: modifiedItem.content,
+                price: modifiedItem.price,
+                itemtype: modifiedItem.itemtype,
+                purtype: modifiedItem.purtype,
+                locations: modifiedItem.location,
+            }
+
+            const formData = new FormData();
+            formData.append("item", new Blob([JSON.stringify(itemPart)], { type: "application/json" }));
+
+            if(modifiedItem.img.length > 0) {
+                modifiedItem.img.forEach((img) => {
+                    if(img.file) {
+                        formData.append("images", img.file);
+                    }
+                });
+
+                const existingImageUrls = modifiedItem.img
+                .filter(img => !img.file)
+                .map(img => img.imgUrl);
+
+                if(existingImageUrls.length > 0) {
+                    formData.append("existingImages", new Blob([JSON.stringify(existingImageUrls)], { type:  "application/json" }));
+                }
+                
+                const imgMeta = modifiedItem.img.map(img => ({ isMain: img.main }));
+                formData.append("imgMeta", new Blob([JSON.stringify(imgMeta)], { type:  "application/json" }));
+            }
+
+            const token = sessionStorage.getItem("token");
+            const response = await postData(`/product/modify/${itemKey}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            if(response.status === 200) {
+                showToast("입력하신 대로 상품이 수정되었습니다!", "success");
+                navigate(`/product/${itemKey}`);
+            }
+        } catch {
+            showToast("상품 수정에 실패했습니다...", "error");
+        }
+    };
 
     if(!itemKey && !item) {
         showToast("해당 상품이 존재하지 않습니다!", "error");
@@ -209,7 +259,7 @@ const ItemModify = () => {
                             <div className="img-box">
                                 {modifiedItem.img.map((img, index) => (
                                     <div
-                                        key={index}
+                                        key={img.id || index}
                                         className={`img-thumb${img.main ? " main" : ""}`}
                                         onClick={() => setMainImage(index)}
                                     >
@@ -333,16 +383,16 @@ const ItemModify = () => {
                                         {modifiedItem.location.map((loc, index) => (
                                             <>
                                             <li key={loc.id || index}>
-                                                {loc.address}
+                                            {loc.address}
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        setModifiedItem(prev => ({
+                                                            ...prev,
+                                                            location: prev.location.filter((_, i) => i !== index)
+                                                    }))}
+                                                >x</button>
                                             </li>
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    setModifiedItem(prev => ({
-                                                        ...prev,
-                                                        location: prev.location.filter((_, i) => i !== index)
-                                                }))}
-                                            >x</button>
                                             </>
                                         ))}
                                     </ul>

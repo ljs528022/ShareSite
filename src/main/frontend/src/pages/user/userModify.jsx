@@ -378,7 +378,7 @@ const UserModify = ({ user }) => {
                 </div>
                 <div className="mail-verify">
                     {!sameEmail ?
-                    <MailVerification email={newEmail.email} onVerify={handleEmailVerify} />
+                    <MailVerification email={newEmail.email} onVerify={handleEmailVerify} style={"mail-verify-"}/>
                     :
                     <span className="error-email">동일한 이메일 입니다!</span>
                     }

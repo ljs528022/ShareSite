@@ -55,13 +55,6 @@
         <result column="viewcnt" property="viewcnt" />
     </resultMap>
 
-    <resultMap id="mapItemImage" type="com.lec.spring.domain.ItemImage">
-        <id column="imageKey" property="imageKey" />
-        <result column="itemKey" property="itemKey"  />
-        <result column="imgUrl" property="imgUrl"  />
-        <result column="isMain" property="isMain"  />
-    </resultMap>
-
     <resultMap id="mapLocation" type="com.lec.spring.domain.Location">
         <id column="userKey" property="userKey" />
         <result column="itemKey" property="itemKey" />
@@ -81,12 +74,6 @@
         (userKey, cateKey, subject, content, price, itemtype, purtype, tradestatus, writeDate, viewcnt)
         VALUES
         (#{userKey}, #{cateKey}, #{subject}, #{content}, #{price}, #{itemtype}, #{purtype}, #{tradestatus}, #{writeDate}, #{viewcnt})
-    </insert>
-
-    <insert id="insertImage" flushCache="true" parameterType="com.lec.spring.domain.ItemImage"
-            useGeneratedKeys="true" keyColumn="imageKey" keyProperty="imageKey">
-        INSERT INTO d1_item_image (itemKey, imgUrl, isMain)
-        VALUES (#{itemKey}, #{imgUrl}, #{isMain})
     </insert>
 
     <update id="chTradeState" flushCache="true">
@@ -205,20 +192,5 @@
         SELECT *
         FROM d1_item
         WHERE userKey = #{userKey}
-    </select>
-
-    <select id="findImgByItemKey" resultMap="mapItemImage">
-        SELECT *
-        FROM d1_item_image
-        WHERE itemKey = #{itemKey}
-    </select>
-
-    <select id="findImagesByItemKeys" parameterType="list" resultType="com.lec.spring.domain.ItemImage">
-        SELECT *
-        FROM d1_item_image
-        WHERE itemKey IN
-        <foreach collection="list" item="key" open="(" close=")" separator=",">
-            #{key}
-        </foreach>
     </select>
 </mapper>

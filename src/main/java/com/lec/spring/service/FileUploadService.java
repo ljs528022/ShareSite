@@ -8,6 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,5 +83,21 @@ public class FileUploadService {
         }
 
         return userImagePath;
+    }
+
+    public void deleteFilesByUrls(List<String> imgUrls) {
+        if(imgUrls == null || imgUrls.isEmpty()) return;
+
+        for(String url: imgUrls) {
+            try {
+                String relativePath = url.startsWith("/") ? url.substring(1) : url;
+                Path filePath = Paths.get(uploadDir, relativePath);
+
+                Files.deleteIfExists(filePath);
+            } catch (IOException e) {
+                System.err.println("파일 삭제 실패: " + url);
+                e.printStackTrace();
+            }
+        }
     }
 }

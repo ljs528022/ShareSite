@@ -2,15 +2,13 @@ package com.lec.spring.service;
 
 import com.lec.spring.DTO.LocationDTO;
 import com.lec.spring.domain.Location;
-import com.lec.spring.domain.User;
 import com.lec.spring.repository.LocationRepository;
-import com.lec.spring.repository.UserRepository;
-import jakarta.persistence.PreUpdate;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -31,6 +29,31 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    public void updateLocation(Long itemKey, String userKey, List<LocationDTO> location) {
+        List<LocationDTO> existing = locationRepository.findByUserKeyAndItemKey(userKey, itemKey);
+
+        List<LocationDTO> incoming = location.stream()
+                .map(dto -> LocationDTO.builder()
+                        .userKey(userKey)
+                        .itemKey(itemKey)
+                        .useralias(dto.getUseralias())
+                        .address(dto.getAddress())
+                        .zoneCode(dto.getZoneCode())
+                        .build())
+                .toList();
+
+        List<LocationDTO> toDelete = existing.stream()
+                .filter(ex -> incoming.stream().noneMatch(in -> isSameLocation(ex, in)))
+                .toList();
+
+        List<LocationDTO> toInsert = incoming.stream()
+                .filter(in -> existing.stream().noneMatch(ex -> isSameLocation(ex, in)))
+                .toList();
+
+        if(!toDelete.isEmpty()) locationRepository.deleteAll(toDelete);
+        if(!toInsert.isEmpty()) locationRepository.insertAll(toInsert);
+    }
+
     public int deleteLocation(String address) {
         return locationRepository.deleteLocation(address);
     }
@@ -48,5 +71,13 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public List<LocationDTO> findByUserKeyAndItemKey(String userKey, Long itemKey) {
         return locationRepository.findByUserKeyAndItemKey(userKey, itemKey);
+    }
+
+    // 장소 비교를 위한 로직
+    private boolean isSameLocation(LocationDTO a, LocationDTO b) {
+        return a.getItemKey().equals(b.getItemKey())
+                && a.getAddress().equals(b.getAddress())
+                && a.getZoneCode().equals(b.getZoneCode())
+                && Objects.equals(a.getUseralias(), b.getUseralias());
     }
 }
