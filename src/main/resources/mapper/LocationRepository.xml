@@ -4,21 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.LocationRepository">
 
-    <resultMap id="mapLocation" type="com.lec.spring.domain.Location">
-        <id column="userKey" property="userKey" />
-        <result column="itemKey" property="itemKey" />
-        <result column="address" property="address" />
-        <result column="zoneCode" property="zoneCode" />
-        <result column="detail" property="detail" />
-        <result column="label" property="label" />
-    </resultMap>
-
     <insert id="saveLocation" parameterType="com.lec.spring.domain.Location">
         INSERT INTO d1_location (userKey, itemKey, address, useralias, zoneCode, detail, label)
         VALUES (#{userKey}, #{itemKey}, #{address}, #{useralias}, #{zoneCode}, #{detail}, #{label})
     </insert>
 
-    <insert id="insertAll" parameterType="list">
+    <insert id="deleteAll" parameterType="list">
         DELETE FROM d1_location
         WHERE (userKey, itemKey, useralias, address, zoneCode) IN
         <foreach collection="list" item="loc" open="(" separator="," close=")">
@@ -26,7 +17,7 @@
         </foreach>
     </insert>
 
-    <delete id="deleteAll" parameterType="list">
+    <delete id="insertAll" parameterType="list">
         INSERT INTO d1_location (userKey, itemKey, useralias, address, zoneCode)
         VALUES
         <foreach collection="list" item="loc" separator=",">
@@ -49,7 +40,7 @@
         SELECT * FROM d1_location WHERE userKey = #{userKey} AND itemKey IS NULL
     </select>
 
-    <select id="findByUserKeyAndItemKey" resultMap="mapLocation">
+    <select id="findByUserKeyAndItemKey" resultType="com.lec.spring.DTO.LocationDTO">
         SELECT * FROM d1_location WHERE userKey = #{userKey} AND itemKey = #{itemKey}
     </select>
 

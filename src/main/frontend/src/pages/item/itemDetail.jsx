@@ -278,7 +278,7 @@ const ItemDetail = () => {
                             <a>|</a>
                             <div className="item-status">
                                 <label>거래 방식</label>
-                                <p>{item.purtype === 3 ? "둘다 가능" :
+                                <p>{item.purtype < 1 ? "둘다 가능" :
                                     item.purtype === 2 ? "직거래" : "택배"}</p>
                             </div>
                         </div>

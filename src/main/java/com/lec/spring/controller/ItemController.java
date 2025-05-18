@@ -132,6 +132,7 @@ public class ItemController {
                                     @RequestPart(value = "existingImages", required = false) List<String> existingImages,
                                     @RequestPart(value = "imgMeta", required = false) String isMains) throws IOException {
         Item item = Item.builder()
+                .itemKey(itemKey)
                 .userKey(itemDTO.getUserKey())
                 .cateKey(itemDTO.getCateKey())
                 .subject(itemDTO.getSubject())
@@ -204,7 +205,12 @@ public class ItemController {
             locationService.updateLocation(itemKey, itemDTO.getUserKey(), itemDTO.getLocations());
         }
 
-        return ResponseEntity.ok("수정 완료");
+        int result = itemService.modify(item);
+        if(result < 1) {
+            return ResponseEntity.badRequest().body("수정 실패...");
+        }
+        return ResponseEntity.ok("수정 완료!");
+
     }
 
     // Delete Item

@@ -88,10 +88,15 @@
         WHERE itemKey = #{itemKey}
     </update>
 
-    <update id="modify" flushCache="true"
-            parameterType="com.lec.spring.domain.Item">
+    <update id="modify" flushCache="true" parameterType="com.lec.spring.domain.Item">
         UPDATE d1_item
-        SET subject = #{subject}, content = #{content}, price = #{price}, cateKey = #{cateKey}, itemtype = #{itemtype}, purtype = #{purtype}
+        SET
+            subject = #{subject},
+            content = #{content},
+            price = #{price},
+            cateKey = #{cateKey},
+            itemtype = #{itemtype},
+            purtype = #{purtype}
         WHERE itemKey = #{itemKey}
     </update>
 

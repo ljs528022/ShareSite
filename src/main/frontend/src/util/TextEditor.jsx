@@ -1,9 +1,15 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-const TextEditor = ({ onChange }) => {
+const TextEditor = ({ onChange, content }) => {
     const editorRef = useRef();
+
+    useEffect(() => {
+      if(editorRef.current) {
+        editorRef.current.getInstance().setHTML(content);
+      }
+    }, [content]);
 
     const handleContentChange = () => {
         const markdown = editorRef.current.getInstance().getMarkdown();
@@ -13,7 +19,7 @@ const TextEditor = ({ onChange }) => {
     return (
         <Editor
           ref={editorRef}
-          initialValue="상품 설명을 입력하세요."
+          initialValue=""
           height="400px"
           initialEditType="wysiwyg"    // 'wysiwyg'로 바꾸면 WYSIWYG 모드
           hideModeSwitch={true}         // 하단 'Edit | Preview' 토글 제거

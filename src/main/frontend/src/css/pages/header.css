@@ -10,7 +10,7 @@
     background-color: white;
     border-bottom: 1px solid #c9c9c9;
 
-    z-index: 20;
+    z-index: 100;
 }
 
 .Navbar-row {

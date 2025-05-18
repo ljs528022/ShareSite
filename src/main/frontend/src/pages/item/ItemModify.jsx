@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { deleteData, postData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";
@@ -16,7 +16,7 @@ const ItemModify = () => {
     const item = location.state?.item || [];
     const category = location.state?.category || [];
 
-    const [ formattedPrice, setFormattedPrice ] = useState(0);
+    const [ formattedPrice, setFormattedPrice ] = useState('');
     const [ selectedCate, setSelectedCate ] = useState(null);
     const [ pcateSelected, setPcateSelected ] = useState(false);
     const [ addLocation, setAddLocation ] = useState(false);
@@ -37,7 +37,7 @@ const ItemModify = () => {
 
     const [ showDelete, setShowDelete ] = useState(false);
     const { showToast } = useToast();
-
+    
     // 상품의 값들
     const handleInput = (e) => {
         const { id, value } = e.target;
@@ -162,21 +162,6 @@ const ItemModify = () => {
         setAddLocation(false);
     };
 
-    const deleteItem = async () => {
-        try {
-            const response = await deleteData(`/product/delete/${itemKey}`);
-            if(response.status === 200) {
-                showToast("상품을 삭제했습니다!", "success");
-                navigate("/home");
-            } else {
-                showToast("상품을 삭제하지 못했습니다...", "error")
-            }
-        } catch (err) {
-            showToast("네트워크 오류가 발생했습니다!", "error");
-            console.log(err);
-        }
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -234,6 +219,23 @@ const ItemModify = () => {
             showToast("상품 수정에 실패했습니다...", "error");
         }
     };
+
+    const deleteItem = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await deleteData(`/product/delete/${itemKey}`);
+            if(response.status === 200) {
+                showToast("상품을 삭제했습니다!", "success");
+                navigate("/home");
+            } else {
+                showToast("상품을 삭제하지 못했습니다...", "error")
+            }
+        } catch (err) {
+            showToast("네트워크 오류가 발생했습니다!", "error");
+            console.log(err);
+        }
+    }
 
     if(!itemKey && !item) {
         showToast("해당 상품이 존재하지 않습니다!", "error");
@@ -321,14 +323,14 @@ const ItemModify = () => {
                         <div className="input-price">
                             <div className="input-price-wrapper">
                                 <span>₩</span>
-                                <input id="price" type="text" value={formattedPrice} onChange={handlePriceChange}/>
+                                <input id="price" type="text" value={formattedPrice} placeholder={item.price} onChange={handlePriceChange}/>
                             </div>
                         </div>
                     </div>
                     {/* 상품 설명 란 */}
                     <div className="form-row">
                         <div className="input-content">
-                            <TextEditor onChange={handleEditorChange} />
+                            <TextEditor onChange={handleEditorChange} content={item.content} />
                         </div>
                     </div>
                     {/* 상품 상태 선택란 */}
@@ -409,8 +411,8 @@ const ItemModify = () => {
                     />
 
                     {/* 등록버튼 */}
-                    <button className="item-delete" onClick={() => setShowDelete(true)}>삭제</button>
-                    <button className="item-submit" type="submit">등록</button>
+                    <button className="item-delete" type="button" onClick={() => setShowDelete(true)}>삭제</button>
+                    <button className="item-submit" type="submit">수정</button>
                     <Modal
                         isOpen={showDelete}                            
                         onClose={() => setShowDelete(false)}

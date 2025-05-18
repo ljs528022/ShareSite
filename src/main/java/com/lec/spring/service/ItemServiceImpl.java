@@ -133,8 +133,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public int modify(Item item) {
-        int result = itemRepository.modify(item);
-        return result;
+        return itemRepository.modify(item);
     }
 
     @Override

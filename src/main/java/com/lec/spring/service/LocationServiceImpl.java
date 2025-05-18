@@ -50,6 +50,8 @@ public class LocationServiceImpl implements LocationService {
                 .filter(in -> existing.stream().noneMatch(ex -> isSameLocation(ex, in)))
                 .toList();
 
+        System.out.println("추가해야 할 장소 : " + toInsert);
+
         if(!toDelete.isEmpty()) locationRepository.deleteAll(toDelete);
         if(!toInsert.isEmpty()) locationRepository.insertAll(toInsert);
     }
