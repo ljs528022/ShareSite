@@ -1,0 +1,160 @@
+.purchase-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.purchase-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.purchase-box-loc {
+    display: flex;
+    flex-direction: row;
+}
+
+.purchase-closeBtn {
+    margin: 0 auto;
+    width: initial;
+    margin-top: 8px;
+    margin-right: 0;
+    cursor: pointer;
+}
+
+.purchase-label {
+    width: initial;
+    margin: 0 auto;
+    margin-left: 25px;
+    margin-bottom: 20px;
+    padding: 0;
+    font-size: 20px;
+}
+
+.purchase-radio {
+    display: flex;
+    flex-direction: column;
+
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 30px 0px;
+    border: 1px solid #777;
+    border-radius: 10px;
+    color: #555;
+
+    cursor: pointer;
+}
+
+.purchase-radio-checked {
+    display: flex;
+    flex-direction: column;
+
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 30px 0px;
+    font-weight: 500;
+    border: 1.5px solid #91B4FF;
+    border-radius: 10px;
+    color: #91B4FF;
+
+    cursor: pointer;
+}
+
+.purchase-radio:hover {
+    box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.2);
+    color: #222;
+    font-weight: 500;
+}   
+
+.purchase-radio-span {
+    margin: 0 auto;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.purchase-radio-p {
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.purchase-next-btn {
+    width: 90%;
+    font-size: 15px;
+    margin: 0 auto;
+    padding: 10px 0px;
+    font-weight: 500;
+    color: white;
+    border-radius: 7px;
+    background-color: #777;
+    cursor: pointer;
+}
+
+.purchase-next-btn:hover {
+    box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.purchase-blank {
+    width: 100%;
+    height: 15px;
+    margin: 20px 0px;
+    background-color: #aaa;
+}
+
+.purchase-purType {
+    display: grid;
+    width: 90%;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+.purType-radio {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    padding-top: 4px;
+    padding-bottom: 6px;
+    text-align: center;
+    align-items: center;
+    border: 2px solid #444;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.purType-radio:hover {
+    box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.purType-radio-span {
+    font-size: 15px;
+}
+
+.purchase-btn {
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 8px 0px;
+    width: 90%;
+    font-size: 16px;
+    border-radius: 6px;
+    color: white;
+    background-color: #777;
+
+    cursor: pointer;
+}
+
+.purchase-locBtn {
+    width: initial;
+    height: 30px;
+    margin-right: 20px;
+    padding: 2px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: 500;
+    background-color: #aaa;
+    cursor: pointer;
+}

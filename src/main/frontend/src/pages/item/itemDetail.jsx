@@ -13,6 +13,7 @@ import SidePage from "../../util/sidePage";
 import MapShow from "../../pages/side/MapShow";
 import EmptyBox from "../../components/EmptyBox";
 import "../../css/pages/itemDetail.css";
+import Purchase from "../side/Purchase";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
@@ -43,9 +44,11 @@ const ItemDetail = () => {
     // Item's Likes
     const [ itemsLike, setitemLike ] = useState(0);
 
-    // Utils
+    // Utils && Side On/OFF
     const [ showMap, setShowMap ] = useState(false);    // 지도 창
     const [ sideMapLocation, setSideMapLocation ] = useState(''); // 지도 창 정보
+    const [ confirmPurchase, setConfirmPurChase ] = useState(false);    // 거래 전 확인 모달
+    const [ showPurchase, setShowPurchase ] = useState(false);    // 거래 창
     const { showToast } = useToast();
     const navigate = useNavigate();
     
@@ -289,8 +292,27 @@ const ItemDetail = () => {
                         {item.userKey !== userKey ?
                         <div className="item-Btns">
                             <LikeButton item={item} size={35} />
-                            <button type="button" className="item-chat-btn">채팅하기</button>
-                            <button type="button" className="item-purchase-btn">구매하기</button>
+                            <button 
+                                type="button" 
+                                className="item-chat-btn"
+                                style={{cursor: "pointer"}}
+                                onClick={() => {
+                                    if(!user) {
+                                        showToast("로그인이 필요한 기능입니다!", "error");
+                                        return;
+                                    } else ""
+                                }}
+                            >채팅하기</button>
+                            <button 
+                                type="button" 
+                                className="item-purchase-btn"
+                                style={{cursor: "pointer"}}
+                                onClick={() => {
+                                    if(!user) {
+                                        showToast("로그인이 필요한 기능입니다!", "error");
+                                        return;
+                                    } else setConfirmPurChase(true)}}
+                            >구매하기</button>
                         </div>
                         :
                         <div className="item-user-btn">
@@ -364,8 +386,9 @@ const ItemDetail = () => {
                         }
                     </div>
                 </div>
-                <SidePage 
-                    className={"kakaoMap"} 
+
+                {/* 희망 거래 지역 표시 란 */}
+                <SidePage
                     isOpen={showMap} 
                     onClose={() => setShowMap(false)}
                     headerText={"희망거래지역"} 
@@ -376,6 +399,32 @@ const ItemDetail = () => {
                         data={sideMapLocation}
                     />
                     } 
+                />
+
+                {/* 구매 란 */}
+                <Modal
+                    isOpen={confirmPurchase}
+                    onClose={() => {
+                        setConfirmPurChase(false)
+                        setShowPurchase(true)}}
+                    onConfirm={() => {}}
+                    title={"잠깐! 판매자와 채팅은 해보셨나요?"}
+                    message={"채팅 없이 결제를 진행하면 거래가 취소될 확률이 높습니다! \n 판매자와 소통해보세요."}
+                    confirmText={"네, 채팅하고 거래할래요"}
+                    cancelText={"아뇨, 채팅 없이 거래할게요"}
+                />
+                <SidePage
+                    isOpen={showPurchase}
+                    onClose={() => setShowPurchase(false)}
+                    headerText={""}
+                    content={
+                    <Purchase
+                        onClose={() => setShowPurchase(false)}
+                        sellerInfo={item}
+                        buyerInfo={!user ? "" : user}
+                        itemInfo={item}
+                    />
+                    }
                 />
             </div>
         </main>

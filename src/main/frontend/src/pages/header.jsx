@@ -110,13 +110,7 @@ const Header = () => {
                         </li>
                         <p>|</p>
                         <li>
-                            <button onClick={() => {
-                                if(user) {
-                                    handlePopupShow();
-                                } else {
-                                    navigate("/user/login");
-                                }
-                            }}>
+                            <button onClick={() => !user ? navigate("/user/login") : ""} onMouseOver={handlePopupShow} onMouseOut={handlePopupShow}>
                             {/* 로그인하면 유저 대표이미지로 변경 */}
                             {user ?
                              <img src={
@@ -129,7 +123,7 @@ const Header = () => {
                              "로그인"}
                             </button>
                             {(showPopup && user) && 
-                                <div className="Navbar-user">
+                                <div className="Navbar-user" onMouseOver={handlePopupShow} onMouseOut={handlePopupShow}>
                                     <a onClick={() => navigate(`/user/${user.userKey}`)}>마이페이지</a>
                                     <div className="logout" onClick={handleLogout}>로그아웃</div>
                                 </div>

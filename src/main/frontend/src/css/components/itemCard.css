@@ -182,3 +182,47 @@
     font-size: 14px;
     float: right;
 }
+
+/* Purchase Card CSS -> style={"Purchase"} 필요함*/ 
+.Purchase_Card_wrapper {
+    margin: 0px 30px;
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.Purchase_Card_img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+}
+
+.Purchase_CardBody {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    margin-top: 5px;
+    text-align: left;
+}
+
+.Purchase_CardBody p {
+    color: #555;
+    margin-left: 5px;
+}
+
+.Purchase_CardBody span {
+    border-radius: 9px;
+}
+
+.Purchase_Card_subject {
+    margin: 0;
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.Purchase_Card_price {
+    margin: 0;
+    margin-top: 5px;
+    font-size: 20px;
+}

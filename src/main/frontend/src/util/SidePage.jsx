@@ -4,7 +4,9 @@ const SidePage = ({ isOpen, onClose, headerText, content }) => {
     if (!isOpen) return null;
 
     return (
+        <div className="side-backdrop">
         <div className="side-page">
+            {headerText !== '' &&
             <div className="side-header">
                 <button type="button" onClick={onClose}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="25" width="20.5" viewBox="0 0 320 512">
@@ -15,11 +17,13 @@ const SidePage = ({ isOpen, onClose, headerText, content }) => {
                     {headerText}
                 </label>
             </div>
+            }
             <div className="side-content-container">
                 <div className={`side`}>
                     {content}
                 </div>
             </div>
+        </div>
         </div>
     )
 };

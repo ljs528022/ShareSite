@@ -80,11 +80,12 @@ CREATE TABLE d1_location
 
 CREATE TABLE d1_purchase
 (
-	purchaseKey int NOT NULL AUTO_INCREMENT,
-	userKey varchar(20) NOT NULL,
-	bank varchar(20) NOT NULL,
-	bankNum varchar(50) NOT NULL,
-	PRIMARY KEY (purchaseKey)
+	sellerKey varchar(20) NOT NULL,
+	buyerKey varchar(20) NOT NULL,
+	itemKey int NOT NULL,
+	tradeType int NOT NULL,
+	purType varchar(50) NOT NULL,
+	purchaseDate datetime NOT NULL
 );
 
 
@@ -186,12 +187,25 @@ ALTER TABLE d1_location
 
 
 ALTER TABLE d1_purchase
-	ADD FOREIGN KEY (userKey)
+	ADD FOREIGN KEY (sellerKey)
 	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE CASCADE
 ;
 
+ALTER TABLE d1_purchase
+	ADD FOREIGN KEY (buyerKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE CASCADE
+;
+
+ALTER TABLE d1_purchase
+	ADD FOREIGN KEY (itemKey)
+	REFERENCES d1_item (itemKey)
+	ON UPDATE RESTRICT
+	ON DELETE CASCADE
+;
 
 ALTER TABLE d1_review
 	ADD FOREIGN KEY (userKey)
