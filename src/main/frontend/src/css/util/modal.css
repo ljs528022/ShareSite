@@ -94,6 +94,69 @@
     background-color: #7badff;
 }
 
+/* 사이드 바 모달 설정 */
+.side-modal-container {
+    position: fixed;
+
+    top: 40%;
+    left: 18%;
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+    width: 50%;
+    padding: 30px;
+    padding-top: 5px;
+    gap: 20px;
+    
+    animation: appear 0.5s ease-out forwards;
+
+    background-color: white;
+    border: 2px solid #777;
+    border-radius: 10px;
+}
+
+.side-modal-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    font-weight: bold;
+
+    width: 100%;
+}
+
+.side-modal-button-cancel {
+    padding: 10px 20px;
+
+    color: #777;
+    border: 2px solid #777;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.side-modal-button-cancel:hover {
+    color: white;
+    background-color: #777;
+}
+
+.side-modal-button-confirm {
+    padding: 10px 20px;
+
+    color: #7badff;
+    border: 2px solid #7badff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.side-modal-button-confirm:hover {
+    color: white;
+    background-color: #7badff;
+}
+
 /* ModifyModal 설정 */
 .edit-modal-backdrop {
     position: fixed;

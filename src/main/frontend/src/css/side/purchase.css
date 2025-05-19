@@ -129,8 +129,19 @@ input[type="radio"] {
     padding-top: 4px;
     padding-bottom: 6px;
     text-align: center;
-    align-items: center;
-    border: 2px solid #444;
+    border: 2px solid #aaa;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.purType-radio-checked {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    padding-top: 4px;
+    padding-bottom: 6px;
+    text-align: center;
+    border: 2px solid black;
     border-radius: 8px;
     cursor: pointer;
 }

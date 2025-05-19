@@ -47,7 +47,8 @@ const ItemDetail = () => {
     // Utils && Side On/OFF
     const [ showMap, setShowMap ] = useState(false);    // 지도 창
     const [ sideMapLocation, setSideMapLocation ] = useState(''); // 지도 창 정보
-    const [ confirmPurchase, setConfirmPurChase ] = useState(false);    // 거래 전 확인 모달
+    const [ confirmPurchase, setConfirmPurChase ] = useState(false); // 거래 전 확인 모달
+    const [ cancelPurchase, setCancelPurchase ] = useState(false);  // 거래 취소 확인 모달
     const [ showPurchase, setShowPurchase ] = useState(false);    // 거래 창
     const { showToast } = useToast();
     const navigate = useNavigate();

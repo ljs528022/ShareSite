@@ -1,16 +1,16 @@
 import "../css/util/modal.css";
 
-const Modal = ({ isOpen, onClose, onConfirm, title, message, confirmText, cancelText }) => {
+const Modal = ({ isOpen, onClose, onConfirm, style = "", title, message, confirmText, cancelText }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="modal-backdrop">
-            <div className="modal-container">
-                {title && <h2 className="modal-title">{title}</h2>}
+        <div className={`modal-backdrop`}>
+            <div className={`${style}modal-container`}>
+                {title && <h2 className={`${style}modal-title`}>{title}</h2>}
                 {message && <p className="modal-message">{message}</p>}
-                <div className="modal-buttons">
-                    <button className="modal-button-cancel" onClick={onClose}>{cancelText}</button>
-                    <button className="modal-button-confirm" onClick={onConfirm}>{confirmText}</button>
+                <div className={`${style}modal-buttons`}>
+                    <button className={`${style}modal-button-cancel`} onClick={onClose}>{cancelText}</button>
+                    <button className={`${style}modal-button-confirm`} onClick={onConfirm}>{confirmText}</button>
                 </div>
             </div>
         </div>

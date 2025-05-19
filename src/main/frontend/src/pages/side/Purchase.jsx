@@ -15,6 +15,7 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
         purType: "",
     });
 
+    const [ cancelPurchase, setCancelPurchase ] = useState(false);
     const [ selectedLoc, setSelectedLoc ] = useState(null);
     const [ purchasePage, setPurchasePage ] = useState(2);
     const [ changeLoc, setChangeLoc ] = useState(false);
@@ -71,7 +72,7 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
         </div>
         : (purchasePage <= 1 && !changeLoc) ?
         <div className="purchase-wrapper">
-            <label className="purchase-closeBtn" onClick={onClose}>
+            <label className="purchase-closeBtn" onClick={() => setCancelPurchase(true)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width={30} height={30} viewBox="0 0 384 512">
                     <path fill="#5c5c5c" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
                 </svg>
@@ -109,28 +110,34 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
                     결제 방법
                 </label>
                 <div className="purchase-purType">
-                    <label className="purType-radio" style={{gridRow: 1, gridColumn: "span 2", color: "red"}}>
-                        <input id="purType" type="radio" value={"PAYCO"} onChange={handleInput} checked={purInfo.tradeType == 1}/>
+                    <label className={purInfo.purType === "PAYCO" ? "purType-radio-checked" : "purType-radio"} 
+                    style={{gridRow: 1, gridColumn: "span 2", color: "red"}}>
+                        <input id="purType" type="radio" value={"PAYCO"} onChange={handleInput} checked={purInfo.purType == "PAYCO"}/>
                         <span className="purType-radio-span">PAYCO</span>
                     </label>
-                    <label className="purType-radio" style={{gridRow: 2, gridColumn: 1}}>
-                        <input id="purType" type="radio" value={"CREDIT"} onChange={handleInput} checked={purInfo.tradeType == 1}/>
+                    <label className={purInfo.purType === "CREDIT" ? "purType-radio-checked" : "purType-radio"} 
+                    style={{gridRow: 2, gridColumn: 1}}>
+                        <input id="purType" type="radio" value={"CREDIT"} onChange={handleInput} checked={purInfo.purType == "CREDIT"}/>
                         <span className="purType-radio-span">카드 결제</span>
                     </label>
-                    <label className="purType-radio" style={{gridRow: 2, gridColumn: 2, color: "#2DB400"}}>
-                        <input id="purType" type="radio" value={"NAVERPAY"} onChange={handleInput} checked={purInfo.tradeType == 1}/>
+                    <label className={purInfo.purType === "NAVERPAY" ? "purType-radio-checked" : "purType-radio"} 
+                    style={{gridRow: 2, gridColumn: 2, color: "#2DB400"}}>
+                        <input id="purType" type="radio" value={"NAVERPAY"} onChange={handleInput} checked={purInfo.purType == "NAVERPAY"}/>
                         <span className="purType-radio-span">NPAY</span>
                     </label>
-                    <label className="purType-radio" style={{gridRow: 3, gridColumn: 1, color: "#0064FF"}}>
-                        <input id="purType" type="radio" value={"KAKAOPAY"} onChange={handleInput} checked={purInfo.tradeType == 1}/>
+                    <label className={purInfo.purType === "KAKAOPAY" ? "purType-radio-checked" : "purType-radio"} 
+                    style={{gridRow: 3, gridColumn: 1, color: "#0064FF"}}>
+                        <input id="purType" type="radio" value={"KAKAOPAY"} onChange={handleInput} checked={purInfo.purType == "KAKAOPAY"}/>
                         <span className="purType-radio-span">TOSS PAY</span>
                     </label>
-                    <label className="purType-radio" style={{gridRow: 3, gridColumn: 2, color: "#FFE300"}}>
-                        <input id="purType" type="radio" value={"TOSSPAY"} onChange={handleInput} checked={purInfo.tradeType == 1}/>
+                    <label className={purInfo.purType === "TOSSPAY" ? "purType-radio-checked" : "purType-radio"} 
+                    style={{gridRow: 3, gridColumn: 2, color: "#FFE300"}}>
+                        <input id="purType" type="radio" value={"TOSSPAY"} onChange={handleInput} checked={purInfo.purType == "TOSSPAY"}/>
                         <span className="purType-radio-span">KAKAO PAY</span>
                     </label>
-                    <label className="purType-radio" style={{gridRow: 4, gridColumn: "span 2"}}>
-                        <input id="purType" type="radio" value={"DEPOSIT"} onChange={handleInput} checked={purInfo.tradeType == 1}/>
+                    <label className={purInfo.purType === "DEPOSIT" ? "purType-radio-checked" : "purType-radio"} 
+                    style={{gridRow: 4, gridColumn: "span 2"}}>
+                        <input id="purType" type="radio" value={"DEPOSIT"} onChange={handleInput} checked={purInfo.purType == "DEPOSIT"}/>
                         <span className="purType-radio-span">무통장 입금</span>
                     </label>
                 </div>
@@ -155,6 +162,15 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
         </div>
         }
         </form>
+        <Modal 
+            isOpen={cancelPurchase}
+            onClose={() => setCancelPurchase(false)}
+            onConfirm={onClose}
+            style="side-"
+            message={"진행 중이던 거래를 \n 취소하시겠어요?"}
+            confirmText={"확인"}
+            cancelText={"취소"}
+        />
         </>
     )
 }

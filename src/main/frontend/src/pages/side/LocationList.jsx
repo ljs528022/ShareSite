@@ -49,6 +49,7 @@ const LocationList = ({ onSelectLocation }) => {
 
     const handleSelect = (e, loc) => {
         e.preventDefault();
+        if(!onSelectLocation) return;
         onSelectLocation(loc);
     }
 
