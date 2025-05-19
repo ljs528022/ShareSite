@@ -56,6 +56,15 @@ public class LocationServiceImpl implements LocationService {
         if(!toInsert.isEmpty()) locationRepository.insertAll(toInsert);
     }
 
+    @Override
+    public int updateMainLocation(LocationDTO locationDTO) {
+        if (locationDTO == null) return 0;
+        locationRepository.resetAllMainLocations(locationDTO.getUserKey());
+        locationRepository.setMainLocationByKey(locationDTO.getUserKey(), locationDTO.getAddress());
+        return 1;
+    }
+
+    @Override
     public int deleteLocation(String address) {
         return locationRepository.deleteLocation(address);
     }

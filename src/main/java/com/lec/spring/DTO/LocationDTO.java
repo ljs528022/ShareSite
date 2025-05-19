@@ -16,6 +16,7 @@ public class LocationDTO {
     private String useralias;   // 장소를 저장한 유저의 이름
     private String address;     // 해당 장소의 주소
     private String zoneCode;    // 해당 장소의 구역 번호
+    private Boolean main;       // 해당 장소가 대표 장소 인지에 대한 유무
     private String detail;      // 해당 주소의 상세 주소
     private String label;       // 저장한 장소의 별명
 }

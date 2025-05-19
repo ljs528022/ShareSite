@@ -29,4 +29,9 @@ public interface LocationRepository {
                                               @Param("itemKey")Long itemKey);
 
     List<LocationDTO> findLocationsByItemKeys(List<Long> itemKeys);
+
+    void resetAllMainLocations(@Param("userKey")String userKey);
+
+    void setMainLocationByKey(@Param("userKey")String userKey,
+                              @Param("address")String address);
 }

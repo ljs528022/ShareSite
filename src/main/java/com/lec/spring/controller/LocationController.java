@@ -29,6 +29,7 @@ public class LocationController {
                 .useralias(locationDTO.getUseralias())
                 .address(locationDTO.getAddress())
                 .zoneCode(locationDTO.getZoneCode())
+                .main(locationDTO.getMain())
                 .detail(locationDTO.getDetail())
                 .label(locationDTO.getLabel())
                 .build();
@@ -46,11 +47,19 @@ public class LocationController {
     public ResponseEntity<?> getUserLocations(@PathVariable("userKey")String userKey) {
         if(userKey != null) {
             List<Location> locations = locationService.findLocationByUserKey(userKey);
-
             return ResponseEntity.ok(locations);
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/location/set-main")
+    public ResponseEntity<?> setMainLocation(@RequestBody LocationDTO locationDTO) {
+        int result = locationService.updateMainLocation(locationDTO);
+
+        if(result < 1) {
+            return ResponseEntity.badRequest().body("수정 실패...");
+        } else return ResponseEntity.ok("수정 성공!");
     }
 
     @PostMapping("/location/delete")

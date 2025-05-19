@@ -5,8 +5,8 @@
 <mapper namespace="com.lec.spring.repository.LocationRepository">
 
     <insert id="saveLocation" parameterType="com.lec.spring.domain.Location">
-        INSERT INTO d1_location (userKey, itemKey, address, useralias, zoneCode, detail, label)
-        VALUES (#{userKey}, #{itemKey}, #{address}, #{useralias}, #{zoneCode}, #{detail}, #{label})
+        INSERT INTO d1_location (userKey, itemKey, address, useralias, main, zoneCode, detail, label)
+        VALUES (#{userKey}, #{itemKey}, #{address}, #{useralias}, #{main}, #{zoneCode}, #{detail}, #{label})
     </insert>
 
     <insert id="deleteAll" parameterType="list">
@@ -56,4 +56,16 @@
             #{key}
         </foreach>
     </select>
+
+    <update id="resetAllMainLocations">
+        UPDATE d1_location
+        SET main = false
+        WHERE userKey = #{userKey} AND itemKey IS NULL
+    </update>
+
+    <update id="setMainLocationByKey">
+        UPDATE d1_location
+        SET main = true
+        WHERE address = #{address} AND userKey = #{userKey}
+    </update>
 </mapper>

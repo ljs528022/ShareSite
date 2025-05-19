@@ -15,22 +15,38 @@
     padding-bottom: 15px;
     width: 95%;
     height: inherit;
-    border: 1px solid #7badff;
+    border: 1px solid #777;
     border-radius: 10px;
 }
 
-.location-list-box label {
-    width: 85%;
-    margin: 15px 0px;
-    text-align: left;
+.location-list-box-main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding-bottom: 15px;
+    width: 95%;
+    height: inherit;
+    border: 1.5px solid #7badff;
+    color: #4872fc;
+    border-radius: 10px;
 }
 
-.location-list-box button {
-    margin: 0px auto;
-    margin-top: 10px;
+.location-list-label {
+    display: flex;
+    gap: 10px;
+    width: 85%;
+    align-items: center;
+    margin: 5px 0px;
+    margin-top: 20px;
+}
 
-    color: red;
-    cursor: pointer;
+.location-list-label-main {
+    font-size: 12px;
+    border: 1px solid #4872fc;
+    padding: 1px 10px;
 }
 
 .location-list-box p {
@@ -38,6 +54,47 @@
     margin: 2px 0px;
     width: 85%;
     text-align: left;
+}
+
+.location-list-box-main p {
+    padding: 0;
+    margin: 2px auto;
+    margin-left: 30px;
+    width: initial;
+    text-align: left;
+}
+
+.location-list-box:hover, .location-list-box-main:hover {
+    box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.location-list-edit {
+    display: flex;
+    margin: 0 auto;
+    margin-top: 15px;
+    width: inherit;
+    text-align: center;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+}
+
+.location-list-edit a {
+    height: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.location-list-main {
+    width: 150px;
+    color: black;
+    cursor: pointer;
+}
+
+.location-list-delete {
+    width: 130px;
+    color: red;
+    cursor: pointer;
 }
 
 .list-add-box {
@@ -100,6 +157,23 @@
     font-size: 13px;
 
     cursor: pointer;
+}
+
+.location-main-btn {
+    display: flex;
+    margin: 0 auto;
+    margin-left: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.location-main-btn p {
+    margin: 0px 8px;
+    margin-bottom: 2px;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #555;
 }
 
 .location-submit-btn {

@@ -73,6 +73,7 @@ CREATE TABLE d1_location
 	useralias varchar(50) NOT NULL,
 	address varchar(300) NOT NULL,
 	zoneCode varchar(300) NOT NULL,
+	main boolean,
 	detail varchar(300),
 	label varchar(100)
 );
@@ -83,6 +84,7 @@ CREATE TABLE d1_purchase
 	sellerKey varchar(20) NOT NULL,
 	buyerKey varchar(20) NOT NULL,
 	itemKey int NOT NULL,
+	location varchar(300),
 	tradeType int NOT NULL,
 	purType varchar(50) NOT NULL,
 	purchaseDate datetime NOT NULL

@@ -11,6 +11,8 @@ public interface LocationService {
 
     void updateLocation(Long itemKey, String userKey, List<LocationDTO> location);
 
+    int updateMainLocation(LocationDTO locationDTO);
+
     int deleteLocation(String address);
 
     boolean checkSameLocation(String address, String userKey);

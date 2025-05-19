@@ -5,7 +5,7 @@ import SearchPostCode from "../../util/SearchPostCode";
 import { postData, getData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";
 
-const LocationList = () => {
+const LocationList = ({ onSelectLocation }) => {
 
     const { user } = useUser();
     const { showToast } = useToast();
@@ -13,7 +13,7 @@ const LocationList = () => {
     const [ showAddLocation, setShowAddLocation ] = useState(false);
     const [ showPostCode, setShowPostCode ] = useState(false);
 
-    // 인증을 위한 토큰큰
+    // 인증을 위한 토큰
     const token = sessionStorage.getItem("token");
 
     // 입력할 주소 정보
@@ -21,6 +21,7 @@ const LocationList = () => {
         useralias: user.useralias,
         address: '',
         zoneCode: '',
+        main: false,
         detail: '',
         label: ''
     });
@@ -37,6 +38,18 @@ const LocationList = () => {
             zoneCode
         }));
         setShowPostCode(false);
+    }
+
+    const toggleLocationMain = () => {
+        setLocationInfo(prev => ({
+            ...prev,
+            main: !locationInfo.main,
+        }));
+    }
+
+    const handleSelect = (e, loc) => {
+        e.preventDefault();
+        onSelectLocation(loc);
     }
 
     useEffect(() => {
@@ -68,13 +81,24 @@ const LocationList = () => {
                 className="modify-btn"
                 onClick={() => setModify(prev => !prev)}
             >✐ 편집</button>
-            <div className="location-list-box">
-                <label>{locs[0].label}</label>
+            <div className={locs[0].main ? "location-list-box-main" : "location-list-box"} onDoubleClick={(e) => handleSelect(e, locs[0])}>
+                <label className="location-list-label">
+                    <a>{locs[0].label}</a>
+                    {locs[0].main && <a className="location-list-label-main">대표 배송지</a>}
+                </label>
                 <p>{locs[0].useralias}</p>
                 <p>{`[${locs[0].zoneCode}] ${locs[0].address}`}</p>
                 <p>{locs[0].detail}</p>
                 {modify &&
-                <button onClick={() => deleteLocation(locs[0])}>삭제</button>
+                <div className="location-list-edit">
+                    {!locs[0].main &&
+                    <>
+                    <button className="location-list-main" onClick={(e) => setMainLocation(e, locs[0])}>대표 장소로 설정</button>
+                    <a></a>
+                    </>
+                    }
+                    <button className="location-list-delete" onClick={(e) => deleteLocation(e, locs[0])}>삭제</button>
+                </div>
                 }
             </div>
             </>
@@ -83,48 +107,41 @@ const LocationList = () => {
         if(locs.length > 1) {
             return (
                 <>
-                {locs.map((loc, index) => (
-                <>
                 <button 
                     type="button" 
                     className="modify-btn"
                     onClick={() => setModify(prev => !prev)}
                 >✐ 편집</button>
-                <div key={index} className="location-list-box">
-                    <label>{loc.label}</label>
+                {locs.map((loc, index) => (
+                <div key={loc.id || index} className={loc.main ? "location-list-box-main" : "location-list-box"} onDoubleClick={(e) => handleSelect(e, loc)}>
+                    <label className="location-list-label">
+                        <a>{loc.label}</a>
+                        {loc.main && <a className="location-list-label-main">대표 배송지</a>}
+                    </label>
                     <p>{loc.useralias}</p>
                     <p>{`[${loc.zoneCode}] ${loc.address}`}</p>
                     <p>{loc.detail}</p>
                     {modify &&
-                    <button onClick={() => deleteLocation(loc)}>삭제</button>
+                    <div className="location-list-edit">
+                        {!loc.main &&
+                        <>
+                        <button className="location-list-main" onClick={(e) => setMainLocation(e, loc)}>대표 장소로 설정</button>
+                        <a></a>
+                        </>
+                        }
+                        <button className="location-list-delete" onClick={(e) => deleteLocation(e, loc)}>삭제</button>
+                    </div>
                     }
                 </div>
-                </>
                 ))}
                 </>
             )
         }
     }
 
-    const deleteLocation = async ( loc ) => {
-        try {
-            const response = await postData("/location/delete", loc, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            if(response.status === 200) {
-                showToast("해당 장소를 삭제했습니다!", "success");
-                setLocationChanged(prev => !prev);
-            }
-        } catch (err) {
-            showToast("장소를 삭제하는 데에 실패했습니다...", "error");
-            console.log(err);
-        }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    }
-
-    const handleSubmit = async () => {
         if(!locationInfo && !userLocations) return;
 
         if(userLocations.length > 5) {
@@ -138,6 +155,7 @@ const LocationList = () => {
             useralias: user.useralias,
             address: locationInfo.address,
             zoneCode: locationInfo.zoneCode,
+            main: locationInfo.main ? 1 : 0,
             detail: locationInfo.detail || '',
             label: locationInfo.label
         }
@@ -180,6 +198,41 @@ const LocationList = () => {
                 showToast("통신 장애가 발생했습니다!", "error");
                 console.log(err);
             }
+        }
+    }
+
+    const setMainLocation = async (e, loc) => {
+        e.preventDefault();
+
+        try {
+            const response = await postData("/location/set-main", loc, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if(response.status === 200) {
+                showToast("대표 장소로 설정되었습니다!", "success");
+                setLocationChanged(prev => !prev);
+            }
+        } catch {
+            showToast("대표 장소 설정에 실패했습니다...", "error");
+        }
+    }
+
+    const deleteLocation = async ( e, loc ) => {
+        e.preventDefault();
+
+        try {
+            const response = await postData("/location/delete", loc, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if(response.status === 200) {
+                showToast("해당 장소를 삭제했습니다!", "success");
+                setLocationChanged(prev => !prev);
+            }
+        } catch (err) {
+            showToast("장소를 삭제하는 데에 실패했습니다...", "error");
+            console.log(err);
         }
     }
 
@@ -236,10 +289,20 @@ const LocationList = () => {
                 />
                 </>
                 }
+                <button type="button" className="location-main-btn" onClick={toggleLocationMain}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width={15} height={15} cursor="pointer" viewBox="0 0 512 512">
+                    {locationInfo.main ?
+                        <path fill="#74C0FC" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                        :
+                        <path fill="#74C0FC" d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"/>
+                    }
+                    </svg>
+                    <p>대표 이미지로 설정</p>
+                </button>
                 <button 
                     type="button" 
                     className="location-submit-btn"
-                    onClick={() => handleSubmit()}
+                    onClick={(e) => handleSubmit(e)}
                 >완료</button>
             </div>
             <button 

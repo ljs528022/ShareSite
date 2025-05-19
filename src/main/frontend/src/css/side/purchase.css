@@ -13,6 +13,15 @@
     flex-direction: row;
 }
 
+.purchase-loc p {
+    margin: 0 auto;
+    margin-top: 4px;
+    margin-left: 30px;
+    text-align: left;
+    padding: 0;
+
+}
+
 .purchase-closeBtn {
     margin: 0 auto;
     width: initial;
