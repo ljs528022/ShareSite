@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/home';
 import Header from './pages/header';
 import Footer from './pages/footer';
@@ -11,16 +11,25 @@ import ItemDetail from './pages/item/itemDetail';
 import ItemSearch from './pages/item/itemSearch';
 import UserPage from './pages/user/userPage';
 import ItemModify from './pages/item/itemModify';
+import PaymentPage from './components/PaymentPage';
 
 function App() {
+
+  const location = useLocation();
+
+  const hideLayoutPaths = ['/mock-payment'];
+
+  const hideLayout = hideLayoutPaths.some(path =>
+    location.pathname.startsWith(path)
+  );
 
   return (
     <>
       <ToastProvider>
         <UserProvider>
-          <Header />
-          <Routes>
+          {!hideLayout && <Header />}
 
+          <Routes>
             {/* Main page */}
             <Route path='/home' Component={Home}></Route>
 
@@ -39,8 +48,11 @@ function App() {
             {/* Item Search */}
             <Route path='/search' Component={ItemSearch}></Route>
 
+            {/* Payment */}
+            <Route path='/mock-payment/:orderId' Component={PaymentPage} />
+
           </Routes>
-          <Footer />
+          {!hideLayout && <Footer />}
         </UserProvider>
       </ToastProvider>
     </>

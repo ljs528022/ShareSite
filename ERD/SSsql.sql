@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS d1_review;
 DROP TABLE IF EXISTS d1_item;
 DROP TABLE IF EXISTS d1_category;
 DROP TABLE IF EXISTS d1_location;
-DROP TABLE IF EXISTS d1_purchase;
+DROP TABLE IF EXISTS d1_payment;
 DROP TABLE IF EXISTS d1_user;
 DROP TABLE IF EXISTS d1_item_image;
 
@@ -79,7 +79,7 @@ CREATE TABLE d1_location
 );
 
 
-CREATE TABLE d1_purchase
+CREATE TABLE d1_payment
 (
 	sellerKey varchar(20) NOT NULL,
 	buyerKey varchar(20) NOT NULL,
@@ -188,21 +188,21 @@ ALTER TABLE d1_location
 ;
 
 
-ALTER TABLE d1_purchase
+ALTER TABLE d1_payment
 	ADD FOREIGN KEY (sellerKey)
 	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE CASCADE
 ;
 
-ALTER TABLE d1_purchase
+ALTER TABLE d1_payment
 	ADD FOREIGN KEY (buyerKey)
 	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE CASCADE
 ;
 
-ALTER TABLE d1_purchase
+ALTER TABLE d1_payment
 	ADD FOREIGN KEY (itemKey)
 	REFERENCES d1_item (itemKey)
 	ON UPDATE RESTRICT

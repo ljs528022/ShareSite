@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../css/side/purchase.css";
 import { useToast } from "../../util/ToastContext";
 import Modal from "../../util/Modal";
 import ItemCard from "../../components/itemCard";
 import LocationList from "./LocationList";
+import { getData, postData } from "../../services/api";
 
 const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
 
@@ -21,18 +22,64 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
     const [ changeLoc, setChangeLoc ] = useState(false);
     const { showToast } = useToast();
 
+    useEffect(() => {
+        const handleMessage = async (event) => {
+            if(event.origin !== window.location.origin) return;
+
+            if(event.data?.type === "READY_FOR_PAYMENT") {
+                const { orderId } = event.data;
+                const paymentInfo = JSON.parse(sessionStorage.getItem(`payment-${orderId}`));
+                event.source.postMessage({ orderId, paymentInfo }, event.origin);
+            }
+
+            if(event.data === "PAY_SUCCESS") {
+                const res = await getData(`/api/payment/status/${event.data.orderId}`);
+                const status = res.data.status;
+                showToast(`결제 상태: ${status}`);
+            }
+            
+        };
+
+        window.addEventListener("message", handleMessage);
+        return () => window.removeEventListener("message", handleMessage);
+    }, [])
+
     const handleInput = (e) => {
         const { id, value } = e.target;
         setPurInfo(prev => ({ ...prev, [id]: value }));
     }
 
-    const handleSubmit = async () => {
-        
+    const handlePayment = async () => {
+        if(purInfo.tradeType === 0 && !selectedLoc) { showToast("배송지를 고르지 않으셨어요!", "error"); return; }
+        if(purInfo.purType === "") { showToast("결제 방식을 선택해주세요!", "error"); return; }
+
+        const paymentList = {
+            itemId: purInfo.itemKey,
+            amount: itemInfo.price,
+            userId: purInfo.buyerKey,
+            tradeType: purInfo.tradeType,
+            purType: purInfo.purType,
+            location: selectedLoc,
+        }
+
+        const res = await postData("/api/payment/ready", paymentList);
+        if(!res) {
+            showToast("결제 진행 중에 문제가 발생했습니다..", "error"); return;
+        }
+
+        const { orderId, ...paymentInfo } = res.data;
+        sessionStorage.setItem(`payment-${orderId}`, JSON.stringify(paymentInfo));
+
+
+        const popup = window.open(
+            `/mock-payment/${orderId}`,
+            "PaymentPopup",
+            "width=500,height=500"
+        );
     }
 
     return (
         <>
-        <form onSubmit={handleSubmit}>
         {(purchasePage >= 2 && !changeLoc) ?
         <div className="purchase-wrapper">
             <label className="purchase-closeBtn" onClick={onClose}>
@@ -141,7 +188,7 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
                         <span className="purType-radio-span">무통장 입금</span>
                     </label>
                 </div>
-                <button type="button" className="purchase-btn" onClick={() => {}}>
+                <button type="button" className="purchase-btn" onClick={handlePayment}>
                     {itemInfo.price === 0 ? "무료" : itemInfo.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원"} 결제
                 </button>
             </div>
@@ -161,7 +208,6 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
             }}/>
         </div>
         }
-        </form>
         <Modal 
             isOpen={cancelPurchase}
             onClose={() => setCancelPurchase(false)}
