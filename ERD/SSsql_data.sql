@@ -2,7 +2,6 @@ DELETE FROM d1_authority ;
 ALTER TABLE d1_authority  AUTO_INCREMENT = 1;
 
 DELETE FROM d1_user;
-
 DELETE FROM d1_category;
 
 INSERT INTO d1_authority (auth) VALUES

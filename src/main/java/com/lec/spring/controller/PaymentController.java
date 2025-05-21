@@ -2,6 +2,9 @@ package com.lec.spring.controller;
 
 import com.lec.spring.DTO.PaymentCompleteRequest;
 import com.lec.spring.DTO.PaymentRequest;
+import com.lec.spring.domain.Payment;
+import com.lec.spring.service.PaymentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +17,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @CrossOrigin(origins = "http://localhost:5178/")
 public class PaymentController {
     private final Map<String, String> paymentStatus = new ConcurrentHashMap<>();
+
+    @Autowired
+    private PaymentService paymentService;
 
     @PostMapping("/ready")
     public ResponseEntity<Map<String, String>> createPayment(@RequestBody PaymentRequest request) {
@@ -33,12 +39,15 @@ public class PaymentController {
     }
 
     @PostMapping("/complete")
-    public ResponseEntity<Void> completePayment(@RequestBody PaymentCompleteRequest request) {
-        if(paymentStatus.containsKey(request.getOrderId())) {
-            paymentStatus.put(request.getOrderId(), "SUCCESS");
+    public ResponseEntity<?> completePayment(@RequestBody PaymentCompleteRequest orderId,
+                                             @RequestBody PaymentRequest request) {
+        if(paymentStatus.containsKey(orderId.getOrderId())) {
+            paymentStatus.put(orderId.getOrderId(), "SUCCESS");
+
+            Payment paymentInfo = Payment.builder()
+
+                    .build();
         }
-
-
 
         return ResponseEntity.ok().build();
     }

@@ -32,7 +32,11 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
                 event.source.postMessage({ orderId, paymentInfo }, event.origin);
             }
 
-            if(event.data === "PAY_SUCCESS") {
+            if(event.data === "PAYMENT_CANCEL") {
+                showToast("결제가 취소되었습니다!", "error");
+            }
+
+            if(event.data === "PAYMENT_SUCCESS") {
                 const res = await getData(`/api/payment/status/${event.data.orderId}`);
                 const status = res.data.status;
                 showToast(`결제 상태: ${status}`);
@@ -59,7 +63,7 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
             userId: purInfo.buyerKey,
             tradeType: purInfo.tradeType,
             purType: purInfo.purType,
-            location: selectedLoc,
+            location: !selectedLoc ? "" : selectedLoc.address,
         }
 
         const res = await postData("/api/payment/ready", paymentList);
@@ -70,11 +74,10 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
         const { orderId, ...paymentInfo } = res.data;
         sessionStorage.setItem(`payment-${orderId}`, JSON.stringify(paymentInfo));
 
-
         const popup = window.open(
             `/mock-payment/${orderId}`,
             "PaymentPopup",
-            "width=500,height=500"
+            "width=500,height=450"
         );
     }
 

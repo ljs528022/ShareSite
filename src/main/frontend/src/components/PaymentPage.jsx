@@ -13,8 +13,6 @@ function PaymentPage() {
         const handleMessage = (event) => {
             if(event.origin !== window.location.origin) return;
 
-            console.log(event);
-
             const { orderId: receivedOrderId, paymentInfo } = event.data;
             if(receivedOrderId === orderId) {
                 setPaymentData(paymentInfo);
@@ -25,8 +23,31 @@ function PaymentPage() {
         return () => window.removeEventListener("message", handleMessage);
     }, [orderId]);
 
+    const selectPurchaseType = (type) => {
+        switch (type) {
+            case "PAYCO":
+                return "PAYCO";
+            case "CREDIT":
+                return "카드 결제";
+            case "NAVERPAY":
+                return "네이버 페이";
+            case "KAKAOPAY":
+                return "카카오 페이";
+            case "TOSSPAY":
+                return "토스 페이";
+            case "DEPOSIT":
+                return "무통장 입금";
+        }
+    }
+
+    const cancelPayment = () => {
+        confirm("진행 중이던 결제를 취소하시겠습니까?");
+        window.opener.postMessage("PAYMENT_CANCEL", "*");
+        window.close();
+    }
+
     const completePayment = async () => {
-        await postData("/api/payment/complete", { orderId });
+        await postData("/api/payment/complete", { orderId, paymentData });
         window.opener.postMessage("PAYMENT_SUCCESS", "*");
         window.close();
     };
@@ -34,16 +55,33 @@ function PaymentPage() {
     if (!paymentData) return <div>결제 정보를 불러오는 중...</div>
 
     return (
-        <div>
+        <div className="payment-box">
             <h2>임시 결제 페이지</h2>
-            <p>주문 번호: {orderId}</p>
-            <p>결제 금액: {paymentData.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원</p>
-            <p>거래 방법: {paymentData.tradeType === "0" ? "택배" : "직거래"}</p>
-            <p>결제 종류: {paymentData.purType}</p>
-            {paymentData.location && <p>배송지: {paymentData.location}</p>}
-            <div>
-                <button onClick={completePayment}>결제 취소</button>
-                <button onClick={completePayment}>결제 완료</button>
+            <div className="payment-info">
+                <p>주문 번호</p>
+                <span>{orderId}</span>
+            </div>
+            <div className="payment-info">
+                <p>결제 금액</p>
+                <span>{paymentData.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원</span>
+            </div>
+            <div className="payment-info">
+                <p>결제 종류</p>
+                <span>{selectPurchaseType(paymentData.purType)}</span>
+            </div>
+            <div className="payment-info">
+                <p>거래 방법</p>
+                <span>{paymentData.tradeType === "0" ? "택배" : "직거래"}</span>
+            </div>
+            {paymentData.location &&
+            <div className="payment-info">
+                <p>배송지</p>
+                <span>{paymentData.location}</span>
+            </div>
+            }
+            <div className="payment-btn">
+                <button className="payment-btn-cancel" onClick={cancelPayment}>결제 취소</button>
+                <button className="payment-btn-confirm" onClick={completePayment}>결제 완료</button>
             </div>
         </div>
     )
