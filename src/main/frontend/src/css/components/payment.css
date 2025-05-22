@@ -39,7 +39,7 @@
 .payment-btn {
     display: flex;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 15px;
     justify-content: space-evenly;
 }
 
@@ -71,4 +71,9 @@
 .payment-btn-cancel:hover {
     color: white;
     background-color: #777;
+}
+
+.payment-confirm {
+    font-size: 13px;
+    margin-top: 30px;
 }

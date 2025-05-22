@@ -14,3 +14,8 @@ SELECT *
 FROM d1_location
 WHERE userKey = '80A0001'
 AND itemKey IS NULL;
+
+SELECT *
+        FROM d1_payment
+        WHERE buyerKey = '80A0001'
+        ORDER BY purchaseDate DESC;

@@ -13,9 +13,10 @@ import java.time.LocalDateTime;
 @Builder
 public class Payment {
 
-    private String sellerKey;           // 판매자 PK
-    private String buyerKey;            // 구매자 PK
-    private Long itemKey;               // 판매, 구매한 상품 PK
+    private String orderKey;            // 거래 주문 번호 (PK)
+    private String sellerKey;           // 판매자 PK (FK)
+    private String buyerKey;            // 구매자 PK (FK)
+    private Long itemKey;               // 판매, 구매한 상품 PK (FK)
     private String location;            // 상품 배송지
     private Long tradeType;             // 상품을 거래한 방식 -> 0: 택배, 1: 직거래
     private String purType;             // 상품을 구매한 방식

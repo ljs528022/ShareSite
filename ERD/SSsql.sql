@@ -81,13 +81,15 @@ CREATE TABLE d1_location
 
 CREATE TABLE d1_payment
 (
+	orderKey varchar(100) NOT NULL,
 	sellerKey varchar(20) NOT NULL,
 	buyerKey varchar(20) NOT NULL,
 	itemKey int NOT NULL,
 	location varchar(300),
 	tradeType int NOT NULL,
 	purType varchar(50) NOT NULL,
-	purchaseDate datetime NOT NULL
+	purchaseDate datetime NOT NULL,
+	PRIMARY KEY (orderKey)
 );
 
 

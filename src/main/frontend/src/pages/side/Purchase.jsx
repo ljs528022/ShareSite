@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import "../../css/side/purchase.css";
 import { useToast } from "../../util/ToastContext";
+import { postData } from "../../services/api";
 import Modal from "../../util/Modal";
 import ItemCard from "../../components/itemCard";
 import LocationList from "./LocationList";
-import { getData, postData } from "../../services/api";
+import "../../css/side/purchase.css";
 
 const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
 
@@ -37,16 +37,15 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
             }
 
             if(event.data === "PAYMENT_SUCCESS") {
-                const res = await getData(`/api/payment/status/${event.data.orderId}`);
-                const status = res.data.status;
-                showToast(`결제 상태: ${status}`);
+                onClose();
+                showToast(`결제 성공! 마이페이지에서 거래확정을 확인해주세요!`, "success");
             }
             
         };
 
         window.addEventListener("message", handleMessage);
         return () => window.removeEventListener("message", handleMessage);
-    }, [])
+    }, [onClose])
 
     const handleInput = (e) => {
         const { id, value } = e.target;
@@ -60,15 +59,17 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
         const paymentList = {
             itemId: purInfo.itemKey,
             amount: itemInfo.price,
-            userId: purInfo.buyerKey,
+            sellerId: purInfo.sellerKey,
+            buyerId: purInfo.buyerKey,
             tradeType: purInfo.tradeType,
             purType: purInfo.purType,
             location: !selectedLoc ? "" : selectedLoc.address,
         }
 
         const res = await postData("/api/payment/ready", paymentList);
-        if(!res) {
-            showToast("결제 진행 중에 문제가 발생했습니다..", "error"); return;
+        if(res.status !== 200) {
+            showToast("결제 진행 중에 문제가 발생했습니다..", "error"); 
+            return;
         }
 
         const { orderId, ...paymentInfo } = res.data;

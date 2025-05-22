@@ -52,7 +52,9 @@ function PaymentPage() {
         window.close();
     };
 
+    
     if (!paymentData) return <div>결제 정보를 불러오는 중...</div>
+    console.log(paymentData);
 
     return (
         <div className="payment-box">
@@ -79,9 +81,12 @@ function PaymentPage() {
                 <span>{paymentData.location}</span>
             </div>
             }
+            <p className="payment-confirm">
+                해당 내용으로 결제를 진행하시겠습니까?
+            </p>
             <div className="payment-btn">
                 <button className="payment-btn-cancel" onClick={cancelPayment}>결제 취소</button>
-                <button className="payment-btn-confirm" onClick={completePayment}>결제 완료</button>
+                <button className="payment-btn-confirm" onClick={completePayment}>결제 확인</button>
             </div>
         </div>
     )

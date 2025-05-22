@@ -34,9 +34,10 @@ const UserPage = () => {
     const [ userScore, setUserScore ] = useState(0);
 
     // 사이드 페이지 & 모달 ON | OFF
-    const [ showLikeItem, setShowLikeItem ] = useState(false);
-    const [ showModify, setShowModify] = useState(false);
-    const [ showLocation, setShowLocation ] = useState(false);
+    const [ showPayment, setShowPayment ] = useState(false);    // 구매 내역
+    const [ showLikeItem, setShowLikeItem ] = useState(false);  // 찜한 상품
+    const [ showModify, setShowModify] = useState(false);       // 내 정보 수정
+    const [ showLocation, setShowLocation ] = useState(false);  // 배송지 관리
 
     const logginUserKey = user !== null ? user.userKey : null;
     const isOwnPage = userKey === logginUserKey;
@@ -101,8 +102,10 @@ const UserPage = () => {
                     <div className="user-mypage-row">
                         <label>거래정보</label>
                         <ul>
-                            <li>구매 내역</li>
-                            <li onClick={() => setShowLikeItem(prev => !prev)}>
+                            <li onClick={() => setShowPayment(true)}>
+                                구매 내역
+                            </li>
+                            <li onClick={() => setShowLikeItem(true)}>
                                 찜한 상품
                             </li>
                         </ul>
@@ -136,8 +139,8 @@ const UserPage = () => {
                             {/* 유저 이름 */}
                             <label>{userInfo.useralias}#{userInfo.userKey}</label>
                             <p className="user-decoration">
-                                {/* userIntro로 받아오게 변경 예정 */}
-                                더 다양한 상품을 다른 회원들과 거래 해보세요!
+                                
+                                {userInfo.userIntro ? userInfo.userIntro : "더 다양한 상품을 다른 회원들과 거래 해보세요!"}
                             </p>
                             {/* 유저의 상품 거래 현황 */}
                             <div className="user-trade-status">
@@ -263,8 +266,15 @@ const UserPage = () => {
                 </div>
             </div>
             {/* 사이드 페이지 부분 */}
-
-            {/* 찜 목록 페이지 */}
+            {/* 구매 내역  */}
+            <SidePage
+                isOpen={showPayment}
+                onClose={() => setShowPayment(false)}
+                headerText={"내가 거래한 상품"}
+                content={""}
+            />
+            
+            {/* 찜한 상품 */}
             <SidePage 
                 isOpen={showLikeItem} 
                 onClose={() => setShowLikeItem(false)}
@@ -277,7 +287,7 @@ const UserPage = () => {
                 }
             />
 
-            {/* 내 정보 수정 페이지 */}
+            {/* 내 정보 수정 */}
             <EditModal 
                 isOpen={showModify}
                 onClose={() => setShowModify(false)}
@@ -285,9 +295,10 @@ const UserPage = () => {
                 content={<UserModify user={userInfo} onClose={() => setShowModify(false)}/>}
             />
 
-            {/* 계좌 관리 페이지 */}
+            {/* 계좌 관리 */}
+            
 
-            {/* 배송지 관리 페이지 */}
+            {/* 배송지 관리 */}
             <SidePage 
                 isOpen={showLocation}
                 onClose={() => {setShowLocation(false)}}
@@ -297,10 +308,10 @@ const UserPage = () => {
                 }
             />
 
-            {/* 거래 후기 페이지 */}
+            {/* 거래 후기 */}
 
 
-            {/* 탈퇴하기 페이지지 */}
+            {/* 탈퇴하기 */}
 
         </main>
         </>

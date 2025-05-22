@@ -122,4 +122,10 @@
             </if>
         WHERE userKey = #{userKey}
     </update>
+
+    <update id="includeVisitcnt" flushCache="true">
+        UPDATE d1_user
+        SET visitcnt = visitcnt + 1
+        WHERE userKey = #{userKey}
+    </update>
 </mapper>
