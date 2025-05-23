@@ -11,5 +11,11 @@ public interface PaymentRepository {
 
     int savePayment(Payment payment);
 
+    int deletePayment(@Param("orderKey")String orderKey);
+
+    int updateConfirm(@Param("orderKey")String orderKey);
+
     List<Payment> findByUserKey(@Param("userKey")String userKey);
+
+    Payment findByOrderKey(@Param("orderKey")String orderKey);
 }

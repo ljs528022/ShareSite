@@ -11,14 +11,30 @@
             keyProperty="orderKey"
             keyColumn="orderKey"
     >
-        INSERT INTO d1_payment (orderKey, sellerKey, buyerKey, itemKey, location, tradeType, purType, purchaseDate)
-        VALUES (#{orderKey}, #{sellerKey}, #{buyerKey}, #{itemKey}, #{location}, #{tradeType}, #{purType}, #{purchaseDate})
+        INSERT INTO d1_payment (orderKey, sellerKey, buyerKey, itemKey, location, tradeType, purType, price, purchaseDate, confirmed)
+        VALUES (#{orderKey}, #{sellerKey}, #{buyerKey}, #{itemKey}, #{location}, #{tradeType}, #{purType}, #{price}, #{purchaseDate}, #{confirmed})
     </insert>
+
+    <delete id="deletePayment" flushCache="true">
+        DELETE FROM d1_payment WHERE orderKey = #{orderKey}
+    </delete>
+
+    <update id="updateConfirm">
+        UPDATE d1_payment
+        SET confirmed = true
+        WHERE orderKey = #{orderKey}
+    </update>
 
     <select id="findByUserKey" resultType="com.lec.spring.domain.Payment">
         SELECT *
         FROM d1_payment
         WHERE buyerKey = #{userKey}
         ORDER BY purchaseDate DESC
+    </select>
+
+    <select id="findByOrderKey" resultType="com.lec.spring.domain.Payment">
+        SELECT *
+        FROM d1_payment
+        WHERE orderKey = #{orderKey}
     </select>
 </mapper>

@@ -85,5 +85,7 @@ public interface UserRepository {
     // List All Users
     List<User> userList();
 
-    void includeVisitcnt(@Param("userKey")String userKey);
+    void includeVisitCnt(@Param("userKey")String userKey);
+
+    void includeTradeCnt(@Param("userKey")String userKey);
 }

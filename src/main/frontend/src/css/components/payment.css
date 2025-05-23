@@ -5,6 +5,7 @@
     margin: 0 auto;
     margin-top: 60px;
     text-align: center;
+    
 }
 
 .payment-box h2 {
@@ -76,4 +77,104 @@
 .payment-confirm {
     font-size: 13px;
     margin-top: 30px;
+}
+
+/* 구매 내역 CSS */
+.payments-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.payments-box {
+    display: grid;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.paymentInfo-btn {
+    grid-column: 2;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.rotated {
+    grid-column: 2;
+    transform: rotate(180deg);
+}
+
+.paymentInfo-box {
+    grid-column: span 2;
+
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    margin: 0 auto;
+    padding: 10px 0px;
+    margin-top: 20px;
+
+    border-top: 1.5px solid rgba(0, 0, 0, 0.2);
+}
+
+.paymentInfo-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.paymentInfo-row p {
+    width: 100px;
+    margin: 10px 0px;
+    border-right: 1px solid rgba(0, 0, 0, 0.5);
+    font-weight: 500;
+}
+
+.paymentInfo-row span {
+    width: 200px;
+    font-size: 14.5px;
+}
+
+.payments-btn-confirm {
+    margin-top: 15px;
+    padding: 8px 20px;
+    border: 1px solid #91B4FF;
+    font-weight: 500;
+    color: #91B4FF;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.payments-btn-confirm:hover {
+    background-color: #91B4FF;
+    color: white;
+}
+
+.payments-btn-cancel {
+    margin-top: 15px;
+    padding: 8px 20px;
+    font-weight: 500;
+    border: 1px solid #d75454;
+    color: #d75454;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.payments-btn-cancel:hover {
+    background-color: #d75454;
+    color: white;
+}
+
+.payments-btn-review {
+    margin-top: 15px;
+    padding: 8px 20px;
+    border: 1px solid #91B4FF;
+    font-weight: 500;
+    color: #91B4FF;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.payments-btn-review:hover {
+    background-color: #91B4FF;
+    color: white;
 }

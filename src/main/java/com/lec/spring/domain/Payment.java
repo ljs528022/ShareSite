@@ -20,6 +20,9 @@ public class Payment {
     private String location;            // 상품 배송지
     private Long tradeType;             // 상품을 거래한 방식 -> 0: 택배, 1: 직거래
     private String purType;             // 상품을 구매한 방식
+    private Long price;                 // 결제한 금액
     private LocalDateTime purchaseDate; // 상품을 구매한 날짜
+    private Boolean confirmed;          // 거래 확정 확인 값
+
 
 }

@@ -11,6 +11,8 @@ import UserModify from "./userModify";
 import EditModal from "../../util/EditModal";
 import "../../css/pages/userPage.css";
 import LocationList from "../side/LocationList";
+import Payments from "../side/Payments";
+import Modal from "../../util/Modal";
 
 const UserPage = () => {
 
@@ -38,6 +40,8 @@ const UserPage = () => {
     const [ showLikeItem, setShowLikeItem ] = useState(false);  // 찜한 상품
     const [ showModify, setShowModify] = useState(false);       // 내 정보 수정
     const [ showLocation, setShowLocation ] = useState(false);  // 배송지 관리
+    const [ showReivew, setShowReview ] = useState(false);      // 리뷰 남기기 확인
+    const [ writeReview, setWriteReview ] = useState(false);    // 리뷰 남기기기
 
     const logginUserKey = user !== null ? user.userKey : null;
     const isOwnPage = userKey === logginUserKey;
@@ -271,6 +275,28 @@ const UserPage = () => {
                 isOpen={showPayment}
                 onClose={() => setShowPayment(false)}
                 headerText={"내가 거래한 상품"}
+                content={<Payments setShowReview={() => setShowReview(true)} />}
+            />
+
+            {/* 리뷰 남기기 확인인 Modal */}
+            <Modal
+                isOpen={showReivew}
+                onClose={() => setShowReview(false)}
+                onConfirm={() => {
+                    setShowReview(false)
+                    setWriteReview(true)}}
+                title={"리뷰 남기기"}
+                message={`상품을 구매해주셔서 감사합니다!\n지금 판매자에 대한 거래 리뷰를 남기시겠어요?\n
+                    거래 리뷰를 남기면 판매자의 상품을 구매하는 \n다른 회원분들에게 큰 도움이 됩니다!`}
+                confirmText={"네, 지금 쓸게요"}
+                cancelText={"아뇨, 나중에 쓸게요"}
+            />
+
+            {/* 리뷰 남기기 EditModal */}
+            <EditModal
+                isOpen={writeReview}
+                onClose={() => setWriteReview(false)}
+                title={"리뷰 남기기"}
                 content={""}
             />
             

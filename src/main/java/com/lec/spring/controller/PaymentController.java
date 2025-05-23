@@ -7,6 +7,7 @@ import com.lec.spring.domain.Item;
 import com.lec.spring.domain.Payment;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.PaymentService;
+import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,8 @@ public class PaymentController {
     private PaymentService paymentService;
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/ready")
     public ResponseEntity<Map<String, String>> createPayment(@RequestBody PaymentRequest request) {
@@ -64,7 +67,9 @@ public class PaymentController {
                     .location(request.getLocation())
                     .tradeType(request.getTradeType())
                     .purType(request.getPurType())
+                    .price(request.getAmount())
                     .purchaseDate(LocalDateTime.now())
+                    .confirmed(false)
                     .build();
 
             paymentService.savePayment(paymentInfo);
@@ -73,18 +78,32 @@ public class PaymentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{userKey}")
-    public ResponseEntity<?> getUserPayments(@PathVariable("userKey")String userKey) {
-        List<Payment> payments = paymentService.findByUserKey(userKey);
+    @GetMapping("/buyer/{buyerId}")
+    public ResponseEntity<?> getUserPayments(@PathVariable("buyerId")String buyerId) {
+        Map<String, Object> response = new HashMap<>();
+
+        List<Payment> payments = paymentService.findByUserKey(buyerId);
 
         List<Long> itemKeys = payments.stream().map(Payment::getItemKey).toList();
         List<ItemDTO> items = itemService.findItemsByKeys(itemKeys);
 
-        Map<String, Object> response = new HashMap<>();
-
         response.put("userPayments", payments);
         response.put("items", items);
 
-        return ResponseEntity.ok(payments);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/confirm/{orderKey}")
+    public ResponseEntity<?> confirmPayment(@PathVariable("orderKey")String orderKey) {
+        paymentService.updateConfirm(orderKey);
+
+        return ResponseEntity.ok("거래 완료!");
+    }
+
+    @DeleteMapping("/cancel/{orderKey}")
+    public ResponseEntity<?> cancelPayment(@PathVariable("orderKey")String orderKey) {
+        paymentService.deletePayment(orderKey);
+
+        return ResponseEntity.ok("거래 취소 됨");
     }
 }

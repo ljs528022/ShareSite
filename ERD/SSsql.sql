@@ -88,7 +88,9 @@ CREATE TABLE d1_payment
 	location varchar(300),
 	tradeType int NOT NULL,
 	purType varchar(50) NOT NULL,
+	price int NOT NULL,
 	purchaseDate datetime NOT NULL,
+	confirmed boolean NOT NULL,
 	PRIMARY KEY (orderKey)
 );
 
@@ -96,10 +98,10 @@ CREATE TABLE d1_payment
 CREATE TABLE d1_review
 (
 	reviewKey int NOT NULL AUTO_INCREMENT,
-	userKey varchar(20) NOT NULL,
-	itemKey int NOT NULL,
-	reviewtag varchar(20) NOT NULL,
-	content longtext,
+	sellerKey varchar(20) NOT NULL,
+	buyerKey varchar(20) NOT NULL,
+	reviewScore varchar(20) NOT NULL,
+	reviewDetail longtext,
 	PRIMARY KEY (reviewKey)
 );
 
@@ -212,11 +214,21 @@ ALTER TABLE d1_payment
 ;
 
 ALTER TABLE d1_review
-	ADD FOREIGN KEY (userKey)
+	ADD FOREIGN KEY (sellerKey)
 	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
+
+ALTER TABLE d1_review
+	ADD FOREIGN KEY (buyerKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE CASCADE
+;
+
+
+
 
 
 

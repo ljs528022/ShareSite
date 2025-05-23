@@ -38,7 +38,7 @@ const Purchase = ({ onClose, sellerInfo, buyerInfo, itemInfo }) => {
 
             if(event.data === "PAYMENT_SUCCESS") {
                 onClose();
-                showToast(`결제 성공! 마이페이지에서 거래확정을 확인해주세요!`, "success");
+                showToast(`결제 성공! 마이페이지에서 구매 내역을 확인해주세요!`, "success");
             }
             
         };
