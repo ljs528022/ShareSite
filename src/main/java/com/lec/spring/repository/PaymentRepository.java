@@ -18,4 +18,6 @@ public interface PaymentRepository {
     List<Payment> findByUserKey(@Param("userKey")String userKey);
 
     Payment findByOrderKey(@Param("orderKey")String orderKey);
+
+    int findByItemKeyAndUserKey(@Param("itemKey")Long itemKey, @Param("buyerKey")String buyerKey);
 }

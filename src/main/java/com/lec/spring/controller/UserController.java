@@ -128,4 +128,15 @@ public class UserController {
             return ResponseEntity.ok("비밀번호가 일치합니다!");
         }
     }
+
+    @GetMapping("/getSellerInfo/{userKey}")
+    public ResponseEntity<?> getSellerInfo(@PathVariable("userKey") String userKey) {
+        if(userKey != null) {
+            User userInfo = userService.findByUserKey(userKey);
+
+            return ResponseEntity.ok(userInfo);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

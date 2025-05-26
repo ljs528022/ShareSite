@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../services/UserContext";
 import { getData } from "../../services/api";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,6 +13,7 @@ import "../../css/pages/userPage.css";
 import LocationList from "../side/LocationList";
 import Payments from "../side/Payments";
 import Modal from "../../util/Modal";
+import WriteReview from "../side/WriteReview";
 
 const UserPage = () => {
 
@@ -27,6 +28,9 @@ const UserPage = () => {
     const [ userItem, setUserItem ] = useState(null);
     const [ trading, setTranding ] = useState(null);
     const [ traded, setTranded ] = useState(null);
+
+    // 거래 리뷰의 판매자 정보
+    const reviewRef = useRef(null);
 
     // 상품 정렬 기준
     const [ sortTrade, setSortTrade ] = useState("ALL");
@@ -89,6 +93,11 @@ const UserPage = () => {
 
         return sorted;
     };
+
+    const handleShowReview = (sellerInfo) => {
+        reviewRef.current = sellerInfo;
+        setShowReview(true);
+    }
 
     const displayedItems = getsortedItems();
 
@@ -275,7 +284,7 @@ const UserPage = () => {
                 isOpen={showPayment}
                 onClose={() => setShowPayment(false)}
                 headerText={"내가 거래한 상품"}
-                content={<Payments setShowReview={() => setShowReview(true)} />}
+                content={<Payments setShowReview={handleShowReview} />}
             />
 
             {/* 리뷰 남기기 확인인 Modal */}
@@ -296,8 +305,8 @@ const UserPage = () => {
             <EditModal
                 isOpen={writeReview}
                 onClose={() => setWriteReview(false)}
-                title={"리뷰 남기기"}
-                content={""}
+                title={""}
+                content={<WriteReview sellerInfo={reviewRef.current} />}
             />
             
             {/* 찜한 상품 */}

@@ -58,4 +58,9 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment findByOrderKey(String orderKey) {
         return paymentRepository.findByOrderKey(orderKey);
     }
+
+    @Override
+    public Boolean findByItemKeyAndUserKey(Long itemKey, String buyerKey) {
+        return paymentRepository.findByItemKeyAndUserKey(itemKey, buyerKey) > 0;
+    }
 }

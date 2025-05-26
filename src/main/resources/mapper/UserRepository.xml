@@ -123,13 +123,13 @@
         WHERE userKey = #{userKey}
     </update>
 
-    <update id="includeVisitcnt" flushCache="true">
+    <update id="includeVisitCnt" flushCache="true" parameterType="com.lec.spring.domain.User">
         UPDATE d1_user
         SET visitcnt = visitcnt + 1
-        WHERE userKey = #{userKey}
+        WHERE username = #{username}
     </update>
 
-    <update id="includeTradeCnt" flushCache="true">
+    <update id="includeTradeCnt" flushCache="true" parameterType="com.lec.spring.domain.User">
         UPDATE d1_user
         SET tradecnt = tradecnt + 1
         WHERE userKey = #{userKey}

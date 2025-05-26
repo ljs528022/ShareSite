@@ -37,4 +37,10 @@
         FROM d1_payment
         WHERE orderKey = #{orderKey}
     </select>
+
+    <select id="findByItemKeyAndUserKey" resultType="int">
+        SELECT COUNT(*)
+        FROM d1_payment
+        WHERE itemKey = #{itemKey} AND buyerKey = #{buyerKey}
+    </select>
 </mapper>

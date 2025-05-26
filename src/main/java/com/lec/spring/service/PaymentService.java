@@ -12,4 +12,6 @@ public interface PaymentService {
     int updateConfirm(String orderKey);
     List<Payment> findByUserKey(String userKey);
     Payment findByOrderKey(String orderKey);
+
+    Boolean findByItemKeyAndUserKey(Long itemKey, String buyerKey);
 }

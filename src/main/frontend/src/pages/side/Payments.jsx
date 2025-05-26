@@ -85,23 +85,28 @@ const Payments = ({ setShowReview }) => {
 
     const handleCancel = async ( e, orderKey ) => {
         e.preventDefault();
-        confirm("정말 해당 거래를 취소하시겠습니까?\n거래가 취소되면 해당 상품의 거래 내역이 삭제됩니다.");
+        const confirmed = confirm("정말 해당 거래를 취소하시겠습니까?\n거래가 취소되면 해당 상품의 거래 내역이 삭제됩니다.");
 
-        const response = await deleteData(`/api/payment/cancel/${orderKey}`);
-        if(response.status === 200) {
-            showToast("거래를 취소했습니다", "warning");
-            setInfoChanged(prev => !prev);
-        };
+        if(confirmed) {
+            const response = await deleteData(`/api/payment/cancel/${orderKey}`);
+            if(response.status === 200) {
+                showToast("거래를 취소했습니다", "warning");
+                setInfoChanged(prev => !prev);
+            };
+        }
     }
 
     const handleConfirm = async ( e, orderKey ) => {
         e.preventDefault();
-        confirm("판매자와의 거래를 확정합니다.\n확정하기 전에 거래가 잘 이루워졌는지 확인해주세요.");
-        
-        const response = await postData(`/api/payment/confirm/${orderKey}`);
-        if(response.status === 200) {
-            showToast("거래가 확정되었습니다!");
-            setInfoChanged(prev => !prev);
+        const confirmed = confirm("판매자와의 거래를 확정합니다.\n확정하기 전에 거래가 잘 이루워졌는지 확인해주세요.");
+
+        if(confirmed) {
+            const response = await postData(`/api/payment/confirm/${orderKey}`);
+            if(response.status === 200) {
+                showToast("거래가 확정되었습니다!");
+                setInfoChanged(prev => !prev);
+                setShowReview();
+            }
         }
     }
 
@@ -159,9 +164,9 @@ const Payments = ({ setShowReview }) => {
                         :
                         // 리뷰를 불러온게 없으면 남기기 버튼, 있으면 리뷰 내용을 출력
                         <div className="paymentInfo-row">
-                            <button className="payments-btn-review" onClick={setShowReview}>거래 리뷰 남기기</button>
+                            <button className="payments-btn-review" onClick={() => setShowReview(p.itemInfo.userKey)}>거래 리뷰 남기기</button>
                         </div>
-                        // ? 연산자로 불러올 예정정
+                        // ? 연산자로 불러올 예정
                         }
                     </div>
                     }

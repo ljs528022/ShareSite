@@ -118,7 +118,8 @@ public class UserServiceImpl implements UserService {
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("아이디 또는 비밀번호가 일치하지 않습니다.");
         }
-        userRepository.includeVisitCnt(user.getUserKey());
+
+        userRepository.includeVisitCnt(user.getUsername());
 
         return jwtUtil.generateToken(user.getUsername());
     }

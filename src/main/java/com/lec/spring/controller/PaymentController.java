@@ -106,4 +106,11 @@ public class PaymentController {
 
         return ResponseEntity.ok("거래 취소 됨");
     }
+
+    @GetMapping
+    public ResponseEntity<?> getPaymentInfo(@RequestParam("itemKey")Long itemKey, @RequestParam("buyerKey")String buyerKey) {
+        Boolean paymentIsExist = paymentService.findByItemKeyAndUserKey(itemKey, buyerKey);
+
+        return ResponseEntity.ok(paymentIsExist);
+    }
 }
