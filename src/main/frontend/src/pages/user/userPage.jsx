@@ -306,7 +306,7 @@ const UserPage = () => {
                 isOpen={writeReview}
                 onClose={() => setWriteReview(false)}
                 title={""}
-                content={<WriteReview sellerInfo={reviewRef.current} />}
+                content={<WriteReview sellerInfo={reviewRef.current} onClose={() => setWriteReview(false)} />}
             />
             
             {/* 찜한 상품 */}

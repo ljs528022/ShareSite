@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import "../../css/side/writeReview.css";
 import { useUser } from "../../services/UserContext";
-import { getData } from "../../services/api";
+import { getData, postData } from "../../services/api";
+import { useToast } from "../../util/ToastContext";
 
-const WriteReview = ({ sellerInfo }) => {
+const WriteReview = ({ sellerInfo, onClose }) => {
 
     const { user } = useUser();
+
+    const { showToast } = useToast();
 
     const [ reviewPage, setReviewPage ] = useState(0);
     const [ sellerData, setSellerData ] = useState(null);
     const [ reviewData, setReviewData ] = useState({
-        sellerKey: "",
+        sellerKey: sellerInfo,
         buyerKey: user.userKey,
         reviewScore: "",
         reviewDetail: "",
@@ -31,12 +34,17 @@ const WriteReview = ({ sellerInfo }) => {
         setReviewData(prev => ({ ...prev, [id] : value }));
     }
 
-    const handleTextArea = (e) => {
-
-    }
-
     const handleSubmit = async () => {
+        if(reviewData.reviewScore === "") {
+            showToast("거래에 대한 평가를 남겨주새요!", "error");
+            return;
+        }
 
+        const response = await postData("/api/review/write", reviewData);
+        if(response.status === 200) {
+            showToast("성공적으로 리뷰를 저장했습니다!", "success");
+            onClose();
+        }
     }
 
     if(!sellerData) return;
@@ -59,7 +67,7 @@ const WriteReview = ({ sellerInfo }) => {
             </div>
             : reviewPage === 1 ?
             <div className="review-input">
-                <button className="review-btn" onClick={() => setReviewPage(0)}>
+                <button className="review-btn" onClick={() => {setReviewPage(0); setReviewData(prev => ({ ...prev, reviewScore: ""}));}}>
                     <span className="review-btn-span">좋았어요</span>
                 </button>
                 <label className={reviewData.reviewScore === "GOOD" ? "review-btn-checked" : "review-btn"}>
@@ -81,7 +89,7 @@ const WriteReview = ({ sellerInfo }) => {
             </div>
             : reviewPage === 2 &&
             <div className="review-input">
-                <button className="review-btn" onClick={() => setReviewPage(0)}>
+                <button className="review-btn" onClick={() => {setReviewPage(0); setReviewData(prev => ({ ...prev, reviewScore: ""}));}}>
                     <span className="review-btn-span">아쉬웠어요</span>
                 </button>
                 <label className={reviewData.reviewScore === "BAD" ? "review-btn-checked" : "review-btn"}>
@@ -102,8 +110,8 @@ const WriteReview = ({ sellerInfo }) => {
                 </label>
             </div>
             }
-            <textarea className="review-detail" onChange={handleTextArea}/>
-            <button type="button" className="review-submit-btn" >제출</button>
+            <textarea className="review-detail" id="reviewDetail" onChange={handleInput}/>
+            <button type="button" className="review-submit-btn" onClick={handleSubmit}>제출</button>
         </div>
     )
 }
