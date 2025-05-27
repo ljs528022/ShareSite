@@ -139,4 +139,12 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/getReviewUsers")
+    public ResponseEntity<?> getReviewUsers(@RequestBody List<String> buyers) {
+        if(buyers == null) return ResponseEntity.ok("리뷰 없음!");
+        List<User> users = userService.getReviewUsers(buyers);
+
+        return ResponseEntity.ok(users);
+    }
 }

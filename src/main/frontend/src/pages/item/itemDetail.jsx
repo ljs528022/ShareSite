@@ -345,7 +345,7 @@ const ItemDetail = () => {
                                     } else setConfirmPurChase(true)}}
                             >구매하기</button>
                         </div>
-                        :
+                        : !item.tradestatus ?
                         <div className="item-Btns">
                             <button
                                 type="button"
@@ -353,6 +353,15 @@ const ItemDetail = () => {
                                 style={{cursor: "pointer", }}
                                 onClick={() => navigate(`/user/${userKey}`)}
                             >거래를 진행 중인 상품 입니다</button>
+                        </div>
+                        :
+                        <div className="item-Btns">
+                            <button
+                                type="button"
+                                className="item-purchase-btn"
+                                style={{cursor: "pointer", }}
+                                disabled
+                            >거래가 완료된 상품 입니다</button>
                         </div>
                         }   
                         <Modal

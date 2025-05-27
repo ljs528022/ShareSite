@@ -33,12 +33,11 @@ public interface UserService {
     // Verify Password
     boolean verifyPass(String userKey, String password);
 
-    // Auth as each UserKey
-    List<Authority> selectAuthByUserKey (String userKey);
+    // Get Review's Users
+    List<User> getReviewUsers(List<String> buyerKeys);
 
-    // -- User Page --
-    User getUserByUserName(String username);
-    User getUserByUserKey(String userKey);
+
+    // For Modify User Info
     void deleteAccount(String userKey);
     void updatePassword(String newPassword, String userKey);
     void updateEmail(String newEmail, String userKey);

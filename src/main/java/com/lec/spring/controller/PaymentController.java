@@ -5,8 +5,10 @@ import com.lec.spring.DTO.PaymentCompleteRequest;
 import com.lec.spring.DTO.PaymentRequest;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.Payment;
+import com.lec.spring.domain.Review;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.PaymentService;
+import com.lec.spring.service.ReviewService;
 import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,8 @@ public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private ReviewService reviewService;
     @Autowired
     private ItemService itemService;
     @Autowired

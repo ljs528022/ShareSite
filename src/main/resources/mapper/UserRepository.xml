@@ -134,4 +134,13 @@
         SET tradecnt = tradecnt + 1
         WHERE userKey = #{userKey}
     </update>
+
+    <select id="getReviewUsers" parameterType="list" resultType="com.lec.spring.domain.User">
+        SELECT *
+        FROM d1_user
+        WHERE userKey IN
+        <foreach item="key" collection="list" open="(" separator="," close=")">
+            #{key}
+        </foreach>
+    </select>
 </mapper>

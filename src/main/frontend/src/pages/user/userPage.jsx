@@ -14,6 +14,7 @@ import LocationList from "../side/LocationList";
 import Payments from "../side/Payments";
 import Modal from "../../util/Modal";
 import WriteReview from "../side/WriteReview";
+import Reviews from "../side/Reviews";
 
 const UserPage = () => {
 
@@ -26,11 +27,13 @@ const UserPage = () => {
     // 유저페이지 정보들
     const [ userInfo, setUserInfo ] = useState(null);
     const [ userItem, setUserItem ] = useState(null);
-    const [ trading, setTranding ] = useState(null);
-    const [ traded, setTranded ] = useState(null);
+    const [ trading, setTrading ] = useState(null);
+    const [ traded, setTraded ] = useState(null);
 
     // 거래 리뷰의 판매자 정보
     const reviewRef = useRef(null);
+    // 해당 유저 페이지의 거래 후기
+    const [ userReivew, setUserReview ] = useState(null);
 
     // 상품 정렬 기준
     const [ sortTrade, setSortTrade ] = useState("ALL");
@@ -40,12 +43,13 @@ const UserPage = () => {
     const [ userScore, setUserScore ] = useState(0);
 
     // 사이드 페이지 & 모달 ON | OFF
-    const [ showPayment, setShowPayment ] = useState(false);    // 구매 내역
-    const [ showLikeItem, setShowLikeItem ] = useState(false);  // 찜한 상품
-    const [ showModify, setShowModify] = useState(false);       // 내 정보 수정
-    const [ showLocation, setShowLocation ] = useState(false);  // 배송지 관리
-    const [ showReivew, setShowReview ] = useState(false);      // 리뷰 남기기 확인
-    const [ writeReview, setWriteReview ] = useState(false);    // 리뷰 남기기기
+    const [ showPayment, setShowPayment ] = useState(false);            // 구매 내역
+    const [ showLikeItem, setShowLikeItem ] = useState(false);          // 찜한 상품
+    const [ showModify, setShowModify] = useState(false);               // 내 정보 수정
+    const [ showLocation, setShowLocation ] = useState(false);          // 배송지 관리
+    const [ showReivewModal, setShowReviewModal ] = useState(false);    // 리뷰 남기기 확인 모달
+    const [ writeReview, setWriteReview ] = useState(false);            // 리뷰 남기기
+    const [ showReviews, setShowReviews ] = useState(false);            // 거래 리뷰
 
     const logginUserKey = user !== null ? user.userKey : null;
     const isOwnPage = userKey === logginUserKey;
@@ -59,8 +63,8 @@ const UserPage = () => {
                 setUserItem(userItems);
 
                 if(userItems != null) {
-                    setTranding(userItems.filter(item => item.tradestatus === false));
-                    setTranded(userItems.filter(item => item.tradestatus === true));
+                    setTrading(userItems.filter(item => item.tradestatus === false));
+                    setTraded(userItems.filter(item => item.tradestatus === true));
                 };
             } catch (err) {
                 showToast("통신 에러가 발생했습니다..", "error");
@@ -68,6 +72,21 @@ const UserPage = () => {
             }
         }
         getUserInfo();
+    }, [userKey]);
+
+    // 해당 유저의 거래 리뷰 받아오기
+    useEffect(() => {
+        const getReview = async () => {
+            try {
+                const response = await getData(`/api/review/${userKey}`);
+                if(response.status === 200) {
+                    setUserReview(response.data);
+                }
+            } catch {
+                showToast("통신 에러가 발생했습니다..", "error");
+            }
+        }
+        getReview();
     }, [userKey]);
 
     const getsortedItems = () => {
@@ -96,7 +115,7 @@ const UserPage = () => {
 
     const handleShowReview = (sellerInfo) => {
         reviewRef.current = sellerInfo;
-        setShowReview(true);
+        setShowReviewModal(true);
     }
 
     const displayedItems = getsortedItems();
@@ -135,7 +154,7 @@ const UserPage = () => {
                             <li onClick={() => setShowLocation(prev => !prev)}>
                                 배송지 관리
                             </li>
-                            <li onClick={() => showToast("작성 예정!")}>
+                            <li onClick={() => setShowReviews(true)}>
                                 거래 후기
                             </li>
                             <li onClick={() => showToast("작성 예정!")}>
@@ -163,15 +182,15 @@ const UserPage = () => {
                                 </div>
                                 <a>|</a>
                                 <div className="trade-status-box">
-                                    <label>거래완료</label>
+                                    <label>거래 완료</label>
                                     <p>{traded ? traded.length : "0"}</p>
                                 </div>
                                 <a>|</a>
                                 <div className="trade-status-box">
-                                    <label>거래리뷰</label>
+                                    <label>거래 리뷰</label>
                                     <p style={{textDecoration: "underline", cursor: "pointer"}}
-                                        onClick={null}>
-                                        {1}
+                                        onClick={() => setShowReviews(true)}>
+                                        {userReivew ? userReivew.length : "0"}
                                     </p>
                                 </div>
                             </div>
@@ -223,20 +242,17 @@ const UserPage = () => {
                         <div className="user-item-type">
                             <button
                                 className={sortTrade === "ALL" ? "sort-button-selected" : "sort-button"}
-                                onClick={() => setSortTrade("ALL")}
-                            >
+                                onClick={() => setSortTrade("ALL")}>
                                 전체
                             </button>
                             <button
                                 className={sortTrade === "TRADING" ? "sort-button-selected" : "sort-button"}
-                                onClick={() => setSortTrade("TRADING")}
-                            >
+                                onClick={() => setSortTrade("TRADING")}>
                                 거래중
                             </button>
                             <button
                                 className={sortTrade === "TRADED" ? "sort-button-selected" : "sort-button"}
-                                onClick={() => setSortTrade("TRADED")}
-                            >
+                                onClick={() => setSortTrade("TRADED")}>
                                 거래완료
                             </button>
                         </div>
@@ -287,13 +303,13 @@ const UserPage = () => {
                 content={<Payments setShowReview={handleShowReview} />}
             />
 
-            {/* 리뷰 남기기 확인인 Modal */}
+            {/* 리뷰 남기기 확인 Modal */}
             <Modal
-                isOpen={showReivew}
-                onClose={() => setShowReview(false)}
+                isOpen={showReivewModal}
+                onClose={() => setShowReviewModal(false)}
                 onConfirm={() => {
-                    setShowReview(false)
-                    setWriteReview(true)}}
+                    setShowReviewModal(false);
+                    setWriteReview(true);}}
                 title={"리뷰 남기기"}
                 message={`상품을 구매해주셔서 감사합니다!\n지금 판매자에 대한 거래 리뷰를 남기시겠어요?\n
                     거래 리뷰를 남기면 판매자의 상품을 구매하는 \n다른 회원분들에게 큰 도움이 됩니다!`}
@@ -314,12 +330,7 @@ const UserPage = () => {
                 isOpen={showLikeItem} 
                 onClose={() => setShowLikeItem(false)}
                 headerText={"내가 찜한 상품"}
-                content={
-                    <LikeShow 
-                        isOpen={showLikeItem}
-                        data={userKey}
-                    />
-                }
+                content={<LikeShow isOpen={showLikeItem} data={userKey} />}
             />
 
             {/* 내 정보 수정 */}
@@ -336,14 +347,18 @@ const UserPage = () => {
             {/* 배송지 관리 */}
             <SidePage 
                 isOpen={showLocation}
-                onClose={() => {setShowLocation(false)}}
+                onClose={() => setShowLocation(false)}
                 headerText={"배송지 관리"}
-                content={
-                    <LocationList />
-                }
+                content={<LocationList />}
             />
 
             {/* 거래 후기 */}
+            <SidePage
+                isOpen={showReviews}
+                onClose={() => setShowReviews(false)}
+                headerText={"거래 리뷰"}
+                content={<Reviews reviews={userReivew} />}
+            />
 
 
             {/* 탈퇴하기 */}

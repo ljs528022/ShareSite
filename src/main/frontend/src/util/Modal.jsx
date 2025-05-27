@@ -4,7 +4,7 @@ const Modal = ({ isOpen, onClose, onConfirm, style = "", title, message, confirm
     if (!isOpen) return null;
 
     return (
-        <div className={`modal-backdrop`}>
+        <div className="modal-backdrop" onClick={onClose}>
             <div className={`${style}modal-container`}>
                 {title && <h2 className={`${style}modal-title`}>{title}</h2>}
                 {message && <p className="modal-message">{message}</p>}

@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS d1_location;
 DROP TABLE IF EXISTS d1_payment;
 DROP TABLE IF EXISTS d1_user;
 DROP TABLE IF EXISTS d1_item_image;
+DROP TABLE IF EXISTS d1_chat; 
 
 /* Create Tables */
 
@@ -102,6 +103,7 @@ CREATE TABLE d1_review
 	buyerKey varchar(20) NOT NULL,
 	reviewScore varchar(20) NOT NULL,
 	reviewDetail longtext,
+	writeDate datetime NOT NULL,
 	PRIMARY KEY (reviewKey)
 );
 

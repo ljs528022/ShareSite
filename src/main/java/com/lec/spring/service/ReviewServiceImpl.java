@@ -7,6 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
@@ -26,10 +29,20 @@ public class ReviewServiceImpl implements ReviewService {
                 .buyerKey(reviewDTO.getBuyerKey())
                 .reviewScore(reviewDTO.getReviewScore())
                 .reviewDetail(reviewDTO.getReviewDetail())
+                .writeDate(LocalDateTime.now())
                 .build();
 
         return reviewRepository.write(review);
     }
 
+    @Override
+    public List<Review> findReviewsByBuyerKey(String sellerKey) {
+        List<Review> reviews = reviewRepository.findReviewsByBuyerKey(sellerKey);
 
+        if(reviews != null) {
+            return reviews;
+        } else {
+            return null;
+        }
+    }
 }

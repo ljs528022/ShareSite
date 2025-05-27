@@ -11,9 +11,8 @@ SELECT * FROM d1_payment;
 SELECT * FROM d1_review;
 
 SELECT *
-FROM d1_location
-WHERE userKey = '80A0001'
-AND itemKey IS NULL;
+FROM d1_review
+WHERE sellerKey = '9160007';
 
 SELECT *
         FROM d1_payment

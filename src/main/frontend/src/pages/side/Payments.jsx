@@ -13,7 +13,6 @@ const Payments = ({ setShowReview }) => {
     const [ infoChanged, setInfoChanged ] = useState(false);
     const [ sameIndex, setSameIndex ] = useState(null);
     const [ purchaseInfo, setPurchaseInfo ] = useState(null);
-    const [ paymentReviews, setPaymentReviews ] = useState(null);
 
     const { showToast } = useToast();
     const navigate = useNavigate();
@@ -22,12 +21,10 @@ const Payments = ({ setShowReview }) => {
     useEffect(() => {
         const getUserPayments = async () => {
             try {
-                // 리뷰도도 받아서 가져와야 함
                 const response = await getData(`/api/payment/buyer/${user.userKey}`);
                 const { userPayments, items } = response.data;
 
                 // 받아온 상품과 상품 구매 내역을 itemKey로 분류하기
-                // 리뷰도 받아와서 merge 해야함
                 const mergedData = userPayments.map(p => {
                     const item = items.find(i => i.itemKey === p.itemKey);
                     return {
@@ -43,9 +40,6 @@ const Payments = ({ setShowReview }) => {
         }
         getUserPayments();
     }, [infoChanged]);
-
-    // 본인이 작성한 거래후기 받아오기
-    // TODO
 
     const selectPurchaseType = (type) => {
         switch (type) {
@@ -103,9 +97,8 @@ const Payments = ({ setShowReview }) => {
         if(confirmed) {
             const response = await postData(`/api/payment/confirm/${orderKey}`);
             if(response.status === 200) {
-                showToast("거래가 확정되었습니다!");
+                showToast("거래가 확정되었습니다! 리뷰를 남겨주시면 다른 회원분들에게 큰 도움이 됩니다!");
                 setInfoChanged(prev => !prev);
-                setShowReview();
             }
         }
     }
@@ -162,11 +155,9 @@ const Payments = ({ setShowReview }) => {
                             <button className="payments-btn-confirm" onClick={(e) => handleConfirm(e, p.orderKey)}>거래 확정</button>
                         </div>
                         :
-                        // 리뷰를 불러온게 없으면 남기기 버튼, 있으면 리뷰 내용을 출력
                         <div className="paymentInfo-row">
                             <button className="payments-btn-review" onClick={() => setShowReview(p.itemInfo.userKey)}>거래 리뷰 남기기</button>
                         </div>
-                        // ? 연산자로 불러올 예정
                         }
                     </div>
                     }

@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
-//    private final ReviewRepository reviewRepository;
     private final JwtUtil jwtUtil;
 
 
@@ -39,7 +38,6 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = sqlSession.getMapper(UserRepository.class);
         this.authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
-//        this.reviewRepository = sqlSession.getMapper(ReviewRepository.class);
         this.jwtUtil = jwtUtil;
 
         System.out.println("✅ UserService() Created");
@@ -147,18 +145,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Authority> selectAuthByUserKey(String userKey) {
-        return null;
-    }
-
-    @Override
-    public User getUserByUserName(String username) {
-        return null;
-    }
-
-    @Override
-    public User getUserByUserKey(String userKey) {
-        return null;
+    public List<User> getReviewUsers(List<String> buyerKeys) {
+        return userRepository.getReviewUsers(buyerKeys);
     }
 
     @Override

@@ -88,4 +88,6 @@ public interface UserRepository {
     void includeVisitCnt(@Param("username")String username);
 
     void includeTradeCnt(@Param("userKey")String userKey);
+
+    List<User> getReviewUsers(List<String> buyerKeys);
 }

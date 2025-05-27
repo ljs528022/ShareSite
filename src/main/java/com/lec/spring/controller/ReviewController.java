@@ -1,10 +1,13 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.DTO.ReviewDTO;
+import com.lec.spring.domain.Review;
 import com.lec.spring.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/review")
@@ -21,10 +24,10 @@ public class ReviewController {
         return ResponseEntity.ok("저장 완료!");
     }
 
-    @GetMapping("/{buyerKey}")
-    public ResponseEntity<?> getReviews(@PathVariable("buyerKey")String buyerKey) {
+    @GetMapping("/{userKey}")
+    public ResponseEntity<?> gerReviews(@PathVariable("userKey")String userKey) {
+        List<Review> reviews = reviewService.findReviewsByBuyerKey(userKey);
 
-
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(reviews);
     }
 }

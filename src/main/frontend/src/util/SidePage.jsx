@@ -4,7 +4,7 @@ const SidePage = ({ isOpen, onClose, headerText, content }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="side-backdrop">
+        <div className="side-backdrop" onClick={onClose}>
         <div className="side-page">
             {headerText !== '' &&
             <div className="side-header">
