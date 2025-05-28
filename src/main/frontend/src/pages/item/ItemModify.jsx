@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { deleteData, postData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";
 import { useUser } from "../../services/UserContext";
-import TextEditor from "../../util/TextEditor";
 import SidePage from "../../util/sidePage";
 import SearchPostCode from "../../util/SearchPostCode";
 import Modal from "../../util/Modal";
@@ -125,7 +124,7 @@ const ItemModify = () => {
             setPcateSelected(true);
         }
     }
-
+ 
     // 가격
     const handlePriceChange = (e) => {
         const rawValue = e.target.value.replace(/[^0-9]/g, "");
@@ -133,14 +132,6 @@ const ItemModify = () => {
         setModifiedItem(prev => ({ ...prev, price: rawValue}));
         setFormattedPrice(formatted);
     }
-
-    // 상품 정보
-    const handleEditorChange = (markdown) => {
-        setModifiedItem(prev => ({
-            ...prev,
-            content: markdown
-        }));
-    };
 
     // 희망 거래 지역
     const handleLocationChange = ( newLocation) => {
@@ -330,7 +321,7 @@ const ItemModify = () => {
                     {/* 상품 설명 란 */}
                     <div className="form-row">
                         <div className="input-content">
-                            <TextEditor onChange={handleEditorChange} content={item.content} />
+                            <textarea id="content" onChange={handleInput} placeholder={item.content} />
                         </div>
                     </div>
                     {/* 상품 상태 선택란 */}

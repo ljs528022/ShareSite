@@ -4,7 +4,6 @@ import { deleteData, getData } from "../../services/api";
 import { useUser } from "../../services/UserContext";
 import { useToast } from "../../util/ToastContext";
 import { getCategory } from "../../services/getCategory";
-import { Viewer } from "@toast-ui/react-editor";
 import Pagination from "../../util/Pagination";
 import ItemCardList from "../../components/itemCardList";
 import LikeButton from "../../util/LikeButton";
@@ -12,8 +11,8 @@ import Modal from "../../util/Modal";
 import SidePage from "../../util/sidePage";
 import MapShow from "../../pages/side/MapShow";
 import EmptyBox from "../../components/EmptyBox";
-import "../../css/pages/itemDetail.css";
 import Purchase from "../side/Purchase";
+import "../../css/pages/itemDetail.css";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
@@ -381,7 +380,9 @@ const ItemDetail = () => {
                             <label>상품정보</label>
                             <div className="item-content">
                                 {item.content && (
-                                    <Viewer key={item.itemKey} initialValue={item.content} />
+                                    <pre>
+                                        {item.content}
+                                    </pre>
                                 )}
                             </div>
                         </div>

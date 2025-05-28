@@ -5,7 +5,6 @@ import { useUser } from "../../services/UserContext";
 import { useToast } from "../../util/ToastContext";
 import { postData } from "../../services/api";
 import { useNavigate } from "react-router-dom";
-import TextEditor from "../../util/TextEditor";
 import SidePage from "../../util/sidePage";
 import SearchPostCode from "../../util/SearchPostCode";
 
@@ -145,14 +144,6 @@ const ItemWrite = () => {
         setFormattedPrice(formatted);
     }
 
-    // 상품 정보
-    const handleEditorChange = (markdown) => {
-        setItemData(prev => ({
-            ...prev,
-            content: markdown
-        }));
-    };
-
     // 희망 거래 지역
     const handleLocationChange = ( newLocation) => {
         if (itemData.location.length >= 3) {
@@ -225,6 +216,8 @@ const ItemWrite = () => {
             showToast("오류가 발생했습니다!", "error");
         }
     };
+
+    console.log(itemData.content);
 
     return (
         <>
@@ -313,7 +306,7 @@ const ItemWrite = () => {
                     {/* 상품 설명 란 */}
                     <div className="form-row">
                         <div className="input-content">
-                            <TextEditor onChange={handleEditorChange} />
+                            <textarea id="content" placeholder="상품 정보를 입력해주세요..." onChange={handleInput} />
                         </div>
                     </div>
                     {/* 상품 상태 선택란 */}

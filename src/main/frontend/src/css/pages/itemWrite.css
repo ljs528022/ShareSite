@@ -229,6 +229,17 @@
     z-index: 1;
 }
 
+/* 상품 내용 부분 */
+.input-content textarea {
+    width: 90%;
+    height: 100px;
+    padding: 15px;
+    resize: none;
+    font-size: 13px;
+    border-radius: 8px;
+    background-color: #eee;
+}
+
 /* 상품 상태 부분 */
 .input-itemtype {
     position: relative;

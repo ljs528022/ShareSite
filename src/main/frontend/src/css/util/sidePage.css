@@ -30,7 +30,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 
-    z-index: 100;
+    z-index: 200;
 }
 
 .side-page::-webkit-scrollbar {

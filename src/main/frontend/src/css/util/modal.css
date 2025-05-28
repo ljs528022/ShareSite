@@ -34,6 +34,8 @@
     background-color: white;
     border: 2px solid #777;
     border-radius: 10px;
+
+    z-index: 200;
 }
 
 @keyframes appear {
@@ -117,6 +119,8 @@
     background-color: white;
     border: 2px solid #777;
     border-radius: 10px;
+
+    z-index: 200;
 }
 
 .side-modal-buttons {
@@ -191,6 +195,8 @@
     background-color: white;
     border: 2px solid #777;
     border-radius: 10px;
+
+    z-index: 200;
 }
 
 .edit-modal-btn {
