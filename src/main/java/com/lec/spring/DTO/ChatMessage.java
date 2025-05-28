@@ -10,13 +10,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatMessage {
-    public enum MessageType {
-        ENTER, TALK
-    }
-
-    private MessageType type;
     private String roomKey;
     private String sender;
     private String message;
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private LocalDateTime timestamp;
 }

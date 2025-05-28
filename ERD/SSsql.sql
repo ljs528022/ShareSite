@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS d1_location;
 DROP TABLE IF EXISTS d1_payment;
 DROP TABLE IF EXISTS d1_user;
 DROP TABLE IF EXISTS d1_item_image;
-DROP TABLE IF EXISTS d1_chat; 
+DROP TABLE IF EXISTS d1_chatroom; 
 
 /* Create Tables */
 
@@ -28,6 +28,14 @@ CREATE TABLE d1_category
 	cateKey int NOT NULL,
 	catename varchar(20) NOT NULL,
 	PRIMARY KEY (cateKey)
+);
+
+CREATE TABLE d1_chatroom
+(
+	roomKey varchar(30) NOT NULL,
+	senderKey varchar(20) NOT NULL,
+	receiverKey varchar(20) NOT NULL,
+	PRIMARY KEY (roomKey)
 );
 
 
@@ -218,6 +226,20 @@ ALTER TABLE d1_review
 	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE CASCADE
+;
+
+ALTER TABLE d1_chatroom
+	ADD FOREIGN KEY (senderKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+ALTER TABLE d1_chatroom
+	ADD FOREIGN KEY (receiverKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 
