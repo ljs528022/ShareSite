@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.ChatRepository">
+
+    <insert id="createChatRoom"
+            flushCache="true"
+            parameterType="com.lec.spring.domain.ChatRoom"
+            keyProperty="roomKey"
+            keyColumn="roomKey">
+        INSERT INTO d1_chatroom(roomKey, senderKey, receiverKey)
+        VALUES(#{roomKey}, #{senderKey}, #{receiverKey})
+    </insert>
+
+    <insert
+            id="saveChatMessage"
+            flushCache="true"
+            parameterType="com.lec.spring.DTO.ChatMessage"
+            keyColumn="id"
+            keyProperty="id">
+        INSERT INTO d1_chatMessage(roomKey, senderKey, message, readAt, timestamp, isRead)
+        VALUES (#{roomKey}, #{senderKey}, #{message}, #{readAt}, #{timestamp}, #{isRead})
+    </insert>
+
+    <select id="getChatRoomsByUser" resultType="com.lec.spring.domain.ChatRoom">
+        SELECT * FROM d1_chatroom
+        WHERE senderKey = #{userKey}
+        OR receiverKey = #{userKey}
+    </select>
+
+    <select id="findRoomByUsers" resultType="com.lec.spring.domain.ChatRoom">
+        SELECT * FROM d1_chatroom
+        WHERE (senderKey = #{senderKey} AND receiverKey = #{receiverKey})
+        OR (senderKey = #{receiverKey} AND receiverKey = #{senderKey})
+        LIMIT 1
+    </select>
+
+    <select id="findMessagesByRoomKey" resultType="com.lec.spring.DTO.ChatMessage">
+        SELECT *
+        FROM d1_chatMessage
+        WHERE roomKey = #{roomKey}
+        ORDER BY timestamp ASC
+    </select>
+</mapper>

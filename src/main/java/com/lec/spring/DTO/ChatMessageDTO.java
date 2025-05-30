@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ChatMessage {
+public class ChatMessageDTO {
     private String roomKey;
-    private String sender;
+    private String senderKey;
     private String message;
+    private LocalDateTime readAt;
     private LocalDateTime timestamp;
 }

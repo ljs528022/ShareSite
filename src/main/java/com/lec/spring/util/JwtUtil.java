@@ -28,27 +28,11 @@ public class JwtUtil {
     }
 
     public String generateToken(String username) {
-        Date now = new Date();
-        Date expiry = new Date(now.getTime() + EXPIRATION_TIME);
-
-        return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(now)
-                .setExpiration(expiry)
-                .signWith(secretKey, SignatureAlgorithm.HS256)
-                .compact();
+        return buildToken(username, EXPIRATION_TIME);
     }
 
     public String generateRefreshToken(String username) {
-        Date now = new Date();
-        Date expiry = new Date(now.getTime() + EXPIRATION_TIME);
-
-        return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(now)
-                .setExpiration(expiry)
-                .signWith(secretKey, SignatureAlgorithm.HS256)
-                .compact();
+        return buildToken(username, EXPIRATION_TIME);
     }
 
     public String getUsernameFromToken(String token) {
@@ -76,4 +60,15 @@ public class JwtUtil {
         return parseToken(token).getBody();
     }
 
+    private String buildToken(String username, long duration) {
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + EXPIRATION_TIME);
+
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
+                .compact();
+    }
 }

@@ -11,8 +11,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChatRoom {
+public class ChatMessage {
+    private int id;
     private String roomKey;
     private String senderKey;
-    private String receiverKey;
+    private String message;
+    private LocalDateTime readAt;
+    private LocalDateTime timestamp;
+
+    private boolean isRead;
 }

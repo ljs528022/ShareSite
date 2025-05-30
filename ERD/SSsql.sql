@@ -38,6 +38,30 @@ CREATE TABLE d1_chatroom
 	PRIMARY KEY (roomKey)
 );
 
+CREATE TABLE d1_chatMessage
+(
+	id int NOT NULL AUTO_INCREMENT,
+	roomKey varchar(30) NOT NULL,
+	senderKey varchar(20) NOT NULL,
+	message longtext NOT NULL,
+	readAt datetime NOT NULL,
+	timestamp datetime NOT NULL,
+	isRead boolean NOT NULL,
+	
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE d1_chatroom_user 
+(
+	id int NOT NULL AUTO_INCREMENT,
+	roomKey varchar(30) NOT NULL,
+	userKey varchar(20) NOT NULL,
+	joinedAt datetime,
+	exitedAt datetime,
+	lastReadTime datetime,
+	PRIMARY KEY (id)
+);
+
 
 CREATE TABLE d1_item
 (
@@ -237,6 +261,20 @@ ALTER TABLE d1_chatroom
 
 ALTER TABLE d1_chatroom
 	ADD FOREIGN KEY (receiverKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+ALTER TABLE d1_chatMessage
+	ADD FOREIGN KEY (roomKey)
+	REFERENCES d1_chatroom (roomKey)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+ALTER TABLE d1_chatMessage
+	ADD FOREIGN KEY (senderKey)
 	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
