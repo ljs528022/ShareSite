@@ -76,6 +76,7 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
         if(input && stompClient.current?.connected && chatRoom) {
             const chatMessage = {
                 roomKey: chatRoom.roomKey,
+                receiverKey: receiverKey,
                 message: input,
             };
             stompClient.current.send(`/chat/send/${chatRoom.roomKey}`, {}, JSON.stringify(chatMessage));

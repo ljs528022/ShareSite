@@ -7,7 +7,6 @@ import com.lec.spring.repository.ChatRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +35,9 @@ public class ChatServiceImpl implements ChatService{
         newRoom.setRoomKey(roomKey);
         newRoom.setSenderKey(senderKey);
         newRoom.setReceiverKey(receiverKey);
+        newRoom.setCreatedAt(LocalDateTime.now());
+        newRoom.setSenderLeft(false);
+        newRoom.setReceiverLeft(false);
 
         chatRepository.createChatRoom(newRoom);
         return newRoom;
@@ -51,6 +53,7 @@ public class ChatServiceImpl implements ChatService{
         ChatMessage message =  new ChatMessage();
         message.setRoomKey(chatMessage.getRoomKey());
         message.setSenderKey(chatMessage.getSenderKey());
+        message.setReceiverKey(chatMessage.getReceiverKey());
         message.setMessage(chatMessage.getMessage());
         message.setReadAt(chatMessage.getReadAt());
         message.setTimestamp(chatMessage.getTimestamp());
@@ -64,8 +67,24 @@ public class ChatServiceImpl implements ChatService{
         return chatRepository.findMessagesByRoomKey(roomKey);
     }
 
-    @Transactional
-    public void markMessagesAsRead(String roomKey, String reader) {
+    @Override
+    public void markMessagesAsRead(String roomKey, String userKey) {
+        chatRepository.markMessagesAsRead(roomKey, userKey);
+    }
 
+    @Override
+    public void leaveChatRoom(String roomKey, String userKey) {
+        ChatRoom room = chatRepository.findByRoomKey(roomKey);
+        if(userKey.equals(room.getSenderKey())) {
+            room.setSenderLeft(true);
+        } else if (userKey.equals(room.getReceiverKey())) {
+            room.setReceiverLeft(true);
+        }
+
+        if(room.isSenderLeft() && room.isReceiverLeft()) {
+            chatRepository.delete(roomKey);
+        } else {
+            chatRepository.update(room);
+        }
     }
 }

@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS d1_payment;
 DROP TABLE IF EXISTS d1_user;
 DROP TABLE IF EXISTS d1_item_image;
 DROP TABLE IF EXISTS d1_chatroom; 
+DROP TABLE IF EXISTS d1_chatMessage; 
+DROP TABLE IF EXISTS d1_chatroom_user; 
 
 /* Create Tables */
 
@@ -35,6 +37,9 @@ CREATE TABLE d1_chatroom
 	roomKey varchar(30) NOT NULL,
 	senderKey varchar(20) NOT NULL,
 	receiverKey varchar(20) NOT NULL,
+	createdAt datetime NOT NULL,
+	senderLeft boolean,
+	receiverLeft boolean,
 	PRIMARY KEY (roomKey)
 );
 
@@ -43,6 +48,7 @@ CREATE TABLE d1_chatMessage
 	id int NOT NULL AUTO_INCREMENT,
 	roomKey varchar(30) NOT NULL,
 	senderKey varchar(20) NOT NULL,
+	receiverKey varchar(20) NOT NULL,
 	message longtext NOT NULL,
 	readAt datetime NOT NULL,
 	timestamp datetime NOT NULL,
@@ -270,11 +276,18 @@ ALTER TABLE d1_chatMessage
 	ADD FOREIGN KEY (roomKey)
 	REFERENCES d1_chatroom (roomKey)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 ALTER TABLE d1_chatMessage
 	ADD FOREIGN KEY (senderKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+ALTER TABLE d1_chatMessage
+	ADD FOREIGN KEY (receiverKey)
 	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT

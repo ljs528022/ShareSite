@@ -15,4 +15,9 @@ public class ChatRoom {
     private String roomKey;
     private String senderKey;
     private String receiverKey;
+    private LocalDateTime createdAt;
+
+    private boolean senderLeft;
+    private boolean receiverLeft;
+
 }

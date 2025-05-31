@@ -7,15 +7,11 @@ const ChatRoomList = ({  }) => {
 
     useEffect(() => {
         const fetchChatRooms = async () => {
-            const response = await getData("/chat/rooms", {
-
-            });
-            if(response.status === 200) {
-                setChatRooms(response.data);
-            }
-        }
+            const response = await getData("/chat/rooms");
+            setChatRooms(response.data);
+        };
         fetchChatRooms();
-    }, [])
+    }, []);
 
     if(!chatRooms) return;
 

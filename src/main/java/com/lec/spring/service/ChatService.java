@@ -17,4 +17,6 @@ public interface ChatService {
     List<ChatMessage> findMessagesByRoomKey(String roomKey);
 
     void markMessagesAsRead(String roomKey, String reader);
+
+    void leaveChatRoom(String roomKey, String userKey);
 }

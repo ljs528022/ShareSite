@@ -16,8 +16,16 @@ public interface ChatRepository {
 
     ChatRoom findRoomByUsers(@Param("senderKey")String senderKey, @Param("receiverKey")String receiverKey);
 
+    ChatRoom findByRoomKey(@Param("roomKey")String roomKey);
+
     void saveChatMessage(ChatMessage chatMessage);
 
     List<ChatMessage> findMessagesByRoomKey(String roomKey);
+
+    int countUsersInRoom(@Param("roomKey")String roomKey);
+
+    void markMessagesAsRead(@Param("roomKey")String roomKey, @Param("userKey")String userKey);
+    void update(ChatRoom room);
+    void delete(@Param("roomKey")String roomKey);
 
 }

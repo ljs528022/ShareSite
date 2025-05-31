@@ -9,8 +9,8 @@
             parameterType="com.lec.spring.domain.ChatRoom"
             keyProperty="roomKey"
             keyColumn="roomKey">
-        INSERT INTO d1_chatroom(roomKey, senderKey, receiverKey)
-        VALUES(#{roomKey}, #{senderKey}, #{receiverKey})
+        INSERT INTO d1_chatroom(roomKey, senderKey, receiverKey, createdAt, senderLeft, receiverLeft)
+        VALUES(#{roomKey}, #{senderKey}, #{receiverKey}, #{createdAt}, #{senderLeft}, #{receiverLeft})
     </insert>
 
     <insert
@@ -19,14 +19,13 @@
             parameterType="com.lec.spring.DTO.ChatMessage"
             keyColumn="id"
             keyProperty="id">
-        INSERT INTO d1_chatMessage(roomKey, senderKey, message, readAt, timestamp, isRead)
-        VALUES (#{roomKey}, #{senderKey}, #{message}, #{readAt}, #{timestamp}, #{isRead})
+        INSERT INTO d1_chatMessage(roomKey, senderKey, receiverKey, message, readAt, timestamp, isRead)
+        VALUES (#{roomKey}, #{senderKey}, #{receiverKey}, #{message}, #{readAt}, #{timestamp}, #{isRead})
     </insert>
 
     <select id="getChatRoomsByUser" resultType="com.lec.spring.domain.ChatRoom">
         SELECT * FROM d1_chatroom
-        WHERE senderKey = #{userKey}
-        OR receiverKey = #{userKey}
+        WHERE senderKey = #{userKey} OR receiverKey = #{userKey}
     </select>
 
     <select id="findRoomByUsers" resultType="com.lec.spring.domain.ChatRoom">
@@ -36,10 +35,32 @@
         LIMIT 1
     </select>
 
+    <select id="findByRoomKey" resultType="com.lec.spring.domain.ChatRoom">
+        SELECT * FROM d1_chatroom
+        WHERE roomKey = #{roomKey}
+    </select>
+
     <select id="findMessagesByRoomKey" resultType="com.lec.spring.DTO.ChatMessage">
         SELECT *
         FROM d1_chatMessage
         WHERE roomKey = #{roomKey}
         ORDER BY timestamp ASC
     </select>
+
+    <update id="markMessagesAsRead">
+        UPDATE d1_chatMessage
+        SET isRead = true
+        WHERE roomKey = #{roomKey} AND receiverKey = #{userKey}
+    </update>
+
+    <update id="update" parameterType="com.lec.spring.domain.ChatRoom">
+        UPDATE d1_chatroom
+        SET senderLeft = #{senderLeft},
+            receiverLeft = #{receiverLeft}
+        WHERE roomKey = #{roomKey}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM d1_chatroom WHERE roomKey = #{roomKey}
+    </delete>
 </mapper>
