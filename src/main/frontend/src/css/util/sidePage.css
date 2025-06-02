@@ -4,8 +4,7 @@
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
-
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
 
     z-index: 100;
@@ -18,7 +17,7 @@
     right: 0;
 
     width: 400px;
-    height: 100%;
+    max-height: 100vh;
 
     text-align: center;
 
@@ -26,7 +25,7 @@
     box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
     animation: leftSlide 0.5s ease-out forwards;
 
-    overflow: scroll;
+    overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
 
@@ -68,7 +67,7 @@
 
 .side-content-container {
     width: 100%;
-    height: 100%;
+    height: 92.5vh;
 }
 
 /* ▼ 사이드 컨탠츠 크기 ▼ */
@@ -76,9 +75,3 @@
     width: 100%;
     height: 100%;
 }
-
-/* 구매 창 */
-
-/* 채팅 리스트 */
-
-/* 채팅 창 */

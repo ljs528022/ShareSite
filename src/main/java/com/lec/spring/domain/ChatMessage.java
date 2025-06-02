@@ -20,5 +20,5 @@ public class ChatMessage {
     private LocalDateTime readAt;
     private LocalDateTime timestamp;
 
-    private boolean isRead;
+    private Boolean isRead;
 }

@@ -9,12 +9,13 @@ import SidePage from "../../util/sidePage";
 import LikeShow from "../side/LikeShow";
 import UserModify from "./userModify";
 import EditModal from "../../util/EditModal";
-import "../../css/pages/userPage.css";
 import LocationList from "../side/LocationList";
 import Payments from "../side/Payments";
 import Modal from "../../util/Modal";
 import WriteReview from "../side/WriteReview";
 import Reviews from "../side/Reviews";
+import ChatRoom from "../../services/ChatRoom";
+import "../../css/pages/userPage.css";
 
 const UserPage = () => {
 
@@ -50,6 +51,7 @@ const UserPage = () => {
     const [ showReivewModal, setShowReviewModal ] = useState(false);    // 리뷰 남기기 확인 모달
     const [ writeReview, setWriteReview ] = useState(false);            // 리뷰 남기기
     const [ showReviews, setShowReviews ] = useState(false);            // 거래 리뷰
+    const [ showChat, setShowChat ] = useState(false);                  // 채팅하기
 
     const logginUserKey = user !== null ? user.userKey : null;
     const isOwnPage = userKey === logginUserKey;
@@ -226,7 +228,7 @@ const UserPage = () => {
                                     </p>
                                 </div>
                                 
-                                <button onClick={isOwnPage ? () => navigate("/product/write") : ""}>
+                                <button onClick={isOwnPage ? () => navigate("/product/write") : () => setShowChat(true)}>
                                     {isOwnPage ?
                                     "등록하기"
                                     :
@@ -358,6 +360,19 @@ const UserPage = () => {
                 onClose={() => setShowReviews(false)}
                 headerText={"거래 리뷰"}
                 content={<Reviews reviews={userReivew} />}
+            />
+
+            {/* 채팅하기 */}
+            <SidePage
+                isOpen={showChat}
+                onClose={() => setShowChat(false)}
+                headerText={"채팅하기"}
+                content={
+                <ChatRoom
+                    senderKey={user.userKey}
+                    receiverKey={userKey}
+                />
+                }
             />
 
 

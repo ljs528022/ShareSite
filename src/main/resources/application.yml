@@ -1,7 +1,6 @@
 # server port
 server:
     port: 8093
-
     error:
       include-stacktrace: always
 

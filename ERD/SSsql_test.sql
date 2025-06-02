@@ -12,6 +12,8 @@ SELECT * FROM d1_review;
 
 SELECT * FROM d1_chatroom;
 
+SELECT * FROM d1_chatmessage;
+
 SELECT *
 FROM d1_review
 WHERE sellerKey = '9160007';

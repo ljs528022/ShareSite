@@ -21,9 +21,6 @@ public interface ChatRepository {
     void saveChatMessage(ChatMessage chatMessage);
 
     List<ChatMessage> findMessagesByRoomKey(String roomKey);
-
-    int countUsersInRoom(@Param("roomKey")String roomKey);
-
     void markMessagesAsRead(@Param("roomKey")String roomKey, @Param("userKey")String userKey);
     void update(ChatRoom room);
     void delete(@Param("roomKey")String roomKey);

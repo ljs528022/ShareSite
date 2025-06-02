@@ -34,7 +34,7 @@ CREATE TABLE d1_category
 
 CREATE TABLE d1_chatroom
 (
-	roomKey varchar(30) NOT NULL,
+	roomKey varchar(50) NOT NULL,
 	senderKey varchar(20) NOT NULL,
 	receiverKey varchar(20) NOT NULL,
 	createdAt datetime NOT NULL,
@@ -54,17 +54,6 @@ CREATE TABLE d1_chatMessage
 	timestamp datetime NOT NULL,
 	isRead boolean NOT NULL,
 	
-	PRIMARY KEY (id)
-);
-
-CREATE TABLE d1_chatroom_user 
-(
-	id int NOT NULL AUTO_INCREMENT,
-	roomKey varchar(30) NOT NULL,
-	userKey varchar(20) NOT NULL,
-	joinedAt datetime,
-	exitedAt datetime,
-	lastReadTime datetime,
 	PRIMARY KEY (id)
 );
 

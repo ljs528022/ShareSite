@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getData } from "../../services/api";
 
-const ChatRoomList = ({  }) => {
+const ChatRoomList = () => {
 
     const [ chatRooms, setChatRooms ] = useState(null);
 

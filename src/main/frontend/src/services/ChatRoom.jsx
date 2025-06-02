@@ -1,9 +1,9 @@
 import SockJS from 'sockjs-client';
-import { CompatClient, Stomp } from '@stomp/stompjs';
+import { Stomp } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
 import { getData, postData } from './api';
-import { useNavigate } from 'react-router-dom';
 import { useToast } from '../util/ToastContext';
+import '../css/util/chatroom.css';
 
 const ChatRoom = ({ senderKey, receiverKey }) => {
 
@@ -12,20 +12,18 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
     const [ input, setInput ] = useState('');
     const stompClient = useRef(null);
 
-    const navigate = useNavigate();
     const { showToast } = useToast();
 
     useEffect(() => {
         if(!senderKey && !receiverKey) return;
-        const createChatRoom = async (senderKey, receiverKey) => {
+
+        const createChatRoom = async () => {
             try {
                 const response = await postData("/chat/room", {
                     senderKey,
                     receiverKey
                 });
-                
                 setChatRoom(response.data);
-                navigate(`/chat/${chatRoom.roomKey}`);
             } catch {
                 showToast("채팅방을 불러오지 못했습니다...", "error");
             }
@@ -34,6 +32,8 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
     }, []);
 
     useEffect(() => {
+        if(!chatRoom) return;
+
         const fetchMessage = async () => {
             try {
                 const response = await getData(`/chat/history/${chatRoom.roomKey}`);
@@ -43,10 +43,11 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
             }
         };
         fetchMessage();
-    }, [chatRoom.roomKey]);
+    }, [chatRoom]);
 
     useEffect(() => {
         if(!chatRoom) return;
+        const roomKey = chatRoom.roomKey;
 
         const token = sessionStorage.getItem("token");
         const socket = new SockJS('http://localhost:8093/ws-chat');
@@ -84,21 +85,41 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
         }
     };
 
-    return (
+    const fetchMessages = (messages) => {
+        if(!messages) return;
+
+        return (
         <div>
+
+        </div>
+        );
+    }
+
+    if(!senderKey && !receiverKey && !stompClient) return;
+
+    return (
+        <div className='chat-room'>
             <div className='chat-box'>
+                {messages.length > 0 ? 
+                ""
+                :
+                <span className='chat-span'>나눴던 대화가 없어요. 인사부터 시작해볼까요?</span>
+                }
                 {messages.map((msg, idx) => (
                     <div key={idx}>
                         <strong>{msg.sender}</strong> : {msg.message} <i>({msg.timestamp})</i>
                     </div>
                 ))}
             </div>
-            <input 
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder='메세지를 입력해주세요...'
-            />
-            <button onClick={sendMessage}>전송</button>
+            <div className='chat-input'>
+                <input
+                    className='chat-message'
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder='메세지를 입력해주세요'
+                    />
+                <button className='chat-btn' onClick={sendMessage}>전송</button>
+            </div>
         </div>
     );
 };

@@ -6,9 +6,7 @@
 
     <insert id="createChatRoom"
             flushCache="true"
-            parameterType="com.lec.spring.domain.ChatRoom"
-            keyProperty="roomKey"
-            keyColumn="roomKey">
+            parameterType="com.lec.spring.domain.ChatRoom">
         INSERT INTO d1_chatroom(roomKey, senderKey, receiverKey, createdAt, senderLeft, receiverLeft)
         VALUES(#{roomKey}, #{senderKey}, #{receiverKey}, #{createdAt}, #{senderLeft}, #{receiverLeft})
     </insert>
@@ -16,7 +14,8 @@
     <insert
             id="saveChatMessage"
             flushCache="true"
-            parameterType="com.lec.spring.DTO.ChatMessage"
+            parameterType="com.lec.spring.domain.ChatMessage"
+            useGeneratedKeys="true"
             keyColumn="id"
             keyProperty="id">
         INSERT INTO d1_chatMessage(roomKey, senderKey, receiverKey, message, readAt, timestamp, isRead)
@@ -40,7 +39,7 @@
         WHERE roomKey = #{roomKey}
     </select>
 
-    <select id="findMessagesByRoomKey" resultType="com.lec.spring.DTO.ChatMessage">
+    <select id="findMessagesByRoomKey" resultType="com.lec.spring.domain.ChatMessage">
         SELECT *
         FROM d1_chatMessage
         WHERE roomKey = #{roomKey}
@@ -50,7 +49,9 @@
     <update id="markMessagesAsRead">
         UPDATE d1_chatMessage
         SET isRead = true
-        WHERE roomKey = #{roomKey} AND receiverKey = #{userKey}
+        WHERE roomKey = #{roomKey}
+        AND isRead = false
+        AND receiverKey = #{userKey}
     </update>
 
     <update id="update" parameterType="com.lec.spring.domain.ChatRoom">

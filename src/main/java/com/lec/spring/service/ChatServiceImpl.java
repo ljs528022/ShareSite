@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ChatServiceImpl implements ChatService{
+public class ChatServiceImpl implements ChatService {
 
-    private ChatRepository chatRepository;
+    private final ChatRepository chatRepository;
 
     @Autowired
     public ChatServiceImpl(SqlSession sqlSession) {
@@ -49,15 +49,15 @@ public class ChatServiceImpl implements ChatService{
     }
 
     @Override
-    public void saveChatMessage(ChatMessageDTO chatMessage) {
+    public void saveChatMessage(ChatMessageDTO chatMessageDTO) {
         ChatMessage message =  new ChatMessage();
-        message.setRoomKey(chatMessage.getRoomKey());
-        message.setSenderKey(chatMessage.getSenderKey());
-        message.setReceiverKey(chatMessage.getReceiverKey());
-        message.setMessage(chatMessage.getMessage());
-        message.setReadAt(chatMessage.getReadAt());
-        message.setTimestamp(chatMessage.getTimestamp());
-        message.setRead(false);
+        message.setRoomKey(chatMessageDTO.getRoomKey());
+        message.setSenderKey(chatMessageDTO.getSenderKey());
+        message.setReceiverKey(chatMessageDTO.getReceiverKey());
+        message.setMessage(chatMessageDTO.getMessage());
+        message.setReadAt(chatMessageDTO.getReadAt());
+        message.setTimestamp(chatMessageDTO.getTimestamp());
+        message.setIsRead(false);
 
         chatRepository.saveChatMessage(message);
     }
@@ -81,7 +81,7 @@ public class ChatServiceImpl implements ChatService{
             room.setReceiverLeft(true);
         }
 
-        if(room.isSenderLeft() && room.isReceiverLeft()) {
+        if(room.getSenderLeft() && room.getReceiverLeft()) {
             chatRepository.delete(roomKey);
         } else {
             chatRepository.update(room);

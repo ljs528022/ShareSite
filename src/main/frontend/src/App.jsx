@@ -1,3 +1,4 @@
+window.global = window;
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/home';
 import Header from './pages/header';
@@ -12,6 +13,7 @@ import ItemSearch from './pages/item/itemSearch';
 import UserPage from './pages/user/userPage';
 import ItemModify from './pages/item/itemModify';
 import PaymentPage from './components/PaymentPage';
+
 
 function App() {
 

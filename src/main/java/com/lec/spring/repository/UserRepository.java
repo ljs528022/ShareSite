@@ -1,8 +1,6 @@
 package com.lec.spring.repository;
 
-import com.lec.spring.DTO.RegisterRequest;
 import com.lec.spring.domain.Item;
-import com.lec.spring.domain.Like;
 import com.lec.spring.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

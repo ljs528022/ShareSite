@@ -13,6 +13,7 @@ import MapShow from "../../pages/side/MapShow";
 import EmptyBox from "../../components/EmptyBox";
 import Purchase from "../side/Purchase";
 import "../../css/pages/itemDetail.css";
+import ChatRoom from "../../services/ChatRoom";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
@@ -49,6 +50,7 @@ const ItemDetail = () => {
     const [ sideMapLocation, setSideMapLocation ] = useState(''); // 지도 창 정보
     const [ confirmPurchase, setConfirmPurChase ] = useState(false); // 거래 전 확인 모달
     const [ showPurchase, setShowPurchase ] = useState(false);    // 거래 창
+    const [ showChat, setShowChat ] = useState(false);  // 채팅 창
     const { showToast } = useToast();
     const navigate = useNavigate();
     
@@ -330,7 +332,7 @@ const ItemDetail = () => {
                                     if(!user) {
                                         showToast("로그인이 필요한 기능입니다!", "error");
                                         return;
-                                    } else ""
+                                    } else setShowChat(true);
                                 }}
                             >채팅하기</button>
                             <button 
@@ -458,6 +460,19 @@ const ItemDetail = () => {
                         sellerInfo={item}
                         buyerInfo={!user ? "" : user}
                         itemInfo={item}
+                    />
+                    }
+                />
+
+                {/* 채팅 사이드바 */}
+                <SidePage
+                    isOpen={showChat}
+                    onClose={() => setShowChat(false)}
+                    headerText={`"${item.useralias}" 님과의 채팅`}
+                    content={
+                    <ChatRoom
+                        senderKey={userKey}
+                        receiverKey={item.userKey}
                     />
                     }
                 />
