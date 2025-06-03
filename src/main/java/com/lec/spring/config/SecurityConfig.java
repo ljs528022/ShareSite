@@ -46,9 +46,11 @@ public class SecurityConfig {
 
                     .authorizeHttpRequests(auth -> auth
                             // 인증이 필요 없는 URL
-                            .requestMatchers("/home", "/error", "/api/**", "/user/**", "/product/**", "/item-images/**", "/user-images/**", "/like/**", "/search", "/search?**").permitAll()
+                            .requestMatchers("/home", "/error", "/api/**", "/user/**", "/product/**", "/item-images/**", "/user-images/**", "/like/**", "/search", "/search?**", "/chat/**").permitAll()
                             // 인증이 필요한 URL
                             .requestMatchers("/product/write", "/product/delete/**", "/product/modify/**", "/like?**", "/location/**").authenticated()
+                            // 채팅방 관련
+                            .requestMatchers("/ws-chat/**", "/topic/**", "/app/**").permitAll()
                             .anyRequest().authenticated()
                     )
                     .cors(cors -> cors.configurationSource(corsConfigurationSource()))

@@ -68,8 +68,8 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void markMessagesAsRead(String roomKey, String userKey) {
-        chatRepository.markMessagesAsRead(roomKey, userKey);
+    public void markMessagesAsRead(String roomKey, String userKey, LocalDateTime readAt) {
+        chatRepository.markMessagesAsRead(roomKey, userKey, readAt);
     }
 
     @Override

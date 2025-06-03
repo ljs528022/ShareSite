@@ -17,8 +17,8 @@ public class ChatMessage {
     private String senderKey;
     private String receiverKey;
     private String message;
-    private LocalDateTime readAt;
     private LocalDateTime timestamp;
+    private LocalDateTime readAt;
 
     private Boolean isRead;
 }

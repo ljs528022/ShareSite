@@ -17,6 +17,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -50,38 +51,41 @@ public class ChatController {
 
     @MessageMapping("/send/{roomKey}")
     public void sendMessage(@DestinationVariable String roomKey,
-                                   @Payload ChatMessageDTO chatMessage,
+                                   @Payload ChatMessageDTO chatMessageDTO,
                                    @Header("simpSessionAttributes")Map<String, Object> sessionAttributes) {
 
         String username = (String) sessionAttributes.get("username");
         User user = getUserByUsername(username);
 
-        chatMessage.setSenderKey(user.getUserKey());
-        chatMessage.setReceiverKey(chatMessage.getReceiverKey());
-        chatMessage.setTimestamp(LocalDateTime.now());
-        chatMessage.setReadAt(LocalDateTime.now());
+        if(!Objects.equals(user.getUserKey(), chatMessageDTO.getSenderKey())) {
+            throw new IllegalArgumentException("보낸 사람 정보가 인증된 사용자와 일치하지 않습니다.");
+        }
 
+        chatMessageDTO.setRoomKey(roomKey);
+        chatMessageDTO.setSenderKey(user.getUserKey());
+        chatMessageDTO.setTimestamp(LocalDateTime.now());
 
-        chatService.saveChatMessage(chatMessage);
-        messagingTemplate.convertAndSend("/topic/chat/" + roomKey, chatMessage);
+        chatService.saveChatMessage(chatMessageDTO);
+        messagingTemplate.convertAndSend("/topic/chat/" + roomKey, chatMessageDTO);
     }
 
     @GetMapping("/history/{roomKey}")
-    public ResponseEntity<List<ChatMessage>> getChatHistory(@PathVariable String roomKey) {
+    public ResponseEntity<List<ChatMessage>> getChatHistory(@PathVariable("roomKey") String roomKey) {
         List<ChatMessage> messages = chatService.findMessagesByRoomKey(roomKey);
         return ResponseEntity.ok(messages);
     }
 
     @PostMapping("/markAsRead/{roomKey}")
-    public ResponseEntity<?> markAsRead(@PathVariable String roomKey, Principal principal) {
+    public ResponseEntity<?> markAsRead(@PathVariable("roomKey") String roomKey, Principal principal) {
         User user = getUserByUsername(principal.getName());
+        LocalDateTime now = LocalDateTime.now();
 
-        chatService.markMessagesAsRead(roomKey, user.getUserKey());
+        chatService.markMessagesAsRead(roomKey, user.getUserKey(), now);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/room/leave/{roomKey}")
-    public ResponseEntity<?> leaveRoom(@PathVariable String roomKey, Principal principal) {
+    public ResponseEntity<?> leaveRoom(@PathVariable("roomKey") String roomKey, Principal principal) {
         User user = getUserByUsername(principal.getName());
         chatService.leaveChatRoom(roomKey, user.getUserKey());
         return ResponseEntity.ok().build();

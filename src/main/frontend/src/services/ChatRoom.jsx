@@ -1,5 +1,5 @@
 import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
+import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
 import { getData, postData } from './api';
 import { useToast } from '../util/ToastContext';
@@ -10,7 +10,7 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
     const [ chatRoom, setChatRoom ] = useState(null);
     const [ messages, setMessages ] = useState([]);
     const [ input, setInput ] = useState('');
-    const stompClient = useRef(null);
+    const clientRef = useRef(null);
 
     const { showToast } = useToast();
 
@@ -50,38 +50,51 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
         const roomKey = chatRoom.roomKey;
 
         const token = sessionStorage.getItem("token");
-        const socket = new SockJS('http://localhost:8093/ws-chat');
-        const client = Stomp.over(socket);
-        stompClient.current = client;
+        const socket = new SockJS(`http://localhost:8093/ws-chat?token=${token}`);
+        const client = new Client({
+            webSocketFactory: () => socket,
+            debug: (str) => console.log(str),
+            reconnectDelay: 5000,
+            onConnect: (frame) => {
+                console.log('Connected:', frame);
 
-        client.connect({
-            Authorization: `Bearer ${token}`,
-        }, () => {
-            client.subscribe(`/topic/chat/${chatRoom.roomKey}`, (message) => {
+                client.subscribe(`/topic/chat/${roomKey}`, (message) => {
                 const msg = JSON.parse(message.body);
                 setMessages((prev) => [...prev, msg]);
-            });
-        },
-        (error) => {
-            console.error("WebSocket 연결 실패...", error);
+                });
+            },
+            onStompError: (frame) => {
+                console.error('Broker Error:', frame.headers['message']);
+                console.error('Additional details:', frame.body);
+            },
+            onWebSocketError: (event) => {
+                console.error("WebSocket 연결 실패 (onWebSocketError):", event);
+            }
         });
+        clientRef.current = client;
+        client.activate();
 
         return () => {
-            if(stompClient.current) {
-                stompClient.current.disconnect();
+            if(clientRef.current) {
+                clientRef.current.deactivate();
             }
         }
-    }, []);
+    }, [chatRoom]);
 
     const sendMessage = () => {
-        if(input && stompClient.current?.connected && chatRoom) {
+        if(input && clientRef.current?.connected && chatRoom) {
             const chatMessage = {
-                roomKey: chatRoom.roomKey,
+                senderKey: senderKey,
                 receiverKey: receiverKey,
                 message: input,
             };
-            stompClient.current.send(`/chat/send/${chatRoom.roomKey}`, {}, JSON.stringify(chatMessage));
+            clientRef.current.publish({
+                destination: `/app/send/${chatRoom.roomKey}`,
+                body: JSON.stringify(chatMessage),
+            });
             setInput('');
+        } else {
+            console.warn("메시지 전송 실패: 연결 안 됨");
         }
     };
 
@@ -95,7 +108,7 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
         );
     }
 
-    if(!senderKey && !receiverKey && !stompClient) return;
+    if(!senderKey && !receiverKey && !clientRef) return;
 
     return (
         <div className='chat-room'>

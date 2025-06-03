@@ -4,6 +4,7 @@ import com.lec.spring.DTO.ChatMessageDTO;
 import com.lec.spring.domain.ChatMessage;
 import com.lec.spring.domain.ChatRoom;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ChatService {
@@ -16,7 +17,7 @@ public interface ChatService {
 
     List<ChatMessage> findMessagesByRoomKey(String roomKey);
 
-    void markMessagesAsRead(String roomKey, String reader);
+    void markMessagesAsRead(String roomKey, String reader, LocalDateTime readAt);
 
     void leaveChatRoom(String roomKey, String userKey);
 }

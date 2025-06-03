@@ -13,7 +13,6 @@ DROP TABLE IF EXISTS d1_user;
 DROP TABLE IF EXISTS d1_item_image;
 DROP TABLE IF EXISTS d1_chatroom; 
 DROP TABLE IF EXISTS d1_chatMessage; 
-DROP TABLE IF EXISTS d1_chatroom_user; 
 
 /* Create Tables */
 
@@ -46,14 +45,13 @@ CREATE TABLE d1_chatroom
 CREATE TABLE d1_chatMessage
 (
 	id int NOT NULL AUTO_INCREMENT,
-	roomKey varchar(30) NOT NULL,
+	roomKey varchar(50) NOT NULL,
 	senderKey varchar(20) NOT NULL,
 	receiverKey varchar(20) NOT NULL,
 	message longtext NOT NULL,
-	readAt datetime NOT NULL,
+	readAt datetime,
 	timestamp datetime NOT NULL,
 	isRead boolean NOT NULL,
-	
 	PRIMARY KEY (id)
 );
 

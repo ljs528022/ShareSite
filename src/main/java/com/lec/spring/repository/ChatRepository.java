@@ -5,6 +5,7 @@ import com.lec.spring.domain.ChatRoom;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -20,8 +21,8 @@ public interface ChatRepository {
 
     void saveChatMessage(ChatMessage chatMessage);
 
-    List<ChatMessage> findMessagesByRoomKey(String roomKey);
-    void markMessagesAsRead(@Param("roomKey")String roomKey, @Param("userKey")String userKey);
+    List<ChatMessage> findMessagesByRoomKey(@Param("roomKey")String roomKey);
+    void markMessagesAsRead(@Param("roomKey")String roomKey, @Param("userKey")String userKey, @Param("readAt")LocalDateTime readAt);
     void update(ChatRoom room);
     void delete(@Param("roomKey")String roomKey);
 

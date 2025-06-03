@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class ChatMessageDTO {
     private String roomKey;
     private String senderKey;

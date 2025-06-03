@@ -49,6 +49,7 @@
     <update id="markMessagesAsRead">
         UPDATE d1_chatMessage
         SET isRead = true
+        SET readAt = #{readAt}
         WHERE roomKey = #{roomKey}
         AND isRead = false
         AND receiverKey = #{userKey}
