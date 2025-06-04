@@ -27,20 +27,22 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatRoom createChatRoom(String senderKey, String receiverKey) {
         ChatRoom existingRoom = chatRepository.findRoomByUsers(senderKey, receiverKey);
-        if(existingRoom != null) return existingRoom;
+        if(existingRoom != null) {
+            return existingRoom;
+        } else {
+            String roomKey = UUID.randomUUID().toString();
 
-        String roomKey = UUID.randomUUID().toString();
+            ChatRoom newRoom = new ChatRoom();
+            newRoom.setRoomKey(roomKey);
+            newRoom.setSenderKey(senderKey);
+            newRoom.setReceiverKey(receiverKey);
+            newRoom.setCreatedAt(LocalDateTime.now());
+            newRoom.setSenderLeft(false);
+            newRoom.setReceiverLeft(false);
 
-        ChatRoom newRoom = new ChatRoom();
-        newRoom.setRoomKey(roomKey);
-        newRoom.setSenderKey(senderKey);
-        newRoom.setReceiverKey(receiverKey);
-        newRoom.setCreatedAt(LocalDateTime.now());
-        newRoom.setSenderLeft(false);
-        newRoom.setReceiverLeft(false);
-
-        chatRepository.createChatRoom(newRoom);
-        return newRoom;
+            chatRepository.createChatRoom(newRoom);
+            return newRoom;
+        }
     }
 
     @Override

@@ -217,8 +217,6 @@ const ItemWrite = () => {
         }
     };
 
-    console.log(itemData.content);
-
     return (
         <>
         <main>

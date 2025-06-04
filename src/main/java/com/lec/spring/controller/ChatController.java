@@ -50,7 +50,7 @@ public class ChatController {
     }
 
     @MessageMapping("/send/{roomKey}")
-    public void sendMessage(@DestinationVariable String roomKey,
+    public void sendMessage(@DestinationVariable("roomKey") String roomKey,
                                    @Payload ChatMessageDTO chatMessageDTO,
                                    @Header("simpSessionAttributes")Map<String, Object> sessionAttributes) {
 

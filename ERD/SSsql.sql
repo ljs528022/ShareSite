@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS d1_payment;
 DROP TABLE IF EXISTS d1_user;
 DROP TABLE IF EXISTS d1_item_image;
 DROP TABLE IF EXISTS d1_chatroom; 
-DROP TABLE IF EXISTS d1_chatMessage; 
+DROP TABLE IF EXISTS d1_chatMessage;
 
 /* Create Tables */
 

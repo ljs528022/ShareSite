@@ -4,13 +4,24 @@ import { useEffect, useRef, useState } from 'react';
 import { getData, postData } from './api';
 import { useToast } from '../util/ToastContext';
 import '../css/util/chatroom.css';
+import { useUser } from './UserContext';
+import { FaAngleDown, FaAngleUp, FaArrowCircleRight, FaBullhorn, FaInfoCircle } from "react-icons/fa";
 
 const ChatRoom = ({ senderKey, receiverKey }) => {
 
+    // 로그인 중인 회원 정보
+    const { user } = useUser();
+
     const [ chatRoom, setChatRoom ] = useState(null);
     const [ messages, setMessages ] = useState([]);
-    const [ input, setInput ] = useState('');
+    const [ input, setInput ] = useState(``);
     const clientRef = useRef(null);
+
+    // 채팅 메뉴
+    const [ chatMenu, setChatMenu ] = useState(false);
+
+    // 대화 상대의 정보
+    const [ chatUserInfo, setChatUserInfo ] = useState(null);
 
     const { showToast } = useToast();
 
@@ -99,35 +110,79 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
     };
 
     const fetchMessages = (messages) => {
-        if(!messages) return;
+        if(!messages && !user) return;
 
         return (
-        <div>
-
+        <>
+        {messages.map(m => (
+        <div key={m.id} className={`chatMsg-box ${m.senderKey === user.userKey ? "sender" : "receiver"}`}>
+            <div className={`chatMsg-label ${m.senderKey === user.userKey ? "sender" : "receiver"}`}>
+                <span>{m.readAt ? "읽음" : ""}</span>
+                <span>{getDayMinuteCounter(m.timestamp)}</span>
+            </div>
+            <div className={`chatMsg-content-${m.senderKey === user.userKey ? "sender" : "receiver"}`}>
+                {m.message}
+            </div>
         </div>
+        ))}
+        </>
         );
+    }
+
+    const handleKeyDown = (e) => {
+        if(e.key === "Enter") {
+            if(e.shiftKey) {
+                e.preventDefault();
+                setInput((prev) => prev + `\n`);
+            } else {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
     }
 
     if(!senderKey && !receiverKey && !clientRef) return;
 
     return (
         <div className='chat-room'>
+            <div className='chat-menu-box'>
+                {chatMenu && 
+                <div className='chat-menu'>
+                    <button className='chat-menu-btn'>
+                        <FaInfoCircle size={30} color='#7badff' />
+                        <a>상대방 정보</a>
+                    </button>
+                    <button className='chat-menu-btn'>
+                        <FaBullhorn size={30} color='#e53939' />
+                        <a>신고하기</a>
+                    </button>
+                    <button className='chat-menu-btn'>
+                        <FaArrowCircleRight size={30} color='#555' />
+                        <a>나가기</a>
+                    </button>
+                </div>
+                }
+                <button className='chat-user-btn' onClick={() => setChatMenu(prev => !prev)}>
+                    {chatMenu ? 
+                    <FaAngleUp size={20} color='black' />
+                    :
+                    <FaAngleDown size={20} color='black'/>
+                    }
+                </button>
+            </div>
             <div className='chat-box'>
                 {messages.length > 0 ? 
                 ""
                 :
                 <span className='chat-span'>나눴던 대화가 없어요. 인사부터 시작해볼까요?</span>
                 }
-                {messages.map((msg, idx) => (
-                    <div key={idx}>
-                        <strong>{msg.sender}</strong> : {msg.message} <i>({msg.timestamp})</i>
-                    </div>
-                ))}
+                {fetchMessages(messages)}
             </div>
             <div className='chat-input'>
-                <input
+                <textarea
                     className='chat-message'
                     value={input}
+                    onKeyDown={handleKeyDown}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder='메세지를 입력해주세요'
                     />
@@ -135,6 +190,32 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
             </div>
         </div>
     );
-};
+}
+
+const getDayMinuteCounter = (date) => {
+    if (!date) {return "";}
+
+    let today = new Date();
+    let postdate = new Date(date);
+    let elapsedTime = Math.trunc((today - postdate) / 1000);
+    let elapsedText = "";
+
+    const seconds = 1;
+    const minute = seconds * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+
+    if (elapsedTime < minute) {
+        elapsedText = "방금 전";
+    } else if (elapsedTime < hour) {
+        elapsedText = Math.trunc(elapsedTime / minute) + "분 전";
+    } else if (elapsedTime < day) {
+        elapsedText = Math.trunc(elapsedTime / hour) + "시간 전";
+    } else {
+        elapsedText = postdate.toLocaleDateString("ko-KR", {dateStyle: "medium",})
+    }
+
+    return elapsedText;
+}
 
 export default ChatRoom;
