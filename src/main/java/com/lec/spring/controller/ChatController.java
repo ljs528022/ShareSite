@@ -33,11 +33,13 @@ public class ChatController {
     private UserService userService;
 
     @PostMapping("/room")
-    public ResponseEntity<?> createChatRoom(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<?> createChatRoom(@RequestBody Map<String, String> payload, Principal principal) {
         String senderKey = payload.get("senderKey");
         String receiverKey  = payload.get("receiverKey");
+        User user = getUserByUsername(principal.getName());
 
-        ChatRoom room = chatService.createChatRoom(senderKey, receiverKey);
+        ChatRoom room = chatService.createChatRoom(senderKey, receiverKey, user.getUserKey());
+
         return ResponseEntity.ok(room);
     }
 
@@ -75,8 +77,8 @@ public class ChatController {
         return ResponseEntity.ok(messages);
     }
 
-    @PostMapping("/markAsRead/{roomKey}")
-    public ResponseEntity<?> markAsRead(@PathVariable("roomKey") String roomKey, Principal principal) {
+    @PostMapping("/read/{roomKey}")
+    public ResponseEntity<?> markAsRead(@PathVariable("roomKey")String roomKey, Principal principal) {
         User user = getUserByUsername(principal.getName());
         LocalDateTime now = LocalDateTime.now();
 
@@ -88,6 +90,14 @@ public class ChatController {
     public ResponseEntity<?> leaveRoom(@PathVariable("roomKey") String roomKey, Principal principal) {
         User user = getUserByUsername(principal.getName());
         chatService.leaveChatRoom(roomKey, user.getUserKey());
+
+        ChatMessage leaveMessage = new ChatMessage();
+        leaveMessage.setRoomKey(roomKey);
+        leaveMessage.setSenderKey("SYSTEM");
+        leaveMessage.setMessage(user.getUseralias() + "님이 채팅방을 나갔습니다.");
+
+        messagingTemplate.convertAndSend("/topic/chat/" + roomKey, leaveMessage);
+
         return ResponseEntity.ok().build();
     }
 

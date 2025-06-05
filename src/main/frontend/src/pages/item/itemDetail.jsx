@@ -444,7 +444,9 @@ const ItemDetail = () => {
                     onClose={() => {
                         setConfirmPurChase(false)
                         setShowPurchase(true)}}
-                    onConfirm={() => {}}
+                    onConfirm={() => {
+                        setConfirmPurChase(false)
+                        setShowChat(true)}}
                     title={"잠깐! 판매자와 채팅은 해보셨나요?"}
                     message={"채팅 없이 결제를 진행하면 거래가 취소될 확률이 높습니다! \n 판매자와 소통해보세요."}
                     confirmText={"네, 채팅하고 거래할래요"}

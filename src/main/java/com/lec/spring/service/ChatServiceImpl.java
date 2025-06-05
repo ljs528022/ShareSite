@@ -4,10 +4,12 @@ import com.lec.spring.DTO.ChatMessageDTO;
 import com.lec.spring.domain.ChatMessage;
 import com.lec.spring.domain.ChatRoom;
 import com.lec.spring.repository.ChatRepository;
+import com.lec.spring.repository.UserRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -16,18 +18,27 @@ import java.util.UUID;
 public class ChatServiceImpl implements ChatService {
 
     private final ChatRepository chatRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public ChatServiceImpl(SqlSession sqlSession) {
         this.chatRepository = sqlSession.getMapper(ChatRepository.class);
+        this.userRepository = sqlSession.getMapper(UserRepository.class);
 
         System.out.println("✅ ChatService() Created");
     }
 
     @Override
-    public ChatRoom createChatRoom(String senderKey, String receiverKey) {
+    public ChatRoom createChatRoom(String senderKey, String receiverKey, String userKey) {
         ChatRoom existingRoom = chatRepository.findRoomByUsers(senderKey, receiverKey);
         if(existingRoom != null) {
+            if(senderKey == userKey && existingRoom.getSenderLeft()) {
+                existingRoom.setSenderLeft(false);
+                chatRepository.update(existingRoom);
+            } else if (receiverKey == userKey && existingRoom.getReceiverLeft()) {
+                existingRoom.setReceiverLeft(false);
+                chatRepository.update(existingRoom);
+            }
             return existingRoom;
         } else {
             String roomKey = UUID.randomUUID().toString();

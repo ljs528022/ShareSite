@@ -9,11 +9,13 @@
 .chat-box {
     display: flex;
     flex-direction: column;
-    height: 85vh;
+    height: inherit;
     overflow-y: auto;
 }
 
 .chat-menu-box {
+    display: flex;
+    flex-direction: column;
     width: 100%;
 }
 
@@ -48,10 +50,11 @@
 }
 
 .chat-input {
+    position: fixed;
     display: flex;
     width: 95%;
-    margin: 0 auto;
-    margin-bottom: 8px;
+    left: 10px;
+    bottom: 5px;
     justify-content: space-between;
     border-radius: 8px;
     background-color: white;
@@ -94,35 +97,93 @@
 
 .sender {
     margin-right: 5px;
+    text-align: right;
 }
 
 .receiver {
     margin-left: 5px;
     flex-direction: row-reverse;
+    text-align: left;
 }
 
 .chatMsg-label {
     display: flex;
     flex-direction: column;
-    text-align: right;
     
     font-size: 10px;
 }
 
 .chatMsg-content-sender {
     max-width: 180px;
+    margin: 0;
     padding: 5px 15px;
     border-radius: 8px;
     text-align: left;
     font-size: 15px;
+    font-family: none;
     background-color: rgb(202, 220, 255);
 }
 
 .chatMsg-content-receiver {
     max-width: 180px;
+    margin: 0;
     padding: 5px 15px;
     border-radius: 8px;
     text-align: left;
     font-size: 15px;
+    font-family: none;
     background-color: white;
+}
+
+.chatMsg-content-system {
+    margin: 0;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-family: none;
+    color: black;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* 상대방 정보 CSS 부분 */
+.chat-userInfo-wrapper {
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    padding: 10px 0px;
+    justify-content: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: white;
+    cursor: pointer;
+    z-index: 200;
+}
+
+.chat-userInfo-box {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.chat-userInfo-img {
+    width: 70px;
+    border-radius: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.chat-userInfo-text {
+    margin: 0;
+    padding: 0;
+}
+
+.chat-userInfo-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 50px;
 }

@@ -173,7 +173,6 @@ const UserPage = () => {
                             {/* 유저 이름 */}
                             <label>{userInfo.useralias}#{userInfo.userKey}</label>
                             <p className="user-decoration">
-                                
                                 {userInfo.userIntro ? userInfo.userIntro : "더 다양한 상품을 다른 회원들과 거래 해보세요!"}
                             </p>
                             {/* 유저의 상품 거래 현황 */}
@@ -340,7 +339,7 @@ const UserPage = () => {
                 isOpen={showModify}
                 onClose={() => setShowModify(false)}
                 title={"내 정보 수정"}
-                content={<UserModify user={userInfo} onClose={() => setShowModify(false)}/>}
+                content={<UserModify user={userInfo} />}
             />
 
             {/* 계좌 관리 */}
@@ -366,7 +365,7 @@ const UserPage = () => {
             <SidePage
                 isOpen={showChat}
                 onClose={() => setShowChat(false)}
-                headerText={"채팅하기"}
+                headerText={`"${userInfo.useralias}" 님과의 채팅`}
                 content={
                 <ChatRoom
                     senderKey={user.userKey}
