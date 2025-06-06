@@ -9,15 +9,22 @@ import { FaAngleDown, FaAngleUp, FaArrowCircleRight, FaBullhorn, FaInfoCircle } 
 import Modal from '../util/Modal';
 import { useNavigate } from 'react-router-dom';
 
-const ChatRoom = ({ senderKey, receiverKey }) => {
+const ChatRoom = (props) => {
+    const { sender, receiver } = props;
 
     // 로그인 중인 회원 정보
     const { user } = useUser();
-
+    
+    // 채팅방
     const [ chatRoom, setChatRoom ] = useState(null);
     const [ messages, setMessages ] = useState([]);
     const [ input, setInput ] = useState(``);
     const clientRef = useRef(null);
+
+    // 채팅방 유저 정보 sender, receiver
+    const [ senderInfo, setSenderInfo ] = useState(sender);
+    const [ receiverInfo, setReceiverInfo ] = useState(receiver);
+    const [ chatUserInfo, setChatUSerInfo ] = useState(null);
 
     // 채팅 메뉴
     const [ chatMenu, setChatMenu ] = useState(false);
@@ -25,20 +32,21 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
 
     // 대화 상대의 정보
     const [ showUserInfo, setShowUserInfo ] = useState(false);
-    const [ chatUserInfo, setChatUserInfo ] = useState(null);
+
 
     const [ messageRead, setMessageRead] = useState(false);
     const { showToast } = useToast();
     const navigate = useNavigate();
 
+    // 채팅방 생성 or 있으면 가져오기
     useEffect(() => {
-        if(!senderKey && !receiverKey) return;
+        if(!senderInfo && !receiverInfo) return;
 
         const createChatRoom = async () => {
             try {
                 const response = await postData("/chat/room", {
-                    senderKey,
-                    receiverKey
+                    senderKey: senderInfo.userKey,
+                    receiverKey: receiverInfo.userKey
                 });
                 setChatRoom(response.data);
             } catch {
@@ -48,6 +56,18 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
         createChatRoom();
     }, []);
 
+    // 로그인한 유저에 따라 상대방 고르기
+    useEffect(() => {
+        if(!user && !senderInfo && !receiverInfo) return;
+
+        if(user.userKey === senderInfo.userKey) {
+            setChatUSerInfo(receiverInfo);
+        } else if (user.userKey === receiverInfo.userKey) {
+            setChatUSerInfo(senderInfo);
+        }
+    }, [user, sender, receiver])
+
+    // 해당 채팅방의 메세지 가져오기
     useEffect(() => {
         if(!chatRoom) return;
 
@@ -62,6 +82,7 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
         fetchMessage();
     }, [chatRoom, messageRead]);
 
+    // 채팅방 WebSocket 연결
     useEffect(() => {
         if(!chatRoom) return;
         const roomKey = chatRoom.roomKey;
@@ -98,22 +119,7 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
         }
     }, [chatRoom]);
 
-    useEffect(() => {
-        if(chatUserInfo) return;
-
-        const userKey = senderKey === user.userKey ? receiverKey : senderKey;
-
-        const getUserInfo = async () => {
-            try {
-                const response = await getData(`/user/getSellerInfo/${userKey}`);
-                if(response.status === 200) setChatUserInfo(response.data);
-            } catch {
-                showToast("통신 장애가 발생했습니다...", "error");
-            }
-        }
-        getUserInfo();
-    }, []);
-
+    // 메세지 읽음음 표시
     useEffect(() => {
         if(!chatRoom) return;
 
@@ -138,8 +144,8 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
     const sendMessage = () => {
         if(input && clientRef.current?.connected && chatRoom) {
             const chatMessage = {
-                senderKey: senderKey,
-                receiverKey: receiverKey,
+                senderKey: senderInfo.userKey,
+                receiverKey: receiverInfo.userKey,
                 message: input,
             };
             clientRef.current.publish({
@@ -204,7 +210,7 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
         }
     }
 
-    if(!senderKey && !receiverKey && !chatUserInfo && !clientRef) return;
+    if(!senderInfo && !receiverInfo && !clientRef) return;
 
     return (
         <>
@@ -225,7 +231,7 @@ const ChatRoom = ({ senderKey, receiverKey }) => {
                 <div className='chat-userInfo-wrapper' onClick={() => navigate(`/user/${chatUserInfo.userKey}`)}>
                     {chatUserInfo &&
                     <img className='chat-userInfo-img'
-                    src={chatUserInfo.userimg !== '' ? `http://localhost:8093${chatUserInfo.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'}/>
+                    src={chatUserInfo.userimg ? `http://localhost:8093${chatUserInfo.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'}/>
                     }
                     <div className='chat-userInfo-box'>
                         <p className='chat-userInfo-text'>{chatUserInfo.useralias}</p>

@@ -23,6 +23,7 @@ const ItemDetail = () => {
 
     // Item's Info
     const [ item, setItem ] = useState([]);
+    const [ itemUser, setItemUser ] = useState(null);
     const [ loading, setLoading ] = useState(true);
     const [ showDelete, setShowDelete ] = useState(false);
     const [ paymentIsExist, setPaymentIsExist ] = useState(false);
@@ -53,14 +54,17 @@ const ItemDetail = () => {
     const [ showChat, setShowChat ] = useState(false);  // 채팅 창
     const { showToast } = useToast();
     const navigate = useNavigate();
-    
- 
+
     // 해당 상품의 정보 받아오기
     useEffect(() => {
         const fetchItem = async () => {
             try {
-                const response = await getData(`/product/${itemKey}`, { withCredentials: true });
-                setItem(response.data);
+                const res = await getData(`/product/${itemKey}`, { withCredentials: true });
+                if(res.status === 200) {
+                    const { item, itemUser } = res.data;
+                    setItem(item);
+                    setItemUser(itemUser);
+                }
             } catch (err) {
                 showToast("통신 장애로 상품을 가져오지 못했어요...", "error");
                 console.log(err);
@@ -242,7 +246,7 @@ const ItemDetail = () => {
         navigate("/home");
     }
 
-    if(!item) return;
+    if(!item && !itemUser) return;
 
     return (
         <>
@@ -391,8 +395,8 @@ const ItemDetail = () => {
                         <div className="item-seller-box">
                             <label>판매자 정보</label>
                             <div className="item-seller">
-                                <p onClick={() => navigate(`/user/${item.userKey}`)}>{item.useralias}</p>
-                                <img onClick={() => navigate(`/user/${item.userKey}`)} src={`http://localhost:8093/item-images/temp/userImgTemp.png`}/>
+                                <p onClick={() => navigate(`/user/${itemUser.userKey}`)}>{itemUser.useralias}</p>
+                                <img onClick={() => navigate(`/user/${itemUser.userKey}`)} src={itemUser.userimg ? `http://localhost:8093${itemUser.userimg}` : `http://localhost:8093/item-images/temp/userImgTemp.png`}/>
                             </div>
                             {/* 추가적인 판매자 정보 추가 필요함 */}
                             {/* ex) 신뢰 점수, 거래 완료 수, 리뷰 수 등... */}
@@ -473,8 +477,8 @@ const ItemDetail = () => {
                     headerText={`"${item.useralias}" 님과의 채팅`}
                     content={
                     <ChatRoom
-                        senderKey={userKey}
-                        receiverKey={item.userKey}
+                        sender={user}
+                        receiver={itemUser}
                     />
                     }
                 />

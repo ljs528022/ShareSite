@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.DTO.ItemDTO;
 import com.lec.spring.DTO.LocationDTO;
+import com.lec.spring.DTO.UserInfoResponse;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.ItemImage;
 import com.lec.spring.domain.Location;
+import com.lec.spring.domain.User;
 import com.lec.spring.service.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,6 +34,8 @@ public class ItemController {
     private FileUploadService fileUploadService;
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private UserService userService;
     @Autowired
     private ItemImageService itemImageService;
     @Autowired
@@ -93,8 +97,20 @@ public class ItemController {
 
     // Get Item's Detail
     @GetMapping("/{itemKey}")
-    public ResponseEntity<ItemDTO> getItemDetail(@PathVariable("itemKey") Long itemKey, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> getItemDetail(@PathVariable("itemKey")Long itemKey, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> res = new HashMap<>();
+
         ItemDTO item = itemService.detail(itemKey);
+        String userKey = item.getUserKey();
+        User user = userService.findByUserKey(userKey);
+        UserInfoResponse itemUser = new UserInfoResponse(
+                user.getUserKey(),
+                user.getUsername(),
+                user.getUseralias(),
+                user.getEmail(),
+                user.getUserimg(),
+                user.getAuth()
+        );
 
         Cookie[] cookies = request.getCookies();
         boolean viewed = false;
@@ -117,11 +133,10 @@ public class ItemController {
             response.addCookie(viewCookie);
         }
 
-        if (item != null) {
-            return ResponseEntity.ok(item);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        res.put("item", item);
+        res.put("itemUser", itemUser);
+
+        return ResponseEntity.ok(res);
     }
 
     // Modify Item

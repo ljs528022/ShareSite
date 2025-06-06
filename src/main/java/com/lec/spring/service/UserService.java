@@ -17,6 +17,8 @@ public interface UserService {
     // Search by User ID
     Optional<User> findByUserName (String username);
 
+    List<User> findUsersByUserKeys(List<String> userKeys);
+
     User findSellerInfoByUserKey(String userKey);
 
     // ID Verification

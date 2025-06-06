@@ -50,6 +50,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findUsersByUserKeys(List<String> userKeys) {
+        return userRepository.findUsersByUserKeys(userKeys);
+    }
+
+    @Override
     public User findSellerInfoByUserKey(String userKey) {
         return userRepository.findSellerInfoByUserKey(userKey);
     }

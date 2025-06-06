@@ -18,6 +18,8 @@ public interface ChatService {
 
     List<ChatMessage> findMessagesByRoomKey(String roomKey);
 
+    List<ChatMessage> getLastMessages(List<String> roomKeys);
+
     void markMessagesAsRead(String roomKey, String reader, LocalDateTime readAt);
 
     void leaveChatRoom(String roomKey, String userKey);

@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/chat")
@@ -45,10 +43,34 @@ public class ChatController {
 
     @GetMapping("/rooms")
     public ResponseEntity<?> getUserChatRooms(Principal principal) {
-        User user = getUserByUsername(principal.getName());
+        Map<String, Object> response = new HashMap<>();
 
+        // 로그인한 유저가 있는 채팅방들
+        User user = getUserByUsername(principal.getName());
         List<ChatRoom> rooms = chatService.getChatRoomsByUser(user.getUserKey());
-        return ResponseEntity.ok(rooms);
+
+        // 채팅방들의 상대방의 정보
+        List<String> otherUserKeys = rooms.stream()
+                .map(room -> {
+                    if(room.getSenderKey().equals(user.getUserKey())) {
+                        return room.getReceiverKey();
+                    } else {
+                        return room.getSenderKey();
+                    }
+                }).distinct().collect(Collectors.toList());
+        List<User> otherUsers = userService.findUsersByUserKeys(otherUserKeys);
+
+        // 채팅방들의 마지막 메세지
+        List<String> roomKeys = rooms.stream().map(room -> room.getRoomKey()).collect(Collectors.toList());
+        List<ChatMessage> lastMessages = chatService.getLastMessages(roomKeys);
+
+        // 채팅방들의 안읽은 메세지 수
+
+        response.put("rooms", rooms);
+        response.put("otherUsers", otherUsers);
+        response.put("lastMessages", lastMessages);
+
+        return ResponseEntity.ok(response);
     }
 
     @MessageMapping("/send/{roomKey}")

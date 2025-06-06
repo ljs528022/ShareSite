@@ -1,3 +1,60 @@
+/* 채팅방 리스트 CSS 부분 */
+.chatRoom-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatRoom-box {
+    display: flex;
+    margin: 10px 20px;
+    cursor: pointer;
+}
+
+.chatRoom-img {
+    width: 60px;
+    border-radius: 50px;
+}
+
+.chatRoom-info {
+    display: flex;
+    flex-direction: column;
+    margin: 8px auto;
+    margin-left: 20px;
+}
+
+.chatRoom-label {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    text-align: left;
+}
+
+.chatRoom-content {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 15px;
+    color: #555;
+}
+
+.chatRoom-sub {
+    display: flex;
+    flex-direction: column;
+}
+
+.chatRoom-time {
+    margin: 0;
+    margin-top: 8px;
+    font-size: 12px;
+}
+.chatRoom-unread {
+    
+}
+
+/* 채팅방 CSS 부분 */
 .chat-room {
     width: 100%;
     height: 100%;

@@ -5,6 +5,8 @@ import Categorybox from '../components/categorybox.jsx';
 import { useUser } from "../services/UserContext.jsx";
 import { useToast } from "../util/ToastContext.jsx";
 import { getCategory } from "../services/getCategory.jsx";
+import ChatRoomList from "./side/ChatRoomList.jsx";
+import SidePage from "../util/sidePage.jsx";
 
 
 const Header = () => {
@@ -18,6 +20,7 @@ const Header = () => {
     const navigate = useNavigate();
     
     const [ showCategories, setShowCategories ] = useState(false);
+    const [ showChatRooms, setShowChatRooms ] = useState(false);
 
     // 카테고리 받아오기
     useEffect(() => {
@@ -85,10 +88,9 @@ const Header = () => {
                 <div className="Navbar-menu">
                     <ul>
                         <li>
-                            {/* 옆에서 채팅창 나오게 만들기 (추후에) */}
                             <button onClick={() => {
                                 if(user) {
-                                    showToast("준비 중인 서비스입니다. 빠른 시일 내에 제공해드릴게요!", "warning");
+                                    setShowChatRooms(true);
                                 } else {
                                     showToast("로그인 후에 이용 가능한 기능입니다!", "error");
                                 }
@@ -154,6 +156,12 @@ const Header = () => {
                 </nav>
             </div>
         </header>
+        <SidePage 
+            isOpen={showChatRooms}
+            onClose={() => setShowChatRooms(false)}
+            headerText={"채팅방 목록"}
+            content={<ChatRoomList />}
+        />
         </>
     )
 }

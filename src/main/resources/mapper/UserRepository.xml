@@ -84,6 +84,14 @@
         WHERE username = #{username}
     </select>
 
+    <select id="findUsersByUserKeys" resultType="com.lec.spring.domain.User">
+        SELECT * FROM d1_user
+        WHERE userKey IN
+        <foreach collection="list" item="key" open="(" separator="," close=")">
+            #{key}
+        </foreach>
+    </select>
+
     <select id="existsByUsername" resultType="int" parameterType="String">
         SELECT COUNT(*)
         FROM d1_user

@@ -81,6 +81,11 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public List<ChatMessage> getLastMessages(List<String> roomKeys) {
+        return chatRepository.getLastMessages(roomKeys);
+    }
+
+    @Override
     public void markMessagesAsRead(String roomKey, String userKey, LocalDateTime readAt) {
         chatRepository.markMessagesAsRead(roomKey, userKey, readAt);
     }

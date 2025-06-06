@@ -17,6 +17,8 @@ public interface UserRepository {
     // Return User By username
     Optional<User> findByUserName(@Param("username") String username);
 
+    List<User> findUsersByUserKeys(List<String> userKeys);
+
     // ID Verification
     int existsByUsername(@Param("username") String username);
 

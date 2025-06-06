@@ -368,8 +368,8 @@ const UserPage = () => {
                 headerText={`"${userInfo.useralias}" 님과의 채팅`}
                 content={
                 <ChatRoom
-                    senderKey={user.userKey}
-                    receiverKey={userKey}
+                    sender={user}
+                    receiver={userInfo}
                 />
                 }
             />

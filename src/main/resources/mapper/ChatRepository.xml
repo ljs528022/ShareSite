@@ -46,6 +46,25 @@
         ORDER BY timestamp ASC
     </select>
 
+    <select id="getLastMessages" resultType="com.lec.spring.domain.ChatMessage">
+        SELECT *
+        FROM (
+            SELECT *, ROW_NUMBER() OVER (PARTITION BY roomKey ORDER BY timestamp DESC) as rn
+            FROM d1_chatMessage
+            WHERE roomKey IN
+            <foreach collection="list" item="key" open="(" separator="," close=")">
+                #{key}
+            </foreach>
+        ) sub
+        WHERE rn = 1
+    </select>
+
+    <select id="getCountUnread" resultType="int">
+        SELECT roomKey, COUNT(*)
+        FROM d1_chatMessage
+        WHERE TODO
+    </select>
+
     <update id="markMessagesAsRead">
         UPDATE d1_chatMessage
         SET isRead = true,
