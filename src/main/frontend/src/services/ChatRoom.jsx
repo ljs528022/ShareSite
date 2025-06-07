@@ -97,9 +97,13 @@ const ChatRoom = (props) => {
                 console.log('Connected:', frame);
 
                 client.subscribe(`/topic/chat/${roomKey}`, (message) => {
-                const msg = JSON.parse(message.body);
-                setMessages((prev) => [...prev, msg]);
+                    const msg = JSON.parse(message.body);
+                    setMessages((prev) => [...prev, msg]);
                 });
+
+                client.subscribe(`/queue/readUpdate${roomKey}`, () => {
+                    setMessageRead(prev => !prev);
+                })
             },
             onStompError: (frame) => {
                 console.error('Broker Error:', frame.headers['message']);
@@ -119,27 +123,21 @@ const ChatRoom = (props) => {
         }
     }, [chatRoom]);
 
-    // 메세지 읽음음 표시
+    // 메세지 읽음 표시
     useEffect(() => {
-        if(!chatRoom) return;
-
-        const unreadMessages = messages.filter(
-            m => m.receiverKey === user.userKey && !m.isRead
-        );
-
-        if(unreadMessages.length > 0) {
-            markMessageAsRead(chatRoom.roomKey);
+        if(clientRef.current?.connected && chatRoom) {
+            const enterCheck = {
+                roomKey: chatRoom.roomKey,
+                userKey: user.userKey
+            };
+            clientRef.current.publish({
+                destination: `/app/chat/enter`,
+                body: JSON.stringify(enterCheck),
+            });
+        }else {
+            console.warn("입장 확인 실패: 연결 안 됨");
         }
-    }, [messages]);
-
-    const markMessageAsRead = async (roomKey) => {
-        try {
-            const response = await postData(`/chat/read/${roomKey}`);
-            if(response.status === 200) setMessageRead(prev => !prev);
-        } catch {
-            showToast("통신 장애가 발생했습니다...", "error");
-        }
-    };
+    }, [chatRoom, user]);
 
     const sendMessage = () => {
         if(input && clientRef.current?.connected && chatRoom) {

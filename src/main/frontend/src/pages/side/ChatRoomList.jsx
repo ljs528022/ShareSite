@@ -10,7 +10,7 @@ const ChatRoomList = () => {
     const [ chatRooms, setChatRooms ] = useState(null);
     const [ otherUser, setOtherUser ] = useState(null);
     const [ recentMessage, setRecentMessage ] = useState(null);
-    const [ unReadCount, setUnReadCount ] = useState(0);
+    const [ unReadCount, setUnReadCount ] = useState(null);
 
     const { showToast } = useToast();
 
@@ -18,23 +18,24 @@ const ChatRoomList = () => {
         const getChatRooms = async () => {
             const response = await getData("/chat/rooms");
             if(response.status === 200) {
-                const { rooms, otherUsers, lastMessages } = response.data;
+                const { rooms, otherUsers, lastMessages, unReadCounts } = response.data;
                 setChatRooms(rooms);
                 setOtherUser(otherUsers);
                 setRecentMessage(lastMessages);
+                setUnReadCount(unReadCounts);
             }
         };
         getChatRooms();
     }, []);
 
     const handleOpenChat = () => {
-        
+
     }
 
     const fetchChatRooms = (rooms, users) => {
         if(!rooms && !users) return;
 
-        const userKey = user.userKey
+        const userKey = user.userKey;
 
         return (
             <div className="chatRoom-wrapper">
@@ -42,6 +43,7 @@ const ChatRoomList = () => {
                 const otherUserKey = room.senderKey === userKey ? room.receiverKey : room.senderKey;
                 const chatOhterUser = users.find(user => user.userKey === otherUserKey);
                 const msg = recentMessage.find(msg => msg.roomKey === room.roomKey);
+                const unRead = unReadCount.find(un => un.roomKey === room.roomKey);
 
                 return (
                 <div key={room.roomKey} className="chatRoom-box" >
@@ -51,12 +53,16 @@ const ChatRoomList = () => {
                         <p className="chatRoom-content">{!msg ? "나눈 대화가 없습니다" : msg.message}</p>
                     </div>
                     <div className="chatRoom-sub">
+                        {msg &&
                         <p className="chatRoom-time">
-                            {msg && getDayMinuteCounter(msg.timestamp)}
+                            {getDayMinuteCounter(msg.timestamp)}
                         </p>
+                        }
+                        {unRead &&
                         <p className="chatRoom-unread">
-                            {unReadCount === 0 ? "" : unReadCount}
+                            {unRead.unreadCount}
                         </p>
+                        }
                     </div>
                 </div>
                 )

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -86,8 +87,13 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void markMessagesAsRead(String roomKey, String userKey, LocalDateTime readAt) {
-        chatRepository.markMessagesAsRead(roomKey, userKey, readAt);
+    public List<Map<String, Integer>> getCountUnread(List<String> roomKeys, String userKey) {
+        return chatRepository.getCountUnread(roomKeys, userKey);
+    }
+
+    @Override
+    public void markMessagesAsRead(String roomKey, String userKey) {
+        chatRepository.markMessagesAsRead(roomKey, userKey, LocalDateTime.now());
     }
 
     @Override

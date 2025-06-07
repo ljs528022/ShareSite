@@ -7,6 +7,7 @@ import com.lec.spring.domain.ChatRoom;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface ChatService {
 
@@ -20,7 +21,9 @@ public interface ChatService {
 
     List<ChatMessage> getLastMessages(List<String> roomKeys);
 
-    void markMessagesAsRead(String roomKey, String reader, LocalDateTime readAt);
+    List<Map<String, Integer>> getCountUnread(List<String> roomKeys, String userKey);
+
+    void markMessagesAsRead(String roomKey, String reader);
 
     void leaveChatRoom(String roomKey, String userKey);
 }

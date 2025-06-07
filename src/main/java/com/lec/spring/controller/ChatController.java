@@ -1,6 +1,7 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.DTO.ChatMessageDTO;
+import com.lec.spring.DTO.EnterDTO;
 import com.lec.spring.domain.ChatMessage;
 import com.lec.spring.domain.ChatRoom;
 import com.lec.spring.domain.User;
@@ -65,10 +66,13 @@ public class ChatController {
         List<ChatMessage> lastMessages = chatService.getLastMessages(roomKeys);
 
         // 채팅방들의 안읽은 메세지 수
+        List<Map<String, Integer>> unReadCounts = chatService.getCountUnread(roomKeys, user.getUserKey());
+        System.out.println("받아온 Map의 값: " + unReadCounts);
 
         response.put("rooms", rooms);
         response.put("otherUsers", otherUsers);
         response.put("lastMessages", lastMessages);
+        response.put("unReadCounts", unReadCounts);
 
         return ResponseEntity.ok(response);
     }
@@ -93,19 +97,22 @@ public class ChatController {
         messagingTemplate.convertAndSend("/topic/chat/" + roomKey, chatMessageDTO);
     }
 
+    @MessageMapping("/chat/enter")
+    public void handleUserEnter(@Payload EnterDTO enterDTO) {
+        String roomKey = enterDTO.getRoomKey();
+        String userKey = enterDTO.getUserKey();
+
+        chatService.markMessagesAsRead(roomKey, userKey);
+        messagingTemplate.convertAndSend(
+                "/topic/readStatus/" + roomKey,
+                Map.of("userKey", userKey, "roomKey", roomKey)
+        );
+    }
+
     @GetMapping("/history/{roomKey}")
     public ResponseEntity<List<ChatMessage>> getChatHistory(@PathVariable("roomKey") String roomKey) {
         List<ChatMessage> messages = chatService.findMessagesByRoomKey(roomKey);
         return ResponseEntity.ok(messages);
-    }
-
-    @PostMapping("/read/{roomKey}")
-    public ResponseEntity<?> markAsRead(@PathVariable("roomKey")String roomKey, Principal principal) {
-        User user = getUserByUsername(principal.getName());
-        LocalDateTime now = LocalDateTime.now();
-
-        chatService.markMessagesAsRead(roomKey, user.getUserKey(), now);
-        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/room/leave/{roomKey}")

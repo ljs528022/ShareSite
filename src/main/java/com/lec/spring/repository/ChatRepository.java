@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ChatRepository {
@@ -23,6 +24,7 @@ public interface ChatRepository {
 
     List<ChatMessage> findMessagesByRoomKey(@Param("roomKey")String roomKey);
     List<ChatMessage> getLastMessages(List<String> roomKeys);
+    List<Map<String, Integer>> getCountUnread(List<String> roomKeys, @Param("userKey")String userKey);
     void markMessagesAsRead(@Param("roomKey")String roomKey, @Param("userKey")String userKey, @Param("readAt")LocalDateTime readAt);
     void update(ChatRoom room);
     void delete(@Param("roomKey")String roomKey);

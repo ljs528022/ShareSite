@@ -59,10 +59,16 @@
         WHERE rn = 1
     </select>
 
-    <select id="getCountUnread" resultType="int">
-        SELECT roomKey, COUNT(*)
+    <select id="getCountUnread" resultType="map">
+        SELECT roomKey, COUNT(*) AS unreadCount
         FROM d1_chatMessage
-        WHERE TODO
+        WHERE isRead = false
+        AND receiverKey = #{userKey}
+        AND roomKey IN
+        <foreach collection="roomKeys" item="key" open="(" separator="," close=")">
+            #{key}
+        </foreach>
+        GROUP BY roomKey
     </select>
 
     <update id="markMessagesAsRead">
