@@ -5,12 +5,12 @@ import { deleteData, getData, postData } from './api';
 import { useToast } from '../util/ToastContext';
 import '../css/util/chatroom.css';
 import { useUser } from './UserContext';
-import { FaAngleDown, FaAngleUp, FaArrowCircleRight, FaBullhorn, FaInfoCircle } from "react-icons/fa";
+import { FaAngleDown, FaAngleLeft, FaAngleUp, FaArrowCircleRight, FaBullhorn, FaInfoCircle } from "react-icons/fa";
 import Modal from '../util/Modal';
 import { useNavigate } from 'react-router-dom';
 
 const ChatRoom = (props) => {
-    const { sender, receiver } = props;
+    const { sender, receiver, onBack } = props;
 
     // 로그인 중인 회원 정보
     const { user } = useUser();
@@ -20,11 +20,12 @@ const ChatRoom = (props) => {
     const [ messages, setMessages ] = useState([]);
     const [ input, setInput ] = useState(``);
     const clientRef = useRef(null);
+    const chatBoxRef = useRef(null);
 
     // 채팅방 유저 정보 sender, receiver
     const [ senderInfo, setSenderInfo ] = useState(sender);
     const [ receiverInfo, setReceiverInfo ] = useState(receiver);
-    const [ chatUserInfo, setChatUSerInfo ] = useState(null);
+    const [ chatUserInfo, setChatUserInfo ] = useState(null);
 
     // 채팅 메뉴
     const [ chatMenu, setChatMenu ] = useState(false);
@@ -33,14 +34,14 @@ const ChatRoom = (props) => {
     // 대화 상대의 정보
     const [ showUserInfo, setShowUserInfo ] = useState(false);
 
-
+    const [ isConnected, setIsConnected ] = useState(false);
     const [ messageRead, setMessageRead] = useState(false);
     const { showToast } = useToast();
     const navigate = useNavigate();
 
     // 채팅방 생성 or 있으면 가져오기
     useEffect(() => {
-        if(!senderInfo && !receiverInfo) return;
+        if(!senderInfo || !receiverInfo) return;
 
         const createChatRoom = async () => {
             try {
@@ -54,16 +55,16 @@ const ChatRoom = (props) => {
             }
         };
         createChatRoom();
-    }, []);
+    }, [senderInfo, receiverInfo]);
 
     // 로그인한 유저에 따라 상대방 고르기
     useEffect(() => {
         if(!user && !senderInfo && !receiverInfo) return;
 
         if(user.userKey === senderInfo.userKey) {
-            setChatUSerInfo(receiverInfo);
+            setChatUserInfo(receiverInfo);
         } else if (user.userKey === receiverInfo.userKey) {
-            setChatUSerInfo(senderInfo);
+            setChatUserInfo(senderInfo);
         }
     }, [user, sender, receiver])
 
@@ -95,13 +96,21 @@ const ChatRoom = (props) => {
             reconnectDelay: 5000,
             onConnect: (frame) => {
                 console.log('Connected:', frame);
+                setIsConnected(true);
 
                 client.subscribe(`/topic/chat/${roomKey}`, (message) => {
                     const msg = JSON.parse(message.body);
-                    setMessages((prev) => [...prev, msg]);
+                    setMessages((prev) => {
+                        const updated = [...prev, msg];
+                        setTimeout(() => {
+                            if(chatBoxRef.current)
+                                chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+                        }, 0);
+                        return updated;
+                    });
                 });
 
-                client.subscribe(`/queue/readUpdate${roomKey}`, () => {
+                client.subscribe(`/topic/readStatus/${roomKey}`, () => {
                     setMessageRead(prev => !prev);
                 })
             },
@@ -125,7 +134,9 @@ const ChatRoom = (props) => {
 
     // 메세지 읽음 표시
     useEffect(() => {
-        if(clientRef.current?.connected && chatRoom) {
+        if(!isConnected || !chatRoom || !user) return;
+
+        const sendRead = () => {
             const enterCheck = {
                 roomKey: chatRoom.roomKey,
                 userKey: user.userKey
@@ -134,13 +145,38 @@ const ChatRoom = (props) => {
                 destination: `/app/chat/enter`,
                 body: JSON.stringify(enterCheck),
             });
-        }else {
-            console.warn("입장 확인 실패: 연결 안 됨");
-        }
-    }, [chatRoom, user]);
+        };
 
+        const handleVisibilityChange = () => {
+            const isVisible = document.visibilityState === 'visible';
+            if(isVisible) {   
+                console.log("메세지 읽음 실행!");
+                sendRead();
+            } else {
+                console.log("메시지 읽음 처리 중지");
+            }
+        };
+
+        if(document.visibilityState === 'visible') {
+            sendRead();
+        }
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, [isConnected, chatRoom, user]);
+
+    // 메세지 자동 스크롤
+    useEffect(() => {
+        if(chatBoxRef.current) {
+            chatBoxRef.current.scrollTop  = chatBoxRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+    // 메세지 전송
     const sendMessage = () => {
-        if(input && clientRef.current?.connected && chatRoom) {
+        if(input && isConnected && chatRoom) {
             const chatMessage = {
                 senderKey: senderInfo.userKey,
                 receiverKey: receiverInfo.userKey,
@@ -155,31 +191,6 @@ const ChatRoom = (props) => {
             console.warn("메시지 전송 실패: 연결 안 됨");
         }
     };
-
-    const fetchMessages = (messages) => {
-        if(!messages && !user) return;
-
-        return (
-        <>
-        {messages.map(m => (
-        <div key={m.id} 
-        className={`chatMsg-box ${
-            m.senderKey === 'SYSTEM' ? "system" :
-            m.senderKey === user.userKey ? "sender" : "receiver"}`}>
-            <div className={`chatMsg-label ${m.senderKey === user.userKey ? "sender" : "receiver"}`}>
-                <span>{m.readAt ? "읽음" : ""}</span>
-                <span>{getDayMinuteCounter(m.timestamp)}</span>
-            </div>
-            <pre className={`chatMsg-content-${
-                m.senderKey === 'SYSTEM' ? "system" :
-                m.senderKey === user.userKey ? "sender" : "receiver"}`}>
-                {m.message}
-            </pre>
-        </div>
-        ))}
-        </>
-        );
-    }
 
     const handleKeyDown = (e) => {
         if(e.key === "Enter") {
@@ -208,11 +219,19 @@ const ChatRoom = (props) => {
         }
     }
 
-    if(!senderInfo && !receiverInfo && !clientRef) return;
+    if(!senderInfo && !receiverInfo  && !chatUserInfo && !clientRef) return;
 
     return (
         <>
         <div className='chat-room'>
+            <div className="chat-header">
+                <button type="button" onClick={onBack}>
+                <FaAngleLeft size={35} />
+                </button>
+                <label>
+                    {chatUserInfo && `"${chatUserInfo.useralias}" 님과의 채팅`}
+                </label>
+            </div>
             <div className='chat-menu-box'>
                 {chatMenu && !showUserInfo ? 
                 <div className='chat-menu'>
@@ -251,13 +270,26 @@ const ChatRoom = (props) => {
                 }
                 </button>
             </div>
-            <div className='chat-box'>
-                {messages.length > 0 ? 
-                ""
+            <div className='chat-box' ref={chatBoxRef}>
+                {messages.length > 0 ?
+                (messages.map(m => (
+                    <div key={m.id} 
+                    className={`chatMsg-box ${
+                        m.senderKey === 'SYSTEM' ? "system" :
+                        m.senderKey === user.userKey ? "sender" : "receiver"}`}>
+                        <div className={`chatMsg-label ${m.senderKey === user.userKey ? "sender" : "receiver"}`}>
+                            <span>{m.readAt ? "읽음" : ""}</span>
+                            <span>{getDayMinuteCounter(m.timestamp)}</span>
+                        </div>
+                        <pre className={`chatMsg-content-${
+                            m.senderKey === 'SYSTEM' ? "system" :
+                            m.senderKey === user.userKey ? "sender" : "receiver"}`}>
+                            {m.message}
+                        </pre>
+                    </div>
+                )))
                 :
-                <span className='chat-span'>나눴던 대화가 없어요. 인사부터 시작해볼까요?</span>
-            }
-                {fetchMessages(messages)}
+                <span className='chat-span'>나눴던 대화가 없어요. 인사부터 시작해볼까요?</span>}
             </div>
             <div className='chat-input'>
                 <textarea

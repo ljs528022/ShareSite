@@ -365,15 +365,14 @@ const UserPage = () => {
             <SidePage
                 isOpen={showChat}
                 onClose={() => setShowChat(false)}
-                headerText={`"${userInfo.useralias}" 님과의 채팅`}
                 content={
                 <ChatRoom
                     sender={user}
                     receiver={userInfo}
+                    onBack={() => setShowChat(false)}
                 />
                 }
             />
-
 
             {/* 탈퇴하기 */}
 

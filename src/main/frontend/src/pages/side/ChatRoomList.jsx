@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { getData } from "../../services/api";
 import { useUser } from "../../services/UserContext";
-import { useToast } from "../../util/ToastContext";
+import ChatRoom from "../../services/ChatRoom";
+import { FaAngleRight } from "react-icons/fa";
+import '../../css/util/chatroom.css';
 
-const ChatRoomList = () => {
+const ChatRoomList = ({ onClose }) => {
 
     const { user } = useUser();
 
@@ -12,7 +14,9 @@ const ChatRoomList = () => {
     const [ recentMessage, setRecentMessage ] = useState(null);
     const [ unReadCount, setUnReadCount ] = useState(null);
 
-    const { showToast } = useToast();
+    const [ selectedRoom, setSelectedRoom ] = useState(null);
+
+    const [ chatPage, setChatPage ] = useState(0);
 
     useEffect(() => {
         const getChatRooms = async () => {
@@ -28,8 +32,15 @@ const ChatRoomList = () => {
         getChatRooms();
     }, []);
 
-    const handleOpenChat = () => {
+    const handleOpenChat = (room) => {
+        if(!room) return;
 
+        setSelectedRoom({
+            roomKey: room.roomKey,
+            sender: user,
+            receiver: otherUser.find(o => room.senderKey === o.userKey || room.receiverKey === o.userKey)
+        });
+        setChatPage(1);
     }
 
     const fetchChatRooms = (rooms, users) => {
@@ -38,7 +49,7 @@ const ChatRoomList = () => {
         const userKey = user.userKey;
 
         return (
-            <div className="chatRoom-wrapper">
+            <>
             {rooms.map(room => {
                 const otherUserKey = room.senderKey === userKey ? room.receiverKey : room.senderKey;
                 const chatOhterUser = users.find(user => user.userKey === otherUserKey);
@@ -46,7 +57,7 @@ const ChatRoomList = () => {
                 const unRead = unReadCount.find(un => un.roomKey === room.roomKey);
 
                 return (
-                <div key={room.roomKey} className="chatRoom-box" >
+                <div key={room.roomKey} className="chatRoom-box" onClick={() => handleOpenChat(room)}>
                     <img className="chatRoom-img" src={chatOhterUser.userimg ? `http://localhost:8093${chatOhterUser.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'} />
                     <div className="chatRoom-info">
                         <p className="chatRoom-label">{chatOhterUser.useralias}</p>
@@ -67,16 +78,34 @@ const ChatRoomList = () => {
                 </div>
                 )
             })}
-            </div>
+            </>
         )
     }
 
     if(!chatRooms && !otherUser) return;
 
     return (
-        <>
-        {fetchChatRooms(chatRooms, otherUser)}
-        </>
+        <div className="chatRoom-wrapper">
+            {chatPage === 0 && 
+            <>
+            <div className="chat-header">
+                <button type="button" onClick={onClose}>
+                    <FaAngleRight size={35} />
+                </button>
+                <label>{"채팅방 목록"}</label>
+            </div>
+            {fetchChatRooms(chatRooms, otherUser)}
+            </>
+            }
+            {chatPage === 1 && selectedRoom && (
+                <ChatRoom
+                    sender={selectedRoom.sender}
+                    receiver={selectedRoom.receiver}
+                    onBack={() => setChatPage(0)}
+                />
+            )}
+            
+        </div>
     );
 }
 

@@ -13,6 +13,7 @@ import ItemSearch from './pages/item/itemSearch';
 import UserPage from './pages/user/userPage';
 import ItemModify from './pages/item/itemModify';
 import PaymentPage from './components/PaymentPage';
+import Report from './pages/report';
 
 
 function App() {
@@ -33,25 +34,28 @@ function App() {
 
           <Routes>
             {/* Main page */}
-            <Route path='/home' Component={Home}></Route>
+            <Route path='/home' Component={Home} />
 
             {/* Login & Register */}
-            <Route path='/user/login' Component={Login}></Route>
-            <Route path='/user/register' Component={Register}></Route>
+            <Route path='/user/login' Component={Login} />
+            <Route path='/user/register' Component={Register} />
 
             {/* User Page */}
-            <Route path='/user/:userKey' Component={UserPage}></Route>
+            <Route path='/user/:userKey' Component={UserPage} />
 
             {/* Item Page */}
-            <Route path='/product/write' Component={ItemWrite}></Route>
-            <Route path='/product/:itemKey' Component={ItemDetail}></Route>
-            <Route path='/product/modify/:itemKey' Component={ItemModify}></Route>
+            <Route path='/product/write' Component={ItemWrite} />
+            <Route path='/product/:itemKey' Component={ItemDetail} />
+            <Route path='/product/modify/:itemKey' Component={ItemModify} />
 
             {/* Item Search */}
-            <Route path='/search' Component={ItemSearch}></Route>
+            <Route path='/search' Component={ItemSearch} />
 
             {/* Payment */}
             <Route path='/mock-payment/:orderId' Component={PaymentPage} />
+
+            {/* Report Page */}
+            <Route path='/report' Component={Report}/>
 
           </Routes>
           {!hideLayout && <Footer />}

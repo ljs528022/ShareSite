@@ -474,11 +474,11 @@ const ItemDetail = () => {
                 <SidePage
                     isOpen={showChat}
                     onClose={() => setShowChat(false)}
-                    headerText={`"${item.useralias}" 님과의 채팅`}
                     content={
                     <ChatRoom
                         sender={user}
                         receiver={itemUser}
+                        onBack={() => setShowChat(false)}
                     />
                     }
                 />

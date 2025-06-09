@@ -7,6 +7,7 @@ import { useToast } from "../util/ToastContext.jsx";
 import { getCategory } from "../services/getCategory.jsx";
 import ChatRoomList from "./side/ChatRoomList.jsx";
 import SidePage from "../util/sidePage.jsx";
+import LikeShow from "./side/LikeShow.jsx";
 
 
 const Header = () => {
@@ -19,8 +20,9 @@ const Header = () => {
     const [ keyword, setKeyword ] = useState('');
     const navigate = useNavigate();
     
-    const [ showCategories, setShowCategories ] = useState(false);
-    const [ showChatRooms, setShowChatRooms ] = useState(false);
+    const [ showCategories, setShowCategories ] = useState(false);  // 카테고리 버튼
+    const [ showLikeItem, setShowLikeItem ] = useState(false);      // 찜한 상품
+    const [ showChatRooms, setShowChatRooms ] = useState(false);    // 채팅하기 버튼
 
     // 카테고리 받아오기
     useEffect(() => {
@@ -65,6 +67,15 @@ const Header = () => {
         if(e.key === "Enter") {
             navigate("/search")
         }
+    }
+
+    const handleShowLikeItem = () => {
+        if(!user) {
+            showToast("로그인이 필요합니다!" ,"error");
+            return;
+        }
+
+        setShowLikeItem(true);
     }
 
     return (
@@ -150,17 +161,30 @@ const Header = () => {
                         <a href="/price_search">시세조회</a>
                     </div>
                     <div className="Navbar-item">
-                        {/* 클릭하면 옆에 창 나오는 기능 */}
-                        <button type="button" onClick={null}>찜한 상품</button>
+                        <a href="/report">신고하기</a>
+                    </div>
+                    <div className="Navbar-item">
+                        <button type="button" onClick={handleShowLikeItem}>찜한 상품</button>
                     </div>
                 </nav>
             </div>
         </header>
+
+        {/* 찜한 상품 */}
+        <SidePage 
+        isOpen={showLikeItem} 
+        onClose={() => setShowLikeItem(false)}
+        headerText={"내가 찜한 상품"}
+        content={<LikeShow isOpen={showLikeItem} data={user && user.userKey} />}
+        />
+
+        {/* 채팅하기 */}
         <SidePage 
             isOpen={showChatRooms}
             onClose={() => setShowChatRooms(false)}
-            headerText={"채팅방 목록"}
-            content={<ChatRoomList />}
+            content={<ChatRoomList 
+                onClose={() => setShowChatRooms(false)}
+            />}
         />
         </>
     )
