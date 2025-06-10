@@ -14,6 +14,7 @@ import UserPage from './pages/user/userPage';
 import ItemModify from './pages/item/itemModify';
 import PaymentPage from './components/PaymentPage';
 import Report from './pages/report';
+import SearchPrice from './pages/searchPrice';
 
 
 function App() {
@@ -53,6 +54,9 @@ function App() {
 
             {/* Payment */}
             <Route path='/mock-payment/:orderId' Component={PaymentPage} />
+
+            {/* Search Price Page */}
+            <Route path='/search/price' Component={SearchPrice}/>
 
             {/* Report Page */}
             <Route path='/report' Component={Report}/>

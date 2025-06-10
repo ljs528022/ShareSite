@@ -327,6 +327,7 @@
 .item-empty {
     display: flex;
     flex-direction: row;
+    align-items: center;
 
     width: inherit;
     max-width: 950px;
@@ -337,12 +338,9 @@
     border-radius: 20px;
 }
 
-.item-empty a {
-    margin-top: 55px;
-    margin-right: 10px;
-}
-
 .item-empty p {
+    margin-left: 10px;
+    margin-bottom: 15px;
     line-height: 110px;
     font-size: 15px;
     font-weight: bold;

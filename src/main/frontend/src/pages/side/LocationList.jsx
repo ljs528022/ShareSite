@@ -4,6 +4,7 @@ import { useUser } from "../../services/UserContext";
 import SearchPostCode from "../../util/SearchPostCode";
 import { postData, getData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";
+import { FaCheckCircle, FaPlus, FaRegCheckCircle } from "react-icons/fa";
 
 const LocationList = ({ onSelectLocation }) => {
 
@@ -244,9 +245,7 @@ const LocationList = ({ onSelectLocation }) => {
         {(!showAddLocation && !showPostCode) &&
         <div className="location-list-wrapper">
             <div className="list-add-box" onClick={() => setShowAddLocation(true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="17" width="20" viewBox="0 0 448 512">
-                    <path fill="#6e6e6e" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/>
-                </svg>
+                <FaPlus size={15} color="#666" />
                 <label>배송지 추가</label>
             </div>
         </div>
@@ -291,13 +290,11 @@ const LocationList = ({ onSelectLocation }) => {
                 </>
                 }
                 <button type="button" className="location-main-btn" onClick={toggleLocationMain}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width={15} height={15} cursor="pointer" viewBox="0 0 512 512">
                     {locationInfo.main ?
-                        <path fill="#74C0FC" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                        <FaCheckCircle size={15} color="#74C0FC" />
                         :
-                        <path fill="#74C0FC" d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"/>
+                        <FaRegCheckCircle size={15} color="#74C0FC" />
                     }
-                    </svg>
                     <p>대표 배송지로 설정</p>
                 </button>
                 <button 

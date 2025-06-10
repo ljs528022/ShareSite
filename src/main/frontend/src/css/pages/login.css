@@ -105,15 +105,12 @@ input {
 
 .auto-login {
     position: relative;
-    text-align: center;
+    align-items: center;
     user-select: none;
-
     top: 10px;
     left: 35px;
-
     width: 200px;
     height: 30px;
-
     color: gray;
     font-weight: bold;
 }

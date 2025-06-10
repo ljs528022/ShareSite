@@ -50,4 +50,13 @@ public class QueryController {
             return ResponseEntity.ok(items);
         }
     }
+
+    @GetMapping("/search/price")
+    public ResponseEntity<?> searchPrice (@RequestParam(name = "keyword")String keyword) {
+        if(keyword != null && !keyword.trim().isEmpty()) {
+
+        }
+
+        return ResponseEntity.ok("");
+    }
 }

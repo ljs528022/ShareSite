@@ -198,4 +198,10 @@
         FROM d1_item
         WHERE userKey = #{userKey}
     </select>
+
+    <select id="getAvgMaxMinPrice" resultType="map">
+        SELECT AVG(price) AS AVG, MAX(price) AS MAX, MIN(price) AS MIN
+        FROM d_item
+        WHERE subject LIKE CONCAT('%', #{keyword}, '%') ESCAPE '!'
+    </select>
 </mapper>

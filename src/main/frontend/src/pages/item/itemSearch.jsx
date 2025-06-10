@@ -6,6 +6,7 @@ import { useToast } from "../../util/ToastContext";
 import ItemCard from "../../components/itemCard";
 import EmptyBox from "../../components/EmptyBox";
 import "../../css/pages/itemSearch.css";
+import { FaAngleLeft, FaAngleRight, FaMinus, FaPlus } from "react-icons/fa";
 
 
 const ItemSearch = () => {
@@ -191,13 +192,11 @@ const ItemSearch = () => {
                                 {/* 카테고리 선택 란 */}
                                 <label>카테고리
                                     <button type="button" onClick={() => setShowCateQuery(prev => !prev)}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.5" viewBox="0 0 448 512">
-                                            {showCateQuery ?
-                                            <path fill="#707070" d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/>
-                                            :
-                                            <path fill="#707070" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/>
+                                        {showCateQuery ?
+                                        <FaMinus size={13} color="#707070" />
+                                        :
+                                        <FaPlus size={13} color="#707070" />
                                         }
-                                        </svg>
                                     </button>
                                 </label>
                                 <p onClick={() => {
@@ -205,19 +204,11 @@ const ItemSearch = () => {
                                     navigate("/search")}}>메인</p>
                                 {parCate &&
                                 <>
-                                <svg xmlns="http://www.w3.org/2000/svg" height="20" width="13"  viewBox="0 0 320 512">
-                                        <path fill="#555" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
-                                </svg>
-                                <p onClick={
-                                    () => { navigate(`/search`)
-                                            setItemCateKey(0)}}>
-                                    {parCate.catename}
-                                </p>
+                                <FaAngleRight size={25} color="#666" />
+                                <p onClick={() => { navigate(`/search`); setItemCateKey(0)}}>{parCate.catename}</p>
                                     {subCate !== parCate &&
                                     <>
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="15" viewBox="0 0 320 512">
-                                        <path fill="#555" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
-                                    </svg>
+                                    <FaAngleRight size={25} color="#666" />
                                     <p onClick={() => navigate(`/search?category=${parCate.cateKey}`)}>{subCate.catename}</p>
                                     </>
                                     }

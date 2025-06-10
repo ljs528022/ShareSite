@@ -3,7 +3,14 @@ const Report = () => {
 
     return (
     <main>
-        <h1>신고 페이지 입니다</h1>
+        <form>
+        <div>
+            <h3>안전한 거래를 위한 한 걸음</h3>
+            <div>
+                <label>신고하기</label>
+            </div>
+        </div>
+        </form>
     </main>
     );
 };

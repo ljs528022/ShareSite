@@ -16,6 +16,7 @@ SELECT * FROM d1_chatmessage;
 
 DELETE FROM d1_chatmessage WHERE id > 7;
 
+
 SELECT *
 FROM d1_review
 WHERE sellerKey = '9160007';

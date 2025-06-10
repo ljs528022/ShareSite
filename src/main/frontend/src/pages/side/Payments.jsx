@@ -6,6 +6,7 @@ import { useUser } from "../../services/UserContext";
 import ItemCard from "../../components/itemCard";
 import "../../css/components/payment.css";
 import EmptyBox from "../../components/EmptyBox";
+import { FaAngleDown } from "react-icons/fa";
 
 const Payments = ({ setShowReview }) => {
 
@@ -117,9 +118,7 @@ const Payments = ({ setShowReview }) => {
                             toggleOpen(index)
                         }}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="22.25" viewBox="0 0 448 512">
-                            <path fill="#4d4d4d" d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
-                        </svg>
+                        <FaAngleDown size={30} color="#555" />
                     </button>
                     {index === sameIndex &&
                     <div className="paymentInfo-box">
