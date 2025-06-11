@@ -119,6 +119,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<Map<String, Long>> getAvgMaxMinPrice(String keyword) {
+        return itemRepository.getAvgMaxMinPrice(keyword);
+    }
+
+    @Override
     public Long write(Item item, List<ItemImage> imageList) {
         int result = itemRepository.write(item);
         if(result > 0) {

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5178")
@@ -53,10 +55,17 @@ public class QueryController {
 
     @GetMapping("/search/price")
     public ResponseEntity<?> searchPrice (@RequestParam(name = "keyword")String keyword) {
-        if(keyword != null && !keyword.trim().isEmpty()) {
+        Map<String, Object> response = new HashMap<>();
 
+
+        if(keyword != null && !keyword.trim().isEmpty()) {
+            List<Map<String, Long>> prices = itemService.getAvgMaxMinPrice(keyword);
+            response.put("prices", prices);
+
+            List<ItemDTO> items = itemService.searchItemsByKeyword(keyword);
+            response.put("items", items);
         }
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(response);
     }
 }

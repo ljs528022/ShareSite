@@ -9,6 +9,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ItemRepository {
@@ -52,6 +53,8 @@ public interface ItemRepository {
     List<ItemImage> findImagesByItemKeys(List<Long> itemKeys);
 
     Item findItemByItemKey(@Param("itemKey")Long itemKey);
+
+    List<Map<String, Long>> getAvgMaxMinPrice(@Param("keyword")String keyword);
 
     // Increment View Count
     int incViewCnt(Long itemKey);

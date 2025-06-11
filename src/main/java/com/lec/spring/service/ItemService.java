@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ItemService {
 
@@ -39,7 +40,7 @@ public interface ItemService {
     // Search Items By Keyword
     List<ItemDTO> searchItemsByKeyword(String keyword);
 
-
+    List<Map<String, Long>> getAvgMaxMinPrice(String keyword);
 
     Long write(Item item, List<ItemImage> imageList);
 
