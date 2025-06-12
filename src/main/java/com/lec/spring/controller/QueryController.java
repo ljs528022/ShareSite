@@ -57,7 +57,6 @@ public class QueryController {
     public ResponseEntity<?> searchPrice (@RequestParam(name = "keyword")String keyword) {
         Map<String, Object> response = new HashMap<>();
 
-
         if(keyword != null && !keyword.trim().isEmpty()) {
             List<Map<String, Long>> prices = itemService.getAvgMaxMinPrice(keyword);
             response.put("prices", prices);

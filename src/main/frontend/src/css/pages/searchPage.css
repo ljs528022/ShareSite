@@ -1,7 +1,7 @@
 .searchPrice-wrapper {
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 70%;
     margin: 0 auto;
 }
 
@@ -16,20 +16,35 @@
     border-radius: 30px;
 }
 
-.searchPrice-input input, :focus {
+.searchPrice-input input {
     background-color: white;
     outline: none;
 }
 
-.searchPrice-info {
+.searchPrice-info-wrapper {
     display: flex;
     margin: 0 auto;
-    gap: 10px;
+    padding: 20px 30px;
+    padding-bottom: 0;
+    gap: 20px;
     width: 50%;
+    border-radius: 20px;
     justify-content: center;
-    border: 1px solid red;
+    background-color: #ddd;
 }
 
-.searchPrice-info label {
+.searchPrice-info-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.searchPrice-info-box label {
     width: inherit;
+}
+
+.searchPrice-info-box p {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    color: #7baeff;
 }

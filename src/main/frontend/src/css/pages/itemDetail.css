@@ -331,8 +331,7 @@
 
     width: inherit;
     max-width: 950px;
-
-    padding-left: 50px;
+    padding: 0px 50px;
 
     border: 1px solid #AAA;
     border-radius: 20px;

@@ -9,6 +9,7 @@ const ItemCard = ({ item, style }) => {
 
     return (
         <>
+            {/* style = { Normal, Small, Side, Purchase } */}
             <div className={`${style}_Card_wrapper`} onClick={() => navigate(`/product/${item.itemKey}`)}>
                 <img 
                     className={`${style}_Card_img`}
