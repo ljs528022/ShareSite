@@ -154,10 +154,10 @@ CREATE TABLE d1_user
 	UNIQUE (username)
 );
 
-CREATE TABLE d1_report
-(
-	id int NOT NULL AUTO_INCREMENT,
-);
+-- CREATE TABLE d1_report
+-- (
+-- 	id int NOT NULL AUTO_INCREMENT,
+-- );
 
 
 /* Create Foreign Keys */

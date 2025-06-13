@@ -157,10 +157,10 @@ const Header = () => {
                 </button>
                 <nav className="Navbar-subMenu">
                     <div className="Navbar-item">
-                        <a href="/search/price">시세조회</a>
+                        <a href="/search/price">시세 조회</a>
                     </div>
                     <div className="Navbar-item">
-                        <a href="/report">신고하기</a>
+                        <a href="/report">신고 조회</a>
                     </div>
                     <div className="Navbar-item">
                         <button type="button" onClick={handleShowLikeItem}>찜한 상품</button>

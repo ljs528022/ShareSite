@@ -7,7 +7,9 @@ const Report = () => {
         <div>
             <h3>안전한 거래를 위한 한 걸음</h3>
             <div>
-                <label>신고하기</label>
+                <label>사기 조회</label>
+
+                <input />
             </div>
         </div>
         </form>

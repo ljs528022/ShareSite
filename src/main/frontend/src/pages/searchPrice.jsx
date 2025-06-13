@@ -4,6 +4,7 @@ import { getData } from "../services/api";
 import { FaSearch } from "react-icons/fa";
 import "../css/pages/searchPage.css";
 import ItemCard from "../components/itemCard";
+import EmptyBox from "../components/EmptyBox";
 
 const SearchPrice = () => {
 
@@ -68,7 +69,7 @@ const SearchPrice = () => {
     };
 
     const fetchItems = (item) => {
-        if(item.length === 0) return;
+        if(item.length === 0 || !item) return <EmptyBox content={"검색한 상품 중 판매 중인 상품이 없습니다. 나중에 다시 확인 해주세요."} />;
 
         return (
             <>
