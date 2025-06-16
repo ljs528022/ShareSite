@@ -13,8 +13,8 @@ import MapShow from "../../pages/side/MapShow";
 import EmptyBox from "../../components/EmptyBox";
 import Purchase from "../side/Purchase";
 import "../../css/pages/itemDetail.css";
-import ChatRoom from "../../services/ChatRoom";
-import { FaEdit, FaRegHeart, FaTrash } from "react-icons/fa";
+import ChatRoom from "../chat/ChatRoom";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기

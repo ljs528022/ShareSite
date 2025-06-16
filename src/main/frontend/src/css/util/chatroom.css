@@ -118,7 +118,7 @@
 
 .chat-menu {
     display: flex;
-    gap: 30px;
+    gap: 50px;
     padding: 15px 0px;
     justify-content: center;
     margin: 0 auto;
@@ -252,7 +252,6 @@
     justify-content: center;
     border-top: 1px solid rgba(0, 0, 0, 0.3);
     background-color: white;
-    cursor: pointer;
     z-index: 200;
 }
 
@@ -274,14 +273,4 @@
 .chat-userInfo-text {
     margin: 0;
     padding: 0;
-}
-
-.chat-userInfo-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: 50px;
 }

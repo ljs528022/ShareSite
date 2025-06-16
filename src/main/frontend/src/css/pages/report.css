@@ -1,0 +1,17 @@
+.report-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin: 10px auto;
+    padding: 10px 30px;
+    border: 2px solid #777;
+    border-radius: 10px;
+}
+
+.report-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    font-weight: 500;
+}

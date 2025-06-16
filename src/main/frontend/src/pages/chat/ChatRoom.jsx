@@ -1,13 +1,13 @@
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
-import { deleteData, getData, postData } from './api';
-import { useToast } from '../util/ToastContext';
-import '../css/util/chatroom.css';
-import { useUser } from './UserContext';
+import { deleteData, getData, postData } from '../../services/api';
+import { useToast } from '../../util/ToastContext';
+import '../../css/util/chatroom.css';
 import { FaAngleDown, FaAngleLeft, FaAngleUp, FaArrowCircleRight, FaBullhorn, FaInfoCircle } from "react-icons/fa";
-import Modal from '../util/Modal';
 import { useNavigate } from 'react-router-dom';
+import Modal from '../../util/Modal';
+import { useUser } from '../../services/UserContext';
 
 const ChatRoom = (props) => {
     const { sender, receiver, onBack } = props;
@@ -219,6 +219,12 @@ const ChatRoom = (props) => {
         }
     }
 
+    const handleReport = () => {
+        const reportTarget = receiverInfo;
+        sessionStorage.setItem(`report-target`, JSON.stringify(reportTarget));
+        navigate("/report/write");
+    }
+
     if(!senderInfo && !receiverInfo  && !chatUserInfo && !clientRef) return;
 
     return (
@@ -235,17 +241,18 @@ const ChatRoom = (props) => {
             <div className='chat-menu-box'>
                 {chatMenu && !showUserInfo ? 
                 <div className='chat-menu'>
-                    <button className='chat-menu-btn' onClick={() => setShowUserInfo(true)}>
+                    <button className='chat-menu-btn' title='상대방 정보' onClick={() => setShowUserInfo(true)}>
                         <FaInfoCircle size={30} color='#7badff' />
-                        <a>상대방 정보</a>
                     </button>
-                    <button className='chat-menu-btn' onClick={() => setCloseChat(true)}>
+                    <button className='chat-menu-btn' title='신고 하기' onClick={handleReport}>
+                        <FaBullhorn size={30} color='#e53939' />
+                    </button>
+                    <button className='chat-menu-btn' title='채팅방 나가기' onClick={() => setCloseChat(true)}>
                         <FaArrowCircleRight size={30} color='#555' />
-                        <a>나가기</a>
                     </button>
                 </div>
                 : showUserInfo &&
-                <div className='chat-userInfo-wrapper' onClick={() => navigate(`/user/${chatUserInfo.userKey}`)}>
+                <div className='chat-userInfo-wrapper'>
                     {chatUserInfo &&
                     <img className='chat-userInfo-img'
                     src={chatUserInfo.userimg ? `http://localhost:8093${chatUserInfo.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'}/>
@@ -256,10 +263,6 @@ const ChatRoom = (props) => {
                         <p className='chat-userInfo-text'>방문 : {chatUserInfo.visitcnt}</p>
                         <p className='chat-userInfo-text'>유저 신뢰도 표시 예정</p>
                     </div>
-                    <button className='chat-userInfo-btn'>
-                        <FaBullhorn size={30} color='#e53939' />
-                        <a>신고하기</a>
-                    </button>
                 </div>
                 }
                 <button className='chat-user-btn' onClick={() => {setShowUserInfo(false); setChatMenu(prev => !prev)}}>

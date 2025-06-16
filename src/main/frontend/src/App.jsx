@@ -15,6 +15,7 @@ import ItemModify from './pages/item/itemModify';
 import PaymentPage from './components/PaymentPage';
 import Report from './pages/report';
 import SearchPrice from './pages/searchPrice';
+import WriteReport from './components/WriteReport';
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
             <Route path='/search/price' Component={SearchPrice}/>
 
             {/* Report Page */}
+            <Route path='/report/write' Component={WriteReport}/>
             <Route path='/report' Component={Report}/>
 
           </Routes>

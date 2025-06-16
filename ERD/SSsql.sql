@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS d1_user;
 DROP TABLE IF EXISTS d1_item_image;
 DROP TABLE IF EXISTS d1_chatroom; 
 DROP TABLE IF EXISTS d1_chatMessage;
+DROP TABLE IF EXISTS d1_report;
 
 /* Create Tables */
 
@@ -76,7 +77,7 @@ CREATE TABLE d1_item_image
 (
 	imageKey int NOT NULL AUTO_INCREMENT,
 	itemKey int NOT NULL,
-	imgUrl VARCHAR(500),
+	imgUrl varchar(500),
 	isMain boolean NOT NULL,
 	PRIMARY KEY (imageKey)
 );
@@ -154,10 +155,15 @@ CREATE TABLE d1_user
 	UNIQUE (username)
 );
 
--- CREATE TABLE d1_report
--- (
--- 	id int NOT NULL AUTO_INCREMENT,
--- );
+CREATE TABLE d1_report
+(
+	reportKey varchar(50) NOT NULL AUTO_INCREMENT,
+	reporterKey varchar(20) NOT NULL,
+	targetKey varchar(20) NOT NULL,
+	reason int NOT NULL,
+	content LONGTEXT,
+	createdAt datetime
+);
 
 
 /* Create Foreign Keys */
@@ -280,6 +286,27 @@ ALTER TABLE d1_chatMessage
 
 ALTER TABLE d1_chatMessage
 	ADD FOREIGN KEY (receiverKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+ALTER TABLE d1_report
+	ADD FOREIGN KEY (reporterKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+ALTER TABLE d1_report
+	ADD FOREIGN KEY (targetKey)
+	REFERENCES d1_user (userKey)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+ALTER TABLE d1_report
+	ADD FOREIGN KEY (reason)
 	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT

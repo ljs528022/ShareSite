@@ -7,6 +7,9 @@ DELETE FROM d1_category;
 INSERT INTO d1_authority (auth) VALUES
 ('ADMIN'), ('MEMBER');
 
+INSERT INTO d1_reason_table (reason) VALUES
+()
+
 INSERT INTO d1_user (userKey,username,password,useralias,email,regtype,userimg,regDate,state,visitcnt,tradecnt,auth,emailVerified)
 VALUES
 ('80A0001','ljs4180','$2a$10$bCjbdkovjRxGPpeKkW1o/eGURRmx7ayzmm6frqVgQnQVBltdBnCJa','이정식몰','ljs4180@naver.com','S','','2025-04-29 15:13:41','N',1,0,'MEMBER',1),

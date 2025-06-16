@@ -1,5 +1,29 @@
+import { useState } from "react";
+import { useToast } from "../util/ToastContext";
+import { getData } from "../services/api";
 
 const Report = () => {
+
+    const [ keyword, setKeyword ] = useState('');
+    const [ reportInfo, setReportInfo ] = useState(null);
+
+    const { showToast } = useToast();
+
+    const getReport = async () => {
+        if(keyword === '') {
+            showToast("조희할 수 없는 정보입니다", "error");
+            return;
+        }
+
+        try {            
+            const response = await getData(`/report?keyword=${keyword}`); 
+            if(response.status === 200) {
+                setReportInfo(response.data);
+            }
+        } catch {
+            showToast("통신 장애가 발생했습니다..!", "error");
+        }
+    }
 
     return (
     <main>

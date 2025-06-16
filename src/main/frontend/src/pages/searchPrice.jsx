@@ -12,8 +12,8 @@ const SearchPrice = () => {
     const [ keyword, setKeyword ] = useState("");
     
     // 검색으로 불러온 상품들의 최저, 최고, 평균 가격들 + 상품들
-    const [ prices, setPrices ] = useState([]);
-    const [ items, setItems ] = useState([]);
+    const [ prices, setPrices ] = useState(null);
+    const [ items, setItems ] = useState(null);
 
     const { showToast } = useToast();
 
@@ -38,14 +38,15 @@ const SearchPrice = () => {
     }
 
     const fetchPrices = (price) => {
-        if(price.length === 0) return;
+        if(!price) return;
 
-        const { AVG, MAX, MIN } = price[0];
+        const { AVG, MAX, MIN } = price;
 
         return (
             <>
             <h3 style={{marginTop: "30px"}}>{`검색한 상품에 대한 최근 시세입니다.`}</h3>
-            <div className="searchPrice-info-wrapper">    
+            {price &&
+            <div className="searchPrice-info-wrapper">
                 <div className="searchPrice-info-box">
                     <label>평균 가격대</label>
                     <p>{AVG ? AVG.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원"
@@ -64,19 +65,21 @@ const SearchPrice = () => {
                     : "-"}</p>
                 </div>
             </div>
+            }  
             </>
         )
     };
 
     const fetchItems = (item) => {
-        if(item.length === 0 || !item) return <EmptyBox content={"검색한 상품 중 판매 중인 상품이 없습니다. 나중에 다시 확인 해주세요."} />;
+        if(!item || item.length === 0) return <EmptyBox content={"검색한 상품 중 판매 중인 상품이 없습니다. 나중에 다시 확인 해주세요."} />;
 
         return (
-            <>
+            <div className="searchPage-itemBox">
+
             {item.map(i => (
                 <ItemCard key={i.itemKey} item={i} style={"Normal"}/>    
             ))}
-            </>
+            </div>
         )
     };
 
@@ -88,7 +91,7 @@ const SearchPrice = () => {
     return (
     <main>
         <div className="searchPrice-wrapper">
-            <h3>지금 그 물건의 시세은 얼마일까?</h3>
+            <h3>지금 그 물건의 시세는 얼마일까?</h3>
             <form onSubmit={(e) => getPrices(e)}>
                 <div className="searchPrice-input">
                     <FaSearch size={20} />
@@ -97,13 +100,13 @@ const SearchPrice = () => {
             </form>
 
             {/* 여기에 가격대 표시 해야 함 */}
-            {fetchPrices(prices)}
+            {prices && fetchPrices(prices[0])}
 
             <h4 style={{fontSize: '20px'}}>검색한 시세의 상품들</h4>
             <a style={{border: '1px solid rgba(0,0,0,0.3)', marginBottom: "20px"}}></a>
             
             {/* 여기에 검색한 상품들 불러와야 함 */}
-            {fetchItems(items)}
+            {items && fetchItems(items)}
 
         </div>
     </main>

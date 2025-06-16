@@ -14,7 +14,7 @@ import Payments from "../side/Payments";
 import Modal from "../../util/Modal";
 import WriteReview from "../side/WriteReview";
 import Reviews from "../side/Reviews";
-import ChatRoom from "../../services/ChatRoom";
+import ChatRoom from "../chat/ChatRoom";
 import "../../css/pages/userPage.css";
 
 const UserPage = () => {

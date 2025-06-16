@@ -250,6 +250,14 @@
     color: rgba(0, 0, 0, 0.3);
 }
 
+.user-item-result {
+    display: flex;
+    margin: 10px auto;
+    width: inherit;
+    flex-wrap: wrap;
+    row-gap: 30px;
+}
+
 /* 마이페이지 부분 */
 .user-mypage-box {
     display: flex;

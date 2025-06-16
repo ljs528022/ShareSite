@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getData } from "../../services/api";
 import { useUser } from "../../services/UserContext";
-import ChatRoom from "../../services/ChatRoom";
+import ChatRoom from "../../pages/chat/ChatRoom";
 import { FaAngleRight } from "react-icons/fa";
 import '../../css/util/chatroom.css';
 
@@ -86,17 +86,17 @@ const ChatRoomList = ({ onClose }) => {
 
     return (
         <div className="chatRoom-wrapper">
-            {chatPage === 0 && 
-            <>
             <div className="chat-header">
                 <button type="button" onClick={onClose}>
                     <FaAngleRight size={35} />
                 </button>
                 <label>{"채팅방 목록"}</label>
             </div>
-            {fetchChatRooms(chatRooms, otherUser)}
-            </>
+            <>
+            {chatPage === 0 &&
+            fetchChatRooms(chatRooms, otherUser)
             }
+            </>
             {chatPage === 1 && selectedRoom && (
                 <ChatRoom
                     sender={selectedRoom.sender}
