@@ -157,12 +157,13 @@ CREATE TABLE d1_user
 
 CREATE TABLE d1_report
 (
-	reportKey varchar(50) NOT NULL AUTO_INCREMENT,
+	reportKey varchar(50) NOT NULL,
 	reporterKey varchar(20) NOT NULL,
 	targetKey varchar(20) NOT NULL,
 	reason int NOT NULL,
-	content LONGTEXT,
-	createdAt datetime
+	content LONGTEXT NOT NULL,
+	createdAt datetime,
+	PRIMARY KEY (reportKey)
 );
 
 
@@ -300,13 +301,6 @@ ALTER TABLE d1_report
 
 ALTER TABLE d1_report
 	ADD FOREIGN KEY (targetKey)
-	REFERENCES d1_user (userKey)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-ALTER TABLE d1_report
-	ADD FOREIGN KEY (reason)
 	REFERENCES d1_user (userKey)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT

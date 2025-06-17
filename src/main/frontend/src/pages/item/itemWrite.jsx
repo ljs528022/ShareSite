@@ -146,7 +146,7 @@ const ItemWrite = () => {
     }
 
     // 희망 거래 지역
-    const handleLocationChange = ( newLocation) => {
+    const handleLocationChange = (newLocation) => {
         if (itemData.location.length >= 3) {
             alert("최대 3개까지 등록 가능합니다.");
             setAddLocation(false);

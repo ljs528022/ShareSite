@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.ReportRepository">
+    <insert id="writeReport" parameterType="com.lec.spring.domain.Report">
+        INSERT INTO d1_report (reportKey, reporterKey, targetKey, reason, content, createdAt)
+        VALUES (#{reportKey}, #{reporterKey}, #{targetKey}, #{reason}, #{content}, #{createdAt})
+    </insert>
+    
+    <select id="countReportKeyLike" resultType="int">
+        SELECT COUNT(*)
+        FROM d1_report
+        WHERE reportKey LIKE CONCAT(#{baseKey}, '%')
+    </select>
+</mapper>

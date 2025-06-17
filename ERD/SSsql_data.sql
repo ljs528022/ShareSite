@@ -7,9 +7,6 @@ DELETE FROM d1_category;
 INSERT INTO d1_authority (auth) VALUES
 ('ADMIN'), ('MEMBER');
 
-INSERT INTO d1_reason_table (reason) VALUES
-()
-
 INSERT INTO d1_user (userKey,username,password,useralias,email,regtype,userimg,regDate,state,visitcnt,tradecnt,auth,emailVerified)
 VALUES
 ('80A0001','ljs4180','$2a$10$bCjbdkovjRxGPpeKkW1o/eGURRmx7ayzmm6frqVgQnQVBltdBnCJa','이정식몰','ljs4180@naver.com','S','','2025-04-29 15:13:41','N',1,0,'MEMBER',1),
@@ -28,7 +25,8 @@ VALUES
 ('9160013','michaelsilver','$2a$12$9MYP9mF2CgkEvA7jm0gUofjwn4g59Ih9ShBdS1Ijgw9UN5sFz6yVW','MichaelS','michaelsilver@example.com','S','','2025-02-24 11:25:00','A',7,2,'MEMBER',1),
 ('9160014','nataliegold','$2a$12$T4o0W0HJZtkBzmDNBj3Vj.XdsB3fLt8e.tMyN1KDlY5VYOa4ElRny','NatalieG','nataliegold@example.com','N','','2025-02-23 09:30:00','B',9,3,'MEMBER',1),
 ('9160015','oliviarose','$2a$12$g6P7pvL2i.OzX5NGnFwDb54Ctb5W0lI7Ff5mr3wzq2yJh.jEwCuqO','OliviaR','oliviarose@example.com','K','','2025-02-22 16:40:00','A',4,5,'MEMBER',1),
-('9160016','paulwhite','$2a$12$FpH13H8mUvM5frDQQJzBGwz.BfepUcmUkK2tiVd.CzD4kI0fLFfy2','PaulW','paulwhite@example.com','S','','2025-02-21 18:10:00','C',2,0,'MEMBER',1);
+('9160016','paulwhite','$2a$12$FpH13H8mUvM5frDQQJzBGwz.BfepUcmUkK2tiVd.CzD4kI0fLFfy2','PaulW','paulwhite@example.com','S','','2025-02-21 18:10:00','C',2,0,'MEMBER',1)
+;
 
 INSERT INTO d1_category (cateKey, catename) 
 VALUES
@@ -80,7 +78,8 @@ VALUES
 (804, '닌텐도'),
 (805, '기타'),
 (901, '티켓/쿠폰'),
-(902, '무료나눔');
+(902, '무료나눔')
+;
 
 INSERT INTO d1_item (userKey, cateKey, subject, content, price, itemtype, purtype, tradestatus, writeDate, viewcnt)
 VALUES
