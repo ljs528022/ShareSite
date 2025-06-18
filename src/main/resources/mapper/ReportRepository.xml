@@ -13,4 +13,13 @@
         FROM d1_report
         WHERE reportKey LIKE CONCAT(#{baseKey}, '%')
     </select>
+
+    <select id="getReports" resultType="com.lec.spring.domain.Report">
+        SELECT r.*
+        FROM d1_report r
+        JOIN d1_user u ON r.targetKey = u.userKey
+        WHERE u.userKey = #{keyword}
+        OR u.useralias = #{keyword}
+        OR u.email = #{keyword}
+    </select>
 </mapper>

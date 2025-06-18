@@ -132,7 +132,6 @@ public class ChatController {
 
 
     private User getUserByUsername(String username) {
-        return userService.findByUserName(username)
-                .orElseThrow(() -> new RuntimeException("유저 정보를 찾을 수 없습니다.."));
+        return userService.findByUserName(username);
     }
 }

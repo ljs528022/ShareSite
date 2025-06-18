@@ -2,7 +2,9 @@ package com.lec.spring.service;
 
 import com.lec.spring.DTO.ReportDTO;
 import com.lec.spring.domain.Report;
+import com.lec.spring.domain.User;
 import com.lec.spring.repository.ReportRepository;
+import com.lec.spring.repository.UserRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -38,6 +41,10 @@ public class ReportServiceImpl implements ReportService {
         return reportRepository.writeReport(report);
     }
 
+    @Override
+    public List<Report> getReports(String keyword) {
+        return reportRepository.getReports(keyword);
+    }
 
     public String generateReportKey(String reporterKey) {
         String dateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));

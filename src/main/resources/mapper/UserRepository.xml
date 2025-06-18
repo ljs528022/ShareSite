@@ -84,6 +84,18 @@
         WHERE username = #{username}
     </select>
 
+    <select id="findByUseralias" resultType="com.lec.spring.domain.User">
+        SELECT *
+        FROM d1_user
+        WHERE useralias = #{useralias}
+    </select>
+
+    <select id="findByEmail" resultType="com.lec.spring.domain.User">
+        SELECT *
+        FROM d1_user
+        WHERE email = #{email}
+    </select>
+
     <select id="findUsersByUserKeys" resultType="com.lec.spring.domain.User">
         SELECT * FROM d1_user
         WHERE userKey IN

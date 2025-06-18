@@ -15,7 +15,7 @@ public interface UserService {
     // Search by UserKey
     User findByUserKey (String userKey);
     // Search by User ID
-    Optional<User> findByUserName (String username);
+    User findByUserName (String username);
 
     List<User> findUsersByUserKeys(List<String> userKeys);
 

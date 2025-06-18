@@ -1,7 +1,23 @@
+.report-search-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.report-search-box {
+    display: flex;
+    width: inherit;
+    margin: 0 auto;
+    padding: 0px 15px;
+    border: 3px solid #777;
+    border-radius: 30px;
+    align-items: center;
+}
+
 .report-wrapper {
     display: flex;
     flex-direction: column;
-    width: 30%;
     margin: 0 auto;
     padding: 10px 30px;
     border: 2px solid #777;
