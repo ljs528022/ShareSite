@@ -18,6 +18,7 @@
 .report-wrapper {
     display: flex;
     flex-direction: column;
+    width: 40%;
     margin: 0 auto;
     padding: 10px 30px;
     border: 2px solid #777;
