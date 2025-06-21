@@ -15,6 +15,58 @@
     align-items: center;
 }
 
+.report-result-wrapper {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.report-result-box {
+    display: flex;
+    gap: 30px;
+    width: 400px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    justify-content: center;
+    text-align: center;
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.report-result-label {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.report-result-reason {
+    display: flex;
+    margin: 30px auto;
+    width: 400px;
+}
+
+.report-result-list {
+    position: relative;
+    display: flex;
+    margin: 0;
+    padding: 0px 20px;
+    border-left: 3px solid black;
+    gap: 15px;
+}
+
+.report-result-list p {
+    margin: 0;
+}
+
+.report-result-content {
+    position: absolute;
+    width: 300px;
+    top: 0;
+    left: 150px;
+    padding: 2px 10px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
 .report-wrapper {
     display: flex;
     flex-direction: column;

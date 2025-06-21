@@ -7,6 +7,7 @@ const Report = () => {
 
     const [ keyword, setKeyword ] = useState('');
     const [ reportInfo, setReportInfo ] = useState([]);
+    const [ showContents, setShowContents ] = useState(false);
 
     const { showToast } = useToast();
 
@@ -43,15 +44,36 @@ const Report = () => {
         return (
         <div className="report-result-wrapper">
             <h3>신고 이력 요약</h3>
-            <p>최근 신고일 : {reports.lastedDate}</p>
-            <p>총 신고 건수 : {reports.count}</p>
 
             <div className="report-result-box">
-            {reports.reasonStats.map((r, i) => (
-                <p key={i}>- {r.reasonLabel} : {r.count}건</p>
-                
-            ))}
+                <div>
+                    <p className="report-result-label">최근 신고일</p>
+                    <p style={{color: "#7badff", fontSize: "18px"}}>{reports.lastedDate}</p>
+                </div>
+                <div>
+                    <p className="report-result-label">총 신고 건수</p>
+                    <p style={{color: "#7badff", fontSize: "18px"}}>{reports.count}</p>
+                </div>
             </div>
+            <ul className="report-result-reason">
+                {reports.reasonStats.map((r, i) => (
+                    <li key={i} className="report-result-list">
+                        <p>{r.reasonLabel}</p>
+                        <p 
+                        style={{textDecoration: "underline", cursor: "pointer"}}
+                        onMouseOver={() => setShowContents(true)}
+                        onMouseOut={() => setShowContents(false)}
+                        >{r.count}건</p>
+                        {showContents &&
+                        <div className="report-result-content">
+                            {r.contents.slice(0, 3).map((c, i) => (
+                                <p key={i}>{c}</p>
+                            ))}
+                        </div>
+                        }
+                    </li>
+                ))}
+            </ul>
         </div>
         )
     }
@@ -109,7 +131,7 @@ function transfromReportData(report) {
 
         if(!grouped[reason]) {
             grouped[reason] = {
-            reason,
+                reason,
                 reasonLabel: reasonMap[reason] || "기타 사유(직접 입력)",
                 count: 0,
                 contents: []
