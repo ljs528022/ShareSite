@@ -127,7 +127,7 @@ CREATE TABLE d1_review
 	reviewKey int NOT NULL AUTO_INCREMENT,
 	sellerKey varchar(20) NOT NULL,
 	buyerKey varchar(20) NOT NULL,
-	reviewScore varchar(20) NOT NULL,
+	reviewScore int NOT NULL,
 	reviewDetail longtext,
 	writeDate datetime NOT NULL,
 	PRIMARY KEY (reviewKey)

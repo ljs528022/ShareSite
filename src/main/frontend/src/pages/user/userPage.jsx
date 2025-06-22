@@ -16,6 +16,7 @@ import WriteReview from "../side/WriteReview";
 import Reviews from "../side/Reviews";
 import ChatRoom from "../chat/ChatRoom";
 import "../../css/pages/userPage.css";
+import { FaInfo, FaInfoCircle } from "react-icons/fa";
 
 const UserPage = () => {
 
@@ -42,6 +43,7 @@ const UserPage = () => {
 
     // 유저 신뢰도 -> 거래 리뷰의 좋아요, 싫어요에 따라 점수가 변동하는 값임
     const [ userScore, setUserScore ] = useState(0);
+    const [ showScoreInfo, setShowScoreInfo ] = useState(false);
 
     // 사이드 페이지 & 모달 ON | OFF
     const [ showPayment, setShowPayment ] = useState(false);            // 구매 내역
@@ -60,9 +62,10 @@ const UserPage = () => {
         const getUserInfo = async () => {
             try {
                 const response = await getData(`/user/${userKey}`);
-                const { userInfo, userItems } = response.data;      
+                const { userInfo, userItems, trustScore } = response.data;      
                 setUserInfo(userInfo);
                 setUserItem(userItems);
+                setUserScore(trustScore);
 
                 if(userItems != null) {
                     setTrading(userItems.filter(item => item.tradestatus === false));
@@ -90,6 +93,64 @@ const UserPage = () => {
         }
         getReview();
     }, [userKey]);
+
+    // 유저 신뢰도 표시
+    const getTemperatureColor = (score) => {
+        if (score <= 20) return '#2196F3';
+        if (score <= 40) return '#42A5F5';
+        if (score <= 60) return '#FFEB3B';
+        if (score <= 80) return '#FF9800';
+        return '#F44336';
+    }
+
+    const trustThermometer = (score) => {
+        const color = getTemperatureColor(score);
+        return (
+            <div className="user-score">
+                <label style={{
+                    display: "flex",
+                    textAlign: "left",
+                    alignItems: "center",
+                    gap: "10px",
+                    color: color,
+                }}>
+                    <p style={{
+                        margin: 0,
+                        padding: 0,
+                        fontSize: "13px",
+                        fontWeight: 500,
+                    }}>유저 신뢰도 : {score} ℃</p>
+                    <FaInfoCircle size={15} style={{cursor: "pointer"}}
+                    onMouseOver={() => setShowScoreInfo(true)}
+                    onMouseOut={() => setShowScoreInfo(false)}
+                    />
+                </label>
+                <div 
+                style={{
+                    width: `${score}%`,
+                    marginTop: "10px",
+                    backgroundColor: color,
+                    height: "15px",
+                    borderRadius: "10px",
+                    transition: 'width 0.3s ease'
+                }}
+                />
+                {showScoreInfo &&
+                <div className="user-score-info"
+                    onMouseOver={() => setShowScoreInfo(true)}
+                    onMouseOut={() => setShowScoreInfo(false)}
+                >
+                    <p>{`[ 유저 신뢰도 설명 ]`}</p>
+                    <div>
+                        <p>{`[ 0 ~ 20 도]`}</p>
+                        <p></p>
+                    </div>
+
+                </div>
+                }
+            </div>
+        )
+    };
 
     const getsortedItems = () => {
         if(!userItem) return;
@@ -200,10 +261,7 @@ const UserPage = () => {
                         <div className="user-page-row">
                             <div className="user-info">
                                 {/* 유저 신뢰도 나중에 기능 추가해야 함 */}
-                                <div className="user-score">
-                                    <label>유저 신뢰도 : {userScore}</label>
-                                    <div className="user-score-bar" />
-                                </div>
+                                {trustThermometer(userScore)}
                                 <img 
                                     className="user-img"
                                     src={userInfo.userimg !== '' ? `http://localhost:8093${userInfo.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'}

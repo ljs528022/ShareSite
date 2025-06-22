@@ -26,7 +26,7 @@ public class ReviewController {
 
     @GetMapping("/{userKey}")
     public ResponseEntity<?> gerReviews(@PathVariable("userKey")String userKey) {
-        List<Review> reviews = reviewService.findReviewsByBuyerKey(userKey);
+        List<Review> reviews = reviewService.findReviewsBySellerKey(userKey);
 
         return ResponseEntity.ok(reviews);
     }

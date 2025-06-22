@@ -3,14 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.ReviewRepository">
+
     <insert id="write" parameterType="com.lec.spring.domain.Review">
         INSERT INTO d1_review (sellerKey, buyerKey, reviewScore, reviewDetail, writeDate)
         VALUES (#{sellerKey}, #{buyerKey}, #{reviewScore}, #{reviewDetail}, #{writeDate})
     </insert>
 
-    <select id="findReviewsByBuyerKey" resultType="com.lec.spring.domain.Review">
+    <select id="findReviewsBySellerKey" resultType="com.lec.spring.domain.Review">
         SELECT *
         FROM d1_review
         WHERE sellerKey = #{sellerKey}
+    </select>
+
+    <select id="findGoodReviews" resultType="int">
+        SELECT COUNT(*)
+        FROM d1_review
+        WHERE sellerKey = #{sellerKey}
+        AND reviewScore &lt; 10
+    </select>
+
+    <select id="findBadReviews" resultType="int">
+        SELECT COUNT(*)
+        FROM d1_review
+        WHERE sellerKey = #{sellerKey}
+        AND reviewScore &gt; 10
     </select>
 </mapper>

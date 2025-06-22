@@ -12,5 +12,9 @@ public interface ReviewRepository {
     // Save Review
     int write(Review review);
 
-    List<Review> findReviewsByBuyerKey(@Param("sellerKey")String sellerKey);
+    List<Review> findReviewsBySellerKey(@Param("sellerKey")String sellerKey);
+
+    int findGoodReviews(@Param("sellerKey")String sellerKey);
+
+    int findBadReviews(@Param("sellerKey")String sellerKey);
 }

@@ -36,8 +36,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> findReviewsByBuyerKey(String sellerKey) {
-        List<Review> reviews = reviewRepository.findReviewsByBuyerKey(sellerKey);
+    public List<Review> findReviewsBySellerKey(String sellerKey) {
+        List<Review> reviews = reviewRepository.findReviewsBySellerKey(sellerKey);
 
         if(reviews != null) {
             return reviews;

@@ -38,6 +38,9 @@ public interface UserService {
     // Get Review's Users
     List<User> getReviewUsers(List<String> buyerKeys);
 
+    // Get User's TrustScore
+    double getTrustScore(String userKey);
+
 
     // For Modify User Info
     void deleteAccount(String userKey);

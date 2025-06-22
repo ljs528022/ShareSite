@@ -15,7 +15,7 @@ const WriteReview = ({ sellerInfo, onClose }) => {
     const [ reviewData, setReviewData ] = useState({
         sellerKey: sellerInfo,
         buyerKey: user.userKey,
-        reviewScore: "",
+        reviewScore: 0,
         reviewDetail: "",
     });
 
@@ -35,7 +35,7 @@ const WriteReview = ({ sellerInfo, onClose }) => {
     }
 
     const handleSubmit = async () => {
-        if(reviewData.reviewScore === "") {
+        if(reviewData.reviewScore === 0) {
             showToast("거래에 대한 평가를 남겨주새요!", "error");
             return;
         }
@@ -75,24 +75,24 @@ const WriteReview = ({ sellerInfo, onClose }) => {
                 <button className="review-btn" onClick={() => {setReviewPage(0); setReviewData(prev => ({ ...prev, reviewScore: ""}));}}>
                     <span className="review-btn-span">좋았어요</span>
                 </button>
-                <label className={reviewData.reviewScore === "GOOD" ? "review-btn-checked" : "review-btn"}>
-                        <input id="reviewScore" type="radio" value={"GOOD"} onChange={handleInput} checked={reviewData.reviewScore === "GOOD"}/>
+                <label className={reviewData.reviewScore === "1" ? "review-btn-checked" : "review-btn"}>
+                        <input id="reviewScore" type="radio" value={1} onChange={handleInput} checked={reviewData.reviewScore === "GOOD"}/>
                         <span className="review-btn-span">매너가 좋았어요.</span>
                 </label>
-                <label className={reviewData.reviewScore === "FAST" ? "review-btn-checked" : "review-btn"}>
-                        <input id="reviewScore" type="radio" value={"FAST"} onChange={handleInput} checked={reviewData.reviewScore === "FAST"}/>
+                <label className={reviewData.reviewScore === "2" ? "review-btn-checked" : "review-btn"}>
+                        <input id="reviewScore" type="radio" value={2} onChange={handleInput} checked={reviewData.reviewScore === "FAST"}/>
                         <span className="review-btn-span">답장이 빨랐어요.</span>
                 </label>
-                <label className={reviewData.reviewScore === "GOODITEM" ? "review-btn-checked" : "review-btn"}>
-                        <input id="reviewScore" type="radio" value={"GOODITEM"} onChange={handleInput} checked={reviewData.reviewScore === "KEEPTIME"}/>
+                <label className={reviewData.reviewScore === "3" ? "review-btn-checked" : "review-btn"}>
+                        <input id="reviewScore" type="radio" value={3} onChange={handleInput} checked={reviewData.reviewScore === "KEEPTIME"}/>
                         <span className="review-btn-span">상품 상태가 좋았어요.</span>
                 </label>
-                <label className={reviewData.reviewScore === "WELLPOST" ? "review-btn-checked" : "review-btn"}>
-                        <input id="reviewScore" type="radio" value={"WELLPOST"} onChange={handleInput} checked={reviewData.reviewScore === "WELLPOST"}/>
+                <label className={reviewData.reviewScore === "4" ? "review-btn-checked" : "review-btn"}>
+                        <input id="reviewScore" type="radio" value={4} onChange={handleInput} checked={reviewData.reviewScore === "WELLPOST"}/>
                         <span className="review-btn-span">택배 거래가 수월했어요.(포장, 협조적)</span>
                 </label>
-                <label className={reviewData.reviewScore === "KEEPTIME" ? "review-btn-checked" : "review-btn"}>
-                        <input id="reviewScore" type="radio" value={"KEEPTIME"} onChange={handleInput} checked={reviewData.reviewScore === "KEEPTIME"}/>
+                <label className={reviewData.reviewScore === "5" ? "review-btn-checked" : "review-btn"}>
+                        <input id="reviewScore" type="radio" value={5} onChange={handleInput} checked={reviewData.reviewScore === "KEEPTIME"}/>
                         <span className="review-btn-span">거래 시간을 잘 지켰어요.</span>
                 </label>
             </div>
@@ -101,24 +101,24 @@ const WriteReview = ({ sellerInfo, onClose }) => {
                 <button className="review-btn" onClick={() => {setReviewPage(0); setReviewData(prev => ({ ...prev, reviewScore: ""}));}}>
                     <span className="review-btn-span">아쉬웠어요</span>
                 </button>
-                <label className={reviewData.reviewScore === "BAD" ? "review-btn-checked" : "review-btn"}>
-                        <input id="reviewScore" type="radio" value={"BAD"} onChange={handleInput} checked={reviewData.reviewScore === "BAD"}/>
+                <label className={reviewData.reviewScore === "11" ? "review-btn-checked" : "review-btn"}>
+                        <input id="reviewScore" type="radio" value={11} onChange={handleInput} checked={reviewData.reviewScore === "BAD"}/>
                         <span className="review-btn-span">매너가 안 좋았어요.</span>
                 </label>
-                <label className={reviewData.reviewScore === "LATE" ? "review-btn-checked" : "review-btn"}>
-                        <input id="reviewScore" type="radio" value={"LATE"} onChange={handleInput} checked={reviewData.reviewScore === "LATE"}/>
+                <label className={reviewData.reviewScore === "12" ? "review-btn-checked" : "review-btn"}>
+                        <input id="reviewScore" type="radio" value={12} onChange={handleInput} checked={reviewData.reviewScore === "LATE"}/>
                         <span className="review-btn-span">답장이 너무 느렸어요.</span>
                 </label>
-                <label className={reviewData.reviewScore === "BADITEM" ? "review-btn-checked" : "review-btn"}>
-                    <input id="reviewScore" type="radio" value={"BADITEM"} onChange={handleInput} checked={reviewData.reviewScore === "KEEPTIME"}/>
+                <label className={reviewData.reviewScore === "13" ? "review-btn-checked" : "review-btn"}>
+                    <input id="reviewScore" type="radio" value={13} onChange={handleInput} checked={reviewData.reviewScore === "KEEPTIME"}/>
                     <span className="review-btn-span">상품 상태가 안 좋았어요.</span>
                 </label>
-                <label className={reviewData.reviewScore === "BADPOST" ? "review-btn-checked" : "review-btn"}>
-                        <input id="reviewScore" type="radio" value={"BADPOST"} onChange={handleInput} checked={reviewData.reviewScore === "BADPOST"}/>
+                <label className={reviewData.reviewScore === "14" ? "review-btn-checked" : "review-btn"}>
+                        <input id="reviewScore" type="radio" value={14} onChange={handleInput} checked={reviewData.reviewScore === "BADPOST"}/>
                         <span className="review-btn-span">택배 거래가 힘들었어요.(포장, 비협조적)</span>
                 </label>
-                <label className={reviewData.reviewScore === "LOSTTIME" ? "review-btn-checked" : "review-btn"}>
-                        <input id="reviewScore" type="radio" value={"LOSTTIME"} onChange={handleInput} checked={reviewData.reviewScore === "LOSTTIME"}/>
+                <label className={reviewData.reviewScore === "15" ? "review-btn-checked" : "review-btn"}>
+                        <input id="reviewScore" type="radio" value={15} onChange={handleInput} checked={reviewData.reviewScore === "LOSTTIME"}/>
                         <span className="review-btn-span">거래 시간을 잘 지키지 않았어요.</span>
                 </label>
             </div>

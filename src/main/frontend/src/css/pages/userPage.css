@@ -143,28 +143,24 @@
 }
 
 .user-score {
+    position: relative;
     width: inherit;
     height: inherit;
-
     margin-top: 10px;
     margin-left: 40px;
 }
 
-.user-score label {
-    padding: 0;
-    padding-left: 10px;
+.user-score-info {
+    position: absolute;
+    border-radius: 15px;
+    border: 3px solid #777;
+    background-color: #aaa;
+    text-align: left;
+    padding: 10px;
     font-size: 13px;
     font-weight: 500;
-    color: #7badff;
-}
-
-.user-score-bar {
-
-    width: 285px;
-    height: 15px;
-    
-    border-radius: 10px;
-    background-color: #555;
+    top: 0;
+    right: -46px;
 }
 
 .user-img {

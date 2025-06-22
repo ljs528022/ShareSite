@@ -7,7 +7,7 @@ const Report = () => {
 
     const [ keyword, setKeyword ] = useState('');
     const [ reportInfo, setReportInfo ] = useState([]);
-    const [ showContents, setShowContents ] = useState(false);
+    const [ showContents, setShowContents ] = useState(null);
 
     const { showToast } = useToast();
 
@@ -61,14 +61,16 @@ const Report = () => {
                         <p>{r.reasonLabel}</p>
                         <p 
                         style={{textDecoration: "underline", cursor: "pointer"}}
-                        onMouseOver={() => setShowContents(true)}
-                        onMouseOut={() => setShowContents(false)}
+                        onMouseOver={() => setShowContents(i)}
+                        onMouseOut={() => setShowContents(null)}
                         >{r.count}건</p>
-                        {showContents &&
+                        {showContents === i &&
                         <div className="report-result-content">
                             {r.contents.slice(0, 3).map((c, i) => (
                                 <p key={i}>{c}</p>
+                                
                             ))}
+                            {r.contents.length > 3 && <p>...</p>}
                         </div>
                         }
                     </li>
@@ -98,10 +100,11 @@ const Report = () => {
             <a
             style={{fontSize:"12px", margin: "0 auto", marginTop: "3px"}}
             >최근에 3개월 내 사이트에서 발생한 신고 내역을 조회합니다.</a>
+            
+            {fetchReports(reportInfo)}
         </div>
         </form>
 
-        {fetchReports(reportInfo)}
 
     </main>
     );

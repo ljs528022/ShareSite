@@ -60,12 +60,18 @@ public class UserController {
     @GetMapping("/{userKey}")
     public ResponseEntity<?> getUserInfo(@PathVariable("userKey")String userKey) {
         if(userKey != null) {
+
+            // 해당 유저의 정보와 판매 상품들
             User userInfo = userService.findByUserKey(userKey);
             List<ItemDTO> items = itemService.findByUserKey(userKey);
+
+            // 해당 유저의 신뢰도 계산
+            double trustScore = userService.getTrustScore(userKey);
 
             Map<String, Object> responseBody = new HashMap<>();
             responseBody.put("userInfo", userInfo);
             responseBody.put("userItems", items);
+            responseBody.put("trustScore", trustScore);
 
             return ResponseEntity.ok(responseBody);
         } else {
