@@ -136,14 +136,13 @@ const UserPage = () => {
                 }}
                 />
                 {showScoreInfo &&
-                <div className="user-score-info"
-                    onMouseOver={() => setShowScoreInfo(true)}
-                    onMouseOut={() => setShowScoreInfo(false)}
-                >
-                    <p>{`[ 유저 신뢰도 설명 ]`}</p>
+                <div className="user-score-info">
+                    <p style={{color: "#2196F3"}}>{`[ 유저 신뢰도 설명 ]`}</p>
                     <div>
-                        <p>{`[ 0 ~ 20 도]`}</p>
-                        <p></p>
+                        <pre style={{fontFamily: "none"}}>
+                        {`0 ~ 100도 사이의 온도에 따라 회원의\n거래 매너를 파악할 수 있는 지표입니다.\n기본적으로 20도로 시작하며,\n거래 후기와 신고 내역의 영향을 받아\n온도가 오르거나 내려갑니다.
+                        `}
+                        </pre>
                     </div>
 
                 </div>
@@ -285,7 +284,7 @@ const UserPage = () => {
                                     </p>
                                 </div>
                                 
-                                <button onClick={isOwnPage ? () => navigate("/product/write") : () => setShowChat(true)}>
+                                <button style={{cursor: "pointer"}} onClick={isOwnPage ? () => navigate("/product/write") : () => setShowChat(true)}>
                                     {isOwnPage ?
                                     "등록하기"
                                     :
