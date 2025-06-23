@@ -153,4 +153,13 @@ public class UserController {
 
         return ResponseEntity.ok(users);
     }
+
+    // 회원 탈퇴 처리
+    @PostMapping("/deactivate/{userKey}")
+    public ResponseEntity<?> deactivateUser(@PathVariable("userKey")String userKey) {
+        if(userKey != null) {
+            userService.changeUserStateToStop(userKey);
+        }
+        return ResponseEntity.ok().build();
+    }
 }

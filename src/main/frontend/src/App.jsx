@@ -63,6 +63,9 @@ function App() {
             <Route path='/report/write' Component={WriteReport}/>
             <Route path='/report' Component={Report}/>
 
+            {/* Deactivate Confirm Page */}
+            
+
           </Routes>
           {!hideLayout && <Footer />}
         </UserProvider>

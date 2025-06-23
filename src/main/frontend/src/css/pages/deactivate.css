@@ -1,0 +1,37 @@
+.deactivate-container {
+    width: 100%;
+}
+
+.deactivate-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 20px;
+}
+
+.deactivate-p {
+    font-weight: 500;
+    font-size: "14px";
+}
+
+.deactivate-input {
+    padding: 0px 20px;
+    background-color: white;
+    border: 2px solid #42A5F5;
+    outline: none;
+    width: 90%;
+}
+
+.deactivate-btn {
+    padding: 5px 20px;
+    font-weight: 500;
+    border: 2px solid #42A5F5;
+    color: #42A5F5;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.deactivate-btn:hover {
+    background-color: #42A5F5;
+    color: white;
+}

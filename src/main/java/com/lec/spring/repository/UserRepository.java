@@ -39,55 +39,11 @@ public interface UserRepository {
 
     // -- User Page --
 
-    // Get All User's Item
-    List<Item> findAllItemByUserKey(@Param("userKey")String userKey);
-
-    // User's Item Count
-    int userItemCountAll(@Param("userKey")String userKey);
-
-    // User's Trading Item Count
-    int userItemTradingCountAll(@Param("userKey")String userKey);
-
-    // User's Traded Item Count
-    int userItemTradedCountAll(@Param("userKey")String userKey);
-
-    // User's Review Count
-    int userReviewCountAll(@Param("userKey")String userKey);
-
-    // Change User's Password
-    void updatePassword(
-            @Param("newPassword") String newPassword,
-            @Param("userKey") String userKey
-    );
-
-    // Change Phone Number
-    void updateEmail(
-            @Param("newEmail") String newEmail,
-            @Param("userKey") String userKey
-    );
-
     // Delete Account
-    void deleteAccount(
-            @Param("userKey") String userKey
-    );
-
-    // Get User's Like
-    List<Item> findLikeByUserKey(@Param("userKey") String userKey);
-
-    // Pagination
-    List<User> searchWithPaging();
-
-
-    // -- Admin Page --
+    void changeUserStateToStop(@Param("userKey") String userKey);
 
     // Search All User
     List<User> findAll();
-
-    // Search Latest 5 USer
-    List<User> findLatestUser();
-
-    // List All Users
-    List<User> userList();
 
     void includeVisitCnt(@Param("username")String username);
 

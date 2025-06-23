@@ -16,7 +16,8 @@ import WriteReview from "../side/WriteReview";
 import Reviews from "../side/Reviews";
 import ChatRoom from "../chat/ChatRoom";
 import "../../css/pages/userPage.css";
-import { FaInfo, FaInfoCircle } from "react-icons/fa";
+import { FaInfoCircle } from "react-icons/fa";
+import Deactivate from "./deactivate";
 
 const UserPage = () => {
 
@@ -54,6 +55,7 @@ const UserPage = () => {
     const [ writeReview, setWriteReview ] = useState(false);            // 리뷰 남기기
     const [ showReviews, setShowReviews ] = useState(false);            // 거래 리뷰
     const [ showChat, setShowChat ] = useState(false);                  // 채팅하기
+    const [ showDeactive, setShowDeactive ] = useState(false);
 
     const logginUserKey = user !== null ? user.userKey : null;
     const isOwnPage = userKey === logginUserKey;
@@ -219,7 +221,7 @@ const UserPage = () => {
                             <li onClick={() => setShowReviews(true)}>
                                 거래 후기
                             </li>
-                            <li onClick={() => showToast("작성 예정!")}>
+                            <li onClick={() => setShowDeactive(true)}>
                                 탈퇴하기
                             </li>
                         </ul>
@@ -284,12 +286,15 @@ const UserPage = () => {
                                     </p>
                                 </div>
                                 
-                                <button style={{cursor: "pointer"}} onClick={isOwnPage ? () => navigate("/product/write") : () => setShowChat(true)}>
-                                    {isOwnPage ?
-                                    "등록하기"
-                                    :
-                                    "채팅하기"
-                                    }
+                                <button 
+                                    style={{cursor: "pointer"}} 
+                                    onClick={isOwnPage ? () => navigate("/product/write") : () => setShowChat(true)}
+                                >
+                                {isOwnPage ?
+                                "등록하기"
+                                :
+                                "채팅하기"
+                                }
                                 </button>
                             </div>
                         </div>
@@ -432,7 +437,12 @@ const UserPage = () => {
             />
 
             {/* 탈퇴하기 */}
-
+            <EditModal
+                isOpen={showDeactive}
+                onClose={() => setShowDeactive(false)}
+                title={"정말로 탈퇴하시겠습니까?"}
+                content={<Deactivate user={user} onClose={() => setShowDeactive(false)} />}
+            />
         </main>
         </>
     )

@@ -41,13 +41,8 @@ public interface UserService {
     // Get User's TrustScore
     double getTrustScore(String userKey);
 
-
     // For Modify User Info
-    void deleteAccount(String userKey);
-    void updatePassword(String newPassword, String userKey);
-    void updateEmail(String newEmail, String userKey);
-
-
+    void changeUserStateToStop(String userKey);
 
     // -- Admin Page --
 

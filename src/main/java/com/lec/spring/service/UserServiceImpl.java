@@ -133,9 +133,7 @@ public class UserServiceImpl implements UserService {
         if(!user.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-
         userRepository.update(user);
-
         return 1;
     }
 
@@ -188,32 +186,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteAccount(String userKey) {
-        User user = userRepository.findByUserKey(userKey);
-        if (user != null) {
-            user.setState("B");
-            userRepository.deleteAccount(userKey);
-        }
-    }
-
-    @Override
-    public void updatePassword(String newPassword, String userKey) {
-        if (!isValidPassword(newPassword)) {
-//            throw new IllegalAccessException("유효하지 않은 비밀번호 형식입니다.");
-        }
-
-        String hashedPassword = passwordEncoder.encode(newPassword);
-        userRepository.updatePassword(hashedPassword, userKey);
+    public void changeUserStateToStop(String userKey) {
+        userRepository.changeUserStateToStop(userKey);
     }
 
     private boolean isValidPassword(String password) {
         // 8 ~ 16자, 영문, 숫자, 대문자, 특문 포함
         String passwordRegex = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$";
         return password.matches(passwordRegex);
-    }
-
-    @Override
-    public void updateEmail(String newEmail, String userKey) {
-        userRepository.updateEmail(newEmail, userKey);
     }
 }

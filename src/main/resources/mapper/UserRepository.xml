@@ -143,13 +143,13 @@
         WHERE userKey = #{userKey}
     </update>
 
-    <update id="includeVisitCnt" flushCache="true" parameterType="com.lec.spring.domain.User">
+    <update id="includeVisitCnt" flushCache="true">
         UPDATE d1_user
         SET visitcnt = visitcnt + 1
         WHERE username = #{username}
     </update>
 
-    <update id="includeTradeCnt" flushCache="true" parameterType="com.lec.spring.domain.User">
+    <update id="includeTradeCnt" flushCache="true">
         UPDATE d1_user
         SET tradecnt = tradecnt + 1
         WHERE userKey = #{userKey}
@@ -163,4 +163,10 @@
             #{key}
         </foreach>
     </select>
+
+    <update id="changeUserStateToStop" flushCache="true">
+        UPDATE d1_user
+        SET state = 'S'
+        WHERE userKey = #{userKey}
+    </update>
 </mapper>
