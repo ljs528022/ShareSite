@@ -39,8 +39,8 @@ public interface UserRepository {
 
     // -- User Page --
 
-    // Delete Account
-    void changeUserStateToStop(@Param("userKey") String userKey);
+    // Change User State
+    void changeUserState(@Param("userKey")String userKey, @Param("state")String state);
 
     // Search All User
     List<User> findAll();

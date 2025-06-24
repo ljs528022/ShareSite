@@ -21,28 +21,31 @@ public interface UserService {
 
     User findSellerInfoByUserKey(String userKey);
 
-    // ID Verification
+    // 아이디 중복 확인
     boolean isUsernameTaken(String username);
 
-    // Register
+    // 회원가입
     int register (RegisterRequest request);
 
-    // Login
+    // 로그인
     String login(LoginRequest request);
 
     int modify(User user);
 
-    // Verify Password
+    // 비밀번호 확인
     boolean verifyPass(String userKey, String password);
 
-    // Get Review's Users
+    // 유저의 거래 리뷰 불러오기
     List<User> getReviewUsers(List<String> buyerKeys);
 
-    // Get User's TrustScore
+    // 유저의 신뢰도 점수 불러오기
     double getTrustScore(String userKey);
 
-    // For Modify User Info
-    void changeUserStateToStop(String userKey);
+    // 유저 탈퇴 처리
+    void withdrawUser(String userKey);
+
+    // 유저 탈퇴 처리 취소
+    void cancelWithdraw(String userKey);
 
     // -- Admin Page --
 

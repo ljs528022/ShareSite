@@ -1,28 +1,28 @@
-.deactivate-container {
+.withdraw-container {
     width: 100%;
 }
 
-.deactivate-box {
+.withdraw-box {
     display: flex;
     justify-content: center;
     margin-top: 15px;
     gap: 20px;
 }
 
-.deactivate-p {
+.withdraw-p {
     font-weight: 500;
     font-size: "14px";
 }
 
-.deactivate-input {
+.withdraw-input {
     padding: 0px 20px;
     background-color: white;
     border: 2px solid #42A5F5;
     outline: none;
-    width: 90%;
+    width: 60%;
 }
 
-.deactivate-btn {
+.withdraw-btn {
     padding: 5px 20px;
     font-weight: 500;
     border: 2px solid #42A5F5;
@@ -31,7 +31,7 @@
     cursor: pointer;
 }
 
-.deactivate-btn:hover {
+.withdraw-btn:hover {
     background-color: #42A5F5;
     color: white;
 }

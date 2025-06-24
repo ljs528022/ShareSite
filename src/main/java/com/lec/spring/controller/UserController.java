@@ -6,6 +6,7 @@ import com.lec.spring.service.EmailService;
 import com.lec.spring.service.FileUploadService;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,7 @@ public class UserController {
     private EmailService emailService;
 
 
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
 
@@ -57,10 +59,9 @@ public class UserController {
         return new LoginResponse(token);
     }
 
-    @GetMapping("/{userKey}")
+    @GetMapping("/userprofile/{userKey}")
     public ResponseEntity<?> getUserInfo(@PathVariable("userKey")String userKey) {
-        if(userKey != null) {
-
+        if(userKey != null && !userKey.isEmpty()) {
             // 해당 유저의 정보와 판매 상품들
             User userInfo = userService.findByUserKey(userKey);
             List<ItemDTO> items = itemService.findByUserKey(userKey);
@@ -76,6 +77,17 @@ public class UserController {
             return ResponseEntity.ok(responseBody);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/cancel-withdraw")
+    public ResponseEntity<?> cancelWithdraw(@RequestBody LoginRequest request) {
+        User user = userService.findByUserName(request.getUsername());
+        if(user.getUserKey() != null && !user.getUserKey().isEmpty()) {
+            userService.cancelWithdraw(user.getUserKey());
+            return ResponseEntity.ok().build();
+        } else {
+            return  ResponseEntity.notFound().build();
         }
     }
 
@@ -137,7 +149,7 @@ public class UserController {
 
     @GetMapping("/getSellerInfo/{userKey}")
     public ResponseEntity<?> getSellerInfo(@PathVariable("userKey") String userKey) {
-        if(userKey != null) {
+        if(userKey != null && !userKey.isEmpty()) {
             User userInfo = userService.findByUserKey(userKey);
 
             return ResponseEntity.ok(userInfo);
@@ -155,11 +167,14 @@ public class UserController {
     }
 
     // 회원 탈퇴 처리
-    @PostMapping("/deactivate/{userKey}")
-    public ResponseEntity<?> deactivateUser(@PathVariable("userKey")String userKey) {
-        if(userKey != null) {
-            userService.changeUserStateToStop(userKey);
+    @PostMapping("/withdraw/{userKey}")
+    public ResponseEntity<?> withdrawUser(@PathVariable("userKey")String userKey) {
+        if(userKey != null && !userKey.isEmpty()) {
+            userService.withdrawUser(userKey);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().build();
+
     }
 }

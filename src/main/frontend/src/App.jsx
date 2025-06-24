@@ -16,6 +16,7 @@ import PaymentPage from './components/PaymentPage';
 import Report from './pages/report';
 import SearchPrice from './pages/searchPrice';
 import WriteReport from './components/WriteReport';
+import WithdrawComplete from './pages/user/withdrawComplete';
 
 
 function App() {
@@ -64,7 +65,7 @@ function App() {
             <Route path='/report' Component={Report}/>
 
             {/* Deactivate Confirm Page */}
-            
+            <Route path='/withdraw-complete' Component={WithdrawComplete}/>
 
           </Routes>
           {!hideLayout && <Footer />}

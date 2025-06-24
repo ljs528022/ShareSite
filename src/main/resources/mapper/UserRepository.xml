@@ -164,9 +164,9 @@
         </foreach>
     </select>
 
-    <update id="changeUserStateToStop" flushCache="true">
+    <update id="changeUserState" flushCache="true">
         UPDATE d1_user
-        SET state = 'S'
+        SET state = #{state}
         WHERE userKey = #{userKey}
     </update>
 </mapper>

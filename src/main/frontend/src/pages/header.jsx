@@ -25,6 +25,19 @@ const Header = () => {
     const [ showLikeItem, setShowLikeItem ] = useState(false);      // 찜한 상품
     const [ showChatRooms, setShowChatRooms ] = useState(false);    // 채팅하기 버튼
 
+    // 유저 상태 확인하기
+    useEffect(() => {
+        if(!user) return;
+
+        if(user.state === "S") {
+            localStorage.removeItem("token");
+            sessionStorage.removeItem("token");
+
+            setUser(null);
+            showToast("탈퇴한 계정입니다. Home으로 돌아갑니다.");
+        }
+    })
+
     // 카테고리 받아오기
     useEffect(() => {
         const fetchCategories = async () => {
@@ -43,9 +56,7 @@ const Header = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        localStorage.removeItem("refreshToken");
         sessionStorage.removeItem("token");
-        sessionStorage.removeItem("refreshToken");
     
         setUser(null);
         showToast("로그아웃 완료! 나중에 또 들러주세요~");

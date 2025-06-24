@@ -15,9 +15,9 @@ import Modal from "../../util/Modal";
 import WriteReview from "../side/WriteReview";
 import Reviews from "../side/Reviews";
 import ChatRoom from "../chat/ChatRoom";
+import Withdraw from "./withdraw";
 import "../../css/pages/userPage.css";
 import { FaInfoCircle } from "react-icons/fa";
-import Deactivate from "./deactivate";
 
 const UserPage = () => {
 
@@ -63,8 +63,8 @@ const UserPage = () => {
     useEffect(() => {
         const getUserInfo = async () => {
             try {
-                const response = await getData(`/user/${userKey}`);
-                const { userInfo, userItems, trustScore } = response.data;      
+                const response = await getData(`/user/userprofile/${userKey}`);
+                const { userInfo, userItems, trustScore } = response.data;
                 setUserInfo(userInfo);
                 setUserItem(userItems);
                 setUserScore(trustScore);
@@ -441,7 +441,7 @@ const UserPage = () => {
                 isOpen={showDeactive}
                 onClose={() => setShowDeactive(false)}
                 title={"정말로 탈퇴하시겠습니까?"}
-                content={<Deactivate user={user} onClose={() => setShowDeactive(false)} />}
+                content={<Withdraw user={user} onClose={() => setShowDeactive(false)} />}
             />
         </main>
         </>
