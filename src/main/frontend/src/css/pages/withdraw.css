@@ -35,3 +35,29 @@
     background-color: #42A5F5;
     color: white;
 }
+
+/* 탈퇴 완료 확인 창 CSS */
+.withdraw-complete-box {
+    width: 50%;
+    margin: 80px auto;
+    text-align: center;
+}
+
+.withdraw-complete-box p {
+    margin: 0;
+}
+
+.withdraw-complete-btn {
+    margin-top: 50px;
+    border: 3px solid #42A5F5;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-weight: 500;
+    color: #42A5F5;
+    cursor: pointer;
+}
+
+.withdraw-complete-btn:hover {
+    background-color: #42A5F5;
+    color: white;
+}

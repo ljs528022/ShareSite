@@ -79,6 +79,8 @@ const ItemDetail = () => {
         }
     }, [itemKey]);
 
+    console.log(itemUser);
+
     // 판매자가 판매 중인 다른 상품 불러오기
     useEffect(() => {
         if(item.userKey === undefined) return;
@@ -287,7 +289,7 @@ const ItemDetail = () => {
                             </label>
 
                             {/* 몇분전, 조회, 채팅방 수, 찜 수 */}
-                            <p>{getDayMinuteCounter(item.writeDate)} | 조회 {item.viewcnt} | 채팅 {0} | 찜 {itemsLike}</p>
+                            <p>{`${getDayMinuteCounter(item.writeDate)} | 조회 ${item.viewcnt} | 찜 ${itemsLike}`}</p>
 
                         </div>
                         <div className="item-status-box">
@@ -333,6 +335,9 @@ const ItemDetail = () => {
                                     if(!user) {
                                         showToast("로그인이 필요한 기능입니다!", "error");
                                         return;
+                                    } else if(itemUser.state !== "N") {
+                                        showToast("탈퇴한 회원과는 채팅할 수 없습니다", "error");
+                                        return;
                                     } else setShowChat(true);
                                 }}
                             >채팅하기</button>
@@ -343,6 +348,9 @@ const ItemDetail = () => {
                                 onClick={() => {
                                     if(!user) {
                                         showToast("로그인이 필요한 기능입니다!", "error");
+                                        return;
+                                    } else if(itemUser.state !== "N") {
+                                        showToast("탈퇴한 회원의 상품은 구매할 수 없습니다", "error");
                                         return;
                                     } else setConfirmPurChase(true)}}
                             >구매하기</button>
@@ -392,11 +400,13 @@ const ItemDetail = () => {
                         <div className="item-seller-box">
                             <label>판매자 정보</label>
                             <div className="item-seller">
-                                <p onClick={() => navigate(`/user/${itemUser.userKey}`)}>{itemUser.useralias}</p>
-                                <img onClick={() => navigate(`/user/${itemUser.userKey}`)} src={itemUser.userimg ? `http://localhost:8093${itemUser.userimg}` : `http://localhost:8093/item-images/temp/userImgTemp.png`}/>
+                                <p onClick={() => navigate(`/user/${itemUser.userKey}`)}>{itemUser.state === "S" ? `탈퇴한 회원` : itemUser.useralias}</p>
+                                <img onClick={() => navigate(`/user/${itemUser.userKey}`)} src={(itemUser.userimg && itemUser.state === "N") ? `http://localhost:8093${itemUser.userimg}` : `http://localhost:8093/item-images/temp/userImgTemp.png`}/>
                             </div>
-                            {/* 추가적인 판매자 정보 추가 필요함 */}
-                            {/* ex) 신뢰 점수, 거래 완료 수, 리뷰 수 등... */}
+                            <div className="item-seller">
+                                {/* //TODO */}
+                                <div></div>
+                            </div>
                         </div>
                     </div>                    
                 </div>

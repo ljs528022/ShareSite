@@ -112,19 +112,31 @@
     </select>
 
     <select id="getLatestItems" resultType="com.lec.spring.DTO.ItemDTO">
-        SELECT *
-        FROM d1_item
-        WHERE tradestatus = false
+        SELECT i.*
+        FROM d1_item i
+        JOIN d1_user u ON i.userKey = u.userKey
+        WHERE i.tradestatus = false
+        AND u.state = 'N'
         ORDER BY writeDate DESC
         LIMIT 20
     </select>
 
     <select id="getWeeklyItems" resultType="com.lec.spring.DTO.ItemDTO">
-        SELECT *
-        FROM d1_item
-        WHERE tradestatus = false
-        ORDER BY writeDate DESC
-        LIMIT 20
+        SELECT i.*
+        FROM d1_item i
+        JOIN d1_user u ON i.userKey = u.userKey
+        WHERE i.tradestatus = false
+        AND u.state = 'N'
+        AND i.cateKey = (
+            SELECT i2.cateKey
+            FROM d1_payment p
+            JOIN d1_item i2 ON p.itemKey = i2.itemKey
+            WHERE p.purchaseDate &gt;= DATE_SUB(NOW(), INTERVAL 7 DAY)
+            GROUP BY i2.cateKey
+            ORDER BY COUNT(*) DESC
+            LIMIT 1
+        )
+        ORDER BY i.writeDate DESC
     </select>
 
     <select id="getSellerItems" resultType="com.lec.spring.DTO.ItemDTO">
@@ -188,9 +200,9 @@
     </select>
 
     <select id="findByCategory" resultType="com.lec.spring.DTO.ItemDTO">
-        SELECT i.*
-        FROM d1_item i
-        WHERE i.cateKey = #{cateKey}
+        SELECT *
+        FROM d1_item
+        WHERE cateKey = #{cateKey}
     </select>
 
     <select id="findByUserKey" resultType="com.lec.spring.DTO.ItemDTO">

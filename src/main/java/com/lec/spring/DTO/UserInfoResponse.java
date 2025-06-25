@@ -12,5 +12,6 @@ public class UserInfoResponse {
     private String email;
     private String state;
     private String userimg;
+    private double trustScore;
     private String auth;
 }

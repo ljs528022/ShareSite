@@ -103,6 +103,7 @@ public class ItemController {
         ItemDTO item = itemService.detail(itemKey);
         String userKey = item.getUserKey();
         User user = userService.findByUserKey(userKey);
+        double trustScore = userService.getTrustScore(userKey);
         UserInfoResponse itemUser = new UserInfoResponse(
                 user.getUserKey(),
                 user.getUsername(),
@@ -110,6 +111,7 @@ public class ItemController {
                 user.getEmail(),
                 user.getState(),
                 user.getUserimg(),
+                trustScore,
                 user.getAuth()
         );
 

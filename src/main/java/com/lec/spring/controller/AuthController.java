@@ -84,6 +84,7 @@ public class AuthController {
 
         String username = userDetails.getUsername();
         User user = userService.findByUserName(username);
+        double trustScore = userService.getTrustScore(user.getUserKey());
 
         UserInfoResponse response = new UserInfoResponse(
                 user.getUserKey(),
@@ -92,6 +93,7 @@ public class AuthController {
                 user.getEmail(),
                 user.getState(),
                 user.getUserimg(),
+                trustScore,
                 user.getAuth()
         );
 

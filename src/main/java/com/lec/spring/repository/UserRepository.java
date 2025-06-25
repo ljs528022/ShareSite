@@ -5,6 +5,7 @@ import com.lec.spring.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public interface UserRepository {
     // -- User Page --
 
     // Change User State
-    void changeUserState(@Param("userKey")String userKey, @Param("state")String state);
+    void changeUserState(@Param("userKey")String userKey, @Param("state")String state, @Param("time")LocalDateTime time);
 
     // Search All User
     List<User> findAll();
@@ -50,4 +51,7 @@ public interface UserRepository {
     void includeTradeCnt(@Param("userKey")String userKey);
 
     List<User> getReviewUsers(List<String> buyerKeys);
+
+    // 탈퇴 예정(R)인 유저가 그 상태로 7일이 지나면 탈퇴 상태(S)로 변경
+    void withdrawOver7Days();
 }

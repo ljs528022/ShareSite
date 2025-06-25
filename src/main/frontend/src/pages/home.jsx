@@ -31,8 +31,8 @@ const Home = () => {
     return (
         <>
         <main>
-            <HomeItems items={weeklyItems} content={"이번주 인기 카테고리 상품"} style={"Normal"} pageBtnStyle={""} />
-            <HomeItems items={latestItems} content={"방금 추가된 상품들"} style={"Normal"} pageBtnStyle={""} />
+            <HomeItems items={latestItems} content={"가장 최근에 추가된 상품들"} style={"Normal"} pageBtnStyle={""} />
+            <HomeItems items={weeklyItems} content={"저번주 인기 카테고리 상품들"} style={"Normal"} pageBtnStyle={""} />
         </main>
         </>
 

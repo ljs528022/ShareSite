@@ -132,7 +132,8 @@
         SET
             username = #{username},
             useralias = #{useralias},
-            userIntro = #{userIntro}
+            userIntro = #{userIntro},
+            editedDate = #{editedDate}
             <if test="email != null and email != ''">
                 , email = #{email}
             </if><if test="password != null and password != ''">
@@ -166,7 +167,14 @@
 
     <update id="changeUserState" flushCache="true">
         UPDATE d1_user
-        SET state = #{state}
+        SET state = #{state}, editedDate = #{time}
         WHERE userKey = #{userKey}
+    </update>
+
+    <update id="withdrawOver7Days">
+        UPDATE d1_user
+        SET state = 'S'
+        WHERE state = 'R'
+        AND editedDate &lt;= DATE_SUB(NOW(), INTERVAL 7 DAY)
     </update>
 </mapper>

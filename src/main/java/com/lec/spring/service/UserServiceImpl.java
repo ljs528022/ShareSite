@@ -11,6 +11,7 @@ import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.JwtUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -132,6 +133,7 @@ public class UserServiceImpl implements UserService {
         if(!user.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
+        user.setEditedDate(LocalDateTime.now());
         userRepository.update(user);
         return 1;
     }
@@ -190,12 +192,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void withdrawUser(String userKey) {
-        userRepository.changeUserState(userKey, "R");
+        userRepository.changeUserState(userKey, "R", LocalDateTime.now());
     }
 
     @Override
     public void cancelWithdraw(String userKey) {
-        userRepository.changeUserState(userKey, "N");
+        userRepository.changeUserState(userKey, "N", LocalDateTime.now());
+    }
+
+    @Override
+    @Scheduled(cron = "0 0 4 * * *") // 매일 오전 4시 실행
+    public void withdrawOver7Days() {
+        userRepository.withdrawOver7Days();
+        System.out.println("[스케줄러] 7일이 경과한 탈퇴 예정 회원 상태 전환");
     }
 
     private boolean isValidPassword(String password) {

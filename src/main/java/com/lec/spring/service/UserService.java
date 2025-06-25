@@ -47,6 +47,9 @@ public interface UserService {
     // 유저 탈퇴 처리 취소
     void cancelWithdraw(String userKey);
 
+    // 7일이 지난 탈퇴 예정 회원 탈퇴 전환
+     void withdrawOver7Days();
+
     // -- Admin Page --
 
 }

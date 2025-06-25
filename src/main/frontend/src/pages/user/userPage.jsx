@@ -66,7 +66,11 @@ const UserPage = () => {
                 const response = await getData(`/user/userprofile/${userKey}`);
                 const { userInfo, userItems, trustScore } = response.data;
                 setUserInfo(userInfo);
-                setUserItem(userItems);
+                if(userInfo?.state === "S") {
+                    setUserItem(null);
+                } else {
+                    setUserItem(userItems);
+                }
                 setUserScore(trustScore);
 
                 if(userItems != null) {
@@ -83,6 +87,8 @@ const UserPage = () => {
 
     // 해당 유저의 거래 리뷰 받아오기
     useEffect(() => {
+        if(userInfo?.state === "S") return;
+
         const getReview = async () => {
             try {
                 const response = await getData(`/api/review/${userKey}`);
@@ -233,7 +239,11 @@ const UserPage = () => {
                     <div className="user-info-box">
                         <div className="user-page-row">
                             {/* 유저 이름 */}
-                            <label>{userInfo.useralias}#{userInfo.userKey}</label>
+                            <label>
+                                {userInfo.state === "S" ? "탈퇴한 회원 #0000000" :
+                                `${userInfo.useralias} #${userInfo.userKey}`
+                                }
+                            </label>
                             <p className="user-decoration">
                                 {userInfo.userIntro ? userInfo.userIntro : "더 다양한 상품을 다른 회원들과 거래 해보세요!"}
                             </p>
@@ -261,7 +271,6 @@ const UserPage = () => {
                         {/* 유저 신뢰도 & 유저 이미지 & 채팅 or 상품 등록 버튼 부분 */}
                         <div className="user-page-row">
                             <div className="user-info">
-                                {/* 유저 신뢰도 나중에 기능 추가해야 함 */}
                                 {trustThermometer(userScore)}
                                 <img 
                                     className="user-img"
@@ -288,7 +297,9 @@ const UserPage = () => {
                                 
                                 <button 
                                     style={{cursor: "pointer"}} 
-                                    onClick={isOwnPage ? () => navigate("/product/write") : () => setShowChat(true)}
+                                    onClick={isOwnPage ? () => navigate("/product/write") 
+                                        : userInfo.state !== "N" ? () => showToast("탈퇴한 회원과는 채팅할 수 없습니다!" ,"error")
+                                        : () => setShowChat(true)}
                                 >
                                 {isOwnPage ?
                                 "등록하기"
@@ -322,11 +333,11 @@ const UserPage = () => {
                         <div className="user-item-sort">
                             <label>총 {
                                 sortTrade === "ALL" ? 
-                                `${userItem.length !== undefined ? userItem.length : 0}` 
+                                `${userItem?.length !== undefined ? userItem.length : 0}` 
                                 : sortTrade === "TRADING" ?
-                                `${trading.length !== undefined ? trading.length : 0}`
+                                `${trading?.length !== undefined ? trading.length : 0}`
                                 :
-                                `${traded.length !== undefined ? traded.length : 0}`
+                                `${traded?.length !== undefined ? traded.length : 0}`
                             } 개</label>
                             <div className="item-result-sort">
                                 <button 
@@ -346,12 +357,12 @@ const UserPage = () => {
                             </div>
                         </div>
                         <div className="user-item-result">
-                            {displayedItems.length > 0 ?
+                            {displayedItems?.length > 0 ?
                             displayedItems.map(item => (
                                 <ItemCard key={item.itemKey} item={item} style={"Normal"} />
                             ))
-                            :
-                            <EmptyBox content={"관련된 상품이 없습니다.. 나중에 다시 확인해주세요!"} />
+                            : userInfo?.state === "S" ? <EmptyBox content={"탈퇴한 회원의 상품은 불러오지 않습니다"} />
+                            : <EmptyBox content={"관련된 상품이 없습니다.. 나중에 다시 확인해주세요!"} />
                             }
                         </div>
                     </div>

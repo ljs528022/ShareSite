@@ -150,6 +150,7 @@ CREATE TABLE d1_user
 	auth varchar(10),
 	emailVerified BOOLEAN DEFAULT FALSE,
 	userIntro varchar(500),
+	editedDate datetime,
 	PRIMARY KEY (userKey),
 	UNIQUE (userKey),
 	UNIQUE (username)
