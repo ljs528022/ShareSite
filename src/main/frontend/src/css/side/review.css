@@ -12,8 +12,15 @@
 .review-box-blank {
     width: 100%;
     margin-top: 20px;
-    height: 12px;
+    height: 10px;
     background-color: rgba(0, 0, 0, 0.3);
+}
+
+.review-empty {
+    display: flex;
+    gap: 5px;
+    margin: 40px auto;
+    align-items: center;
 }
 
 .review-list-label {

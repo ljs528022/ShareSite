@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.DTO.ItemDTO;
 import com.lec.spring.DTO.LocationDTO;
 import com.lec.spring.DTO.UserInfoResponse;
-import com.lec.spring.domain.Item;
-import com.lec.spring.domain.ItemImage;
-import com.lec.spring.domain.Location;
-import com.lec.spring.domain.User;
+import com.lec.spring.domain.*;
 import com.lec.spring.service.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,6 +39,8 @@ public class ItemController {
     private LocationService locationService;
     @Autowired
     private LikeService likeService;
+    @Autowired
+    private ReviewService reviewService;
 
     // Write Item
     @PostMapping(value = "/write")
@@ -103,6 +102,7 @@ public class ItemController {
         ItemDTO item = itemService.detail(itemKey);
         String userKey = item.getUserKey();
         User user = userService.findByUserKey(userKey);
+        List<Review> reviews = reviewService.findReviewsBySellerKey(userKey);
         double trustScore = userService.getTrustScore(userKey);
         UserInfoResponse itemUser = new UserInfoResponse(
                 user.getUserKey(),
@@ -110,6 +110,7 @@ public class ItemController {
                 user.getUseralias(),
                 user.getEmail(),
                 user.getState(),
+                user.getTradecnt(),
                 user.getUserimg(),
                 trustScore,
                 user.getAuth()
@@ -138,6 +139,7 @@ public class ItemController {
 
         res.put("item", item);
         res.put("itemUser", itemUser);
+        res.put("reviews", reviews);
 
         return ResponseEntity.ok(res);
     }

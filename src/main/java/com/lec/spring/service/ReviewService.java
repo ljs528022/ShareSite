@@ -9,5 +9,5 @@ public interface ReviewService {
 
     int write(ReviewDTO reviewDTO);
 
-    List<Review> findReviewsBySellerKey(String buyerKey);
+    List<Review> findReviewsBySellerKey(String sellerKey);
 }

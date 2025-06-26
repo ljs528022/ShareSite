@@ -15,6 +15,8 @@ import Purchase from "../side/Purchase";
 import "../../css/pages/itemDetail.css";
 import ChatRoom from "../chat/ChatRoom";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import UserTrustScore from "../../components/userTrustScore";
+import Reviews from "../side/Reviews";
 
 const ItemDetail = () => {
     // URL의 아이템키 받아오기
@@ -41,6 +43,10 @@ const ItemDetail = () => {
     // Seller's Items
     const [ sellerItem, setSellerItem ] = useState([]);
 
+    // Seller's Review
+    const [ sellerReview, setSellerReveiw ] = useState([]);
+    const [ showReview, setShowReivew ] = useState(false);
+
     // Same Category's Items
     const [ itemsSameCate, setItemsSameCate ] = useState([]);
 
@@ -62,9 +68,10 @@ const ItemDetail = () => {
             try {
                 const res = await getData(`/product/${itemKey}`, { withCredentials: true });
                 if(res.status === 200) {
-                    const { item, itemUser } = res.data;
+                    const { item, itemUser, reviews } = res.data;
                     setItem(item);
                     setItemUser(itemUser);
+                    setSellerReveiw(reviews);
                 }
             } catch (err) {
                 showToast("통신 장애로 상품을 가져오지 못했어요...", "error");
@@ -78,8 +85,6 @@ const ItemDetail = () => {
             fetchItem();
         }
     }, [itemKey]);
-
-    console.log(itemUser);
 
     // 판매자가 판매 중인 다른 상품 불러오기
     useEffect(() => {
@@ -388,7 +393,7 @@ const ItemDetail = () => {
                 <div className="item-row">
                     <div className="item-subInfo">
                         <div className="item-content-box">
-                            <label>상품정보</label>
+                            <label className="item-subInfo-label">상품정보</label>
                             <div className="item-content">
                                 {item.content && (
                                     <pre>
@@ -398,14 +403,22 @@ const ItemDetail = () => {
                             </div>
                         </div>
                         <div className="item-seller-box">
-                            <label>판매자 정보</label>
+                            <label className="item-subInfo-label">판매자 정보</label>
                             <div className="item-seller">
                                 <p onClick={() => navigate(`/user/${itemUser.userKey}`)}>{itemUser.state === "S" ? `탈퇴한 회원` : itemUser.useralias}</p>
                                 <img onClick={() => navigate(`/user/${itemUser.userKey}`)} src={(itemUser.userimg && itemUser.state === "N") ? `http://localhost:8093${itemUser.userimg}` : `http://localhost:8093/item-images/temp/userImgTemp.png`}/>
                             </div>
-                            <div className="item-seller">
-                                {/* //TODO */}
-                                <div></div>
+                            <UserTrustScore score={itemUser.trustScore} onLabel={false} />
+                            <div className="item-seller-info">
+                                <div className="item-seller-infoBox">
+                                    <p style={{margin: 0, fontSize: "18px"}}>거래 수</p>
+                                    <p style={{margin: 0, fontSize: "17px"}}>{itemUser?.tradecnt}</p>
+                                </div>
+                                <div style={{border:"1px solid rgba(0,0,0,0.3)", height: "30px"}}/>
+                                <div className="item-seller-infoBox">
+                                    <p style={{margin: 0, fontSize: "18px"}}>거래 리뷰</p>
+                                    <p style={{margin: 0,cursor:"pointer", textDecoration: "underline"}} onClick={() => setShowReivew(true)}>{sellerReview?.length}</p>
+                                </div>
                             </div>
                         </div>
                     </div>                    
@@ -488,6 +501,14 @@ const ItemDetail = () => {
                         onBack={() => setShowChat(false)}
                     />
                     }
+                />
+
+                {/* 상품 판매자 리뷰 사이드바 */}
+                <SidePage
+                    isOpen={showReview}
+                    onClose={() => setShowReivew(false)}
+                    headerText={"거래 리뷰"}
+                    content={<Reviews reviews={sellerReview}/>}
                 />
             </div>
         </main>

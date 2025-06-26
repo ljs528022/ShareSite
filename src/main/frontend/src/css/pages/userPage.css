@@ -142,26 +142,6 @@
     justify-content: space-between;
 }
 
-.user-score {
-    position: relative;
-    width: 300px;
-    height: inherit;
-    margin-top: 10px;
-    margin-left: 30px;
-}
-
-.user-score-info {
-    position: absolute;
-    border-radius: 15px;
-    border: 3px solid #777;
-    background-color: white;
-    text-align: left;
-    padding: 0px 15px;
-    font-size: 13px;
-    font-weight: 500;
-    top: 50px;
-}
-
 .user-img {
     width: 60px;
     min-width: 60px;

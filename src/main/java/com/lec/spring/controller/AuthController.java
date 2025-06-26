@@ -92,6 +92,7 @@ public class AuthController {
                 user.getUseralias(),
                 user.getEmail(),
                 user.getState(),
+                user.getTradecnt(),
                 user.getUserimg(),
                 trustScore,
                 user.getAuth()

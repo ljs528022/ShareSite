@@ -17,7 +17,7 @@ import Reviews from "../side/Reviews";
 import ChatRoom from "../chat/ChatRoom";
 import Withdraw from "./withdraw";
 import "../../css/pages/userPage.css";
-import { FaInfoCircle } from "react-icons/fa";
+import UserTrustScore from "../../components/userTrustScore";
 
 const UserPage = () => {
 
@@ -44,7 +44,6 @@ const UserPage = () => {
 
     // 유저 신뢰도 -> 거래 리뷰의 좋아요, 싫어요에 따라 점수가 변동하는 값임
     const [ userScore, setUserScore ] = useState(0);
-    const [ showScoreInfo, setShowScoreInfo ] = useState(false);
 
     // 사이드 페이지 & 모달 ON | OFF
     const [ showPayment, setShowPayment ] = useState(false);            // 구매 내역
@@ -101,63 +100,6 @@ const UserPage = () => {
         }
         getReview();
     }, [userKey]);
-
-    // 유저 신뢰도 표시
-    const getTemperatureColor = (score) => {
-        if (score <= 20) return '#2196F3';
-        if (score <= 40) return '#42A5F5';
-        if (score <= 60) return '#FFEB3B';
-        if (score <= 80) return '#FF9800';
-        return '#F44336';
-    }
-
-    const trustThermometer = (score) => {
-        const color = getTemperatureColor(score);
-        return (
-            <div className="user-score">
-                <label style={{
-                    display: "flex",
-                    textAlign: "left",
-                    alignItems: "center",
-                    gap: "10px",
-                    color: color,
-                }}>
-                    <p style={{
-                        margin: 0,
-                        padding: 0,
-                        fontSize: "13px",
-                        fontWeight: 500,
-                    }}>유저 신뢰도 : {score} ℃</p>
-                    <FaInfoCircle size={15} style={{cursor: "pointer"}}
-                    onMouseOver={() => setShowScoreInfo(true)}
-                    onMouseOut={() => setShowScoreInfo(false)}
-                    />
-                </label>
-                <div 
-                style={{
-                    width: `${score}%`,
-                    marginTop: "10px",
-                    backgroundColor: color,
-                    height: "15px",
-                    borderRadius: "10px",
-                    transition: 'width 0.3s ease'
-                }}
-                />
-                {showScoreInfo &&
-                <div className="user-score-info">
-                    <p style={{color: "#2196F3"}}>{`[ 유저 신뢰도 설명 ]`}</p>
-                    <div>
-                        <pre style={{fontFamily: "none"}}>
-                        {`0 ~ 100도 사이의 온도에 따라 회원의\n거래 매너를 파악할 수 있는 지표입니다.\n기본적으로 20도로 시작하며,\n거래 후기와 신고 내역의 영향을 받아\n온도가 오르거나 내려갑니다.
-                        `}
-                        </pre>
-                    </div>
-
-                </div>
-                }
-            </div>
-        )
-    };
 
     const getsortedItems = () => {
         if(!userItem) return;
@@ -271,7 +213,7 @@ const UserPage = () => {
                         {/* 유저 신뢰도 & 유저 이미지 & 채팅 or 상품 등록 버튼 부분 */}
                         <div className="user-page-row">
                             <div className="user-info">
-                                {trustThermometer(userScore)}
+                                <UserTrustScore score={userScore} onLabel={true}/>
                                 <img 
                                     className="user-img"
                                     src={userInfo.userimg !== '' ? `http://localhost:8093${userInfo.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'}

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useToast } from "../../util/ToastContext";
 import { postData } from "../../services/api";
+import "../../css/side/review.css";
+import { FaRegCommentDots } from "react-icons/fa";
 
 const Reviews = ({ reviews }) => {
 
@@ -66,9 +68,9 @@ const Reviews = ({ reviews }) => {
 
     return (
         <div className="review-wrapper">
-            {goodReviews.length > 0 &&
             <div className="review-box">
                 <label className="review-list-label">이런 점이 좋았어요</label>
+                {goodReviews.length > 0 ?
                 <div className="review-list">
                 {GOOD_REVIEW_TAG.map(tag => (
                 goodReviewsByScore[tag] && goodReviewsByScore[tag].length > 0 &&
@@ -84,17 +86,21 @@ const Reviews = ({ reviews }) => {
                     </ul>
                 ))}
                 </div>
+                :
+                <div className="review-empty">
+                    <FaRegCommentDots size={20} color="#888"/>
+                    <p style={{margin: 0, color: "#888"}}>{"아직 리뷰가 없습니다..."}</p>
+                </div>
+                }
             </div>
-            }
-            {badReviews.length > 0 &&
-            <>
             <div className="review-box-blank" />
             <div className="review-box">
                 <label className="review-list-label">이런 점이 아쉬웠어요</label>
+                {badReviews.length > 0 ?
+                <div className="review-list">
                 {BAD_REVIEW_TAG.map(tag => (
                     badReviewsByScore[tag] && badReviewsByScore[tag].length > 0 &&
-                    <div className="review-list" key={tag}>
-                    <ul>
+                    <ul key={tag}>
                         {badReviewsByScore[tag].map(r => (
                             <li key={r.id}>
                                 <strong>{REVIEW_TAG_LABELS[tag]}</strong>
@@ -104,11 +110,15 @@ const Reviews = ({ reviews }) => {
                             </li>
                         ))}
                     </ul>
-                </div>
                 ))}
+                </div>
+                :
+                <div className="review-empty">
+                    <FaRegCommentDots size={20} color="#888"/>
+                    <p style={{margin: 0, color: "#888"}}>{"아직 리뷰가 없습니다..."}</p>
+                </div>
+                }   
             </div>
-            </>
-            }
             {detailReviews.length > 0 &&
             <>
             <div className="review-box-blank" />
