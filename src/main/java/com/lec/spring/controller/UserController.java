@@ -59,6 +59,45 @@ public class UserController {
         return new LoginResponse(token);
     }
 
+    // 회원 탈퇴 처리
+    @PostMapping("/withdraw/{userKey}")
+    public ResponseEntity<?> withdrawUser(@PathVariable("userKey")String userKey) {
+        if(userKey != null && !userKey.isEmpty()) {
+            userService.withdrawUser(userKey);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
+
+    // 회원 탈퇴 취소 처리
+    @PostMapping("/cancel-withdraw")
+    public ResponseEntity<?> cancelWithdraw(@RequestBody LoginRequest request) {
+        User user = userService.findByUserName(request.getUsername());
+        if(user.getUserKey() != null && !user.getUserKey().isEmpty()) {
+            userService.cancelWithdraw(user.getUserKey());
+            return ResponseEntity.ok().build();
+        } else {
+            return  ResponseEntity.notFound().build();
+        }
+    }
+
+    // 네이버 로그인
+    @PostMapping("/naver-login")
+    public ResponseEntity<?> loginByNaver() {
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 네이버 아이디 탈퇴
+    @PostMapping("/naver-unlink")
+    public ResponseEntity<?> unlinkNaver() {
+
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/userprofile/{userKey}")
     public ResponseEntity<?> getUserInfo(@PathVariable("userKey")String userKey) {
         if(userKey != null && !userKey.isEmpty()) {
@@ -77,17 +116,6 @@ public class UserController {
             return ResponseEntity.ok(responseBody);
         } else {
             return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PostMapping("/cancel-withdraw")
-    public ResponseEntity<?> cancelWithdraw(@RequestBody LoginRequest request) {
-        User user = userService.findByUserName(request.getUsername());
-        if(user.getUserKey() != null && !user.getUserKey().isEmpty()) {
-            userService.cancelWithdraw(user.getUserKey());
-            return ResponseEntity.ok().build();
-        } else {
-            return  ResponseEntity.notFound().build();
         }
     }
 
@@ -166,15 +194,4 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    // 회원 탈퇴 처리
-    @PostMapping("/withdraw/{userKey}")
-    public ResponseEntity<?> withdrawUser(@PathVariable("userKey")String userKey) {
-        if(userKey != null && !userKey.isEmpty()) {
-            userService.withdrawUser(userKey);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-
-    }
 }

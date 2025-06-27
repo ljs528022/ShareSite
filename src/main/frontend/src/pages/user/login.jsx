@@ -7,20 +7,21 @@ import { getUserInfo } from "../../services/getUserInfo";
 import { useToast } from "../../util/ToastContext";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { FaCheckCircle, FaRegCheckCircle } from "react-icons/fa";
+import { getNaverAuthURL } from "../../services/getNaverAuthURL";
 
 const Login = () => {
 
     const [ userData, setUserData ] = useState({
         username: "",
         password: "",
-    })
-    const navigate = useNavigate();
+    });
+
     const [ autoLoginChecked, setAutoLoginChecked ] = useState(false);
     const [ showPassword, setShowPassword ] = useState(false);
-
+    
     const { setUser } = useUser();
     const { showToast } = useToast();
-
+    const navigate = useNavigate();
 
     const handleInput = (e) => {
         setUserData({
@@ -137,7 +138,7 @@ const Login = () => {
                         <div className="form-row">
                                 <a className="register-link" href="/user/register">회원이 되고 싶으신가요?</a>
                                 {/* API Login */}
-                                <button onClick={null} style={{ background: "#00DE5A", color: "white"}} className="api-login">
+                                <button onClick={() => getNaverAuthURL()} style={{ background: "#00DE5A", color: "white"}} className="api-login">
                                     네이버로 함께하기
                                 </button>
                                 <button onClick={null} style={{ background: "#FEE500" , color: "#000000 85%"}} className="api-login">
