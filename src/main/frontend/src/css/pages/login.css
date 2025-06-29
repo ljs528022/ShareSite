@@ -119,14 +119,12 @@ input {
     position: relative;
     display: block;
     margin: 15px 0px;
-    
     top: 120px;
     width: 330px;
     height: 45px;
-
     font-weight: bold;  
     border-radius: 5px;
-
     left: 20px;
     bottom: 90px;
+    cursor: pointer;
 }

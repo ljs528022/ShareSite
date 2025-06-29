@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -99,5 +100,17 @@ public class AuthController {
         );
 
         return ResponseEntity.ok(response);
+    }
+
+    // 네이버 로그인
+    @PostMapping("/auth/naver")
+    public ResponseEntity<?> naverLogin(@RequestBody Map<String, String> data) {
+        String code = data.get("code");
+        String state = data.get("state");
+
+        String tokenUrl = "https://nid.naver.com/oauth2.0/token";
+        String profileUrl = "https://openapi.naver.com/v1/nid/me";
+
+        return ResponseEntity.ok().build();
     }
 }

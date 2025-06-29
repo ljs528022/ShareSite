@@ -7,7 +7,6 @@ import { getUserInfo } from "../../services/getUserInfo";
 import { useToast } from "../../util/ToastContext";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { FaCheckCircle, FaRegCheckCircle } from "react-icons/fa";
-import { getNaverAuthURL } from "../../services/getNaverAuthURL";
 
 const Login = () => {
 
@@ -138,9 +137,7 @@ const Login = () => {
                         <div className="form-row">
                                 <a className="register-link" href="/user/register">회원이 되고 싶으신가요?</a>
                                 {/* API Login */}
-                                <button onClick={() => getNaverAuthURL()} style={{ background: "#00DE5A", color: "white"}} className="api-login">
-                                    네이버로 함께하기
-                                </button>
+                                {NaverLoginBtn()}
                                 <button onClick={null} style={{ background: "#FEE500" , color: "#000000 85%"}} className="api-login">
                                     카카오로 함께하기
                                 </button>
@@ -153,11 +150,25 @@ const Login = () => {
     )
 }
 
-const NaverLogin = () => {
+const NaverLoginBtn = () => {
+    const CLIENT_ID = "BrUMPDx5cFHxILSg8pRM";
+    const REDIRECT_URI = "http://localhost:5178/naver-callback";
+    const STATE = Math.random().toString(36).substr(2, 12);
 
+    const handleLogin = () => {
+        localStorage.setItem("naver_state", STATE);
+        const loginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&state=${STATE}`;
+        window.location.href = loginUrl;
+    };
+
+    return (
+        <button onClick={handleLogin} style={{ background: "#00DE5A", color: "white"}} className="api-login">
+            네이버로 함께하기
+        </button>
+    );
 }
 
-const KakaoLogin = () => {
+const KakaoLoginBtn = () => {
 
 }
 

@@ -9,7 +9,6 @@ INSERT INTO d1_authority (auth) VALUES
 
 INSERT INTO d1_user (userKey,username,password,useralias,email,regtype,userimg,regDate,state,visitcnt,tradecnt,auth,emailVerified)
 VALUES
-('80A0001','ljs4180','$2a$10$bCjbdkovjRxGPpeKkW1o/eGURRmx7ayzmm6frqVgQnQVBltdBnCJa','이정식몰','ljs4180@naver.com','S','','2025-04-29 15:13:41','N',1,0,'MEMBER',1),
 ('9160001','alicegreen','$2a$12$Xv8t7jT/NYO/MxHl0y9bHezxHiUPyk0qHq9gwY/0IE0v1f2uqTxO6','AliceG','alicegreen@example.com','S','','2025-03-08 10:00:00','N',5,2,'MEMBER',1),
 ('9160002','bobwhite','$2a$12$Z3G9fPpxj2X7t0H7iw2a9o2BO6zZG1B7s2tF7Xak7M1l2IjaNhp0a','BobW','bobwhite@example.com','N','','2025-03-07 09:30:00','N',3,1,'MEMBER',1),
 ('9160003','charlieblue','$2a$12$9NbtL2OlMECUOYmxnkluaqSz5Z.A1hV8Tmf4z58pOjqB.8lgsFc9O','CharlieB','charlieblue@example.com','K','','2025-03-06 11:20:00','N',7,5,'MEMBER',1),
