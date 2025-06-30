@@ -18,6 +18,8 @@ public interface UserRepository {
     // Return User By username
     User findByUserName(@Param("username") String username);
 
+    Optional<User> findByUsernameOrEmail(@Param("username")String username, @Param("email")String email);
+
     User findByUseralias(@Param("useralias")String useralias);
 
     User findByEmail(@Param("email")String email);

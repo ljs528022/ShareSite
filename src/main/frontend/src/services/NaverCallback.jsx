@@ -20,7 +20,7 @@ const NaverCallback = () => {
 
         const fetchLogin = async () => {
             try {
-                const res = await postData("/api/auth/naver", {
+                const res = await postData("/oauth/naver/callback", {
                     code,
                     state
                 });

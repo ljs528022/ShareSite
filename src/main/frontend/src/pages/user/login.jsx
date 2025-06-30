@@ -151,14 +151,13 @@ const Login = () => {
 }
 
 const NaverLoginBtn = () => {
-    const CLIENT_ID = "BrUMPDx5cFHxILSg8pRM";
-    const REDIRECT_URI = "http://localhost:5178/naver-callback";
-    const STATE = Math.random().toString(36).substr(2, 12);
+    const NAVER_CLIENT_ID = "BrUMPDx5cFHxILSg8pRM";
+    const REDIRECT_URI = encodeURIComponent('http://localhost:5178/naver/callback');
+    const STATE = Math.random().toString(36).substring(2, 15);
 
     const handleLogin = () => {
-        localStorage.setItem("naver_state", STATE);
-        const loginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&state=${STATE}`;
-        window.location.href = loginUrl;
+        const naverAuthUrl  = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&state=${STATE}`;
+        window.location.href = naverAuthUrl;
     };
 
     return (

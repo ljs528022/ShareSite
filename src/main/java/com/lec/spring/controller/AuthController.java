@@ -5,19 +5,15 @@ import com.lec.spring.domain.User;
 import com.lec.spring.service.EmailService;
 import com.lec.spring.service.UserService;
 import com.lec.spring.util.JwtUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -100,17 +96,5 @@ public class AuthController {
         );
 
         return ResponseEntity.ok(response);
-    }
-
-    // 네이버 로그인
-    @PostMapping("/auth/naver")
-    public ResponseEntity<?> naverLogin(@RequestBody Map<String, String> data) {
-        String code = data.get("code");
-        String state = data.get("state");
-
-        String tokenUrl = "https://nid.naver.com/oauth2.0/token";
-        String profileUrl = "https://openapi.naver.com/v1/nid/me";
-
-        return ResponseEntity.ok().build();
     }
 }

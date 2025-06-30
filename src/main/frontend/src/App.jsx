@@ -17,6 +17,7 @@ import Report from './pages/report';
 import SearchPrice from './pages/searchPrice';
 import WriteReport from './components/WriteReport';
 import WithdrawComplete from './pages/user/withdrawComplete';
+import NaverCallback from './services/NaverCallback';
 
 
 function App() {
@@ -42,6 +43,8 @@ function App() {
             {/* Login & Register */}
             <Route path='/user/login' Component={Login} />
             <Route path='/user/register' Component={Register} />
+            {/* Naver Login */}
+            <Route path='/naver/callback' Component={<NaverCallback />} />
 
             {/* User Page */}
             <Route path='/user/:userKey' Component={UserPage} />
