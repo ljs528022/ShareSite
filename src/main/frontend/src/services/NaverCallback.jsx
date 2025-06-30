@@ -24,14 +24,15 @@ const NaverCallback = () => {
                     code,
                     state
                 });
+                const data = res.data;
 
-                if(res.data.token) {
-                    sessionStorage.setItem("token", res.data.token);
+                if(data.token) {
+                    sessionStorage.setItem("token", data.token);
                     navigate("/home");
                     showToast("어서오세요! 환영합니다!");
                 } else {
                     // 회워가입 유도 정보
-                    navigate("/register", { state: res.data });
+                    navigate("/user/register/social", { state: res.data });
                 }
             } catch (err) {
                 alert("네이버 로그인 실해");

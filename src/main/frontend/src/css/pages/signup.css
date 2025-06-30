@@ -7,7 +7,7 @@ label {
     padding: 0px 10px;
 }
 
-.register-btn {
+.signup-btn {
     position: relative;
 
     width: 90px;
@@ -21,19 +21,19 @@ label {
     border-radius: 5px;
 }
 
-.register-btn:hover {
+.signup-btn:hover {
     background-color: rgb(220, 220, 220);
 }
 
 
-.register-container {
+.signup-container {
     width: 100%;
     height: 100%;
 
     padding-bottom: 100px;
 }
 
-.register-box {
+.signup-box {
     margin: 0 auto;
     padding-top: 20px;
 
@@ -52,7 +52,7 @@ label {
     padding: 10px;
 }
 
-.register-input {
+.signup-input {
     position: relative;
 
     width: inherit;
@@ -74,7 +74,7 @@ input {
     border-radius: 10px;
 }
 
-.register-side-btn {
+.signup-side-btn {
     position: absolute;
 
     top: 10px;
@@ -95,7 +95,7 @@ input {
     font-weight: bold;
 }
 
-.register-mailChk {
+.signup-mailChk {
     position: relative;
     top: 10px;
     left: 125px;
@@ -105,11 +105,11 @@ input {
     z-index: 10;
 }
 
-.register-mailChk::placeholder {
+.signup-mailChk::placeholder {
     font-size: 12px;
 }
 
-.register-timer {
+.signup-timer {
     position: relative;
 
     width: 50px;
@@ -121,7 +121,7 @@ input {
     font-size: 15px;
 }
 
-.register-timeOut {
+.signup-timeOut {
     position: relative;
 
     width: 300px;
@@ -132,7 +132,7 @@ input {
     font-size: 12px;
 }
 
-.register-verify-success {
+.signup-verify-success {
     position: relative;
 
     width: 130px;

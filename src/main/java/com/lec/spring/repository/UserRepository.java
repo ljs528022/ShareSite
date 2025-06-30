@@ -32,7 +32,7 @@ public interface UserRepository {
     Long countByUserKeyStartWith(@Param("dataPrefix") String dataPrefix);
 
     // Register New User
-    int register(User user);
+    int signup(User user);
 
     // Update User Info
     int update(User user);

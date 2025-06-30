@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
-import "../../css/pages/register.css";
+import "../../css/pages/signup.css";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";
 import MailVerification from "../../services/mailVerification";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
-const Register = () => {
+const Signup = () => {
 
     const navigate = useNavigate();
     const { showToast } = useToast();
@@ -117,15 +117,16 @@ const Register = () => {
         }
 
         try {
-            const res = await postData("/user/register", {
+            const res = await postData("/user/signup", {
                 username: userData.username,
                 password: userData.password,
                 useralias: userData.useralias,
                 email: userData.email,
             });
-
-            showToast("회원가입이 완료되었습니다!", "success");
-            navigate("/user/login")
+            if(res.status === 200) {
+                showToast("회원가입이 완료되었습니다!", "success");
+                navigate("/user/login");
+            }
         } catch (err) {
             console.log("회원가입이 실패했습니다...", err);
             showToast("회원가입이 실패했습니다... 다시 시도해주세요.", "error");
@@ -135,16 +136,16 @@ const Register = () => {
     return (
         <>
             <main>
-                <div className="register-container">
+                <div className="signup-container">
                     <h3>회원님의 정보를 입력해주세요.</h3>
-                    <div className="register-box">
-                        <form className="register-form" onSubmit={handleSubmit}>
+                    <div className="signup-box">
+                        <form className="signup-form" onSubmit={handleSubmit}>
                             {/* ID Part */}
                             <div className="form-row">
-                                <div className="register-input">
+                                <div className="signup-input">
                                     <label>ID :</label>
                                     <input id="username" type="text" value={userData.username} onChange={handleInput} onKeyDown={handleKeyDown}/>
-                                    <button className="register-side-btn" type="button" onClick={idChk}>중복확인</button>
+                                    <button className="signup-side-btn" type="button" onClick={idChk}>중복확인</button>
                                     <span className="error-message" style={userVerify.usernameChk <= 2 ? {color: "red"} : {color: "green"}}>
                                         {userVerify.usernameChk <= 0 ? "" : 
                                         userVerify.usernameChk <= 1 ? "이미 사용중인 ID 입니다!" 
@@ -156,7 +157,7 @@ const Register = () => {
 
                             {/* PW Part */}
                             <div className="form-row">
-                                <div className="register-input">
+                                <div className="signup-input">
                                     <label>PW :</label>
                                     <input 
                                         id="password"
@@ -164,7 +165,7 @@ const Register = () => {
                                         onChange={handleInput}
                                         onKeyDown={handleKeyDown}
                                     />
-                                    <button type="button" className="register-side-btn" onClick={togglePasswordVisibility}>                        
+                                    <button type="button" className="signup-side-btn" onClick={togglePasswordVisibility}>                        
                                     {showPassword ?
                                     <FaRegEyeSlash size={20} />
                                     :
@@ -186,10 +187,10 @@ const Register = () => {
                                 {/* PW Check Part */}
                                 {userData.password && (
                                     <div className="form-row">
-                                        <div className="register-input">
+                                        <div className="signup-input">
                                             <label>CHK :</label>
                                             <input id="passwordChk" type={showPasswordChk ? "text" : "password"} onChange={handleInput} />
-                                            <button type="button" className="register-side-btn" onClick={togglePasswordChkVisibility}>
+                                            <button type="button" className="signup-side-btn" onClick={togglePasswordChkVisibility}>
                                                 {showPasswordChk ?
                                                 <FaRegEyeSlash size={20} />
                                                 :
@@ -208,7 +209,7 @@ const Register = () => {
                                 
                                 {/* Nickname Part */}
                                 <div className="form-row">
-                                    <div className="register-input">
+                                    <div className="signup-input">
                                         <label>NICK :</label>
                                         <input id="useralias" type="text" onChange={handleInput} onKeyDown={handleKeyDown}/>
                                     </div>
@@ -216,15 +217,15 @@ const Register = () => {
 
                                 {/* Email Part */}
                                 <div className="form-row">
-                                    <div className="register-input">
+                                    <div className="signup-input">
                                         <label>MAIL :</label>
                                         <input id="email" type="email" onChange={handleInput} onKeyDown={handleKeyDown} placeholder="Email을 입력해주세요" />
-                                        <MailVerification email={userData.email} onVerify={handleEmailVerify} style={"register-"} />
+                                        <MailVerification email={userData.email} onVerify={handleEmailVerify} style={"signup-"} />
                                     </div>
                                 </div>
                                         
                                 {/* Sumbit Part */}
-                                <button className="register-btn" type="submit">제출</button>
+                                <button className="signup-btn" type="submit">제출</button>
                         </form>
                     </div>
                 </div>
@@ -233,4 +234,4 @@ const Register = () => {
     )
 }
 
-export default Register;
+export default Signup;

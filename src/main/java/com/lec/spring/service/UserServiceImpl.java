@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int register(RegisterRequest request) {
+    public int signup(RegisterRequest request, String regType) {
         Authority authority = authorityRepository.findByAuth("MEMBER");
 
         // Create User Serial Number
@@ -105,13 +105,13 @@ public class UserServiceImpl implements UserService {
 
         user.setState("N");
         user.setUserimg("");
-        user.setRegtype("S");
+        user.setRegtype(regType);
         user.setAuth(authority.getAuth());
         user.setRegDate(LocalDateTime.now());
         user.setEmailVerified(true);
 
         // User 등록
-        userRepository.register(user);
+        userRepository.signup(user);
 
         return 1;
     }

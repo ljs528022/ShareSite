@@ -35,22 +35,30 @@ public class UserController {
     private EmailService emailService;
 
 
-
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+    // 일반 회원가입
+    @PostMapping("/signup")
+    public ResponseEntity<?> signup(@RequestBody RegisterRequest request) {
 
         // 필수값 확인
         if(request.getUsername() == null || request.getPassword() == null || request.getEmail() == null) {
             return ResponseEntity.badRequest().body("필수 정보가 누락되었습니다.");
         }
 
-        userService.register(request);
+        userService.signup(request, "S");
 
         try {
             return ResponseEntity.ok("회원가입 성공!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
         }
+    }
+
+    // 다른 API 회원가입
+    @PostMapping("/signup/social")
+    public ResponseEntity<?> socialsignup(@RequestBody RegisterRequest request) {
+        userService.signup(request, "N");
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
@@ -71,7 +79,6 @@ public class UserController {
 
     }
 
-
     // 회원 탈퇴 취소 처리
     @PostMapping("/cancel-withdraw")
     public ResponseEntity<?> cancelWithdraw(@RequestBody LoginRequest request) {
@@ -82,20 +89,6 @@ public class UserController {
         } else {
             return  ResponseEntity.notFound().build();
         }
-    }
-
-    // 네이버 로그인
-    @PostMapping("/naver-login")
-    public ResponseEntity<?> loginByNaver() {
-
-        return ResponseEntity.ok().build();
-    }
-
-    // 네이버 아이디 탈퇴
-    @PostMapping("/naver-unlink")
-    public ResponseEntity<?> unlinkNaver() {
-
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/userprofile/{userKey}")

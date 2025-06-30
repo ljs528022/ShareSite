@@ -25,7 +25,7 @@ public interface UserService {
     boolean isUsernameTaken(String username);
 
     // 회원가입
-    int register (RegisterRequest request);
+    int signup (RegisterRequest request, String regType);
 
     // 로그인
     String login(LoginRequest request);

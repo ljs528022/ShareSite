@@ -4,7 +4,7 @@ import Home from './pages/home';
 import Header from './pages/header';
 import Footer from './pages/footer';
 import Login from './pages/user/login';
-import Register from './pages/user/register';
+import Signup from './pages/user/signup';
 import { UserProvider } from './services/UserContext';
 import { ToastProvider } from './util/ToastContext';
 import ItemWrite from './pages/item/itemWrite';
@@ -18,6 +18,7 @@ import SearchPrice from './pages/searchPrice';
 import WriteReport from './components/WriteReport';
 import WithdrawComplete from './pages/user/withdrawComplete';
 import NaverCallback from './services/NaverCallback';
+import SocialRegister from './pages/user/socialSignup';
 
 
 function App() {
@@ -42,7 +43,11 @@ function App() {
 
             {/* Login & Register */}
             <Route path='/user/login' Component={Login} />
-            <Route path='/user/register' Component={Register} />
+            <Route path='/user/register' Component={Signup} />
+
+            {/* Social Register */}
+            <Route path='/user/register/social' Component={SocialRegister} />
+
             {/* Naver Login */}
             <Route path='/naver/callback' Component={<NaverCallback />} />
 
