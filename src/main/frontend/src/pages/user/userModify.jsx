@@ -209,7 +209,7 @@ const UserModify = ({ user }) => {
             }
 
             const formData = new FormData();
-            const token = sessionStorage.getItem("token");
+            const token = sessionStorage.getItem("token") || localStorage.getItem("token");
 
             if(userInfo.userimg instanceof File) {
                 formData.append("userimg", userInfo.userimg);

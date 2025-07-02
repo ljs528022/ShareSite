@@ -40,7 +40,7 @@ const WriteReview = ({ sellerInfo, onClose }) => {
             return;
         }
 
-        const token = sessionStorage.getItem("token");
+        const token = sessionStorage.getItem("token") || localStorage.getItem("token");
         const response = await postData("/api/review/write", reviewData, {
             headers: {
                 Authorization: `Bearer ${token}`

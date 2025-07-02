@@ -52,7 +52,7 @@ label {
     padding: 10px;
 }
 
-.signup-input {
+.form-input {
     position: relative;
 
     width: inherit;
@@ -63,7 +63,7 @@ label {
     text-align: center;
 }
 
-input {
+.signup-input {
     position: relative;
 
     width: 275px;
@@ -71,6 +71,17 @@ input {
     padding-left: 15px;
 
     background-color: rgb(235, 235, 235);
+    border-radius: 10px;
+}
+
+.signup-input-disabled {
+    position: relative;
+
+    width: 275px;
+    height: 40px;
+    padding-left: 15px;
+    font-size: 14px;
+    background-color: #999;
     border-radius: 10px;
 }
 

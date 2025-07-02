@@ -34,6 +34,9 @@ public interface UserRepository {
     // Register New User
     int signup(User user);
 
+    // Social Register
+    int socialSignup(User user);
+
     // Update User Info
     int update(User user);
 

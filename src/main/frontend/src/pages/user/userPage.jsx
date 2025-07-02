@@ -18,6 +18,7 @@ import ChatRoom from "../chat/ChatRoom";
 import Withdraw from "./withdraw";
 import "../../css/pages/userPage.css";
 import UserTrustScore from "../../components/userTrustScore";
+import SocialUserModify from "./socialUserModify";
 
 const UserPage = () => {
 
@@ -350,12 +351,21 @@ const UserPage = () => {
             />
 
             {/* 내 정보 수정 */}
+            {userInfo?.regType === "S" ?
             <EditModal 
-                isOpen={showModify}
-                onClose={() => setShowModify(false)}
-                title={"내 정보 수정"}
-                content={<UserModify user={userInfo} />}
+            isOpen={showModify}
+            onClose={() => setShowModify(false)}
+            title={"내 정보 수정"}
+            content={<UserModify user={userInfo} />}
             />
+            :
+            <EditModal
+            isOpen={showModify}
+            onClose={() => setShowModify(false)}
+            title={"내 정보 수정"}
+            content={<SocialUserModify user={userInfo} />}
+            />
+            }
 
             {/* 계좌 관리 */}
             

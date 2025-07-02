@@ -88,7 +88,7 @@ const ChatRoom = (props) => {
         if(!chatRoom) return;
         const roomKey = chatRoom.roomKey;
 
-        const token = sessionStorage.getItem("token");
+        const token = sessionStorage.getItem("token") || localStorage.getItem("token");
         const socket = new SockJS(`http://localhost:8093/ws-chat?token=${token}`);
         const client = new Client({
             webSocketFactory: () => socket,

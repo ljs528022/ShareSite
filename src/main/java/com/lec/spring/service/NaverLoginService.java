@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Optional;
 
 @Service
@@ -41,15 +42,15 @@ public class NaverLoginService {
 
     public ResponseEntity<?> handleCallback(String code, String state) {
         // 1. access_token 요청
-        String accesToken = getAccessToken(code, state);
-        if(accesToken == null) {
+        String accessToken = getAccessToken(code, state);
+        if(accessToken == null) {
             return ResponseEntity.badRequest().body("네이버 토큰 요청 실패");
         }
 
         // 2. 사용자 정보 조회
-        JSONObject userInfo = getUserInfo(accesToken);
+        JSONObject userInfo = getUserInfo(accessToken);
         if(userInfo == null) {
-            return ResponseEntity.badRequest().body("네이버 사용차 정보 요청 실패");
+            return ResponseEntity.badRequest().body("네이버 사용자 정보 요청 실패");
         }
 
         String email = userInfo.optString("email");
@@ -59,12 +60,13 @@ public class NaverLoginService {
         // 3. DB에서 사용자 찾기 / 없으면 회원가입 유도
         Optional<User> optionalUser = userRepository.findByUsernameOrEmail(naverId, email);
         User user;
-        if(optionalUser.isPresent()) {
+        if(optionalUser.isPresent()) {  // 사용자가 있으면 담아서 return
             user = optionalUser.get();
         } else {
             // 유저 정보가 없으면 회원가입으로 이동
             return ResponseEntity.ok().body(new JSONObject()
                     .put("registerRequired", true)
+                    .put("accessToken", accessToken)
                     .put("email", email)
                     .put("name", name)
                     .put("naverId", naverId)
@@ -80,14 +82,39 @@ public class NaverLoginService {
                 .toString());
     }
 
+    public void unlink(String accessToken) {
+        try {
+            String apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=" + clientId
+                    + "&client_secret=" + clientSecret
+                    + "&access_token=" + accessToken
+                    + "&service_provider=NAVER";
+
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    con.getResponseCode() == 200 ? con.getInputStream() : con.getErrorStream()
+            ));
+
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = br.readLine()) != null) response.append(inputLine);
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private String getAccessToken(String code, String state) {
         try {
+            String encodedUri = URLEncoder.encode(redirectUri, "UTF-8");
             String apiURL = "https://nid.naver.com/oauth2.0/token"
                     + "?grant_type=authorization_code"
                     + "&client_id=" + clientId
                     + "&client_secret=" + clientSecret
-                    + "&redirect_uri=" + redirectUri
+                    + "&redirect_uri=" + encodedUri
                     + "&code=" + code
                     + "&state=" + state;
 

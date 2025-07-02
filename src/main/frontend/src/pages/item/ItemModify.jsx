@@ -196,7 +196,7 @@ const ItemModify = () => {
                 formData.append("imgMeta", new Blob([JSON.stringify(imgMeta)], { type:  "application/json" }));
             }
 
-            const token = sessionStorage.getItem("token");
+            const token = sessionStorage.getItem("token") || localStorage.getItem("token");
             const response = await postData(`/product/modify/${itemKey}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,

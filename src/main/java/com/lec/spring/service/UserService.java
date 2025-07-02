@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.DTO.LoginRequest;
 import com.lec.spring.DTO.RegisterRequest;
+import com.lec.spring.DTO.SocialRegisterRequest;
 import com.lec.spring.DTO.UserModifyRequest;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;
@@ -26,6 +27,9 @@ public interface UserService {
 
     // 회원가입
     int signup (RegisterRequest request, String regType);
+
+    // 소셜 회원가입
+    int socialSignup(SocialRegisterRequest request, String regType);
 
     // 로그인
     String login(LoginRequest request);

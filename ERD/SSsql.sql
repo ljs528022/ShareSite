@@ -137,8 +137,8 @@ CREATE TABLE d1_review
 CREATE TABLE d1_user
 (
 	userKey varchar(20) NOT NULL,
-	username varchar(20) NOT NULL,
-	password varchar(150) NOT NULL,
+	username varchar(100) NOT NULL,
+	password varchar(150),
 	useralias varchar(50) NOT NULL,
 	email varchar(50) NOT NULL,
 	regtype varchar(10) NOT NULL,
@@ -151,6 +151,7 @@ CREATE TABLE d1_user
 	emailVerified BOOLEAN DEFAULT FALSE,
 	userIntro varchar(500),
 	editedDate datetime,
+	accessToken varchar(150),
 	PRIMARY KEY (userKey),
 	UNIQUE (userKey),
 	UNIQUE (username)

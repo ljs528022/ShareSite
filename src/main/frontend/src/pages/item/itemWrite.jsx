@@ -198,7 +198,7 @@ const ItemWrite = () => {
                 formData.append("imgMeta", new Blob([JSON.stringify(imgMeta)], { type:  "application/json" }));
             }
 
-            const token = sessionStorage.getItem("token");
+            const token = sessionStorage.getItem("token") || localStorage.getItem("token");
             const response = await postData("/product/write", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,

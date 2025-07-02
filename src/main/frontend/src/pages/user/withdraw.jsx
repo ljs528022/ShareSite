@@ -21,7 +21,7 @@ const Withdraw = ({ user }) => {
             return;
         }
 
-        const token = sessionStorage.getItem("token");
+        const token = sessionStorage.getItem("token") || localStorage.getItem("token");
         try {
             const response = await postData(`/user/withdraw/${user.userKey}`, {
                 headers: {

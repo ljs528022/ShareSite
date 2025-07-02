@@ -15,7 +15,7 @@ const LocationList = ({ onSelectLocation }) => {
     const [ showPostCode, setShowPostCode ] = useState(false);
 
     // 인증을 위한 토큰
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token") || localStorage.getItem("token");
 
     // 입력할 주소 정보
     const [locationInfo, setLocationInfo] = useState({

@@ -25,9 +25,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUserName(username);
 
+        String password = user.getRegtype().equals("S") ? user.getPassword() : "";
+
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
-                .password(user.getPassword())
+                .password(password)
                 .roles(user.getAuth())
                 .build();
     }

@@ -142,9 +142,9 @@ const Signup = () => {
                         <form className="signup-form" onSubmit={handleSubmit}>
                             {/* ID Part */}
                             <div className="form-row">
-                                <div className="signup-input">
+                                <div className="form-input">
                                     <label>ID :</label>
-                                    <input id="username" type="text" value={userData.username} onChange={handleInput} onKeyDown={handleKeyDown}/>
+                                    <input className="signup-input" id="username" type="text" value={userData.username} onChange={handleInput} onKeyDown={handleKeyDown}/>
                                     <button className="signup-side-btn" type="button" onClick={idChk}>중복확인</button>
                                     <span className="error-message" style={userVerify.usernameChk <= 2 ? {color: "red"} : {color: "green"}}>
                                         {userVerify.usernameChk <= 0 ? "" : 
@@ -157,9 +157,10 @@ const Signup = () => {
 
                             {/* PW Part */}
                             <div className="form-row">
-                                <div className="signup-input">
+                                <div className="form-input">
                                     <label>PW :</label>
                                     <input 
+                                        className="signup-input"
                                         id="password"
                                         type={showPassword ? "text" : "password"}
                                         onChange={handleInput}
@@ -187,9 +188,9 @@ const Signup = () => {
                                 {/* PW Check Part */}
                                 {userData.password && (
                                     <div className="form-row">
-                                        <div className="signup-input">
+                                        <div className="form-input">
                                             <label>CHK :</label>
-                                            <input id="passwordChk" type={showPasswordChk ? "text" : "password"} onChange={handleInput} />
+                                            <input className="signup-input" id="passwordChk" type={showPasswordChk ? "text" : "password"} onChange={handleInput} />
                                             <button type="button" className="signup-side-btn" onClick={togglePasswordChkVisibility}>
                                                 {showPasswordChk ?
                                                 <FaRegEyeSlash size={20} />
@@ -209,17 +210,17 @@ const Signup = () => {
                                 
                                 {/* Nickname Part */}
                                 <div className="form-row">
-                                    <div className="signup-input">
+                                    <div className="form-input">
                                         <label>NICK :</label>
-                                        <input id="useralias" type="text" onChange={handleInput} onKeyDown={handleKeyDown}/>
+                                        <input className="signup-input" id="useralias" type="text" onChange={handleInput} onKeyDown={handleKeyDown}/>
                                     </div>
                                 </div>
 
                                 {/* Email Part */}
                                 <div className="form-row">
-                                    <div className="signup-input">
+                                    <div className="form-input">
                                         <label>MAIL :</label>
-                                        <input id="email" type="email" onChange={handleInput} onKeyDown={handleKeyDown} placeholder="Email을 입력해주세요" />
+                                        <input className="signup-input" id="email" type="email" onChange={handleInput} onKeyDown={handleKeyDown} placeholder="Email을 입력해주세요" />
                                         <MailVerification email={userData.email} onVerify={handleEmailVerify} style={"signup-"} />
                                     </div>
                                 </div>

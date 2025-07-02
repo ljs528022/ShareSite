@@ -74,7 +74,7 @@ const WriteReport = () => {
             content: reportInfo.content,
         });
         
-        const token = sessionStorage.getItem("token");
+        const token = sessionStorage.getItem("token") || localStorage.getItem("token");
         try {
             const response = await postData("/report/write", report, {
                 headers: {

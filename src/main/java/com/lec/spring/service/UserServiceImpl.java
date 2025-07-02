@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.DTO.LoginRequest;
 import com.lec.spring.DTO.RegisterRequest;
+import com.lec.spring.DTO.SocialRegisterRequest;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
@@ -76,42 +77,49 @@ public class UserServiceImpl implements UserService {
         Authority authority = authorityRepository.findByAuth("MEMBER");
 
         // Create User Serial Number
-        String dataPrefix = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
-
-        int year = Integer.parseInt(dataPrefix.substring(0, 4));
-        int month = Integer.parseInt(dataPrefix.substring(4, 6));
-        int day = Integer.parseInt((dataPrefix.substring(6, 8)));
-        long result = year + month + day;
-
-        dataPrefix = String.format("%-4s", Long.toHexString(result).toUpperCase()).replace(' ', '0');
-        Long count = userRepository.countByUserKeyStartWith(dataPrefix);
-
-        String serialNumber = String.format("%03d", count + 1);
-        String userKey = dataPrefix + serialNumber;
+        String userKey = generateUserKey();
 
         // User 에 새로운 유저 정보 저장
         User user = new User();
         user.setUserKey(userKey);
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setUseralias(request.getUseralias());
         user.setEmail(request.getEmail());
-
-        // 만약에 NICKNAME이 빈값이면 정해둔 이름을 넣는다.
-        if(request.getUseralias() == null || request.getUseralias().trim().isEmpty()) {
-            user.setUseralias("user" + userKey);
-        } else {
-            user.setUseralias(request.getUseralias());
-        }
-
-        user.setState("N");
         user.setUserimg("");
         user.setRegtype(regType);
-        user.setAuth(authority.getAuth());
+        user.setState("N");
         user.setRegDate(LocalDateTime.now());
+        user.setAuth(authority.getAuth());
         user.setEmailVerified(true);
 
         // User 등록
         userRepository.signup(user);
+
+        return 1;
+    }
+
+    @Override
+    public int socialSignup(SocialRegisterRequest request, String regType) {
+        Authority authority = authorityRepository.findByAuth("MEMBER");
+
+        String userKey = generateUserKey();
+
+        User user = new User();
+        user.setUserKey(userKey);
+        user.setUsername(request.getUsername());
+        user.setUseralias(request.getUseralias());
+        user.setEmail(request.getEmail());
+        user.setUserimg("");
+        user.setRegtype(regType);
+        user.setState("N");
+        user.setRegDate(LocalDateTime.now());
+        user.setAuth(authority.getAuth());
+        user.setEmailVerified(true);
+        user.setAccessToken(request.getAccessToken());
+
+        // User 등록
+        userRepository.socialSignup(user);
 
         return 1;
     }
@@ -211,5 +219,22 @@ public class UserServiceImpl implements UserService {
         // 8 ~ 16자, 영문, 숫자, 대문자, 특문 포함
         String passwordRegex = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$";
         return password.matches(passwordRegex);
+    }
+
+    private String generateUserKey() {
+        String dataPrefix = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+
+        int year = Integer.parseInt(dataPrefix.substring(0, 4));
+        int month = Integer.parseInt(dataPrefix.substring(4, 6));
+        int day = Integer.parseInt((dataPrefix.substring(6, 8)));
+        long result = year + month + day;
+
+        dataPrefix = String.format("%-4s", Long.toHexString(result).toUpperCase()).replace(' ', '0');
+        Long count = userRepository.countByUserKeyStartWith(dataPrefix);
+
+        String serialNumber = String.format("%03d", count + 1);
+        String userKey = dataPrefix + serialNumber;
+
+        return userKey;
     }
 }

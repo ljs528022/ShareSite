@@ -24,6 +24,7 @@ public class User {
     private boolean emailVerified;      // Email Verification
     private String userIntro;           // User Description
     private LocalDateTime editedDate;   // Edited Date
+    private String accessToken;         // API User's Access Token
 
     @ToString.Exclude
     private String passwordChk;     // PW checking

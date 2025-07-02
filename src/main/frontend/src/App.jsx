@@ -17,8 +17,8 @@ import Report from './pages/report';
 import SearchPrice from './pages/searchPrice';
 import WriteReport from './components/WriteReport';
 import WithdrawComplete from './pages/user/withdrawComplete';
+import SocialSignup from './pages/user/socialSignup';
 import NaverCallback from './services/NaverCallback';
-import SocialRegister from './pages/user/socialSignup';
 
 
 function App() {
@@ -43,13 +43,13 @@ function App() {
 
             {/* Login & Register */}
             <Route path='/user/login' Component={Login} />
-            <Route path='/user/register' Component={Signup} />
-
-            {/* Social Register */}
-            <Route path='/user/register/social' Component={SocialRegister} />
+            <Route path='/user/signup' Component={Signup} />
 
             {/* Naver Login */}
-            <Route path='/naver/callback' Component={<NaverCallback />} />
+            <Route path='/oauth/naver/callback' Component={NaverCallback} />
+
+            {/* Social Register */}
+            <Route path='/user/signup/social' Component={SocialSignup} />
 
             {/* User Page */}
             <Route path='/user/:userKey' Component={UserPage} />

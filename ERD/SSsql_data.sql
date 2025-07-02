@@ -10,20 +10,20 @@ INSERT INTO d1_authority (auth) VALUES
 INSERT INTO d1_user (userKey,username,password,useralias,email,regtype,userimg,regDate,state,visitcnt,tradecnt,auth,emailVerified)
 VALUES
 ('9160001','alicegreen','$2a$12$Xv8t7jT/NYO/MxHl0y9bHezxHiUPyk0qHq9gwY/0IE0v1f2uqTxO6','AliceG','alicegreen@example.com','S','','2025-03-08 10:00:00','N',5,2,'MEMBER',1),
-('9160002','bobwhite','$2a$12$Z3G9fPpxj2X7t0H7iw2a9o2BO6zZG1B7s2tF7Xak7M1l2IjaNhp0a','BobW','bobwhite@example.com','N','','2025-03-07 09:30:00','N',3,1,'MEMBER',1),
-('9160003','charlieblue','$2a$12$9NbtL2OlMECUOYmxnkluaqSz5Z.A1hV8Tmf4z58pOjqB.8lgsFc9O','CharlieB','charlieblue@example.com','K','','2025-03-06 11:20:00','N',7,5,'MEMBER',1),
+('9160002','bobwhite','$2a$12$Z3G9fPpxj2X7t0H7iw2a9o2BO6zZG1B7s2tF7Xak7M1l2IjaNhp0a','BobW','bobwhite@example.com','S','','2025-03-07 09:30:00','N',3,1,'MEMBER',1),
+('9160003','charlieblue','$2a$12$9NbtL2OlMECUOYmxnkluaqSz5Z.A1hV8Tmf4z58pOjqB.8lgsFc9O','CharlieB','charlieblue@example.com','S','','2025-03-06 11:20:00','N',7,5,'MEMBER',1),
 ('9160004','davidred','$2a$12$K3MI7iW5VzyX34WGb43Jq5kPMUNqZy4Tk2bpNK0kNmBBNO8A6vVQO','DavidR','davidred@example.com','S','','2025-03-05 08:15:00','N',4,3,'MEMBER',1),
-('9160005','emilypurple','$2a$12$34n2c7Dh2y6vFJgm3VRu8gaK5cCEpXZ1K.9XpZpHvvLl7U4g9D3gu','EmilyP','emilypurple@example.com','N','','2025-03-04 17:10:00','N',10,6,'MEMBER',1),
-('9160006','frankyellow','$2a$12$M8xNzGbdYDiD6y1o.HxxmRHRZJj0Oe3RYtWpcEVoPn2vGhDoxcdiW','FrankY','frankyellow@example.com','K','','2025-03-03 12:30:00','N',2,0,'MEMBER',1),
+('9160005','emilypurple','$2a$12$34n2c7Dh2y6vFJgm3VRu8gaK5cCEpXZ1K.9XpZpHvvLl7U4g9D3gu','EmilyP','emilypurple@example.com','S','','2025-03-04 17:10:00','N',10,6,'MEMBER',1),
+('9160006','frankyellow','$2a$12$M8xNzGbdYDiD6y1o.HxxmRHRZJj0Oe3RYtWpcEVoPn2vGhDoxcdiW','FrankY','frankyellow@example.com','S','','2025-03-03 12:30:00','N',2,0,'MEMBER',1),
 ('9160007','gracebrown','$2a$12$uK52J18hWLtTzJviuS7IlepaE8Me5IlA5Kn.j9icGUL7Zm4sRLOE2','GraceB','gracebrown@example.com','S','','2025-03-02 15:45:00','N',1,2,'MEMBER',1),
-('9160008','hannahblack','$2a$12$9Cj6Zxe58DixQK1lB4LzK8fHjrEdAfkjdzg3MB7yQm.LC2EZZGzmO','HannahB','hannahblack@example.com','N','','2025-03-01 14:40:00','N',3,4,'MEMBER',1),
-('9160009','ianwhite','$2a$12$B0R8gAXr5HGiyKdCFSf7p6jVsEFgAt5nA12d5e03d5P6kUzV7o5Z6','IanW','ianwhite@example.com','K','','2025-02-28 16:25:00','N',8,5,'MEMBER',1),
+('9160008','hannahblack','$2a$12$9Cj6Zxe58DixQK1lB4LzK8fHjrEdAfkjdzg3MB7yQm.LC2EZZGzmO','HannahB','hannahblack@example.com','S','','2025-03-01 14:40:00','N',3,4,'MEMBER',1),
+('9160009','ianwhite','$2a$12$B0R8gAXr5HGiyKdCFSf7p6jVsEFgAt5nA12d5e03d5P6kUzV7o5Z6','IanW','ianwhite@example.com','S','','2025-02-28 16:25:00','N',8,5,'MEMBER',1),
 ('9160010','jacksonblue','$2a$12$L2CTpYrh5M87OxCvZ9Jq8FpekszQfRh.V5w7HuaPGDvxwLO1dYbm6','JacksonB','jacksonblue@example.com','S','','2025-02-27 13:35:00','N',6,2,'MEMBER',1),
-('9160011','katherinegreen','$2a$12$XwUr6Y6.DY9px8nE6jHFqczs5T1VHz13W2o94xDt.tsyNjTO7Fz8a','KatherineG','katherinegreen@example.com','N','','2025-02-26 14:05:00','N',4,1,'MEMBER',1),
-('9160012','lisaorange','$2a$12$D99lx.nBGtPCkZmShl2iHDb8o5kxiPYZfXiO5yXgKbiVTe2Nynfz6','LisaO','lisaorange@example.com','K','','2025-02-25 10:50:00','N',3,4,'MEMBER',1),
+('9160011','katherinegreen','$2a$12$XwUr6Y6.DY9px8nE6jHFqczs5T1VHz13W2o94xDt.tsyNjTO7Fz8a','KatherineG','katherinegreen@example.com','S','','2025-02-26 14:05:00','N',4,1,'MEMBER',1),
+('9160012','lisaorange','$2a$12$D99lx.nBGtPCkZmShl2iHDb8o5kxiPYZfXiO5yXgKbiVTe2Nynfz6','LisaO','lisaorange@example.com','S','','2025-02-25 10:50:00','N',3,4,'MEMBER',1),
 ('9160013','michaelsilver','$2a$12$9MYP9mF2CgkEvA7jm0gUofjwn4g59Ih9ShBdS1Ijgw9UN5sFz6yVW','MichaelS','michaelsilver@example.com','S','','2025-02-24 11:25:00','N',7,2,'MEMBER',1),
-('9160014','nataliegold','$2a$12$T4o0W0HJZtkBzmDNBj3Vj.XdsB3fLt8e.tMyN1KDlY5VYOa4ElRny','NatalieG','nataliegold@example.com','N','','2025-02-23 09:30:00','N',9,3,'MEMBER',1),
-('9160015','oliviarose','$2a$12$g6P7pvL2i.OzX5NGnFwDb54Ctb5W0lI7Ff5mr3wzq2yJh.jEwCuqO','OliviaR','oliviarose@example.com','K','','2025-02-22 16:40:00','N',4,5,'MEMBER',1),
+('9160014','nataliegold','$2a$12$T4o0W0HJZtkBzmDNBj3Vj.XdsB3fLt8e.tMyN1KDlY5VYOa4ElRny','NatalieG','nataliegold@example.com','S','','2025-02-23 09:30:00','N',9,3,'MEMBER',1),
+('9160015','oliviarose','$2a$12$g6P7pvL2i.OzX5NGnFwDb54Ctb5W0lI7Ff5mr3wzq2yJh.jEwCuqO','OliviaR','oliviarose@example.com','S','','2025-02-22 16:40:00','N',4,5,'MEMBER',1),
 ('9160016','paulwhite','$2a$12$FpH13H8mUvM5frDQQJzBGwz.BfepUcmUkK2tiVd.CzD4kI0fLFfy2','PaulW','paulwhite@example.com','S','','2025-02-21 18:10:00','N',2,0,'MEMBER',1)
 ;
 

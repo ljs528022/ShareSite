@@ -132,6 +132,16 @@
         VALUES(#{userKey}, #{username}, #{password}, #{useralias}, #{email}, #{userimg}, #{regtype}, #{state}, #{regDate}, 1, 0, #{auth}, #{emailVerified})
     </insert>
 
+    <!-- API 회원가입 -->
+    <insert id="socialSignup"
+            flushCache="true"
+            parameterType="com.lec.spring.domain.User"
+            keyColumn="userKey"
+            keyProperty="userKey">
+        INSERT INTO d1_user(userKey, username, useralias, email, userimg, regtype, state, regDate, visitcnt, tradecnt, auth, emailVerified, accessToken)
+        VALUES(#{userKey}, #{username}, #{useralias}, #{email}, #{userimg}, #{regtype}, #{state}, #{regDate}, 1, 0, #{auth}, #{emailVerified}, #{accessToken})
+    </insert>
+
     <!-- 회원 정보 수정 -->
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.User">
         UPDATE d1_user

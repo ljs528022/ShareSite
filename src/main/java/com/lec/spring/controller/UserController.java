@@ -2,10 +2,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.DTO.*;
 import com.lec.spring.domain.User;
-import com.lec.spring.service.EmailService;
-import com.lec.spring.service.FileUploadService;
-import com.lec.spring.service.ItemService;
-import com.lec.spring.service.UserService;
+import com.lec.spring.service.*;
 import com.lec.spring.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +30,8 @@ public class UserController {
     private ItemService itemService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private NaverLoginService naverLoginService;
 
 
     // 일반 회원가입
@@ -55,10 +54,9 @@ public class UserController {
 
     // 다른 API 회원가입
     @PostMapping("/signup/social")
-    public ResponseEntity<?> socialsignup(@RequestBody RegisterRequest request) {
-        userService.signup(request, "N");
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> socialSignup(@RequestBody SocialRegisterRequest request) {
+        userService.socialSignup(request, "N");
+        return ResponseEntity.ok("네이버 회원가입 성공");
     }
 
     @PostMapping("/login")
@@ -70,13 +68,26 @@ public class UserController {
     // 회원 탈퇴 처리
     @PostMapping("/withdraw/{userKey}")
     public ResponseEntity<?> withdrawUser(@PathVariable("userKey")String userKey) {
-        if(userKey != null && !userKey.isEmpty()) {
-            userService.withdrawUser(userKey);
-            return ResponseEntity.ok().build();
-        } else {
+        User user = userService.findByUserKey(userKey);
+
+        if (user == null || user.getUserKey() == null || user.getUserKey().isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
+        try {
+            // 가입 방식이 네이버(N)인 경우에만 연결 해제 시도
+            if ("N".equals(user.getRegtype()) && user.getAccessToken() != null) {
+                naverLoginService.unlink(user.getAccessToken());
+            }
+        } catch (Exception e) {
+            // unlink 실패 시 로그만 찍고 탈퇴는 계속 진행
+            System.out.println("unlink 실패: {}" + e.getMessage());
+        }
+
+        // 상태값 변경 처리
+        userService.withdrawUser(user.getUserKey());
+
+        return ResponseEntity.ok().build();
     }
 
     // 회원 탈퇴 취소 처리

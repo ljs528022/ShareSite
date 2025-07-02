@@ -135,7 +135,7 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="form-row">
-                                <a className="register-link" href="/user/register">회원이 되고 싶으신가요?</a>
+                                <a className="register-link" href="/user/signup">회원이 되고 싶으신가요?</a>
                                 {/* API Login */}
                                 {NaverLoginBtn()}
                                 <button onClick={null} style={{ background: "#FEE500" , color: "#000000 85%"}} className="api-login">
@@ -152,10 +152,12 @@ const Login = () => {
 
 const NaverLoginBtn = () => {
     const NAVER_CLIENT_ID = "BrUMPDx5cFHxILSg8pRM";
-    const REDIRECT_URI = encodeURIComponent('http://localhost:5178/naver/callback');
+    const REDIRECT_URI = encodeURIComponent('http://localhost:5178/oauth/naver/callback');
     const STATE = Math.random().toString(36).substring(2, 15);
 
-    const handleLogin = () => {
+    const handleLogin = (e) => {
+        e.preventDefault();
+        localStorage.setItem("naver_state", STATE);
         const naverAuthUrl  = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&state=${STATE}`;
         window.location.href = naverAuthUrl;
     };
