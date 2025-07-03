@@ -138,8 +138,8 @@
             parameterType="com.lec.spring.domain.User"
             keyColumn="userKey"
             keyProperty="userKey">
-        INSERT INTO d1_user(userKey, username, useralias, email, userimg, regtype, state, regDate, visitcnt, tradecnt, auth, emailVerified, accessToken)
-        VALUES(#{userKey}, #{username}, #{useralias}, #{email}, #{userimg}, #{regtype}, #{state}, #{regDate}, 1, 0, #{auth}, #{emailVerified}, #{accessToken})
+        INSERT INTO d1_user(userKey, username, useralias, email, userimg, regtype, state, regDate, visitcnt, tradecnt, auth, emailVerified)
+        VALUES(#{userKey}, #{username}, #{useralias}, #{email}, #{userimg}, #{regtype}, #{state}, #{regDate}, 1, 0, #{auth}, #{emailVerified})
     </insert>
 
     <!-- 회원 정보 수정 -->

@@ -66,7 +66,6 @@ public class NaverLoginService {
             // 유저 정보가 없으면 회원가입으로 이동
             return ResponseEntity.ok().body(new JSONObject()
                     .put("registerRequired", true)
-                    .put("accessToken", accessToken)
                     .put("email", email)
                     .put("name", name)
                     .put("naverId", naverId)
@@ -78,6 +77,7 @@ public class NaverLoginService {
 
         return ResponseEntity.ok().body(new JSONObject()
                 .put("token", token)
+                .put("accessToken", accessToken)
                 .put("useralias", user.getUseralias())
                 .toString());
     }

@@ -48,10 +48,10 @@ const Login = () => {
             const userInfo = await getUserInfo();
             
             // 해당 유저 상태(state) 확인
-            const userState = userInfo.state;
+            const userState = userInfo?.state;
             if(userState === "N") {     // 상태가 "N" 이면 로그인 진행
                 setUser(userInfo);
-                showToast(`로그인 성공! ${userData.username}님 어서오세요!`);
+                showToast(`로그인 성공! ${userInfo.useralias}님 어서오세요!`);
                 navigate("/home");
             } else if(userState === "R") {  // 상태가 "R" 이면 탈퇴 취소를 할지 질문, 확인하면 탈퇴 취소 및 로그인, 취소하면 로그인 취소 
                 const result = confirm("탈퇴 처리 중인 계정입니다. 탈퇴를 취소하시겠습니까?");
@@ -63,7 +63,7 @@ const Login = () => {
                     });
                     if(res.status === 200) {
                         setUser(userInfo);
-                        showToast(`탈퇴 요청이 취소되었습니다. ${userData.username}님 어서오세요!`);
+                        showToast(`탈퇴 요청이 취소되었습니다. ${userInfo.useralias}님 어서오세요!`);
                         navigate("/home");
                     }
                 } else {

@@ -19,6 +19,7 @@ import Withdraw from "./withdraw";
 import "../../css/pages/userPage.css";
 import UserTrustScore from "../../components/userTrustScore";
 import SocialUserModify from "./socialUserModify";
+import SocialWithdraw from "./socialWithdraw";
 
 const UserPage = () => {
 
@@ -59,6 +60,7 @@ const UserPage = () => {
 
     const logginUserKey = user !== null ? user.userKey : null;
     const isOwnPage = userKey === logginUserKey;
+
 
     useEffect(() => {
         const getUserInfo = async () => {
@@ -404,7 +406,12 @@ const UserPage = () => {
                 isOpen={showDeactive}
                 onClose={() => setShowDeactive(false)}
                 title={"정말로 탈퇴하시겠습니까?"}
-                content={<Withdraw user={user} onClose={() => setShowDeactive(false)} />}
+                content={
+                userInfo?.regtype === "S" ?
+                <Withdraw user={user} onClose={() => setShowDeactive(false)} />
+                :
+                <SocialWithdraw user={user} onClose={() => setShowDeactive(false)} />
+                }
             />
         </main>
         </>

@@ -6,7 +6,7 @@ import "../../css/pages/signup.css";
 
 const SocialSignup = () => {
     const location = useLocation();
-    const { email, name, id, accessToken } = location.state || {};
+    const { email, name, id } = location.state || {};
 
     const [ nickname, setNickname ] = useState("");
 
@@ -26,7 +26,6 @@ const SocialSignup = () => {
                 username: id,
                 useralias: nickname,
                 email: email,
-                accessToken: accessToken
             })
             if(res.status === 200) {
                 showToast("회원가입이 완료되었습니다!", "success");

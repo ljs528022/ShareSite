@@ -48,15 +48,16 @@ const Header = () => {
         fetchCategories();
     }, [])
 
-    // MY PAGE Button
+    // 마이페이지 버튼 토글
     const [showPopup, setShowPopup] = useState(false);
     const handlePopupShow = () => {
         setShowPopup(prev => !prev);
     }
 
+    // 로그아웃 처리
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        sessionStorage.removeItem("token");
+        localStorage.clear();
+        sessionStorage.clear();
     
         setUser(null);
         showToast("로그아웃 완료! 나중에 또 들러주세요~");

@@ -73,19 +73,25 @@ public class UserController {
         if (user == null || user.getUserKey() == null || user.getUserKey().isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
-        try {
-            // 가입 방식이 네이버(N)인 경우에만 연결 해제 시도
-            if ("N".equals(user.getRegtype()) && user.getAccessToken() != null) {
-                naverLoginService.unlink(user.getAccessToken());
-            }
-        } catch (Exception e) {
-            // unlink 실패 시 로그만 찍고 탈퇴는 계속 진행
-            System.out.println("unlink 실패: {}" + e.getMessage());
-        }
-
         // 상태값 변경 처리
         userService.withdrawUser(user.getUserKey());
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 소셜 회원 탈퇴 처리
+    @PostMapping("/withdraw/social")
+    public ResponseEntity<?> socialWithdrawUser(@RequestBody Map<String, String> body) {
+        String userKey = body.get("userKey");
+        if(userKey == null) {
+            return ResponseEntity.badRequest().body("회원 고유키가 없습니다.");
+        }
+
+        User user = userService.findByUserKey(userKey);
+        if(user == null || !"N".equals(user.getRegtype())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("올바르지 않은 유저");
+        }
+        userService.withdrawUser(userKey);
 
         return ResponseEntity.ok().build();
     }
@@ -100,6 +106,19 @@ public class UserController {
         } else {
             return  ResponseEntity.notFound().build();
         }
+    }
+
+    // 소셜 회원 탈퇴 취소 처리
+    @PostMapping("/cancel-socialWithdraw")
+    public ResponseEntity<?> cancelSocialWithdraw(@RequestBody Map<String, String> body) {
+        String userKey = body.get("userKey");
+        String accessToken = body.get("accessToken");
+        if(userKey == null) {
+            return ResponseEntity.badRequest().body("회원 고유키가 없습니다.");
+        }
+        userService.cancelWithdraw(userKey);
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/userprofile/{userKey}")

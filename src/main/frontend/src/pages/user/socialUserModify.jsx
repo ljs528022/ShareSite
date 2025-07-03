@@ -33,7 +33,7 @@ const SocialUserModify = ({ user }) => {
             setModifyImg(URL.createObjectURL(userInfo.userimg));
         }
     }, [userInfo.userimg]);
-
+    
     const handleInput = (e) => {
         const { id, value } = e.target;
         setUserInfo(prev => ({ ...prev, [id]: value }));
@@ -117,7 +117,7 @@ const SocialUserModify = ({ user }) => {
             </div>
             <div className="modify-user-row">
                 <label>아이디: </label>
-                <input type="text" id="username" className="username" readOnly value={"네이버로 로그인 중 입니다"}/>
+                <input type="text" id="username" className="username" readOnly value={"소셜 아이디로 가입하셨습니다."}/>
             </div>
             <div className="modify-user-row">
                 <p style={{margin: "10px auto", fontSize: "9px", textAlign: "center"}}>

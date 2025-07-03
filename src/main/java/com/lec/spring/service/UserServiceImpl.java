@@ -116,7 +116,6 @@ public class UserServiceImpl implements UserService {
         user.setRegDate(LocalDateTime.now());
         user.setAuth(authority.getAuth());
         user.setEmailVerified(true);
-        user.setAccessToken(request.getAccessToken());
 
         // User 등록
         userRepository.socialSignup(user);
