@@ -92,7 +92,17 @@ const NaverCallback = () => {
         fetchLogin();
     }, []);
 
-    return <div>네이버 로그인 처리 중입니다...</div>;
+    return (
+        <main>
+            <div
+            style={{
+                margin: "20px auto",
+                width: "400px",
+                textAlign: "center",
+            }}
+            >네이버 로그인 처리 중...잠시만 기다려주세요!</div>
+        </main>
+    );
 }
 
 export default NaverCallback;

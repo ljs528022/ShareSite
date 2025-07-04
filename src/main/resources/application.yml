@@ -82,3 +82,5 @@ naver:
   client-id: BrUMPDx5cFHxILSg8pRM
   client-secret: _8neznSMhe
   redirect-uri: http://localhost:5178/oauth/naver/callback
+
+kakao:

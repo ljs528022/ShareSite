@@ -138,9 +138,7 @@ const Login = () => {
                                 <a className="register-link" href="/user/signup">회원이 되고 싶으신가요?</a>
                                 {/* API Login */}
                                 {NaverLoginBtn()}
-                                <button onClick={null} style={{ background: "#FEE500" , color: "#000000 85%"}} className="api-login">
-                                    카카오로 함께하기
-                                </button>
+                                {KakaoLoginBtn()}
                         </div>
                     </form>
                 </div>
@@ -171,6 +169,12 @@ const NaverLoginBtn = () => {
 
 const KakaoLoginBtn = () => {
 
+
+    return (
+        <button onClick={null} style={{ background: "#FEE500" , color: "#000000 85%"}} className="api-login">
+            카카오로 함께하기
+        </button>
+    )
 }
 
 export default Login;
