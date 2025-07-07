@@ -85,6 +85,11 @@ label {
     border-radius: 10px;
 }
 
+.signup-input-disabled::placeholder {
+    color: black;
+    font-weight: 500;
+}
+
 .signup-side-btn {
     position: absolute;
 

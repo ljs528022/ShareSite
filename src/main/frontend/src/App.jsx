@@ -1,12 +1,12 @@
 window.global = window;
+import { UserProvider } from './services/UserContext';
+import { ToastProvider } from './util/ToastContext';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/home';
 import Header from './pages/header';
 import Footer from './pages/footer';
 import Login from './pages/user/login';
 import Signup from './pages/user/signup';
-import { UserProvider } from './services/UserContext';
-import { ToastProvider } from './util/ToastContext';
 import ItemWrite from './pages/item/itemWrite';
 import ItemDetail from './pages/item/itemDetail';
 import ItemSearch from './pages/item/itemSearch';
@@ -19,6 +19,7 @@ import WriteReport from './components/WriteReport';
 import WithdrawComplete from './pages/user/withdrawComplete';
 import SocialSignup from './pages/user/socialSignup';
 import NaverCallback from './services/NaverCallback';
+import KakaoCallback from './services/kakaoCallback';
 
 
 function App() {
@@ -45,8 +46,9 @@ function App() {
             <Route path='/user/login' Component={Login} />
             <Route path='/user/signup' Component={Signup} />
 
-            {/* Naver Login */}
+            {/* API Login */}
             <Route path='/oauth/naver/callback' Component={NaverCallback} />
+            <Route path='/oauth/kakao/callback' Component={KakaoCallback} />
 
             {/* Social Register */}
             <Route path='/user/signup/social' Component={SocialSignup} />

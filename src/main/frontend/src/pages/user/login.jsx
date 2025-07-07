@@ -149,7 +149,7 @@ const Login = () => {
 }
 
 const NaverLoginBtn = () => {
-    const NAVER_CLIENT_ID = "BrUMPDx5cFHxILSg8pRM";
+    const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
     const REDIRECT_URI = encodeURIComponent('http://localhost:5178/oauth/naver/callback');
     const STATE = Math.random().toString(36).substring(2, 15);
 
@@ -168,10 +168,17 @@ const NaverLoginBtn = () => {
 }
 
 const KakaoLoginBtn = () => {
+    const KAKAO_CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
+    const REDIRECT_URI = encodeURIComponent("http://localhost:5178/oauth/kakao/callback");
 
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`
+        window.location.href = kakaoAuthUrl;
+    }
 
     return (
-        <button onClick={null} style={{ background: "#FEE500" , color: "#000000 85%"}} className="api-login">
+        <button onClick={handleLogin} style={{ background: "#FEE500" , color: "#000000 85%"}} className="api-login">
             카카오로 함께하기
         </button>
     )

@@ -1,11 +1,11 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useToast } from "../util/ToastContext";
+import { useUser } from "./UserContext";
 import { useEffect } from "react";
 import { getData, postData } from "./api";
 import { getUserInfo } from "./getUserInfo";
-import { useUser } from "./UserContext";
 
-const NaverCallback = () => {
+const KakaoCallback = () => {
     const [ searchParams ] = useSearchParams();
     const navigate = useNavigate();
     const { showToast } = useToast();
@@ -14,42 +14,35 @@ const NaverCallback = () => {
 
     useEffect(() => {
         const code = searchParams.get("code");
-        const state = searchParams.get("state");
-
-        const storedState = localStorage.getItem("naver_state");
-        if(state !== storedState) {
-            alert("잘못된 요청입니다.");
-            return;
-        }
 
         const fetchLogin = async () => {
             try {
-                const res = await getData(`/oauth/naver/callback?code=${code}&state=${state}`);
+                const res = await getData(`/oauth/kakao/callback?code=${code}`);
                 const data = typeof res.data === "string" ? JSON.parse(res.data) : res.data;
 
                 if(data.registerRequired) {
-                    sessionStorage.setItem("naverAccessToken", data.accessToken);
+                    sessionStorage.setItem("kakaoAccessToken", data.accessToken);
                     navigate("/user/signup/social", {
                         state: {
                             email: data.email,
                             name: data.name,
-                            id: data.naverId,
+                            id: data.kakaoId,
                         }
                     });
                 } else if (data.token) {
                     sessionStorage.setItem("token", data.token);
-                    sessionStorage.setItem("naverAccessToken", data.accessToken);
+                    sessionStorage.setItem("kakaoAccessToken", data.accessToken);
 
                     const userInfo = await getUserInfo();
                     const userState = userInfo.state;
 
                     if(userState === "N") {
                         setUser(userInfo);
-                        showToast(`로그인 성공! 네이버에서 오신걸 환영합니다!`);
+                        showToast("로그인 성공! 카카오에서 오신걸 환영합니다!");
                         navigate("/home");
                     } else if (userState === "R") {
                         const result = confirm("탈퇴 처리 중인 계정입니다. 탈퇴를 취소하겠습니까?");
-                        const accessToken = sessionStorage.getItem("naverAccessToken");
+                        const accessToken = sessionStorage.getItem("kakaoAccessToken");
                         if(result) {
                             const res = await postData("/user/cancel-socialWithdraw", {
                                 userKey: userInfo.userKey,
@@ -62,14 +55,14 @@ const NaverCallback = () => {
                             }
                         } else {
                             showToast("로그인이 중간되었습니다. Home으로 이동합니다.", "error");
-                            sessionStorage.removeItem("naverAccessToken");
+                            sessionStorage.removeItem("kakaoAccessToken");
                             navigate("/home");
                         }
                     } else if (userState === "S") {
                         confirm("이미 탈퇴 처리된 계정입니다. Home으로 이동합니다.");
                         localStorage.removeItem("token");
                         sessionStorage.removeItem("token");
-                        sessionStorage.removeItem("naverAccessToken");
+                        sessionStorage.removeItem("kakaoAccessToken");
                         navigate("/home");
                     }
                 } else {
@@ -77,15 +70,14 @@ const NaverCallback = () => {
                     localStorage.removeItem("naver-state");
                     localStorage.removeItem("token");
                     sessionStorage.removeItem("token");
-                    sessionStorage.removeItem("naverAccessToken");
+                    sessionStorage.removeItem("kakaoAccessToken");
                     return;
                 }
             } catch {
-                showToast("네이버 로그인에 실패했습니다...", "error");
-                localStorage.removeItem("naver-state");
+                showToast("카카오 로그인에 실패했습니다...", "error");
                 localStorage.removeItem("token");
                 sessionStorage.removeItem("token");
-                sessionStorage.removeItem("naverAccessToken");
+                sessionStorage.removeItem("kakaoAccessToken");
             }
         };
         fetchLogin();
@@ -99,9 +91,9 @@ const NaverCallback = () => {
                 width: "400px",
                 textAlign: "center",
             }}
-            >네이버 로그인 처리 중...잠시만 기다려주세요!</div>
+            >카카오 로그인 처리 중...잠시만 기다려주세요!</div>
         </main>
     );
 }
 
-export default NaverCallback;
+export default KakaoCallback;

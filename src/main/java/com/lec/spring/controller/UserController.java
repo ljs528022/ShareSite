@@ -55,8 +55,8 @@ public class UserController {
     // 다른 API 회원가입
     @PostMapping("/signup/social")
     public ResponseEntity<?> socialSignup(@RequestBody SocialRegisterRequest request) {
-        userService.socialSignup(request, "N");
-        return ResponseEntity.ok("네이버 회원가입 성공");
+        userService.socialSignup(request, request.getTokenType());
+        return ResponseEntity.ok("소셜 회원가입 성공");
     }
 
     @PostMapping("/login")

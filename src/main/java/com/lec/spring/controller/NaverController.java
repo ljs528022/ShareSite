@@ -22,7 +22,4 @@ public class NaverController {
     public ResponseEntity<?> naverCallback(@RequestParam("code")String code, @RequestParam("state")String state) {
         return naverLoginService.handleCallback(code, state);
     }
-
-
-
 }

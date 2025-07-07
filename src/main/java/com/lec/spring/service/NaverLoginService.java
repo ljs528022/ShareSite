@@ -69,6 +69,7 @@ public class NaverLoginService {
                     .put("email", email)
                     .put("name", name)
                     .put("naverId", naverId)
+                    .put("accessToken", accessToken)
                     .toString());
         }
 

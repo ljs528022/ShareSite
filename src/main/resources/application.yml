@@ -84,3 +84,6 @@ naver:
   redirect-uri: http://localhost:5178/oauth/naver/callback
 
 kakao:
+  rest-api-key: da872c3e9425992c74a276e30ded5f34
+  client-secret: GGWoQgwLYL6y45icV6TtKCRADjl3MNEF
+  redirect-uri: http://localhost:5178/oauth/kakao/callback
