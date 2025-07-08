@@ -1,5 +1,5 @@
 import "../../css/pages/withdraw.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "../../util/ToastContext";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../services/api";
@@ -14,8 +14,6 @@ const SocialWithdraw = ({ user }) => {
     const { showToast } = useToast();
     const navigate = useNavigate();
 
-    const token = sessionStorage.getItem("token") || localStorage.getItem("token");
-
     const postWithdraw = async () => {
         if(!user) return;
 
@@ -28,7 +26,7 @@ const SocialWithdraw = ({ user }) => {
 
         try {
             const response = await postData(`/user/withdraw/social`, {
-                userKey: user?.userKey
+                userKey: user?.userKey,
             });
             if(response.status === 200) {
                 localStorage.clear();

@@ -89,7 +89,26 @@ public class KakaoLoginService {
     }
 
     public void unlink(String accessToken) {
+        try {
+            URL url = new URL("https://kapi.kakao.com/v1/user/unlink");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 
+            int responseCode = conn.getResponseCode();
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    responseCode == 200 ? conn.getInputStream() : conn.getErrorStream()
+            ));
+
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private String getAccessToken(String code) {
@@ -126,7 +145,6 @@ public class KakaoLoginService {
             br.close();
 
             JSONObject json = new JSONObject(response.toString());
-            System.out.println("Access Token Response: " + json.toString(2));
             return json.optString("access_token");
 
         } catch (Exception e) {
@@ -152,7 +170,6 @@ public class KakaoLoginService {
             br.close();
 
             JSONObject json = new JSONObject(response.toString());
-            System.out.println("받아온 JSONObject : " + json);
 
             JSONObject result = new JSONObject();
 

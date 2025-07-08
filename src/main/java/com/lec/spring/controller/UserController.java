@@ -32,6 +32,8 @@ public class UserController {
     private EmailService emailService;
     @Autowired
     private NaverLoginService naverLoginService;
+    @Autowired
+    private KakaoLoginService kakaoLoginService;
 
 
     // 일반 회원가입
@@ -88,8 +90,8 @@ public class UserController {
         }
 
         User user = userService.findByUserKey(userKey);
-        if(user == null || !"N".equals(user.getRegtype())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("올바르지 않은 유저");
+        if(user == null || "S".equals(user.getRegtype())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("올바르지 않은 소셜 유저");
         }
         userService.withdrawUser(userKey);
 
