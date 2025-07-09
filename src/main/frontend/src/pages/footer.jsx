@@ -2,7 +2,6 @@ import "../css/pages/home.css"
 
 const Footer = () => {
 
-
     return (
         <>
         <footer>

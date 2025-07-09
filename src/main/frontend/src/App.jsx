@@ -20,13 +20,15 @@ import WithdrawComplete from './pages/user/withdrawComplete';
 import SocialSignup from './pages/user/socialSignup';
 import NaverCallback from './services/NaverCallback';
 import KakaoCallback from './services/kakaoCallback';
+import AdminHome from './pages/admin/adminHome';
+import AdminLogin from './pages/admin/adminLogin';
 
 
 function App() {
 
   const location = useLocation();
 
-  const hideLayoutPaths = ['/mock-payment'];
+  const hideLayoutPaths = ['/mock-payment', '/admin'];
 
   const hideLayout = hideLayoutPaths.some(path =>
     location.pathname.startsWith(path)
@@ -77,6 +79,9 @@ function App() {
             {/* Deactivate Confirm Page */}
             <Route path='/withdraw-complete' Component={WithdrawComplete}/>
 
+            {/* Admin Page */}
+            <Route path='/admin' Component={AdminHome} />
+            <Route path='/admin/login' Component={AdminLogin} />
           </Routes>
           {!hideLayout && <Footer />}
         </UserProvider>
