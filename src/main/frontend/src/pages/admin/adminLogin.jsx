@@ -35,7 +35,10 @@ const AdminLogin = () => {
     return (
         <main>
             <form onSubmit={handleSubmit}>
-
+                <label>관리자 로그인</label>
+                <input id="id" type="text" placeholder="id 입력" onChange={handleInput} />
+                <input id="password" type="password" placeholder="pw 입력" onChange={handleInput} />
+                <button type="button" onClick={handleSubmit}>Login</button>
             </form>
         </main>
     );

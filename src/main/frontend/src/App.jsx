@@ -20,8 +20,9 @@ import WithdrawComplete from './pages/user/withdrawComplete';
 import SocialSignup from './pages/user/socialSignup';
 import NaverCallback from './services/NaverCallback';
 import KakaoCallback from './services/kakaoCallback';
-import AdminHome from './pages/admin/adminHome';
+import { Admin, Resource } from 'react-admin';
 import AdminLogin from './pages/admin/adminLogin';
+import Dashboard from './pages/admin/dashboard';
 
 
 function App() {
@@ -80,8 +81,12 @@ function App() {
             <Route path='/withdraw-complete' Component={WithdrawComplete}/>
 
             {/* Admin Page */}
-            <Route path='/admin' Component={AdminHome} />
-            <Route path='/admin/login' Component={AdminLogin} />
+            <Admin dashboard={Dashboard} dataProvider={null}>
+              <Resource name='users' list={""} />
+              <Resource name='posts' list={""} />
+              <Resource name='reports' list={""} />
+              <Resource name='statistics' list={""} />
+            </Admin>
           </Routes>
           {!hideLayout && <Footer />}
         </UserProvider>
