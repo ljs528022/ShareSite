@@ -61,7 +61,7 @@ const Header = () => {
     
         setUser(null);
         showToast("로그아웃 완료! 나중에 또 들러주세요~");
-        navigate("/home");
+        navigate("/");
     }
 
     const handleKeyword = (e) => {
@@ -95,7 +95,7 @@ const Header = () => {
         <>
         <header className='Navber_wrapper'>
             <div className="Navbar-row">
-                <a href="/home" className="Navbar-logo">
+                <a href="/" className="Navbar-logo">
                     <img src="http://localhost:8093/item-images/temp/SSicon.png" className='SSLogo' />
                 </a>
                 <div className="Navbar-search">

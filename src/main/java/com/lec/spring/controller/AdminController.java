@@ -18,7 +18,7 @@ public class AdminController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginAdmin(@RequestBody LoginRequest request> body) {
+    public ResponseEntity<?> loginAdmin(@RequestBody LoginRequest request) {
         User user = userService.findByUserName(request.getUsername());
 
         if(!user.getAuth().equals("ADMIN")) {
