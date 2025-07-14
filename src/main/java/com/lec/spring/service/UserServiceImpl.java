@@ -236,4 +236,10 @@ public class UserServiceImpl implements UserService {
 
         return userKey;
     }
+
+    // For Admin
+    @Override
+    public List<User> findAll() {
+        return null;
+    }
 }

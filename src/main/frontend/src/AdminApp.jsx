@@ -6,6 +6,7 @@ import Users from './pages/admin/users';
 const AdminApp = () => (
     <Admin basename='/admin' dataProvider={dataProvider} dashboard={Dashboard}>
         <Resource name="users" list={Users} />
+        
     </Admin>
 )
 

@@ -55,5 +55,6 @@ public interface UserService {
      void withdrawOver7Days();
 
     // -- Admin Page --
+    List<User> findAll();
 
 }

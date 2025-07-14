@@ -1,4 +1,4 @@
-import { Datagrid, EmailField, List, TextField } from "react-admin"
+import { Datagrid, DeleteButton, EditButton, EmailField, List, TextField } from "react-admin"
 
 const Users = () => {
     <List>
@@ -6,6 +6,9 @@ const Users = () => {
             <TextField source="id" />
             <TextField source="name" />
             <EmailField source="email" />
+            <TextField source="auth" />
+            <EditButton />
+            <DeleteButton />
         </Datagrid>
     </List>
 }
