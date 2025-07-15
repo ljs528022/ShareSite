@@ -10,4 +10,6 @@ public interface ReportService {
     int writeReport(ReportDTO reportDTO);
 
     List<Report> getReports(String keyword);
+
+    List<Report> findAll();
 }

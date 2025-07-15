@@ -22,4 +22,10 @@
         OR u.useralias = #{keyword}
         OR u.email = #{keyword}
     </select>
+
+    <select id="findAll" resultType="com.lec.spring.domain.Report">
+        SELECT *
+        FROM d1_report
+        WHERE 1 = 1
+    </select>
 </mapper>

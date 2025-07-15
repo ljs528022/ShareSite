@@ -35,11 +35,11 @@ public class MainController {
         Map<String, Object> response = new HashMap<>();
 
         // 주간 인기 카테고리 상품
-        List<ItemDTO> weeklyItems = itemService.getWeeklyItems();
+        List<ItemDTO> weeklyItems = itemService.getWeeklyItems(20);
         response.put("weeklyItems", weeklyItems);
 
         // 방금 등록된 상품
-        List<ItemDTO> latestItems = itemService.getLatestItems();
+        List<ItemDTO> latestItems = itemService.getLatestItems(20);
         response.put("latestItems", latestItems);
 
         return response;

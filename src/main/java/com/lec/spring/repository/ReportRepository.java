@@ -14,4 +14,6 @@ public interface ReportRepository {
     int countReportKeyLike(@Param("baseKey")String baseKey);
 
     List<Report> getReports(@Param("keyword")String keyword);
+
+    List<Report> findAll();
 }

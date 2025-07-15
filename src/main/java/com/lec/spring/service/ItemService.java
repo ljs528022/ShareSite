@@ -25,10 +25,10 @@ public interface ItemService {
     List<ItemDTO> findItemsByKeys(List<Long> itemKeys);
 
     // Find Latest 5 Items
-    List<ItemDTO> getLatestItems();
+    List<ItemDTO> getLatestItems(int limit);
 
     // Find Weekly Most Traded Items
-    List<ItemDTO> getWeeklyItems();
+    List<ItemDTO> getWeeklyItems(int limit);
 
     List<ItemDTO> getSellerItems(String userKey);
 

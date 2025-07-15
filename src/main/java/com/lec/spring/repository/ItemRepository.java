@@ -21,10 +21,10 @@ public interface ItemRepository {
     List<Item> findAllItem();
 
     // Find Latest 5 Item
-    List<ItemDTO> getLatestItems();
+    List<ItemDTO> getLatestItems(@Param("limit")int limit);
 
     // Find Weekly Most Traded Items
-    List<ItemDTO> getWeeklyItems();
+    List<ItemDTO> getWeeklyItems(@Param("limit")int limit);
 
     // Find Item's Seller Items
     List<ItemDTO> getSellerItems(@Param("userKey")String userKey);

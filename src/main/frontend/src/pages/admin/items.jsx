@@ -1,6 +1,6 @@
 import { Datagrid, DeleteButton, EditButton, EmailField, List, TextField } from "react-admin"
 
-const Users = () => {
+const Items = () => {
 
     return (
     <List>
@@ -16,4 +16,4 @@ const Users = () => {
     );
 }
 
-export default Users;
+export default Items;

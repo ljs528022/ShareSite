@@ -66,6 +66,12 @@
         auth
     </sql>
 
+    <select id="findAll" resultType="com.lec.spring.domain.User">
+        SELECT *
+        FROM d1_user
+        WHERE 1 = 1
+    </select>
+
     <select id="findByUserKey" resultType="com.lec.spring.domain.User">
         SELECT *
         FROM d1_user

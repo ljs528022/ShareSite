@@ -46,6 +46,11 @@ public class ReportServiceImpl implements ReportService {
         return reportRepository.getReports(keyword);
     }
 
+    @Override
+    public List<Report> findAll() {
+        return reportRepository.findAll();
+    }
+
     public String generateReportKey(String reporterKey) {
         String dateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         String baseKey = reporterKey + "-" + dateStr;

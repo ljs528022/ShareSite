@@ -240,6 +240,6 @@ public class UserServiceImpl implements UserService {
     // For Admin
     @Override
     public List<User> findAll() {
-        return null;
+        return userRepository.findAll();
     }
 }

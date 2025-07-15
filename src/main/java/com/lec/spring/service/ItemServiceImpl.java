@@ -71,16 +71,16 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDTO> getLatestItems() {
-        List<ItemDTO> items = itemRepository.getLatestItems();
+    public List<ItemDTO> getLatestItems(int limit) {
+        List<ItemDTO> items = itemRepository.getLatestItems(limit);
 
         loadItemsLocationAndImage(items);
         return items;
     }
 
     @Override
-    public List<ItemDTO> getWeeklyItems() {
-        List<ItemDTO> items = itemRepository.getWeeklyItems();
+    public List<ItemDTO> getWeeklyItems(int limit) {
+        List<ItemDTO> items = itemRepository.getWeeklyItems(limit);
 
         loadItemsLocationAndImage(items);
         return items;
