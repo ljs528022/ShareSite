@@ -1,7 +1,6 @@
 import { Card, CardContent, Divider, Grid, List, ListItem, ListItemButton, ListItemText, Table, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getData } from "../../services/api";
-import { ListButton } from "react-admin";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {

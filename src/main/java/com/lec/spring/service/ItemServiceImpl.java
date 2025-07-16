@@ -44,8 +44,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findAllItem() {
-        return itemRepository.findAllItem();
+    public List<ItemDTO> findAllItem() {
+        List<ItemDTO> items = itemRepository.findAllItem();
+
+        loadItemsLocationAndImage(items);
+        return items;
     }
 
     @Override

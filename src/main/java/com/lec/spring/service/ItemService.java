@@ -13,7 +13,7 @@ import java.util.Map;
 public interface ItemService {
 
     // Find All Item
-    List<Item> findAllItem();
+    List<ItemDTO> findAllItem();
 
     // Find Items By UserKey
     List<ItemDTO> findByUserKey(String userKey);

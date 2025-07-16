@@ -18,7 +18,7 @@ public interface ItemRepository {
     int write(Item item);
 
     // Find All Item
-    List<Item> findAllItem();
+    List<ItemDTO> findAllItem();
 
     // Find Latest 5 Item
     List<ItemDTO> getLatestItems(@Param("limit")int limit);

@@ -1,18 +1,16 @@
-import { Datagrid, DeleteButton, EditButton, EmailField, List, TextField } from "react-admin"
+import { Grid } from "@mui/material";
+import { useListContext } from "react-admin";
 
 const Items = () => {
+    const { data } = useListContext();
 
+    if(!data) return <div>Loading...</div>;
+    console.log(data);
+    
     return (
-    <List>
-        <Datagrid>
-            <TextField source="id" label="ID"/>
-            <TextField source="name" label="회원명"/>
-            <EmailField source="email" label="이메일"/>
-            <TextField source="auth" label="권한"/>
-            <EditButton />
-            <DeleteButton />
-        </Datagrid>
-    </List>
+    <Grid container spacing={2}>
+
+    </Grid>
     );
 }
 

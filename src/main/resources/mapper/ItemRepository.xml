@@ -4,70 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.ItemRepository">
 
-    <sql id="SELECT_BASE">
-        SELECT
-            itemKey,
-            userKey,
-            cateKey,
-            subject,
-            content,
-            price,
-            itemtype,
-            purtype,
-            tradestatus,
-            writeDate,
-            viewcnt
-    </sql>
-
-    <sql id="d1_item_base">
-        itemKey,
-        userKey,
-        cateKey,
-        subject,
-        content,
-        price,
-        itemtype,
-        purtype,
-        tradestatus,
-        writeDate,
-        viewcnt
-    </sql>
-
-    <resultMap id="mapUser" type="com.lec.spring.domain.User">
-        <id column="userKey" property="userKey" />
-        <result column="username" property="username" />
-        <result column="useralias" property="useralias" />
-        <result column="tel" property="tel" />
-        <result column="userimg" property="userimg" />
-    </resultMap>
-
-    <resultMap id="mapItem" type="com.lec.spring.domain.Item">
-        <id column="itemKey" property="itemKey" />
-        <result column="userKey" property="userKey" />
-        <result column="cateKey" property="cateKey" />
-        <result column="subject" property="subject" />
-        <result column="content" property="content" />
-        <result column="price" property="price" />
-        <result column="itemtype" property="itemtype" />
-        <result column="purtype" property="purtype" />
-        <result column="tradestatus" property="tradestatus" />
-        <result column="writeDate" property="writeDate" />
-        <result column="viewcnt" property="viewcnt" />
-    </resultMap>
-
-    <resultMap id="mapLocation" type="com.lec.spring.domain.Location">
-        <id column="userKey" property="userKey" />
-        <result column="itemKey" property="itemKey" />
-        <result column="addrName" property="addrName" />
-        <result column="placeName" property="placeName" />
-        <result column="addrDetail" property="addrDetail" />
-    </resultMap>
-
-    <resultMap id="mapCategory" type="com.lec.spring.domain.Category">
-        <id column="cateKey" property="cateKey" />
-        <result column="catename" property="catename" />
-    </resultMap>
-
     <insert id="write" flushCache="true" parameterType="com.lec.spring.domain.Item"
             useGeneratedKeys="true" keyColumn="itemKey" keyProperty="itemKey">
         INSERT INTO d1_item
@@ -105,8 +41,8 @@
         DELETE FROM d1_item WHERE itemKey = #{itemKey}
     </delete>
 
-    <select id="findAllItem" resultMap="mapItem">
-        <include refid="SELECT_BASE" />
+    <select id="findAllItem" resultType="com.lec.spring.DTO.ItemDTO">
+        SELECT *
         FROM d1_item
         WHERE 1 = 1
         ORDER BY writeDate DESC

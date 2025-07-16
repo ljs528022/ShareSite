@@ -32,12 +32,6 @@ public class User {
     @ToString.Exclude
     private String auth;
 
-    // User Page - Selling
-
-
-    // For ADMIN
-
-
     // Logined User Info
     public static class CurrentUser {
         private String username;

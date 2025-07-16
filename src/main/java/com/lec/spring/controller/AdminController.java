@@ -50,7 +50,7 @@ public class AdminController {
     @GetMapping("/dashboard")
     public Map<String, Object> getStats() {
         List<User> users = userService.findAll();
-        List<Item> items = itemService.findAllItem();
+        List<ItemDTO> items = itemService.findAllItem();
         List<Report> reports = reportService.findAll();
 
         Map<String, Object> response = new HashMap<>();
@@ -63,34 +63,62 @@ public class AdminController {
         return response;
     }
 
-    @GetMapping
+    // User 부분
+    @GetMapping("/users")
     public Map<String, Object> getUsers() {
         List<User> allUsers = userService.findAll();
 
         Map<String, Object> response = new HashMap<>();
-        response.put("allUsers", allUsers);
-        response.put("userCount", allUsers.size());
+        response.put("data", allUsers);
+        response.put("count", allUsers.size());
 
         return response;
     }
 
-    @GetMapping("/{id}")
-    public User getUser(@PathVariable("userKey")String userKey) {
-        return userService.findByUserKey(userKey);
+    @GetMapping("/users/{id}")
+    public User getUser(@PathVariable("id")String id) {
+        return userService.findByUserKey(id);
     }
 
-    @PutMapping
-    public User updateUser(@PathVariable("userKey")String userKey, @RequestBody User user) {
-        User editingUser = userService.findByUserKey(userKey);
+    @PostMapping("/users/{id}")
+    public User updateUser(@PathVariable("id")String id, @RequestBody User user) {
+        User editingUser = userService.findByUserKey(id);
 
+        if(editingUser == null) {
+            return null;
+        }
 
 
         return editingUser;
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("userKey")String userKey) {
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable("id")String id) {
 
     }
+
+    // Item 부분
+    @GetMapping("/items")
+    public Map<String, Object> getItems() {
+        List<ItemDTO> items = itemService.findAllItem();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", items);
+        response.put("count", items.size());
+
+        return response;
+    }
+
+    @GetMapping("/items/{id}")
+    public ItemDTO getItem(@PathVariable("id")Long id) {
+        return itemService.findByItemKey(id);
+    }
+
+    @PostMapping("/items/{id}")
+    public ItemDTO updateItem(@PathVariable("id")String id, @RequestBody ItemDTO itemDTO) {
+
+        
+    }
+
 
 }
