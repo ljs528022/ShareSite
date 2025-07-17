@@ -82,14 +82,14 @@ public class AdminController {
 
     @PostMapping("/users/{id}")
     public User updateUser(@PathVariable("id")String id, @RequestBody User user) {
-        User editingUser = userService.findByUserKey(id);
+        User existingUser = userService.findByUserKey(id);
 
-        if(editingUser == null) {
+        if(existingUser == null) {
             return null;
         }
 
 
-        return editingUser;
+        return existingUser;
     }
 
     @DeleteMapping("/users/{id}")
@@ -115,9 +115,19 @@ public class AdminController {
     }
 
     @PostMapping("/items/{id}")
-    public ItemDTO updateItem(@PathVariable("id")String id, @RequestBody ItemDTO itemDTO) {
+    public ItemDTO updateItem(@PathVariable("id")Long id, @RequestBody ItemDTO itemDTO) {
+        ItemDTO existingItem = itemService.findByItemKey(id);
 
-        
+        if(existingItem == null) {
+            return null;
+        }
+
+        return existingItem;
+    }
+
+    @DeleteMapping("/items/{id}")
+    public void deleteItem(@PathVariable("id")String id) {
+
     }
 
 
