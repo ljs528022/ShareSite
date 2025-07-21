@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardMedia, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, CardMedia, FormControl, Grid, InputLabel, MenuItem, Pagination, Select, Typography } from "@mui/material";
 import { ListContextProvider, useListContext, useListController } from "react-admin";
 
 const Items = () => {
@@ -11,12 +11,13 @@ const Items = () => {
     return (
     <ListContextProvider value={controlProps}>
         <GetItemList />
+        <ItemCard />
     </ListContextProvider>
     );
 };
 
 const GetItemList = () => {
-    const { data, sort, setSort, setPage, perPage, setPerPage, total } = useListContext(); 
+    const { data, sort, setSort, page, setPage, perPage, setPerPage, total } = useListContext(); 
 
     const handleSortChange = (e) => {
         const [field, order] = e.target.value.split(",");
@@ -24,9 +25,15 @@ const GetItemList = () => {
     };
 
     const handlePerPageChange = (e) => {
-        setPerPage(parseInt(e.target.value, 10));
+        setPerPage(parseInt(e.target.value));
         setPage(1);
     };
+
+    const handlePageChange = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const totalPages = Math.ceil(total / perPage);
 
     return (
     <>
@@ -59,16 +66,16 @@ const GetItemList = () => {
                     onChange={handlePerPageChange}
                     label="페이지 당 상품 수"
                 >   
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={6}>6</MenuItem>
+                    <MenuItem value={12}>12</MenuItem>
+                    <MenuItem value={24}>24</MenuItem>
                     <MenuItem value={30}>30</MenuItem>
                 </Select>
             </FormControl>
         </Grid>
     </Grid>
 
-    {/* 상품 카드 리스트트 */}
+    {/* 상품 카드 리스트 */}
     <Grid container spacing={2} marginTop={3}>
         {data?.map(i => (
             <Grid size={{ xs: 12, sm: 6, md: 4}} key={i.id}>
@@ -83,8 +90,21 @@ const GetItemList = () => {
             </Grid>
         ))}
     </Grid>
+
+    <Grid container justifyContent="center" marginTop={4}>
+        <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+        />
+    </Grid>
     </>
     );
+}
+
+const ItemCard = () => {
+    
 }
 
 export default Items;

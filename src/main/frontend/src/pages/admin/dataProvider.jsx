@@ -53,8 +53,18 @@ const dataProvider = {
         viewcnt: i.viewcnt,
       }));
 
+      const sorted = [...items].sort((a, b) => {
+        if (a[field] < b[field]) return order === "ASC" ? -1 : 1;
+        if (a[field] > b[field]) return order === "ASC" ? 1 : -1;
+        return 0;
+      });
+      
+      const start = (page - 1) * perPage;
+      const end  = start + perPage;
+      const paginated = sorted.slice(start, end);
+
       return {
-        data: items,
+        data: paginated,
         total: count,
       }
     }
