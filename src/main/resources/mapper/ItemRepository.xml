@@ -55,7 +55,7 @@
         WHERE i.tradestatus = false
         AND u.state = 'N'
         ORDER BY writeDate DESC
-        LIMIT {limit}
+        LIMIT #{limit}
     </select>
 
     <select id="getWeeklyItems" resultType="com.lec.spring.DTO.ItemDTO">
@@ -71,7 +71,7 @@
             WHERE p.purchaseDate &gt;= DATE_SUB(NOW(), INTERVAL 7 DAY)
             GROUP BY i2.cateKey
             ORDER BY COUNT(*) DESC
-            LIMIT {limit}
+            LIMIT #{limit}
         )
         ORDER BY i.writeDate DESC
     </select>

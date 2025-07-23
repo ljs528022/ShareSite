@@ -24,6 +24,6 @@ public class Item {
     private String itemtype;        // item's type (NEW or OLD)
     private Long purtype;         // purchase type ( 1: POST, 2: TRADE, 3: BOTH )
     private Boolean tradestatus;    // false: In progress / true:Done
-    private LocalDateTime orede;// Write Date
+    private LocalDateTime writeDate;// Write Date
     private Long viewcnt;           // View Count
 }
