@@ -63,7 +63,7 @@ public class AdminController {
         return response;
     }
 
-    // User 부분
+    // ---- User 부분 -----------------------------------
     @GetMapping("/users")
     public Map<String, Object> getUsers() {
         List<User> allUsers = userService.findAll();
@@ -75,29 +75,25 @@ public class AdminController {
         return response;
     }
 
-    @GetMapping("/users/{id}")
-    public User getUser(@PathVariable("id")String id) {
-        return userService.findByUserKey(id);
-    }
-
     @PostMapping("/users/{id}")
-    public User updateUser(@PathVariable("id")String id, @RequestBody User user) {
+    public User updateUser(@PathVariable("id")String id, @RequestBody Map<?, ?> data) {
         User existingUser = userService.findByUserKey(id);
 
         if(existingUser == null) {
             return null;
         }
 
-
         return existingUser;
     }
 
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable("id")String id) {
+        User existinUser  = userService.findByUserKey(id);
 
+        if(existinUser != null) userService.withdrawUser(id);
     }
 
-    // Item 부분
+    // ---- Item 부분 -----------------------------------
     @GetMapping("/items")
     public Map<String, Object> getItems() {
         List<ItemDTO> items = itemService.findAllItem();
@@ -109,26 +105,51 @@ public class AdminController {
         return response;
     }
 
-    @GetMapping("/items/{id}")
-    public ItemDTO getItem(@PathVariable("id")Long id) {
-        return itemService.findByItemKey(id);
-    }
-
     @PostMapping("/items/{id}")
-    public ItemDTO updateItem(@PathVariable("id")Long id, @RequestBody ItemDTO itemDTO) {
+    public Item updateItem(@PathVariable("id")Long id, @RequestBody Map<String, String> data) {
         ItemDTO existingItem = itemService.findByItemKey(id);
+        String subject = data.get("subject");
+        String content = data.get("content");
 
         if(existingItem == null) {
             return null;
         }
 
-        return existingItem;
+        Item editedItem = Item.builder()
+                .itemKey(existingItem.getItemKey())
+                .userKey(existingItem.getUserKey())
+                .cateKey(existingItem.getCateKey())
+                .subject(subject)
+                .content(content)
+                .price(existingItem.getPrice())
+                .itemtype(existingItem.getItemtype())
+                .purtype(existingItem.getPurtype())
+                .tradestatus(existingItem.getTradestatus())
+                .writeDate(existingItem.getWriteDate())
+                .viewcnt(existingItem.getViewcnt())
+                .build();
+
+        itemService.modify(editedItem);
+
+        return editedItem;
     }
 
     @DeleteMapping("/items/{id}")
-    public void deleteItem(@PathVariable("id")String id) {
+    public void deleteItem(@PathVariable("id")Long id) {
+        ItemDTO existingItem = itemService.findByItemKey(id);
 
+        if (existingItem != null) itemService.delete(id);
     }
 
+    // ---- Report 부분 -----------------------------------
+    @GetMapping("/reports")
+    public Map<String, Object> getReports() {
+        List<Report> reports = reportService.findAll();
 
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", reports);
+        response.put("count", reports.size());
+
+        return response;
+    }
 }

@@ -244,6 +244,7 @@ const UserPage = () => {
                                     style={{cursor: "pointer"}} 
                                     onClick={isOwnPage ? () => navigate("/product/write") 
                                         : userInfo.state !== "N" ? () => showToast("탈퇴한 회원과는 채팅할 수 없습니다!" ,"error")
+                                        : !user ? () => showToast("로그인 후 이용 가능한 서비스입니다!", "error")
                                         : () => setShowChat(true)}
                                 >
                                 {isOwnPage ?

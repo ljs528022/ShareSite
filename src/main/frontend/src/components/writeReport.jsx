@@ -145,7 +145,7 @@ const WriteReport = () => {
                 <div className="report-confirm-box">
                     <p>{`빠른 시일 내에 조치를 취하겠습니다.`}</p>
                     <p>{`신고해주셔서 감사합니다!`}</p>
-                    <button onClick={() => navigate("/home")}>Home 으로 이동</button>
+                    <button onClick={() => navigate("/")}>Home 으로 이동</button>
                 </div>
             </div>
             }
