@@ -116,7 +116,7 @@
     </select>
 
     <select id="findByItemKey" resultType="com.lec.spring.DTO.ItemDTO">
-        SELECT itemKey
+        SELECT *
         FROM d1_item
         WHERE itemKey = #{itemKey}
     </select>
@@ -128,12 +128,6 @@
         <foreach collection="list" item="key" open="(" separator="," close=")">
             #{key}
         </foreach>
-    </select>
-
-    <select id="findItemByItemKey" resultType="com.lec.spring.domain.Item">
-        SELECT *
-        FROM d1_item
-        WHERE itemKey = #{itemKey}
     </select>
 
     <select id="findByCategory" resultType="com.lec.spring.DTO.ItemDTO">

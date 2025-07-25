@@ -106,7 +106,7 @@ public class AdminController {
     }
 
     @PostMapping("/items/{id}")
-    public Item updateItem(@PathVariable("id")Long id, @RequestBody Map<String, String> data) {
+    public Map<String, Object> updateItem(@PathVariable("id")Long id, @RequestBody Map<String, String> data) {
         ItemDTO existingItem = itemService.findByItemKey(id);
         String subject = data.get("subject");
         String content = data.get("content");
@@ -114,6 +114,8 @@ public class AdminController {
         if(existingItem == null) {
             return null;
         }
+
+        System.out.println("existingItem 정보: " + existingItem);
 
         Item editedItem = Item.builder()
                 .itemKey(existingItem.getItemKey())
@@ -131,7 +133,10 @@ public class AdminController {
 
         itemService.modify(editedItem);
 
-        return editedItem;
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", editedItem);
+
+        return response;
     }
 
     @DeleteMapping("/items/{id}")

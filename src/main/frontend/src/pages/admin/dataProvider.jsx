@@ -67,6 +67,31 @@ const dataProvider = {
         data: paginated,
         total: count,
       }
+    } else if(resource === "reports") {
+      const reports = data.map(r => ({
+          ...r,
+        id: r.reportKey,
+        reporterKey: r.reporterKey,
+        targetKey: r.targetKey,
+        reason: r.reason,
+        content: r.content,
+        createdAt: r.createdAt,
+      }));
+
+      const sorted = [...reports].sort((a, b) => {
+        if (a[field] < b[field]) return order === "ASC" ? -1 : 1;
+        if (a[field] > b[field]) return order === "ASC" ? 1 : -1;
+        return 0;
+      });
+      
+      const start = (page - 1) * perPage;
+      const end  = start + perPage;
+      const paginated = sorted.slice(start, end);
+      
+      return {
+        data: paginated,
+        total: count,
+      }
     }
   },
 
@@ -84,13 +109,13 @@ const dataProvider = {
 
   update: async (resource, { id, data }) => {
     const response = await postData(`/api/admin/${resource}/${id}`, data);
-    const result = await response.json();
-    return { data: result };
+    const result = response.data;
+    return { data: { id, ...result }};
   },
 
   delete: async (resource, { id }) => {
-    await deleteData(`/api/admin/${resource}/${id}`);
-    return { data: { id } };
+    const response = await deleteData(`/api/admin/${resource}/${id}`);
+    if(response.status === 200) return { data: { id } };
   },
 };
 

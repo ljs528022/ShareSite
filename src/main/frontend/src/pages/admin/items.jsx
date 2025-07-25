@@ -1,9 +1,9 @@
 import { Box, Button, Card, CardContent, CardHeader, CardMedia, FormControl, Grid, ImageList, ImageListItem, InputLabel, MenuItem, Pagination, Select, TextField, Typography } from "@mui/material";
-import { DeleteButton, EditButton, ListContextProvider, UPDATE, useDataProvider, useListContext, useListController } from "react-admin";
+import { ListContextProvider, useDataProvider, useListContext, useListController } from "react-admin";
 import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useToast } from "../../util/ToastContext";
-import { postData } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 const Items = () => {
     const controlProps = useListController({ 
@@ -23,17 +23,19 @@ const Items = () => {
 const GetItemList = () => {
     const { data, sort, setSort, page, setPage, perPage, setPerPage, total } = useListContext();
     const dataProvider = useDataProvider();
+    const navigate = useNavigate();
     
     const [ selectedItem, setSelectedItem ] = useState(null);
 
     const [ modify, setModify ] = useState(false);
-    const [ editedData, setEditedData ] = useState({});
+    const [ editedData, setEditedData ] = useState("");
 
     const handlers = {
         modify,
         setModify,
         editedData,
         setEditedData,
+        navigate,
     }
 
     const { showToast } = useToast();
@@ -127,14 +129,22 @@ const GetItemList = () => {
 }
 
 const ItemCard = ({ item, onClose, handlers, dataProvider, showToast }) => {
-    if(!item) return null;
+    useEffect(() => {
+        if(!item) return;
 
-    const { modify, setModify, editedData, setEditedData } = handlers;
-    
+        setEditedData({
+            subject: item.subject,
+            content: item.content,
+        })
+    }, [item]);
+
+    if(!item) return;
+
+    const { modify, setModify, editedData, setEditedData, navigate } = handlers;
+
     const handleTextField = (e) => {
         const { id, value } = e.target;
         setEditedData(prev => ({...prev, [id]: value }));
-        console.log(`${id} : ${value}`);
     }
 
     const cancelModify = () => {
@@ -150,7 +160,8 @@ const ItemCard = ({ item, onClose, handlers, dataProvider, showToast }) => {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-
+        
+        console.log(item.id);
         try {
             await dataProvider.update("items", {
                 id: item.id,
@@ -158,11 +169,10 @@ const ItemCard = ({ item, onClose, handlers, dataProvider, showToast }) => {
                     subject: editedData.subject,
                     content: editedData.content,
                 },
-                previousData: item,
             });
 
-            setModify(false);
-            showToast("상품 수정 완료", "success");
+            alert("상품 수정 완료");
+            navigate(0);
         } catch {
             showToast("상품 수정 실패", "error");
         }
@@ -172,10 +182,10 @@ const ItemCard = ({ item, onClose, handlers, dataProvider, showToast }) => {
         e.preventDefault();
 
         try {
-            await dataProvider.delete("items", {id: item.id});
+            await dataProvider.delete("items", { id: item.id });
 
-            setModify(false);
-            showToast("상품 삭제 완료", "success");
+            alert("상품 삭제 완료");
+            navigate(0);
         } catch {
             showToast("상품 삭제 성공", "error");
         }
@@ -266,11 +276,11 @@ const ItemCard = ({ item, onClose, handlers, dataProvider, showToast }) => {
                 {!modify ?
                 <>
                 <Button variant="contained" onClick={() => setModify(true)}>수정하기</Button>
-                <Button variant="outlined" sx={{marginLeft: "10px"}} color="error" onClick={() => {}}>상품 삭제</Button>
+                <Button variant="outlined" sx={{marginLeft: "10px"}} color="error" onClick={handleDelete}>상품 삭제</Button>
                 </>
                 :
                 <>
-                <Button variant="contained" onClick={() => {}}>수정 완료</Button>
+                <Button variant="contained" onClick={handleUpdate}>수정 완료</Button>
                 <Button variant="outlined" sx={{marginLeft: "10px"}} color="error" onClick={cancelModify}>수정 취소</Button>
                 </>
                 }

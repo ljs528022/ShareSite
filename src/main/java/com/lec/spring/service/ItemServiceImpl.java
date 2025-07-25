@@ -146,7 +146,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDTO detail(Long itemKey) {
-        Item item = itemRepository.findItemByItemKey(itemKey);
+        ItemDTO item = itemRepository.findByItemKey(itemKey);
         List<LocationDTO> locations = locationRepository.findByUserKeyAndItemKey(item.getUserKey(), itemKey);
         List<ItemImage> images = itemImageRepository.findByItemKey(itemKey);
 
@@ -155,23 +155,12 @@ public class ItemServiceImpl implements ItemService {
         String useralias = userRepository.findByUserKey(userKey).getUseralias();
 
         // ItemDTO 로 정보 등록
-        ItemDTO itemInfo = new ItemDTO();
-            itemInfo.setItemKey(item.getItemKey());
-            itemInfo.setUserKey(item.getUserKey());
-            itemInfo.setUseralias(useralias);
-            itemInfo.setCateKey(item.getCateKey());
-            itemInfo.setSubject(item.getSubject());
-            itemInfo.setContent(item.getContent());
-            itemInfo.setPrice(item.getPrice());
-            itemInfo.setItemtype(item.getItemtype());
-            itemInfo.setPurtype(item.getPurtype());
-            itemInfo.setTradestatus(item.getTradestatus());
-            itemInfo.setWriteDate(item.getWriteDate());
-            itemInfo.setViewcnt(item.getViewcnt());
-            itemInfo.setLocations(locations);
-            itemInfo.setImages(images);
+        item.setUserKey(userKey);
+        item.setUseralias(useralias);
+        item.setLocations(locations);
+        item.setImages(images);
 
-        return itemInfo;
+        return item;
     }
     @Override
     public int chTradeState(Long itemKey) {

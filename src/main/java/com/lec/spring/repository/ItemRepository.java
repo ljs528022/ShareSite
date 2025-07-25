@@ -52,8 +52,6 @@ public interface ItemRepository {
 
     List<ItemImage> findImagesByItemKeys(List<Long> itemKeys);
 
-    Item findItemByItemKey(@Param("itemKey")Long itemKey);
-
     List<Map<String, Long>> getAvgMaxMinPrice(@Param("keyword")String keyword);
 
     // Increment View Count
