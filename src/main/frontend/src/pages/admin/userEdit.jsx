@@ -4,6 +4,9 @@ const UserEdit = () => {
     <Edit>
         <SimpleForm>
             <TextInput />
+            <TextInput />
+            <TextInput />
+            <TextInput />
         </SimpleForm>
     </Edit>
 }
