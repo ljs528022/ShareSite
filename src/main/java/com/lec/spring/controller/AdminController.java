@@ -75,6 +75,16 @@ public class AdminController {
         return response;
     }
 
+    @GetMapping("/users/{id}")
+    public Map<String, Object> getOneUser(@PathVariable("id")String id) {
+        User user = userService.findByUserName(id);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", user);
+
+        return response;
+    }
+
     @PostMapping("/users/{id}")
     public User updateUser(@PathVariable("id")String id, @RequestBody Map<?, ?> data) {
         User existingUser = userService.findByUserKey(id);

@@ -98,12 +98,13 @@ const dataProvider = {
   getOne: async (resource, { id }) => {
     const response = await getData(`/api/admin/${resource}/${id}`)
     const result = response.data;
-    return { data: result };
+    return { data: { id, ...result } };
   },
 
   create: async (resource, { data }) => {
     const response = await postData(`/api/admin/${resource}`, data);
     const result = response.data;
+    console.log(result.data);
     return { data: result };
   },
 

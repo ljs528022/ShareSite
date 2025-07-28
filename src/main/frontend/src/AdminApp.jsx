@@ -3,9 +3,9 @@ import { FaCopy, FaExclamationTriangle, FaUser } from "react-icons/fa";
 import Dashboard from './pages/admin/dashboard';
 import dataProvider from './pages/admin/dataProvider';
 import Users from './pages/admin/users';
+import UserEdit from './pages/admin/userEdit';
 import Items from './pages/admin/items';
 import Reports from './pages/admin/reports';
-import UserEdit from './pages/admin/userEdit';
 
 const AdminApp = () => (
     <Admin basename='/admin' name="dashboard" dataProvider={dataProvider} dashboard={Dashboard}>
