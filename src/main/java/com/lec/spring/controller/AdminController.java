@@ -86,21 +86,53 @@ public class AdminController {
     }
 
     @PostMapping("/users/{id}")
-    public User updateUser(@PathVariable("id")String id, @RequestBody Map<?, ?> data) {
-        User existingUser = userService.findByUserKey(id);
+    public Map<String, Object> updateUser(@PathVariable("id")String id, @RequestBody Map<String, String> data) {
+        User existingUser = userService.findByUserName(id);
+        String useralias = data.get("useralias");
+        String userIntro = data.get("userIntro");
+        String email = data.get("email");
+        String auth = data.get("auth");
+        String state = data.get("state");
 
         if(existingUser == null) {
             return null;
         }
 
-        return existingUser;
+        System.out.println("===========================");
+        System.out.println("요청된 유저 : " + existingUser);
+        System.out.println("===========================");
+
+        User editedUser = User.builder()
+                .userKey(existingUser.getUserKey())
+                .username(existingUser.getUsername())
+                .password(existingUser.getPassword())
+                .useralias(useralias)
+                .email(email)
+                .regtype(existingUser.getRegtype())
+                .userimg(existingUser.getUserimg())
+                .state(state)
+                .regDate(existingUser.getRegDate())
+                .visitcnt(existingUser.getVisitcnt())
+                .tradecnt(existingUser.getTradecnt())
+                .userIntro(userIntro)
+                .editedDate(existingUser.getEditedDate())
+                .auth(auth)
+                .build();
+
+        userService.modify(editedUser);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", editedUser);
+
+        return response;
     }
 
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable("id")String id) {
-        User existinUser  = userService.findByUserKey(id);
+        User existinUser  = userService.findByUserName(id);
+        String userKey = existinUser.getUserKey();
 
-        if(existinUser != null) userService.withdrawUser(id);
+        userService.withdrawUser(userKey);
     }
 
     // ---- Item 부분 -----------------------------------
@@ -124,8 +156,6 @@ public class AdminController {
         if(existingItem == null) {
             return null;
         }
-
-        System.out.println("existingItem 정보: " + existingItem);
 
         Item editedItem = Item.builder()
                 .itemKey(existingItem.getItemKey())

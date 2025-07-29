@@ -91,8 +91,8 @@ const Dashboard = () => {
                 <ListItemButton onClick={() => navigate("/admin/reports")}>관리하기</ListItemButton>
                 <List dense>
                 {stats.latestReports.length > 0 ?
-                stats.latestReports.map((r) => (
-                <div key={r.itemKey}>
+                stats.latestReports.map((r, index) => (
+                <div key={index}>
                     <ListItem>
                         <ListItemText primary={r.subject}/>
                     </ListItem>

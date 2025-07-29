@@ -2,7 +2,7 @@ import { Datagrid, DateField, DeleteButton, EditButton, EmailField, List, Number
 
 const Users = () => {
     return (
-        <List>
+        <List title="회원 관리">
             <Datagrid rowClick="edit">
                 <TextField source="userNum" label="회원코드" />
                 <TextField source="id" label="ID"/>

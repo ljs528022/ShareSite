@@ -10,7 +10,7 @@ const dataProvider = {
 
     if(resource === "users") {
       const users = data.map(u => ({
-          ...u,
+        ...u,
         id: u.username,
         userNum: u.userKey,
         name: u.useralias,
@@ -97,8 +97,8 @@ const dataProvider = {
 
   getOne: async (resource, { id }) => {
     const response = await getData(`/api/admin/${resource}/${id}`)
-    const result = response.data;
-    return { data: { id, ...result } };
+    const { data } = response.data;
+    return { data: { id, ...data } };
   },
 
   create: async (resource, { data }) => {
