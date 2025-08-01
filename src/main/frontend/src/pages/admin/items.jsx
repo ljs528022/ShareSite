@@ -161,7 +161,6 @@ const ItemCard = ({ item, onClose, handlers, dataProvider, showToast }) => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         
-        console.log(item.id);
         try {
             await dataProvider.update("items", {
                 id: item.id,

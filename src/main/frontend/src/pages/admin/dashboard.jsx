@@ -8,6 +8,7 @@ const Dashboard = () => {
         users: 0,
         items: 0,
         reports: 0,
+        notices: [],
         latestItems: [],
         latestReports: [],
     });
@@ -66,6 +67,12 @@ const Dashboard = () => {
             </Grid>
         </Grid>
         <Grid container spacing={2} marginTop={10}>
+            {/* 공지사항 */}
+            <Grid size={{xs: 12}}>
+                <Typography variant="h6" gutterBottom>공지사항</Typography>
+                <ListItemButton onClick={() => navigate("/admin/notices")}>관리하기</ListItemButton>
+                
+            </Grid>
             {/* 상품 게시글 */}
             <Grid size={{ xs:12, md:6 }}>
                 <Typography variant="h6" gutterBottom>최근 등록된 상품</Typography>

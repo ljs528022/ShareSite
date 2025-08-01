@@ -22,6 +22,7 @@ import NaverCallback from './services/NaverCallback';
 import KakaoCallback from './services/kakaoCallback';
 import AdminApp from './AdminApp';
 import AdminLogin from './pages/admin/adminLogin';
+import Notice from './pages/notice';
 
 
 function App() {
@@ -41,45 +42,48 @@ function App() {
           {!hideLayout && <Header />}
 
           <Routes>
-            {/* Main page */}
+            {/* 메인 페이지(홈) */}
             <Route path='/' Component={Home} />
 
-            {/* Login & Register */}
+            {/* 로그인 및 회원가입 */}
             <Route path='/user/login' Component={Login} />
             <Route path='/user/signup' Component={Signup} />
 
-            {/* API Login */}
+            {/* 소셜 로그인 */}
             <Route path='/oauth/naver/callback' Component={NaverCallback} />
             <Route path='/oauth/kakao/callback' Component={KakaoCallback} />
 
-            {/* Social Register */}
+            {/* 소셜 회원가입 */}
             <Route path='/user/signup/social' Component={SocialSignup} />
 
-            {/* User Page */}
+            {/* 유저 마이 페이지 */}
             <Route path='/user/:userKey' Component={UserPage} />
 
-            {/* Item Page */}
+            {/* 상품 작성, 상세, 수정 페이지 */}
             <Route path='/product/write' Component={ItemWrite} />
             <Route path='/product/:itemKey' Component={ItemDetail} />
             <Route path='/product/modify/:itemKey' Component={ItemModify} />
 
-            {/* Item Search */}
+            {/* 상품 검색 */}
             <Route path='/search' Component={ItemSearch} />
 
-            {/* Payment */}
+            {/* 결게 페이지 */}
             <Route path='/mock-payment/:orderId' Component={PaymentPage} />
 
-            {/* Search Price Page */}
+            {/* 시세 조회 페이지 */}
             <Route path='/search/price' Component={SearchPrice}/>
 
-            {/* Report Page */}
+            {/* 공지사항 페이지 */}
+            <Route path='/notice' Component={Notice}/>
+
+            {/* 신고 페이지 */}
             <Route path='/report/write' Component={WriteReport}/>
             <Route path='/report' Component={Report}/>
 
-            {/* Deactivate Confirm Page */}
+            {/* 회원 탈퇴 페이지 */}
             <Route path='/withdraw-complete' Component={WithdrawComplete}/>
 
-            {/* Admin Page */}
+            {/* 관리자 전용 */}
             <Route path='/admin/login' Component={AdminLogin} />
             <Route path='/admin/*' Component={AdminApp} />
 
