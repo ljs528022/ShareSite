@@ -11,8 +11,8 @@ import NoticeEdit from './pages/admin/noticeEdit';
 
 const AdminApp = () => (
     <Admin basename='/admin' name="dashboard" dataProvider={dataProvider} dashboard={Dashboard}>
-        <Resource name="users" icon={FaUser} list={Users} edit={UserEdit} />
         <Resource name="notices" icon={FaCalendar} list={Notices} edit={NoticeEdit} />
+        <Resource name="users" icon={FaUser} list={Users} edit={UserEdit} />
         <Resource name="items" icon={FaCopy} list={Items} />
         <Resource name="reports" icon={FaExclamationTriangle} list={Reports} />
     </Admin>

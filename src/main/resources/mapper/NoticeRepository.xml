@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.NoticeRepository">
+    <insert id="write"
+            flushCache="true"
+            parameterType="com.lec.spring.domain.Notice"
+            keyColumn="noticeKey"
+            keyProperty="noticeKey">
+        INSERT INTO d1_notice(noticeKey, subject, content, writeDate)
+        VALUES(#{noticeKey}, #{subject}, #{content}, #{writeDate})
+    </insert>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Notice">
+        UPDATE d1_notice
+        SET
+            subject = #{subject},
+            content = #{content}
+        WHERE noticeKey = #{noticeKey}
+    </update>
+
+    <select id="findByNoticeKey" resultType="com.lec.spring.domain.Notice">
+        SELECT *
+        FROM d1_notice
+        WHERE noticeKey = #{noticeKey}
+    </select>
+
+    <select id="findAll" resultType="com.lec.spring.domain.Notice">
+        SELECT *
+        FROM d1_notice
+        WHERE 1 = 1
+    </select>
+
+    <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.Notice">
+        DELETE FROM d1_notice WHERE noticeKey = #{noticeKey}
+    </delete>
+</mapper>

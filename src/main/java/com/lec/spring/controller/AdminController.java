@@ -4,9 +4,11 @@ import com.lec.spring.DTO.ItemDTO;
 import com.lec.spring.DTO.LoginRequest;
 import com.lec.spring.DTO.UserModifyRequest;
 import com.lec.spring.domain.Item;
+import com.lec.spring.domain.Notice;
 import com.lec.spring.domain.Report;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.ItemService;
+import com.lec.spring.service.NoticeService;
 import com.lec.spring.service.ReportService;
 import com.lec.spring.service.UserService;
 import org.apache.ibatis.annotations.Delete;
@@ -33,6 +35,9 @@ public class AdminController {
     private ItemService itemService;
     @Autowired
     private ReportService reportService;
+
+    @Autowired
+    private NoticeService noticeService;
 
     @PostMapping("/login")
     public ResponseEntity<?> loginAdmin(@RequestBody LoginRequest request) {
@@ -62,6 +67,19 @@ public class AdminController {
 
         return response;
     }
+
+    // ---- Notice 부분 ---------------------------------
+    @GetMapping("/notices")
+    public Map<String, Object> getNotices() {
+        List<Notice> allNotices = noticeService.findAll();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", allNotices);
+        response.put("count", allNotices.size());
+
+        return response;
+    }
+
 
     // ---- User 부분 -----------------------------------
     @GetMapping("/users")

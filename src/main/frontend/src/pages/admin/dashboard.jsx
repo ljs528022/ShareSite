@@ -71,7 +71,9 @@ const Dashboard = () => {
             <Grid size={{xs: 12}}>
                 <Typography variant="h6" gutterBottom>공지사항</Typography>
                 <ListItemButton onClick={() => navigate("/admin/notices")}>관리하기</ListItemButton>
-                
+                <List dense>
+                    
+                </List>
             </Grid>
             {/* 상품 게시글 */}
             <Grid size={{ xs:12, md:6 }}>

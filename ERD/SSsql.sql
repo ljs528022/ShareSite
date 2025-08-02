@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS d1_item_image;
 DROP TABLE IF EXISTS d1_chatroom; 
 DROP TABLE IF EXISTS d1_chatMessage;
 DROP TABLE IF EXISTS d1_report;
+DROP TABLE IF EXISTS d1_notice;
 
 /* Create Tables */
 
@@ -165,6 +166,15 @@ CREATE TABLE d1_report
 	content LONGTEXT NOT NULL,
 	createdAt datetime,
 	PRIMARY KEY (reportKey)
+);
+
+CREATE TABLE d1_notice
+(
+	noticeKey int NOT NULL AUTO_INCREMENT,
+	subject varchar(200) NOT NULL,
+	content LONGTEXT NOT NULL,
+	writeDate datetime,
+	PRIMARY KEY (noticeKey)
 );
 
 
