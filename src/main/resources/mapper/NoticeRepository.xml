@@ -8,8 +8,8 @@
             parameterType="com.lec.spring.domain.Notice"
             keyColumn="noticeKey"
             keyProperty="noticeKey">
-        INSERT INTO d1_notice(noticeKey, subject, content, writeDate)
-        VALUES(#{noticeKey}, #{subject}, #{content}, #{writeDate})
+        INSERT INTO d1_notice(noticeKey, subject, content, noticeType, writeDate)
+        VALUES(#{noticeKey}, #{subject}, #{content}, #{noticeType}, #{writeDate})
     </insert>
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Notice">

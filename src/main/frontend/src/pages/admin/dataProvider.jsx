@@ -92,6 +92,31 @@ const dataProvider = {
         data: paginated,
         total: count,
       }
+    } else if(resource === "notices") {
+      const notices = data.map(n => ({
+          ...n,
+        id: n.reportKey,
+        reporterKey: n.reporterKey,
+        targetKey: n.targetKey,
+        reason: n.reason,
+        content: n.content,
+        createdAt: n.createdAt,
+      }));
+
+      const sorted = [...notices].sort((a, b) => {
+        if (a[field] < b[field]) return order === "ASC" ? -1 : 1;
+        if (a[field] > b[field]) return order === "ASC" ? 1 : -1;
+        return 0;
+      });
+      
+      const start = (page - 1) * perPage;
+      const end  = start + perPage;
+      const paginated = sorted.slice(start, end);
+      
+      return {
+        data: paginated,
+        total: count,
+      }
     }
   },
 

@@ -173,6 +173,7 @@ CREATE TABLE d1_notice
 	noticeKey int NOT NULL AUTO_INCREMENT,
 	subject varchar(200) NOT NULL,
 	content LONGTEXT NOT NULL,
+	noticeType int NOT NULL,
 	writeDate datetime,
 	PRIMARY KEY (noticeKey)
 );

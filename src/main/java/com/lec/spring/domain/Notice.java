@@ -15,5 +15,6 @@ public class Notice {
     private Long noticeKey;             // 공지 글 번호
     private String subject;             // 공지 제목
     private String content;             // 공지 내용
+    private Long noticeType;            // 공지 종류
     private LocalDateTime writeDate;    // 공지 작성일
 }
