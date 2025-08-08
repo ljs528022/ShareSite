@@ -7,7 +7,6 @@ import UserEdit from './pages/admin/userEdit';
 import Items from './pages/admin/items';
 import Reports from './pages/admin/reports';
 import Notices from './pages/admin/Notices';
-import NoticeEdit from './pages/admin/noticeEdit';
 
 const AdminApp = () => (
     <Admin basename='/admin' name="dashboard" dataProvider={dataProvider} dashboard={Dashboard}>
