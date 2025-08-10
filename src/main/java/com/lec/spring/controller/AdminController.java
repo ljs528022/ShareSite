@@ -80,6 +80,16 @@ public class AdminController {
         return response;
     }
 
+    @PostMapping("/notices")
+    public Map<String, Object> addNotices(@RequestBody Map<String, String> data) {
+
+
+        Map<String, Object> response = new HashMap<>();
+
+
+        return response;
+    }
+
 
     // ---- User 부분 -----------------------------------
     @GetMapping("/users")

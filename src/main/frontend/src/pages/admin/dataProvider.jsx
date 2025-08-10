@@ -129,7 +129,6 @@ const dataProvider = {
   create: async (resource, { data }) => {
     const response = await postData(`/api/admin/${resource}`, data);
     const result = response.data;
-    console.log(result.data);
     return { data: result };
   },
 

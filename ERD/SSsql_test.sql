@@ -18,6 +18,8 @@ SELECT * FROM d1_report;
 
 SELECT * FROM d1_authority;
 
+SELECT * FROM d1_notice;
+
 DELETE FROM d1_chatmessage WHERE id > 7;
 
 SELECT *
