@@ -12,6 +12,8 @@ public interface NoticeService {
 
     Notice findByNoticeKey(Long noticeKey);
 
+    Notice findBySubject(String subject);
+
     List<Notice> findAll();
 
     void delete(Long noticeKey);

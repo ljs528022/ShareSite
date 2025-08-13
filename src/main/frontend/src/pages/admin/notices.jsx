@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Button, Datagrid, DateField, List, ListContextProvider, TextField, TextInput, useDataProvider, useListContext, useListController } from "react-admin";
+import { Button, Datagrid, DateField, DeleteButton, EditButton, List, ListContextProvider, TextArrayInput, TextField, TextInput, useDataProvider, useListContext, useListController } from "react-admin";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../util/ToastContext";
+import { Box } from "@mui/material";
 
 const Notices = () => {
     const controlProps = useListController({
@@ -29,8 +30,11 @@ const FetchNotices = () => {
         <Datagrid>
             <TextField source="id" label="공지 번호" />
             <TextField source="subject" label="공지 제목" />
-            <TextField source="content" label="공지 타입" />
+            <TextField source="content" label="공지 내용" />
+            <TextField source="noticeType" label="공지 종류" />
             <DateField source="writeDate" label="작성일" />
+            <EditButton />
+            <DeleteButton />
         </Datagrid>
     </List>
     :
@@ -64,8 +68,8 @@ const AddNotice = ({ dataProvider, navigate }) => {
                 }
             });
 
+            alert("공지 등록 완료");
             navigate(0);
-            showToast("공지 등록 완료");
         } catch {
             showToast("통신에 문제가 발생했습니다.", "error")
         }
@@ -81,7 +85,7 @@ const AddNotice = ({ dataProvider, navigate }) => {
     <>
         <Button onClick={() => setShowAdd(true)}>공지 추가</Button>
         {showAdd && 
-        <div style={{display: "flex", flexDirection: "column", margin: "10px auto", width: "50%", }}>
+        <div style={{display: "flex", flexDirection: "column", margin: "10px auto", padding: "10px 20px", width: "50%", border: "3px solid #999", borderRadius: "10px" }}>
             <div style={{ width: "55px", margin: "10px 0px", border: "1px solid black" }}>
                 <select id="noticeType" value={notice.noticeType} onChange={handleInput}>
                     <option value={''}>종류</option>
@@ -95,15 +99,14 @@ const AddNotice = ({ dataProvider, navigate }) => {
             </div>
             <div>
                 <label style={{ marginTop: "20px", marginBottom: "5px" }}>내용</label>
-                {/* 다른 입력창으로 변경 필요함 */}
                 <textarea id="content" onChange={handleInput} 
-                    style={{ width: "100%", height: "150px", backgroundColor: "#ddd", borderRadius: "10px", padding: "20px", outline: "none", resize: "none" }}
+                    style={{ width: "100%", height: "150px", backgroundColor: "#ddd", borderRadius: "10px", padding: "15px", outline: "none", resize: "none" }}
                 />
             </div>
-            <div style={{display: "flex", margin: "20px auto", width: "100%", justifyContent: "space-evenly"}}>
-                <button type="button" onClick={addNotice} style={{ border: "3px solid #5582ff", color: "#5582ff", borderRadius: "10px", padding: "5px 20px"}}>공지 등록</button>
-                <button type="button" onClick={() => setShowAdd(false)} style={{ border: "3px solid red", color: "red", borderRadius: "10px", padding: "5px 20px" }}>작성 취소</button>
-            </div>
+            <Box margin={"8px auto"}>
+                <Button variant="contained" size="big" onClick={addNotice}>작성 완료</Button>
+                <Button variant="outlined" sx={{marginLeft: "20px"}} size="big" color="error" onClick={() => setShowAdd(false)}>작성 취소</Button>
+            </Box>
         </div>
         }
     </>

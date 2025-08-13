@@ -37,6 +37,11 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    public Notice findBySubject(String subject) {
+        return noticeRepository.findBySubject(subject);
+    }
+
+    @Override
     public List<Notice> findAll() {
         return noticeRepository.findAll();
     }

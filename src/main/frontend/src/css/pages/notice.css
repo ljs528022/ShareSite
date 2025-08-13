@@ -1,0 +1,11 @@
+.notice-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 20px auto;
+}
+
+.notice-table {
+    margin-top: 50px;
+    text-align: center;
+}

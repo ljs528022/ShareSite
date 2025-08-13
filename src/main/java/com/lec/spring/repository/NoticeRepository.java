@@ -15,6 +15,8 @@ public interface NoticeRepository {
 
     Notice findByNoticeKey(@Param("noticeKey")Long noticeKey);
 
+    Notice findBySubject(@Param("subject")String subject);
+
     List<Notice> findAll();
 
     void delete(@Param("noticeKey")Long noticeKey);

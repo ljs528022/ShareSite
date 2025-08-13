@@ -20,9 +20,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Long.parseLong;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -57,11 +60,13 @@ public class AdminController {
         List<User> users = userService.findAll();
         List<ItemDTO> items = itemService.findAllItem();
         List<Report> reports = reportService.findAll();
+        List<Notice> notices = noticeService.findAll();
 
         Map<String, Object> response = new HashMap<>();
         response.put("users", users.size());
         response.put("items", items.size());
         response.put("reports", reports.size());
+        response.put("latestNotices", notices.subList(0, Math.min(notices.size(), 5)));
         response.put("latestItems", items.subList(0, Math.min(items.size(), 5)));
         response.put("latestReports", reports.subList(0, Math.min(reports.size(), 5)));
 
@@ -80,14 +85,68 @@ public class AdminController {
         return response;
     }
 
-    @PostMapping("/notices")
-    public Map<String, Object> addNotices(@RequestBody Map<String, String> data) {
-
+    @GetMapping("/notices/{id}")
+    public Map<String, Object> getOneNotice(@PathVariable("id")Long id) {
+        Notice notice = noticeService.findByNoticeKey(id);
 
         Map<String, Object> response = new HashMap<>();
-
+        response.put("data", notice);
 
         return response;
+    }
+
+    @PostMapping("/notices")
+    public Map<String, Object> addNotices(@RequestBody Map<String, String> data) {
+        String subject = data.get("subject");
+        String content  = data.get("content");
+        String noticeType = data.get("noticeType");
+
+        Notice notice = new Notice();
+        notice.setSubject(subject);
+        notice.setContent(content);
+        notice.setNoticeType(Long.parseLong(noticeType));
+        notice.setWriteDate(LocalDateTime.now());
+
+        noticeService.write(notice);
+
+        Notice newNotice = noticeService.findBySubject(subject);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("result", newNotice);
+
+        return response;
+    }
+
+    @PostMapping("/notices/{id}")
+    public Map<String, Object> updateNotice(@PathVariable("id")Long id, @RequestBody Map<String, String> data) {
+        Notice existNotice = noticeService.findByNoticeKey(id);
+        String subject = data.get("subject");
+        String content = data.get("data");
+        String noticeType = data.get("noticeType");
+
+        if(existNotice == null) return null;
+
+        Notice editedNotice = Notice.builder()
+                .noticeKey(existNotice.getNoticeKey())
+                .subject(subject)
+                .content(content)
+                .noticeType(Long.parseLong(noticeType))
+                .writeDate(existNotice.getWriteDate())
+                .build();
+
+        noticeService.update(editedNotice);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", editedNotice);
+
+        return response;
+    }
+
+    @DeleteMapping("/notices/{id}")
+    public void deleteNotice(@PathVariable("id")Long id) {
+        Notice existingNotice = noticeService.findByNoticeKey(id);
+
+        if(existingNotice != null) noticeService.delete(id);
     }
 
 

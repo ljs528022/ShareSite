@@ -8,7 +8,7 @@ const Dashboard = () => {
         users: 0,
         items: 0,
         reports: 0,
-        notices: [],
+        latestNotices: [],
         latestItems: [],
         latestReports: [],
     });
@@ -72,7 +72,18 @@ const Dashboard = () => {
                 <Typography variant="h6" gutterBottom>공지사항</Typography>
                 <ListItemButton onClick={() => navigate("/admin/notices")}>관리하기</ListItemButton>
                 <List dense>
-                    
+                {stats?.latestNotices.length > 0 ?
+                stats.latestNotices.map((n) => (
+                    <div key={n.noticeKey}>
+                        <ListItem>
+                            <ListItemText primary={n.subject} secondary={new Date(n.writeDate).toLocaleDateString()}/>
+                        </ListItem>
+                        <Divider />
+                    </div>
+                ))
+                :
+                <Typography variant="h6">데이터 로딩에 문제가 발생했습니다...</Typography>
+                }
                 </List>
             </Grid>
             {/* 상품 게시글 */}

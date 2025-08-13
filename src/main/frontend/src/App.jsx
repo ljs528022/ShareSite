@@ -22,7 +22,8 @@ import NaverCallback from './services/NaverCallback';
 import KakaoCallback from './services/kakaoCallback';
 import AdminApp from './AdminApp';
 import AdminLogin from './pages/admin/adminLogin';
-import Notice from './pages/notice';
+import Notice from './pages/notice/notice';
+import NoticeDetail from './pages/notice/noticeDetail';
 
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
 
             {/* 공지사항 페이지 */}
             <Route path='/notice' Component={Notice}/>
+            <Route path='/notice/:noticeKey' Component={NoticeDetail} />
 
             {/* 신고 페이지 */}
             <Route path='/report/write' Component={WriteReport}/>

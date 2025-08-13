@@ -7,10 +7,11 @@ import UserEdit from './pages/admin/userEdit';
 import Items from './pages/admin/items';
 import Reports from './pages/admin/reports';
 import Notices from './pages/admin/Notices';
+import NoticeEdit from './pages/admin/noticesEdit';
 
 const AdminApp = () => (
     <Admin basename='/admin' name="dashboard" dataProvider={dataProvider} dashboard={Dashboard}>
-        <Resource name="notices" icon={FaCalendar} list={Notices} />
+        <Resource name="notices" icon={FaCalendar} list={Notices} edit={NoticeEdit} />
         <Resource name="users" icon={FaUser} list={Users} edit={UserEdit} />
         <Resource name="items" icon={FaCopy} list={Items} />
         <Resource name="reports" icon={FaExclamationTriangle} list={Reports} />

@@ -95,12 +95,11 @@ const dataProvider = {
     } else if(resource === "notices") {
       const notices = data.map(n => ({
           ...n,
-        id: n.reportKey,
-        reporterKey: n.reporterKey,
-        targetKey: n.targetKey,
-        reason: n.reason,
+        id: n.noticeKey,
+        subject: n.subject,
         content: n.content,
-        createdAt: n.createdAt,
+        noticeType: n.noticeType,
+        writeDate: n.writeDate,
       }));
 
       const sorted = [...notices].sort((a, b) => {
@@ -128,8 +127,16 @@ const dataProvider = {
 
   create: async (resource, { data }) => {
     const response = await postData(`/api/admin/${resource}`, data);
-    const result = response.data;
-    return { data: result };
+    const { result } = response.data;
+
+    if(resource === "notices") {
+      return { data: {
+        ...result,
+        id: result.noticeKey,
+      }}
+    } else {
+      return { data: result }
+    }
   },
 
   update: async (resource, { id, data }) => {

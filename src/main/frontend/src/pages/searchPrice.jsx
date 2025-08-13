@@ -99,15 +99,14 @@ const SearchPrice = () => {
                 </div>
             </form>
 
-            {/* 여기에 가격대 표시 해야 함 */}
+            {/* 가격대 표시 */}
             {prices && fetchPrices(prices[0])}
 
             <h4 style={{fontSize: '20px'}}>검색한 시세의 상품들</h4>
             <a style={{border: '1px solid rgba(0,0,0,0.3)', marginBottom: "20px"}}></a>
             
-            {/* 여기에 검색한 상품들 불러와야 함 */}
+            {/* 검색한 상품들 */}
             {items && fetchItems(items)}
-
         </div>
     </main>
     );

@@ -16,7 +16,8 @@
         UPDATE d1_notice
         SET
             subject = #{subject},
-            content = #{content}
+            content = #{content},
+            noticeType = #{noticeType}
         WHERE noticeKey = #{noticeKey}
     </update>
 
@@ -24,6 +25,12 @@
         SELECT *
         FROM d1_notice
         WHERE noticeKey = #{noticeKey}
+    </select>
+
+    <select id="findBySubject" resultType="com.lec.spring.domain.Notice">
+        SELECT *
+        FROM d1_notice
+        WHERE subject = #{subject}
     </select>
 
     <select id="findAll" resultType="com.lec.spring.domain.Notice">
