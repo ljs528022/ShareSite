@@ -49,13 +49,15 @@ footer {
 
 .footer-wrapper {
     position: relative;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
-    display: block;
     margin: 0 auto;
     top: 30px;
+    gap: 10px;
 
     font-weight: bold;
 
     width: 1024px;
-    align-items: center;
+    text-align: left;
 }

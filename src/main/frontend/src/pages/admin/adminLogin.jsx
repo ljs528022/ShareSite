@@ -3,9 +3,6 @@ import { postData } from "../../services/api";
 import { useUser } from "../../services/UserContext";
 
 const AdminLogin = () => {
-
-    const { user, setUser } = useUser();
-
     const [loginData, setLoginData] = useState({
         id: "",
         password: ""

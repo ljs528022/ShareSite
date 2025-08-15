@@ -149,9 +149,6 @@ const Header = () => {
                             {(showPopup && user) && 
                                 <div className="Navbar-user" onMouseOver={handlePopupShow} onMouseOut={handlePopupShow}>
                                     <a onClick={() => navigate(`/user/${user.userKey}`)}>마이페이지</a>
-                                    {user.auth === "ADMIN" &&
-                                    <a href="/admin">관리자페이지</a>
-                                    }
                                     <div className="logout" onClick={handleLogout}>로그아웃</div>
                                 </div>
                             }
