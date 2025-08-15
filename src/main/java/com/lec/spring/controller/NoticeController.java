@@ -3,10 +3,7 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.Notice;
 import com.lec.spring.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +23,16 @@ public class NoticeController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("notices", allNotices);
+
+        return response;
+    }
+
+    @GetMapping("/notice/{noticeKey}")
+    public Map<String, Object> getOneNotice(@PathVariable("noticeKey")Long noticeKey) {
+        Notice notice = noticeService.findByNoticeKey(noticeKey);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("notice", notice);
 
         return response;
     }

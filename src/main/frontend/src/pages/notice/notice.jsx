@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import "../../css/pages/notice.css";
 
 const Notice = () => {
-
     const [ notices, setNotices ] = useState(null);
 
     const { showToast } = useToast();
@@ -26,13 +25,26 @@ const Notice = () => {
         fetchNotice();
     }, []);
 
+    const renderTime = (time) => {
+        if(!time) return "";
+
+        return new Date(time).toLocaleString("ko-KR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        });
+    };
+
     if(!notices) return;
 
     return (
     <main>
-        <div className="notice-wrapper">
-            <h3 style={{marginTop: "30px"}}>공지사항</h3>
-            <table className="notice-table">
+        <div className="notice-board">
+            <div className="notice-title">
+                <h3>공지사항</h3>
+                <span>중요한 공지나 알림을 확인할 수 있습니다</span>
+            </div>
+            <table>
                 <thead>
                     <tr>
                         <th>종류</th>
@@ -45,7 +57,7 @@ const Notice = () => {
                         <tr key={n.noticeKey || index} style={{cursor: "pointer"}} onClick={() => navigate(`/notice/${n.noticeKey}`)}>
                             <td>{n.noticeType === 0 ? "공지" : "알림"}</td>
                             <td>{`${n.subject}`}</td>
-                            <td>{`${n.writeDate}`}</td>
+                            <td>{renderTime(n.writeDate)}</td>
                         </tr>
                     ))}
                 </tbody>
