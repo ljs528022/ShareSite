@@ -21,10 +21,8 @@ import SocialSignup from './pages/user/socialSignup';
 import NaverCallback from './services/NaverCallback';
 import KakaoCallback from './services/kakaoCallback';
 import AdminApp from './AdminApp';
-import AdminLogin from './pages/admin/adminLogin';
 import Notice from './pages/notice/notice';
 import NoticeDetail from './pages/notice/noticeDetail';
-
 
 function App() {
 
@@ -86,9 +84,7 @@ function App() {
             <Route path='/withdraw-complete' Component={WithdrawComplete}/>
 
             {/* 관리자 전용 */}
-            <Route path='/admin/login' Component={AdminLogin} />
             <Route path='/admin/*' Component={AdminApp} />
-
           </Routes>
           {!hideLayout && <Footer />}
         </UserProvider>

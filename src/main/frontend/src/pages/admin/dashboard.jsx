@@ -2,7 +2,6 @@ import { Card, CardContent, Divider, Grid, List, ListItem, ListItemButton, ListI
 import { useEffect, useState } from "react";
 import { getData } from "../../services/api";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../services/UserContext";
 
 const Dashboard = () => {
 
@@ -29,14 +28,6 @@ const Dashboard = () => {
         };
         fetchStats();
     }, []);
-
-    // if(!user) {
-    //     alert("로그인을 하지 않았습니다. 로그인창으로 이동합니다.");
-    //     navigate("/admin/login");
-    // } else if (user?.auth !== "ADMIN") {
-    //     alert("접근할 수 없는 페이지입니다! 홈으로 돌아갑니다.");
-    //     navigate("/");
-    // }
 
     return (
     <>
@@ -130,7 +121,7 @@ const Dashboard = () => {
                 </div>
                 ))
                 :
-                <Typography variant="h6">데이터 로딩에 문제가 발생했습니다...</Typography>
+                <Typography variant="h6" ml={2}>접수된 신고가 없습니다</Typography>
                 }
                 </List>
             </Grid>
