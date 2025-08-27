@@ -139,6 +139,7 @@ const Login = () => {
                                 {/* API Login */}
                                 {NaverLoginBtn()}
                                 {KakaoLoginBtn()}
+                                {GoogleLoginBtn()}
                         </div>
                     </form>
                 </div>
@@ -180,6 +181,21 @@ const KakaoLoginBtn = () => {
     return (
         <button onClick={handleLogin} style={{ background: "#FEE500" , color: "#000000 85%"}} className="api-login">
             카카오로 함께하기
+        </button>
+    )
+}
+
+const GoogleLoginBtn = () => {
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const googleAuthUrl = `"http://localhost:5178/oauth2/authorization/google"`;
+        window.location.href = googleAuthUrl;
+    }
+    
+    return (
+        <button onClick={handleLogin} style={{ background: "white", border: "2px solid rgba(0,0,0,0.7)", color: "rgba(0,0,0,0.8)"}} className="api-login">
+            구글 계정으로 함께하기
         </button>
     )
 }

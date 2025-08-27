@@ -57,6 +57,22 @@ spring:
       name: user
       password: 0000
 
+    # Google 간편 로그인
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 323279129134-a9p04r782furadqhsm0h9mk0flcsejc4.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+
 logging:
     level:
       org:

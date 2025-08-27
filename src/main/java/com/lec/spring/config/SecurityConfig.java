@@ -53,6 +53,9 @@ public class SecurityConfig {
                             .requestMatchers("/ws-chat/**", "/topic/**", "/app/**").permitAll()
                             .anyRequest().authenticated()
                     )
+                    // Google 로그인
+                    .oauth2Login(oauth2 -> oauth2
+                            .defaultSuccessUrl("/loginSuccess", true))
                     .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                     .sessionManagement(session -> session
                             .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
