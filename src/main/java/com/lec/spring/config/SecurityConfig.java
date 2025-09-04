@@ -2,6 +2,7 @@ package com.lec.spring.config;
 
 import com.lec.spring.service.CustomUserDetailsService;
 import com.lec.spring.util.JwtUtil;
+import com.lec.spring.util.OAuth2LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +31,7 @@ public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService userDetailsService;
+    private final OAuth2LoginSuccessHandler successHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -54,8 +56,7 @@ public class SecurityConfig {
                             .anyRequest().authenticated()
                     )
                     // Google 로그인
-                    .oauth2Login(oauth2 -> oauth2
-                            .defaultSuccessUrl("/loginSuccess", true))
+                    .oauth2Login(oauth -> oauth.successHandler(successHandler))
                     .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                     .sessionManagement(session -> session
                             .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

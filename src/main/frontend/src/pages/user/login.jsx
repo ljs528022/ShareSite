@@ -189,7 +189,7 @@ const GoogleLoginBtn = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        const googleAuthUrl = `http://localhost:5178/oauth2/authorization/google`;
+        const googleAuthUrl = `http://localhost:8093/oauth2/authorization/google`;
         window.location.href = googleAuthUrl;
     }
     

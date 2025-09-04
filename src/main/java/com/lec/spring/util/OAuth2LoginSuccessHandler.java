@@ -1,6 +1,8 @@
 package com.lec.spring.util;
 
-import jakarta.servlet.ServletException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lec.spring.domain.User;
+import com.lec.spring.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,13 +12,19 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
+    private UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public OAuth2LoginSuccessHandler(JwtUtil jwtUtil) {
+    public OAuth2LoginSuccessHandler(UserRepository userRepository, JwtUtil jwtUtil) {
+        this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
     }
 
@@ -25,22 +33,24 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-
         String email = oAuth2User.getAttribute("email");
-        String name = oAuth2User.getAttribute("name");
 
-        // JWT 발급
+        User user = userRepository.findByEmail(email);
+
+        // 회원가입을 해야한다면, 그걸 위한 임시 token 생성
         String token = jwtUtil.generateToken(email);
 
-        // 쿠키에 담아서 보내기
-        Cookie cookie = new Cookie("jwt", token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60);
+        Cookie signupCookie = new Cookie("jwt", token);
+        signupCookie.setHttpOnly(false);
+        signupCookie.setPath("/");
+        signupCookie.setMaxAge(10 * 60);   // 10분만 유지
+        response.addCookie(signupCookie);
 
-        response.addCookie(cookie);
+        if(user == null) {
+            response.sendRedirect("http://localhost:5178/user/signup/social");
+        } else {
+            response.sendRedirect("http://localhost:5178/oauth/login-success");
+        }
 
-        response.sendRedirect("http://localhost:5178/login-success");
     }
 }

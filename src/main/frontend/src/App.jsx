@@ -51,6 +51,7 @@ function App() {
             {/* 소셜 로그인 */}
             <Route path='/oauth/naver/callback' Component={NaverCallback} />
             <Route path='/oauth/kakao/callback' Component={KakaoCallback} />
+            <Route path='/oauth/login-success' Component={""}/>
 
             {/* 소셜 회원가입 */}
             <Route path='/user/signup/social' Component={SocialSignup} />
