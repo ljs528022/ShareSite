@@ -46,7 +46,7 @@ const NaverCallback = () => {
                     if(userState === "N") {
                         setUser(userInfo);
                         showToast(`로그인 성공! 네이버에서 오신걸 환영합니다!`);
-                        navigate("/home");
+                        navigate("/");
                     } else if (userState === "R") {
                         const result = confirm("탈퇴 처리 중인 계정입니다. 탈퇴를 취소하겠습니까?");
                         const accessToken = sessionStorage.getItem("naverAccessToken");
@@ -58,19 +58,19 @@ const NaverCallback = () => {
                             if(res.status === 200) {
                                 setUser(userInfo);
                                 showToast(`탈퇴 요청이 취소되었습니다. ${userInfo?.useralias}님 어서오세요!`);
-                                navigate("/home");
+                                navigate("/");
                             }
                         } else {
-                            showToast("로그인이 중간되었습니다. Home으로 이동합니다.", "error");
+                            showToast("로그인이 중단되었습니다. Home으로 이동합니다.", "error");
                             sessionStorage.removeItem("naverAccessToken");
-                            navigate("/home");
+                            navigate("/");
                         }
                     } else if (userState === "S") {
                         confirm("이미 탈퇴 처리된 계정입니다. Home으로 이동합니다.");
                         localStorage.removeItem("token");
                         sessionStorage.removeItem("token");
                         sessionStorage.removeItem("naverAccessToken");
-                        navigate("/home");
+                        navigate("/");
                     }
                 } else {
                     showToast("알 수 없는 응답입니다", "error");

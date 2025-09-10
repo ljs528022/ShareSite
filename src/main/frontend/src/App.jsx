@@ -23,6 +23,7 @@ import KakaoCallback from './services/kakaoCallback';
 import AdminApp from './AdminApp';
 import Notice from './pages/notice/notice';
 import NoticeDetail from './pages/notice/noticeDetail';
+import GoogleCallback from './services/googleCallback';
 
 function App() {
 
@@ -51,7 +52,7 @@ function App() {
             {/* 소셜 로그인 */}
             <Route path='/oauth/naver/callback' Component={NaverCallback} />
             <Route path='/oauth/kakao/callback' Component={KakaoCallback} />
-            <Route path='/oauth/login-success' Component={""}/>
+            <Route path='/oauth/login-success' Component={GoogleCallback}/>
 
             {/* 소셜 회원가입 */}
             <Route path='/user/signup/social' Component={SocialSignup} />

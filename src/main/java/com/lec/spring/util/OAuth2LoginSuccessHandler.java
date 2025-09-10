@@ -6,6 +6,8 @@ import com.lec.spring.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -37,18 +39,28 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         User user = userRepository.findByEmail(email);
 
-        // 회원가입을 해야한다면, 그걸 위한 임시 token 생성
-        String token = jwtUtil.generateToken(email);
 
-        Cookie signupCookie = new Cookie("jwt", token);
-        signupCookie.setHttpOnly(false);
-        signupCookie.setPath("/");
-        signupCookie.setMaxAge(10 * 60);   // 10분만 유지
-        response.addCookie(signupCookie);
 
         if(user == null) {
+            // 회원가입을 해야한다면, 그걸 위한 임시 token 생성
+            String token = jwtUtil.generateToken(email);
+
+            Cookie signupCookie = new Cookie("jwt", token);
+            signupCookie.setHttpOnly(false);
+            signupCookie.setPath("/");
+            signupCookie.setMaxAge(10 * 60);   // 10분만 유지
+            response.addCookie(signupCookie);
+
             response.sendRedirect("http://localhost:5178/user/signup/social");
         } else {
+            String token = jwtUtil.generateToken(user.getUsername());
+
+            Cookie loginCookie = new Cookie("loginCookie", token);
+            loginCookie.setHttpOnly(true);
+            loginCookie.setPath("/");
+            loginCookie.setMaxAge(10 * 60);
+            response.addCookie(loginCookie);
+
             response.sendRedirect("http://localhost:5178/oauth/login-success");
         }
 
