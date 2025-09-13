@@ -95,9 +95,10 @@ const SocialSignup = () => {
             const res = await postData("/user/signup/social", {
                 username: id || signUp.username,
                 useralias: signUp.useralias,
-                email: signUp?.emailChk ? signUp?.email : email,
+                email: signUp?.emailChk !== "" ? signUp?.email : email,
                 tokenType: tokenType,
             });
+            
             if(res.status === 200) {
                 showToast("회원가입이 완료되었습니다!", "success");
                 sessionStorage.removeItem("naverAccessToken");
