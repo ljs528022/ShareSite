@@ -6,7 +6,7 @@ import Users from './pages/admin/users';
 import UserEdit from './pages/admin/userEdit';
 import Items from './pages/admin/items';
 import Reports from './pages/admin/reports';
-import Notices from './pages/admin/Notices';
+import Notices from './pages/admin/notices';
 import NoticeEdit from './pages/admin/noticesEdit';
 import authProvider from './pages/admin/authProvider';
 

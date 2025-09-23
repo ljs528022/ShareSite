@@ -8,7 +8,7 @@ import Pagination from "../../util/Pagination";
 import ItemCardList from "../../components/itemCardList";
 import LikeButton from "../../util/LikeButton";
 import Modal from "../../util/Modal";
-import SidePage from "../../util/sidePage";
+import SidePage from "../../util/SidePage";
 import MapShow from "../../pages/side/MapShow";
 import EmptyBox from "../../components/EmptyBox";
 import Purchase from "../side/Purchase";

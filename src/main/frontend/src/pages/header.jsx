@@ -6,7 +6,7 @@ import { useUser } from "../services/UserContext.jsx";
 import { useToast } from "../util/ToastContext.jsx";
 import { getCategory } from "../services/getCategory.jsx";
 import ChatRoomList from "./chat/ChatRoomList.jsx";
-import SidePage from "../util/sidePage.jsx";
+import SidePage from "../util/SidePage.jsx";
 import LikeShow from "./side/LikeShow.jsx";
 import { FaSearch } from "react-icons/fa";
 

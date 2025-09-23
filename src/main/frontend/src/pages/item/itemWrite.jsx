@@ -5,7 +5,7 @@ import { useUser } from "../../services/UserContext";
 import { useToast } from "../../util/ToastContext";
 import { postData } from "../../services/api";
 import { useNavigate } from "react-router-dom";
-import SidePage from "../../util/sidePage";
+import SidePage from "../../util/SidePage";
 import SearchPostCode from "../../util/SearchPostCode";
 import { FaCamera } from "react-icons/fa";
 
