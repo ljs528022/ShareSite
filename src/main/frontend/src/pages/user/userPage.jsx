@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "../../util/ToastContext";
 import ItemCard from "../../components/itemCard";
 import EmptyBox from "../../components/EmptyBox";
-import SidePage from "../../util/sidePage";
+import SidePage from "../../util/SidePage";
 import LikeShow from "../side/LikeShow";
 import UserModify from "./userModify";
 import EditModal from "../../util/EditModal";
