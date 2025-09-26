@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { deleteData, postData } from "../../services/api";
 import { useToast } from "../../util/ToastContext";
 import { useUser } from "../../services/UserContext";
-import SidePage from "../../util/sidePage";
+import SidePage from "../../util/SidePage";
 import SearchPostCode from "../../util/SearchPostCode";
 import Modal from "../../util/Modal";
 import { FaCamera } from "react-icons/fa";

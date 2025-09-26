@@ -6,7 +6,7 @@ import { useToast } from "../../util/ToastContext";
 import ItemCard from "../../components/itemCard";
 import EmptyBox from "../../components/EmptyBox";
 import "../../css/pages/itemSearch.css";
-import { FaAngleLeft, FaAngleRight, FaMinus, FaPlus } from "react-icons/fa";
+import { FaAngleRight, FaMinus, FaPlus } from "react-icons/fa";
 
 
 const ItemSearch = () => {

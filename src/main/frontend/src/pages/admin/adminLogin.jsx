@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { postData } from "../../services/api";
-import { useUser } from "../../services/UserContext";
+import { setUser } from "../../services/UserContext";
 
 const AdminLogin = () => {
     const [loginData, setLoginData] = useState({

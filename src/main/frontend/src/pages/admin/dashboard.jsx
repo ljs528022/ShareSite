@@ -1,4 +1,4 @@
-import { Card, CardContent, Divider, Grid, List, ListItem, ListItemButton, ListItemText, Table, Typography } from "@mui/material";
+import { Card, CardContent, Divider, Grid, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getData } from "../../services/api";
 import { useNavigate } from "react-router-dom";
