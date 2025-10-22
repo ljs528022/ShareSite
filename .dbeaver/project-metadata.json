@@ -1,1 +1,1 @@
-{"resources":{"ERD/SSsql_data.sql":{"default-datasource":"mysql8-194f83133c7-47bf409ddf53b817","default-catalog":"sharesitedb"},"ERD/SSsql_test.sql":{"default-catalog":"sharesitedb"}}}
+{"resources":{"ERD/SSsql_data.sql":{"default-datasource":"mysql8-194f83133c7-47bf409ddf53b817","default-catalog":"sharesiteDB"},"ERD/SSsql_test.sql":{"default-datasource":"mysql8-194f83133c7-47bf409ddf53b817","default-catalog":"sharesiteDB"}}}
