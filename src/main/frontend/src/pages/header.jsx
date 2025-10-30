@@ -96,7 +96,7 @@ const Header = () => {
         <header className='Navber_wrapper'>
             <div className="Navbar-row">
                 <a href="/" className="Navbar-logo">
-                    <img src="http://localhost:8093/item-images/temp/SSicon.png" className='SSLogo' />
+                    <img src="http://localhost:5178/uploads/item-images/temp/SSicon.png" className='SSLogo' />
                 </a>
                 <div className="Navbar-search">
                     <form role="search">
@@ -141,7 +141,7 @@ const Header = () => {
                                 user.userimg ?
                                 `http://localhost:8093${user.userimg}`
                                 :
-                                `http://localhost:8093/item-images/temp/userImgTemp.png`
+                                `http://localhost:8093/uploads/item-images/temp/userImgTemp.png`
                             } alt={user.username} />
                              :
                              "로그인"}

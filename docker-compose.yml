@@ -34,7 +34,8 @@ services:
     expose:
       - "3306"
     volumes:
-      - db_data:/var/lib/mysql
+      - sharesiteDB_volume:/var/lib/mysql
 
 volumes:
-  db_data:
+  sharesiteDB_volume:
+    external: true
