@@ -35,7 +35,7 @@ const GoogleCallback = () => {
                         const result = confirm("탈퇴 처리 중인 계정입니다. 탈퇴를 취소하겠습니까?");
                         
                         if(result) {
-                            const res = await postData("/user/cancel-socialWithdraw", {
+                            const res = await postData("/api/user/cancel-socialWithdraw", {
                                 userKey: userInfo.userKey
                             });
                             if(res.status === 200) {

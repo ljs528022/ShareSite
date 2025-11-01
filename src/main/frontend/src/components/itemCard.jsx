@@ -13,7 +13,7 @@ const ItemCard = ({ item, style }) => {
             <div className={`${style}_Card_wrapper`} onClick={() => navigate(`/product/${item.itemKey}`)}>
                 <img 
                     className={`${style}_Card_img`}
-                    src={`http://localhost:8093${mainImage.imgUrl}`}
+                    src={`http://localhost:5178${mainImage.imgUrl}`}
                     alt="상품 이미지"
                 />
                 <div className={`${style}_CardBody`}>

@@ -22,7 +22,7 @@ const Payments = ({ setShowReview }) => {
     useEffect(() => {
         const getUserPayments = async () => {
             try {
-                const response = await getData(`/api/payment/buyer/${user.userKey}`);
+                const response = await getData(`/payment/buyer/${user.userKey}`);
                 const { userPayments, items } = response.data;
 
                 // 받아온 상품과 상품 구매 내역을 itemKey로 분류하기

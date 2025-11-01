@@ -33,9 +33,9 @@ const ItemDetail = () => {
     
     // Item's Category
     const [ cate, setCate ] = useState([]);
-    const parentKey = Math.floor(item.cateKey / 100) * 100;
-    const parentCate = cate.find(c => c.cateKey === parentKey);
-    const currentCate = cate.find(c => c.cateKey === item.cateKey);
+    const parentKey = item && Math.floor(item.cateKey / 100) * 100;
+    const parentCate = parentKey && cate.find(c => c.cateKey === parentKey);
+    const currentCate = item && cate.find(c => c.cateKey === item.cateKey);
 
     // Image Pagination
     const [ currentPage, setCurrentPage ] = useState(1);
@@ -64,6 +64,8 @@ const ItemDetail = () => {
 
     // 해당 상품의 정보 받아오기
     useEffect(() => {
+        if(!itemKey) return;
+
         const fetchItem = async () => {
             try {
                 const res = await getData(`/product/${itemKey}`, { withCredentials: true });
@@ -81,42 +83,50 @@ const ItemDetail = () => {
             }
         };
 
-        if(itemKey) {
-            fetchItem();
-        }
+        fetchItem();
     }, [itemKey]);
 
     // 판매자가 판매 중인 다른 상품 불러오기
     useEffect(() => {
-        if(item.userKey === undefined) return;
+        if(!item) return;
+
+        const userKey = item?.userKey;
+        console.log(item);
+        console.log(userKey);
 
         const getOtherItems = async () => {
             try {
-                const response = await getData(`/product/seller/${item.userKey}`, { withCredentials: true });
-                setSellerItem(response.data.sellerItems.filter(items => items.itemKey != itemKey));
+                const response = await getData(`/product/seller/${userKey}`, { withCredentials: true });
+                const sellerItems = response?.data?.sameCateItems ?? [];
+
+                setSellerItem(sellerItems.filter(items => items.itemKey != itemKey));
             } catch (err) {
                 console.log("Failed Load Data...", err);
             }
         }
 
         getOtherItems();
-    }, [item.itemKey, item.userKey]);
+    }, [item?.itemKey, item?.userKey]);
 
     // 연관된 카테고리 상품들 받아오기
     useEffect(() => {
-        if(item.cateKey === undefined) return;
+        if(!item) return;
+
+        const cateKey = item?.cateKey;
 
         const getItemsSameCateKey = async () => {
             try {
-                const response = await getData(`/product/cate/${item.cateKey}`, { withCredentials: true });
-                setItemsSameCate(response.data.sameCateItems.filter(items => items.itemKey != itemKey));
+                const response = await getData(`/product/cate/${cateKey}`, { withCredentials: true });
+                const sellerItems = response?.data?.sameCateItems ?? [];
+
+                setItemsSameCate(sellerItems.filter(items => items.itemKey != itemKey));
             } catch (err) {
                 console.log("Failed Load Data...", err);
             }
         }
 
         getItemsSameCateKey();
-    }, [item.cateKey]);
+    }, [item?.cateKey]);
 
     // 카테고리 받아오기
     useEffect(() => {
@@ -148,7 +158,7 @@ const ItemDetail = () => {
         if(paymentIsExist && !itemKey && !userKey) return;
 
         const getPayment = async () => {
-            const response = await getData(`/api/payment?itemKey=${itemKey}&buyerKey=${userKey}`, { withCredentials: true });
+            const response = await getData(`/payment?itemKey=${itemKey}&buyerKey=${userKey}`, { withCredentials: true });
             if(response.status === 200) {
                 if(response.data === true) {
                     setPaymentIsExist(true);
@@ -175,7 +185,7 @@ const ItemDetail = () => {
         if(!imgs || imgs.length === 0) {
             const temp = "/item-images/temp/SStemp.png";
             return <img
-                    src={`http://localhost:8093${temp}`}
+                    src={`http://localhost:5178${temp}`}
                     alt="상품이미지"/>
         }
 
@@ -185,7 +195,7 @@ const ItemDetail = () => {
                     {currentImg.map((img, index) => (
                         <img
                             key={index}
-                            src={`http://localhost:8093${img.imgUrl}`}
+                            src={`http://localhost:5178${img.imgUrl}`}
                             alt="상품이미지"
                         />
                     ))}
@@ -201,7 +211,7 @@ const ItemDetail = () => {
 
         return (
             <img
-                src={`http://localhost:8093${images[0].imgUrl}`}
+                src={`http://localhost:5178${images[0].imgUrl}`}
                 alt="상품이미지"
             />
         )
@@ -251,7 +261,7 @@ const ItemDetail = () => {
     if (loading) return <div>상품을 가져오고 있어요!</div>;
     if (!item || Object.keys(item).length === 0) {
         showToast("상품이 없습니다!", "error");
-        navigate("/home");
+        navigate("/");
     }
 
     if(!item && !itemUser) return;

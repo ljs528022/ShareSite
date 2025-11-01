@@ -89,7 +89,7 @@ const ChatRoom = (props) => {
         const roomKey = chatRoom.roomKey;
 
         const token = sessionStorage.getItem("token") || localStorage.getItem("token");
-        const socket = new SockJS(`http://localhost:8093/ws-chat?token=${token}`);
+        const socket = new SockJS(`http://localhost:5178/ws-chat?token=${token}`);
         const client = new Client({
             webSocketFactory: () => socket,
             debug: (str) => console.log(str),
@@ -255,7 +255,7 @@ const ChatRoom = (props) => {
                 <div className='chat-userInfo-wrapper'>
                     {chatUserInfo &&
                     <img className='chat-userInfo-img'
-                    src={chatUserInfo.userimg ? `http://localhost:8093${chatUserInfo.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'}/>
+                    src={chatUserInfo.userimg ? `http://localhost:5178${chatUserInfo.userimg}` : 'http://localhost:5178/uploads/item-images/temp/userImgTemp.png'}/>
                     }
                     <div className='chat-userInfo-box'>
                         <p className='chat-userInfo-text'>{chatUserInfo.useralias}</p>

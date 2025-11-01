@@ -219,7 +219,7 @@ const UserPage = () => {
                                 <UserTrustScore score={userScore} onLabel={true}/>
                                 <img 
                                     className="user-img"
-                                    src={userInfo.userimg !== '' ? `http://localhost:8093${userInfo.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'}
+                                    src={userInfo.userimg !== '' ? `http://localhost:5178${userInfo.userimg}` : 'http://localhost:5178/uploads/item-images/temp/userImgTemp.png'}
                                 />
                             </div>
                             <div className="user-info-status">

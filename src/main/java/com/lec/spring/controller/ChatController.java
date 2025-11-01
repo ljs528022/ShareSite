@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/chat")
+@RequestMapping("/api/chat")
 @CrossOrigin(origins = "http://localhost:5178/")
 public class ChatController {
 

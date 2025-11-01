@@ -58,7 +58,7 @@ const ChatRoomList = ({ onClose }) => {
 
                 return (
                 <div key={room.roomKey} className="chatRoom-box" onClick={() => handleOpenChat(room)}>
-                    <img className="chatRoom-img" src={chatOhterUser.userimg ? `http://localhost:8093${chatOhterUser.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'} />
+                    <img className="chatRoom-img" src={chatOhterUser.userimg ? `http://localhost:5178${chatOhterUser.userimg}` : 'http://localhost:5178/uploads/item-images/temp/userImgTemp.png'} />
                     <div className="chatRoom-info">
                         <p className="chatRoom-label">{chatOhterUser.useralias}</p>
                         <p className="chatRoom-content">{!msg ? "나눈 대화가 없습니다" : msg.message}</p>

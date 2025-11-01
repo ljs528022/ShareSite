@@ -133,7 +133,7 @@ const Reviews = ({ reviews }) => {
                                 <div className="review-user-row">
                                     <img 
                                         className="review-user-img"
-                                        src={user.userimg !== "" ? `http://localhost:8093${user.userimg}` : 'http://localhost:8093/item-images/temp/userImgTemp.png'}
+                                        src={user.userimg !== "" ? `http://localhost:5178${user.userimg}` : 'http://localhost:5178/uploads/item-images/temp/userImgTemp.png'}
                                     />
                                     <div className="review-user-box">
                                         <span>{user.useralias}</span>

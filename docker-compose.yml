@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5178:80"
+    volumes:
+      - ./src/main/frontend/dist:/usr/share/nginx/html
     depends_on:
       - backend
 

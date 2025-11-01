@@ -27,7 +27,7 @@ const SocialSignup = () => {
 
     useEffect(() => {
         // 쿠키로 Google Email 받아오기.
-        fetch("http://localhost:8093/api/auth/temp-info", {
+        fetch("http://localhost:5178/api/auth/temp-info", {
             method: "GET",
             credentials: "include"
         }).then(res => res.json())

@@ -139,9 +139,9 @@ const Header = () => {
                             {user ?
                              <img src={
                                 user.userimg ?
-                                `http://localhost:8093${user.userimg}`
+                                `http://localhost:5178${user.userimg}`
                                 :
-                                `http://localhost:8093/uploads/item-images/temp/userImgTemp.png`
+                                `http://localhost:5178/uploads/item-images/temp/userImgTemp.png`
                             } alt={user.username} />
                              :
                              "로그인"}
