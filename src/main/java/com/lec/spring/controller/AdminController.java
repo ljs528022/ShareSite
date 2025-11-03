@@ -28,7 +28,7 @@ import java.util.Map;
 import static java.lang.Long.parseLong;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/admin")
 @CrossOrigin(origins = "http://localhost:5178/")
 public class AdminController {
 

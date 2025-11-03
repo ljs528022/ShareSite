@@ -16,7 +16,7 @@ const Home = () => {
     useEffect(() => {
         const fetchHomeData = async () => {
             try{
-                const data = await getData("/api/home");
+                const data = await getData("/home");
                 setWeeklyItems(data.data.weeklyItems || []);
                 setLatestItems(data.data.latestItems || []);
             } catch (err) {

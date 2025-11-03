@@ -98,7 +98,7 @@ const Signup = () => {
             }));
         } catch (err) {
             console.error("아이디 중복 확인 오류:", err);
-        showToast("서버와의 통신 중 오류가 발생했습니다...", "error");
+            showToast("서버와의 통신 중 오류가 발생했습니다...", "error");
         }
     };
     

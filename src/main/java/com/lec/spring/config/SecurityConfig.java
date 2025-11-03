@@ -42,25 +42,25 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http
                 .csrf(csrf -> csrf.disable())
-                    .formLogin(form -> form.disable())
-                    .httpBasic(basic -> basic.disable())
-                    .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
+                .formLogin(form -> form.disable())
+                .httpBasic(basic -> basic.disable())
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
 
-                    .authorizeHttpRequests(auth -> auth
-                            // 인증이 필요 없는 URL
-                            .requestMatchers("/home", "/error", "/api/**", "/user/**", "/product/**", "/uploads/**", "/notice/**", "/like/**", "/search", "/search?**", "/search/**", "/chat/**", "/report/**", "/oauth/**").permitAll()
-                            // 인증이 필요한 URL
-                            .requestMatchers("/user/withdraw/**", "/product/write", "/product/delete/**", "/product/modify/**", "/like?**", "/location/**", "/report/write").authenticated()
-                            // 채팅방 관련
-                            .requestMatchers("/ws-chat/**", "/topic/**", "/app/**").permitAll()
-                            .anyRequest().authenticated()
-                    )
-                    // Google 로그인
-                    .oauth2Login(oauth -> oauth.successHandler(successHandler))
-                    .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(auth -> auth
+                    // 인증이 필요 없는 URL
+                    .requestMatchers("/home", "/category", "/error", "/api/**", "/user/**", "/user/login", "/user/signup", "/product/**", "/uploads/**", "/notice/**", "/like/**", "/search", "/search?**", "/search/**", "/chat/**", "/report/**", "/oauth/**", "/oauth2/**").permitAll()
+                    // 인증이 필요한 URL
+                    .requestMatchers("/user/withdraw/**", "/product/write", "/product/delete/**", "/product/modify/**", "/like?**", "/location/**", "/report/write").authenticated()
+                    // 채팅방 관련
+                    .requestMatchers("/ws-chat/**", "/topic/**", "/app/**").permitAll()
+                    .anyRequest().authenticated()
+                )
+                // Google 로그인
+                .oauth2Login(oauth -> oauth.successHandler(successHandler))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                     .sessionManagement(session -> session
-                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
+                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

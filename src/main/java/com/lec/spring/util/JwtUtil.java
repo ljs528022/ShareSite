@@ -64,6 +64,9 @@ public class JwtUtil {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + EXPIRATION_TIME);
 
+        System.out.println("토큰 생성 시간: " + now);
+        System.out.println("토큰 만료 시간: " + expiry);
+
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(now)

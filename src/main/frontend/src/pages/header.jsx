@@ -1,14 +1,15 @@
 import "../css/pages/header.css";
+import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Categorybox from '../components/categorybox.jsx';
 import { useUser } from "../services/UserContext.jsx";
 import { useToast } from "../util/ToastContext.jsx";
 import { getCategory } from "../services/getCategory.jsx";
 import ChatRoomList from "./chat/ChatRoomList.jsx";
+import Categorybox from '../components/categorybox.jsx';
 import SidePage from "../util/SidePage.jsx";
 import LikeShow from "./side/LikeShow.jsx";
-import { FaSearch } from "react-icons/fa";
+import UserSidePage from "./side/UserSidePage.jsx";
 
 
 const Header = () => {
@@ -96,7 +97,8 @@ const Header = () => {
         <header className='Navber_wrapper'>
             <div className="Navbar-row">
                 <a href="/" className="Navbar-logo">
-                    <img src="http://localhost:5178/uploads/item-images/temp/SSicon.png" className='SSLogo' />
+                    <img src="http://localhost:5178/uploads/temp/SSicon.png" className='SSLogo' />
+                    
                 </a>
                 <div className="Navbar-search">
                     <form role="search">
@@ -141,16 +143,19 @@ const Header = () => {
                                 user.userimg ?
                                 `http://localhost:5178${user.userimg}`
                                 :
-                                `http://localhost:5178/uploads/item-images/temp/userImgTemp.png`
-                            } alt={user.username} />
+                                `http://localhost:5178/uploads/temp/userImgTemp.png`
+                            } alt={user.username} onClick={setShowPopup(true)}/>
                              :
                              "로그인"}
                             </button>
-                            {(showPopup && user) && 
-                                <div className="Navbar-user" onMouseOver={handlePopupShow} onMouseOut={handlePopupShow}>
-                                    <a onClick={() => navigate(`/user/${user.userKey}`)}>마이페이지</a>
-                                    <div className="logout" onClick={handleLogout}>로그아웃</div>
-                                </div>
+                            {(showPopup && user) &&
+                            // 유저용 사이트 페이지
+                            // 신규 채팅, 거래 내역, 마이페이지 이동, 로그아웃 처리 
+                            <SidePage
+                                isOpen={showPopup}
+                                onClose={setShowPopup(false)}
+                                content={<UserSidePage isOpen={showPopup} logout={handleLogout} />}
+                            />
                             }
                         </li>
                     </ul>

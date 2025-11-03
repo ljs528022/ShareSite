@@ -91,8 +91,6 @@ const ItemDetail = () => {
         if(!item) return;
 
         const userKey = item?.userKey;
-        console.log(item);
-        console.log(userKey);
 
         const getOtherItems = async () => {
             try {
@@ -114,18 +112,20 @@ const ItemDetail = () => {
 
         const cateKey = item?.cateKey;
 
-        const getItemsSameCateKey = async () => {
-            try {
+        if(cateKey) {
+            const getItemsSameCateKey = async () => {
+                try {
                 const response = await getData(`/product/cate/${cateKey}`, { withCredentials: true });
                 const sellerItems = response?.data?.sameCateItems ?? [];
-
+                
                 setItemsSameCate(sellerItems.filter(items => items.itemKey != itemKey));
-            } catch (err) {
-                console.log("Failed Load Data...", err);
+                } catch (err) {
+                    console.log("Failed Load Data...", err);
+                }
             }
+        getItemsSameCateKey();
         }
 
-        getItemsSameCateKey();
     }, [item?.cateKey]);
 
     // 카테고리 받아오기
@@ -183,7 +183,7 @@ const ItemDetail = () => {
 
 
         if(!imgs || imgs.length === 0) {
-            const temp = "/item-images/temp/SStemp.png";
+            const temp = "/uploads/temp/SStemp.png";
             return <img
                     src={`http://localhost:5178${temp}`}
                     alt="상품이미지"/>
@@ -248,7 +248,7 @@ const ItemDetail = () => {
             const response = await deleteData(`/product/delete/${itemKey}`);
             if(response.status === 200) {
                 showToast("상품을 삭제했습니다!", "success");
-                navigate("/home");
+                navigate("/");
             } else {
                 showToast("상품을 삭제하지 못했습니다...", "error")
             }
@@ -416,7 +416,7 @@ const ItemDetail = () => {
                             <label className="item-subInfo-label">판매자 정보</label>
                             <div className="item-seller">
                                 <p onClick={() => navigate(`/user/${itemUser.userKey}`)}>{itemUser.state === "S" ? `탈퇴한 회원` : itemUser.useralias}</p>
-                                <img onClick={() => navigate(`/user/${itemUser.userKey}`)} src={(itemUser.userimg && itemUser.state === "N") ? `http://localhost:8093${itemUser.userimg}` : `http://localhost:8093/item-images/temp/userImgTemp.png`}/>
+                                <img onClick={() => navigate(`/user/${itemUser.userKey}`)} src={(itemUser.userimg && itemUser.state === "N") ? `http://localhost:5178${itemUser.userimg}` : `http://localhost:5178/uploads/temp/userImgTemp.png`}/>
                             </div>
                             <UserTrustScore score={itemUser.trustScore} onLabel={false} />
                             <div className="item-seller-info">

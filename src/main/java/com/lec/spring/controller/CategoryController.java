@@ -15,7 +15,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/api/category")
+    @GetMapping("/category")
     public List<Category> findAllCategories() {
         return categoryService.findAll();
     }

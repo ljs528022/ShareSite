@@ -5,7 +5,7 @@ const ItemCard = ({ item, style }) => {
 
     const navigate = useNavigate();
 
-    const mainImage = item.images.find(img => img.isMain) || { imgUrl: "/uploads/item-images/temp/SStemp.png" };
+    const mainImage = item.images.find(img => img.isMain) || { imgUrl: "/uploads/temp/SStemp.png" };
 
     return (
         <>

@@ -93,7 +93,7 @@ const UserPage = () => {
 
         const getReview = async () => {
             try {
-                const response = await getData(`/api/review/${userKey}`);
+                const response = await getData(`/review/${userKey}`);
                 if(response.status === 200) {
                     setUserReview(response.data);
                 }
@@ -219,7 +219,7 @@ const UserPage = () => {
                                 <UserTrustScore score={userScore} onLabel={true}/>
                                 <img 
                                     className="user-img"
-                                    src={userInfo.userimg !== '' ? `http://localhost:5178${userInfo.userimg}` : 'http://localhost:5178/uploads/item-images/temp/userImgTemp.png'}
+                                    src={userInfo.userimg !== '' ? `http://localhost:5178${userInfo.userimg}` : 'http://localhost:5178/uploads/temp/userImgTemp.png'}
                                 />
                             </div>
                             <div className="user-info-status">
@@ -354,7 +354,7 @@ const UserPage = () => {
             />
 
             {/* 내 정보 수정 */}
-            {userInfo?.regType === "S" ?
+            {userInfo?.regtype === "S" ?
             <EditModal 
             isOpen={showModify}
             onClose={() => setShowModify(false)}

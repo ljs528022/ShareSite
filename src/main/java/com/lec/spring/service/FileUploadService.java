@@ -24,9 +24,23 @@ public class FileUploadService {
 
     private static final List<String> SUPPORTED_EXTENSIONS = Arrays.asList("jpg", "jpeg", "png", "gif");
 
-    public List<ItemImage> saveItemImages(
-            List<MultipartFile> img, List<Boolean> isMainList) throws IOException {
+    private File ensureDirectoryExists(String path) {
+        File dir = new File(path);
+        if(!dir.exists()) {
+            boolean created = dir.mkdirs();
+            if(!created) {
+                throw new RuntimeException("디렉토리를 생성할 수 없습니다: " + path);
+            }
+
+        }
+        return dir; 
+    }
+
+    public List<ItemImage> saveItemImages(List<MultipartFile> img, List<Boolean> isMainList) throws IOException {
         List<ItemImage> imageList = new ArrayList<>();
+
+        String itemImageDir = uploadDir + File.separator + "item-images";
+        ensureDirectoryExists(itemImageDir);
 
         for(int i = 0; i < img.size(); i++) {
             MultipartFile file = img.get(i);
@@ -41,7 +55,7 @@ public class FileUploadService {
                 }
 
                 String uniqueName = UUID.randomUUID().toString() + "." + ext;
-                String fullPath = uploadDir + "/item-images/" + uniqueName;
+                String fullPath = itemImageDir + File.separator + uniqueName;
 
                 File dir = new File(uploadDir + "/item-images/");
                 if(!dir.exists()) dir.mkdirs();
@@ -49,7 +63,7 @@ public class FileUploadService {
                 file.transferTo(new File(fullPath));
 
                 ItemImage image = ItemImage.builder()
-                        .imgUrl("/item-images/" + uniqueName)
+                        .imgUrl("/uploads/item-images/" + uniqueName)
                         .isMain(isMain)
                         .build();
 
@@ -61,28 +75,23 @@ public class FileUploadService {
     }
 
     public String saveUserImage(MultipartFile userimg) throws IOException {
-        String userImagePath = null;
+        if(userimg.isEmpty()) return null;
 
-        if(!userimg.isEmpty()) {
-            String originFilename = userimg.getOriginalFilename();
-            String ext = originFilename.substring(originFilename.lastIndexOf(".") + 1).toLowerCase();
+        String originFilename = userimg.getOriginalFilename();
+        String ext = originFilename.substring(originFilename.lastIndexOf(".") + 1).toLowerCase();
 
-            if(!SUPPORTED_EXTENSIONS.contains(ext)) {
-                throw new IOException("허용되지 않은 파일 형식입니다!");
-            }
-
-            String uniqueName = UUID.randomUUID().toString() + "." + ext;
-            String fullPath = uploadDir + "/user-images/" + uniqueName;
-
-            File dir = new File(uploadDir + "/user-images/");
-            if(!dir.exists()) dir.mkdirs();
-
-            userimg.transferTo(new File(fullPath));
-
-            userImagePath = "/user-images/" + uniqueName;
+        if(!SUPPORTED_EXTENSIONS.contains(ext)) {
+            throw new IOException("허용되지 않은 파일 형식입니다!");
         }
 
-        return userImagePath;
+        String uniqueName = UUID.randomUUID().toString() + "." + ext;
+        String userImageDir = uploadDir + File.separator + "user-images";
+        ensureDirectoryExists(userImageDir);
+
+        String fullPath = userImageDir + File.separator + uniqueName;
+        userimg.transferTo(new File(fullPath));
+
+        return "/uploads/user-images/" + uniqueName;
     }
 
     public void deleteFilesByUrls(List<String> imgUrls) {
@@ -91,7 +100,7 @@ public class FileUploadService {
         for(String url: imgUrls) {
             try {
                 String relativePath = url.startsWith("/") ? url.substring(1) : url;
-                Path filePath = Paths.get(uploadDir, relativePath);
+                Path filePath = Paths.get(uploadDir, relativePath.replace("uploads/", ""));
 
                 Files.deleteIfExists(filePath);
             } catch (IOException e) {

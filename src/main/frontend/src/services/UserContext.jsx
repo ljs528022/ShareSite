@@ -1,11 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getUserInfo } from "./getUserInfo";
 
-const UserContext = createContext();
+const UserContext = createContext({
+    user: null,
+    setUser: () => {},
+    loading: true
+});
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchUser = async () => {

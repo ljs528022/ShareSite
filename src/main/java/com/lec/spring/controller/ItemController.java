@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 import static java.lang.Long.parseLong;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/product")
 @CrossOrigin(origins = "http://localhost:5178")
 public class ItemController {
 
@@ -43,7 +43,7 @@ public class ItemController {
     private ReviewService reviewService;
 
     // Write Item
-    @PostMapping("/write")
+    @PostMapping(value = "/write")
     public ResponseEntity<?> write(
             @RequestPart("item") ItemDTO itemDTO,
             @RequestPart(value = "img", required = false)List<MultipartFile> img,

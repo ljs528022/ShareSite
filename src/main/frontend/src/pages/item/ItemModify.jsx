@@ -258,7 +258,7 @@ const ItemModify = () => {
                                         {img.main ? <span className="badge">MAIN</span> : <span className="empty">임시데이터</span>}
                                         <span className="img-delete-btn" onClick={() => handleDeleteImage(index)}>X</span>
                                         <img
-                                            src={img.imgUrl ? `http://localhost:5178${img.imgUrl}` : URL.createObjectURL(img.file)}
+                                            src={img.imgUrl ? `http://localhost:8039${img.imgUrl}` : URL.createObjectURL(img.file)}
                                             alt={`preview-${index}`} />
                                     </div>
                                 ))}

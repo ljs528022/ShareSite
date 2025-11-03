@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
-@RequestMapping("/api/payment")
+@RequestMapping("/payment")
 @CrossOrigin(origins = "http://localhost:5178/")
 public class PaymentController {
     private final Map<String, String> paymentStatus = new ConcurrentHashMap<>();

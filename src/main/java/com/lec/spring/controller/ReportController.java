@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:5178")
 public class ReportController {
 

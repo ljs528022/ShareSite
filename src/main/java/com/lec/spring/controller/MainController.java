@@ -28,7 +28,7 @@ public class MainController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping("/api/home")
+    @RequestMapping("/home")
     @CrossOrigin(origins = "http://localhost:5178", allowCredentials = "true")
     public Map<String, Object> home(Authentication authentication) {
         Map<String, Object> response = new HashMap<>();

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { getData } from "../../services/api";
 import { useUser } from "../../services/UserContext";
-import ChatRoom from "../../pages/chat/ChatRoom";
 import { FaAngleRight } from "react-icons/fa";
+import ChatRoom from "../../pages/chat/ChatRoom";
 import '../../css/util/chatroom.css';
 
 const ChatRoomList = ({ onClose }) => {

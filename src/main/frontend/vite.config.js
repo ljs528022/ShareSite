@@ -7,11 +7,16 @@ export default defineConfig({
   server: {
     port: 5178,
     proxy: {
-      '/api': {
+      "/api": {
         target: "http://localhost:8093",
         changeOrigin: true,
         secure: false,
-        rewrite: path => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+      "/uploads": {
+        target: "http://localhost:8093",
+        changeOrigin: true,
+        secure: false,
       }
     },
     historyApiFallback: true,
