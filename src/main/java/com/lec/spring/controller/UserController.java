@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @CrossOrigin(origins = "http://localhost:5178")
 public class UserController {
 

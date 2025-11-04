@@ -36,8 +36,9 @@ const Header = () => {
 
             setUser(null);
             showToast("탈퇴한 계정입니다. Home으로 돌아갑니다.");
+            navigate("/");
         }
-    })
+    }, [user])
 
     // 카테고리 받아오기
     useEffect(() => {
@@ -98,7 +99,6 @@ const Header = () => {
             <div className="Navbar-row">
                 <a href="/" className="Navbar-logo">
                     <img src="http://localhost:5178/uploads/temp/SSicon.png" className='SSLogo' />
-                    
                 </a>
                 <div className="Navbar-search">
                     <form role="search">
@@ -136,7 +136,7 @@ const Header = () => {
                         </li>
                         <p>|</p>
                         <li>
-                            <button onClick={() => !user ? navigate("/user/login") : ""} onMouseOver={handlePopupShow} onMouseOut={handlePopupShow}>
+                            <button onClick={() => !user ? navigate("/user/login") : ""} >
                             {/* 로그인하면 유저 대표이미지로 변경 */}
                             {user ?
                              <img src={
@@ -144,19 +144,10 @@ const Header = () => {
                                 `http://localhost:5178${user.userimg}`
                                 :
                                 `http://localhost:5178/uploads/temp/userImgTemp.png`
-                            } alt={user.username} onClick={setShowPopup(true)}/>
+                            } alt={user.username} onClick={handlePopupShow}/>
                              :
                              "로그인"}
                             </button>
-                            {(showPopup && user) &&
-                            // 유저용 사이트 페이지
-                            // 신규 채팅, 거래 내역, 마이페이지 이동, 로그아웃 처리 
-                            <SidePage
-                                isOpen={showPopup}
-                                onClose={setShowPopup(false)}
-                                content={<UserSidePage isOpen={showPopup} logout={handleLogout} />}
-                            />
-                            }
                         </li>
                     </ul>
                 </div>
@@ -204,6 +195,15 @@ const Header = () => {
             content={<ChatRoomList 
                 onClose={() => setShowChatRooms(false)}
             />}
+        />
+
+
+        {/* 유저용 사이트 페이지 */}
+        {/* 신규 채팅, 거래 내역, 마이페이지 이동, 로그아웃 처리 */}
+        <SidePage
+            isOpen={showPopup}
+            onClose={() => setShowPopup(false)}
+            content={<UserSidePage isOpen={showPopup} onClose={() => setShowPopup(false)} logout={handleLogout} />}
         />
         </>
     )

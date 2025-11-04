@@ -37,8 +37,8 @@ function App() {
 
   return (
     <>
-      <ToastProvider>
-        <UserProvider>
+    <ToastProvider>
+      <UserProvider>
           {!hideLayout && <Header />}
 
           <Routes>
@@ -89,8 +89,8 @@ function App() {
             <Route path='/admin/*' Component={AdminApp} />
           </Routes>
           {!hideLayout && <Footer />}
-        </UserProvider>
-      </ToastProvider>
+      </UserProvider>
+    </ToastProvider>
     </>
   )
 }

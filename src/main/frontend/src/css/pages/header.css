@@ -254,18 +254,3 @@
 
     z-index: 1;
 }
-
-.logout {
-    position: relative;
-
-    margin: 5px auto;
-    padding: 5px 0px;
-
-    width: 90%;
-
-    border-top: 2px solid gray;
-}
-
-.logout:hover {
-    color: black;
-}

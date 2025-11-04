@@ -30,3 +30,6 @@ SELECT *
         FROM d1_payment
         WHERE buyerKey = '80A0001'
         ORDER BY purchaseDate DESC;
+        
+DELETE FROM user
+WHERE created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY);

@@ -65,7 +65,7 @@ const UserPage = () => {
     useEffect(() => {
         const getUserInfo = async () => {
             try {
-                const response = await getData(`/user/userprofile/${userKey}`);
+                const response = await getData(`/api/user/userprofile/${userKey}`);
                 const { userInfo, userItems, trustScore } = response.data;
                 setUserInfo(userInfo);
                 if(userInfo?.state === "S") {

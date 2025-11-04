@@ -43,12 +43,14 @@ public class NaverLoginService {
     public ResponseEntity<?> handleCallback(String code, String state) {
         // 1. access_token 요청
         String accessToken = getAccessToken(code, state);
+        System.out.println("받은 accessToken : " + accessToken);
         if(accessToken == null) {
             return ResponseEntity.badRequest().body("네이버 토큰 요청 실패");
         }
 
         // 2. 사용자 정보 조회
         JSONObject userInfo = getUserInfo(accessToken);
+        System.out.println("불러온 userInfo : " + userInfo);
         if(userInfo == null) {
             return ResponseEntity.badRequest().body("네이버 사용자 정보 요청 실패");
         }

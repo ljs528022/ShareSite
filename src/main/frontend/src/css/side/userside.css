@@ -1,30 +1,97 @@
-.userside-box {
+.userside-wrapper {
     display: flex;
     flex-direction: column;
+
+    height: auto;
+}
+
+.userside-box {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+
+    margin: 0 auto;
+    margin-top: 8px;
+
+    width: 95%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
 }
 
 .userside-userinfo {
+    display: flex;
+    flex-direction: column;
+    color: #777;
 
+    margin: 8px 0;
+}
+
+.userside-box:hover {
+    background-color: #ccc;
 }
 
 .userside-userinfo-img {
-
-}
-
-.userside-userinfo-regtype {
-
-}
-
-.userside-userinfo-useralias {
     
 }
 
-.userside-button {
+.userside-userinfo-useralias {
+    width: initial;
+    text-align: right;
+    font-size: 25px;
+}
 
+.userside-userinfo-regtype {
+    width: initial;
+    text-align: center;
+    font-size: 13px;
+}
+
+.userside-mypage {
+    display: flex;
+
+    margin: 10px auto;
+    padding: 5px 0;
+    text-align: center;
+
+    width: 95%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.userside-mypage:hover {
+    background-color: #ccc;
+}
+
+.userside-mypage label {
+    width: initial;
+    margin: 0 auto;
+    font-size: 17px;
+    color: #777;
+    cursor: pointer;
 }
 
 .userside-alert {
 
 }
 
-.userside-logout
+.userside-logout {
+    display: flex;
+    margin: 10px auto;
+    padding: 5px 0;
+    text-align: center;
+
+    width: 95%;
+    border: 2px solid red;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.userside-logout label {
+    width: initial;
+    margin: 0 auto;
+    color: red;
+    font-size: 17px;
+    cursor: pointer;
+}

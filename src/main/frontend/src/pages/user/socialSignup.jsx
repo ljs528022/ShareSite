@@ -92,7 +92,7 @@ const SocialSignup = () => {
         }
 
         try {
-            const res = await postData("/user/signup/social", {
+            const res = await postData("/api/user/signup/social", {
                 username: id || signUp.username,
                 useralias: signUp.useralias,
                 email: signUp?.emailChk !== "" ? signUp?.email : email,

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getUserInfo } from "./getUserInfo";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext({
     user: null,
@@ -10,6 +11,7 @@ const UserContext = createContext({
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -22,11 +24,13 @@ export const UserProvider = ({ children }) => {
                 if(status === 401 || status === 500) {
                     localStorage.removeItem("token");
                     sessionStorage.removeItem("token");
-                    alert("시간이 너무 지나서 자동 로그아웃 되었어요! 다시 로그인 해주세요!");
-                    window.location.href = "/user/login";
-                }
+                    setUser(null);
 
-                setUser(null);
+                    alert("시간이 너무 지나서 자동 로그아웃 되었어요! 다시 로그인 해주세요!");
+                    navigate("/user/login", { replace: true });
+                } else {
+                    setUser(null);
+                }
             } finally {
                 setLoading(false);
             }
