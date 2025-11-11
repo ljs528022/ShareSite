@@ -117,7 +117,7 @@ const Signup = () => {
         }
 
         try {
-            const res = await postData("/user/signup", {
+            const res = await postData("/api/user/signup", {
                 username: userData.username,
                 password: userData.password,
                 useralias: userData.useralias,

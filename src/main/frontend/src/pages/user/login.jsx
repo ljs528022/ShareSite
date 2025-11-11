@@ -1,5 +1,5 @@
 import "../../css/pages/login.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../services/api";
 import { useUser } from "../../services/UserContext";
@@ -22,6 +22,13 @@ const Login = () => {
     const { showToast } = useToast();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        // 로그인 창에 들어오면 모든 토큰을 초기화
+        sessionStorage.removeItem("googleAccessToken");
+        sessionStorage.removeItem("kakaoAccessToken");
+        sessionStorage.removeItem("naverAccessToken");
+    }, [])
+
     const handleInput = (e) => {
         setUserData({
             ...userData,
@@ -34,7 +41,7 @@ const Login = () => {
 
         try {
             // 로그인 요청
-            const { data } = await postData("/user/login", userData);
+            const { data } = await postData("/api/user/login", userData);
 
             // 로그인이 성공하면, 토큰 저장
             const token = data.token;

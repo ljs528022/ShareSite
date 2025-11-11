@@ -39,13 +39,20 @@ const SocialSignup = () => {
         const kakaoToken = sessionStorage.getItem("kakaoAccessToken") || null;
         const googleToken = sessionStorage.getItem("googleAccessToken") || null;
 
+        // 다른 AcessToken 끼리의 충돌 방지용 -> 다른 토큰 제거
         if(naverToken !== null) {
             setTokenType("N");
+            sessionStorage.removeItem("kakaoAccessToken");
+            sessionStorage.removeItem("googleAccessToken");
         } else if (kakaoToken !== null) {
             setTokenType("K");
+            sessionStorage.removeItem("naverAccessToken");
+            sessionStorage.removeItem("googleAccessToken");
         } else if (googleToken !== null) {
             setTokenType("G");
             setSignUp(prev => ({...prev, email: googleToken, emailChk: true}));
+            sessionStorage.removeItem("naverAccessToken");
+            sessionStorage.removeItem("kakaoAccessToken");
         }
     }, [tokenType]);
 

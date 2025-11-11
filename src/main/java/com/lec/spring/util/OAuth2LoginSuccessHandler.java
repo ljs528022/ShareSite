@@ -39,8 +39,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         User user = userRepository.findByEmail(email);
 
-
-
         if(user == null) {
             // 회원가입을 해야한다면, 그걸 위한 임시 token 생성
             String token = jwtUtil.generateToken(email);

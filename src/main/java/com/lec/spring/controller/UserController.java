@@ -4,9 +4,11 @@ import com.lec.spring.DTO.*;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.*;
 import com.lec.spring.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,7 +64,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
+    public LoginResponse login(@RequestBody LoginRequest request, HttpServletRequest httpServletRequest) {
+        SecurityContextHolder.clearContext();
+        httpServletRequest.getSession().invalidate();
+
         String token = userService.login(request);
         return new LoginResponse(token);
     }

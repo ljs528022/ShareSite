@@ -56,7 +56,7 @@ public class SecurityConfig {
                     .anyRequest().authenticated()
                 )
                 // Google 로그인
-                .oauth2Login(oauth -> oauth.successHandler(successHandler))
+                .oauth2Login(oauth -> oauth.successHandler(successHandler).defaultSuccessUrl("/oauth/login-success", true))
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                     .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))

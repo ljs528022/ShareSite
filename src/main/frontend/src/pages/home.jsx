@@ -24,6 +24,8 @@ const Home = () => {
             }
         };
 
+        sessionStorage.clear();
+
         fetchHomeData();
     }, []);
 
